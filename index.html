@@ -216,7 +216,7 @@
                     </div>
                 </div>
                 <p class="text-sm md:text-base text-gray-600 mt-6 leading-relaxed bg-gray-50 p-4 rounded-xl border border-gray-100 text-justify">
-                    林佳和以納粹為例，說明威權統治者往往會用社會福利或經濟利益來餵食人民，當人民只在乎利益與好處，無視正當程序的重要性，就很容易落入威權體制的陷阱。
+                    林佳和以納粹為例，說明威權統治者往往會用社會福利 or 經濟利益來餵食人民，當人民只在乎利益與好處，無視正當程序的重要性，就很容易落入威權體制的陷阱。
                 </p>
             </div>
 
@@ -236,7 +236,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                     <div>
                         <p class="text-sm md:text-base text-gray-300 leading-relaxed text-justify mb-4">
-                            根據本報記者所做〈青年對白恐時期之認知問卷調查〉，有超過半數的青年並不關心白恐議題。雖然教科書中有相關內容，但彷彿這些故事只是停留在考試卷上的題目，無法深入青年的心裡。
+                            根據本報記者所做〈青年對白恐時期之認知問卷調查〉，有超過半數的青年並不關心白恐議題。雖然教科書中有相關內容，但彷彿 these 故事只是停留在考試卷上的題目，無法深入青年的心裡。
                         </p>
                     </div>
                     <!-- 圓餅圖模擬 -->
@@ -341,8 +341,8 @@
     </section>
 
     <!-- 頁面 5：詮釋面向二 (教育扁平化) -->
-    <section id="page-5-education" class="section-view hidden flex-col bg-[#FAFAFA] min-h-screen pb-32">
-        <div class="max-w-3xl mx-auto px-6 md:px-8 py-24">
+    <section id="page-5-education" class="section-view hidden flex-col bg-[#FAFAFA] min-h-screen">
+        <div class="max-w-3xl mx-auto px-6 md:px-8 pt-24 pb-12">
             
             <div class="mb-16">
                 <span class="text-[#9B2C2C] font-semibold tracking-[0.3em] text-xs uppercase block mb-3">Part II</span>
@@ -377,7 +377,7 @@
                 <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
                     <p class="serif-title text-lg text-gray-900 font-bold mb-2">「（白恐課程）大部分都不是很重要的考試範圍，它甚至又有一點沉重。」</p>
                     <p class="text-sm text-gray-500">
-                        他表示，當學生缺乏足夠學習動機，而社會對相關議題的討論和溝通又不足時，教師在教學現場必須更加謹慎。
+                        他表示，當學生缺乏足夠學習動機，而社會對相關議題的討論 and 溝通又不足時，教師在教學現場 must 更加謹慎。
                     </p>
                 </div>
             </div>
@@ -465,15 +465,137 @@
                         </p>
                     </button>
                 </div>
+
+                <!-- 解鎖提示動畫 (與 page-3 時間軸引導的文字顏色、位置與箭頭完全一致) -->
+                <div id="unlocked-arrow-indicator" class="hidden flex-col items-center justify-center mt-16 animate-bounce cursor-pointer text-gray-400" onclick="scrollToUnlockedPerspectiveFive()">
+                    <span class="text-xs tracking-widest mb-2 font-medium">向下滾動閱讀報導</span>
+                    <svg class="w-5 h-5 text-[#9B2C2C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    </svg>
+                </div>
             </section>
 
-            <!-- 專題落款尾部 -->
-            <div class="mt-24 text-center border-t border-gray-100 pt-12">
-                <p class="text-xs tracking-[0.3em] text-gray-400 font-medium">報導團隊｜融媒體新聞學專題小組 敬製</p>
-                <p class="text-[10px] text-gray-300 tracking-widest mt-2 font-mono">© 2026 THE WEIGHT OF MEMORY. ALL RIGHTS RESERVED.</p>
-            </div>
-
         </div>
+
+        <!-- ==========================================
+             面向五：突破同溫層與記憶傳承 (解鎖後動態插入此區)
+             ========================================== -->
+        <div id="unlocked-content" class="hidden">
+            <section id="page-10-perspective-five" class="bg-[#FAFAFA] py-24 px-6 border-t border-gray-200">
+                <div class="max-w-3xl mx-auto">
+
+                    <div class="text-center mb-16">
+                        <span class="text-[#9B2C2C] font-semibold tracking-[0.3em] text-xs uppercase block mb-3">Part V</span>
+                        <h2 class="serif-title text-3xl md:text-5xl font-bold text-gray-800 leading-tight">
+                            如何走出同溫層，讓更多人認識白色恐怖？
+                        </h2>
+                        <div class="w-12 h-1 bg-[#9B2C2C] mt-6 mx-auto"></div>
+                    </div>
+
+                    <div class="space-y-8 text-base md:text-lg text-gray-600 leading-loose text-justify">
+                        <p>陳永謙分享籌辦活動時的觀察，「基本上七、八成參與者對這個議題有一定程度的了解，參加是想要加深認識或精進認知。」然而青年多為個人或小組行動，觸及對象往往僅限於既有關注者。</p>
+
+                        <p>張惠君也有類似觀察，因此他積極嘗試突破同溫層，如在邀請講者時，不一定限制於研究白色恐怖的學者，也會邀請作家、詩人、Podcaster等多元領域的創作者參與，「有些粉絲從來不會到中正紀念堂裡，但因為有他們的演講，粉絲就會願意進來。」</p>
+
+                        <p>為突破同溫層，青年學子也試圖透過自身力量，讓更多人認識威權時期的臺灣。如臺大學生會轉型正義小組舉辦轉型正義相關講座、電影會等，並製作事件懶人包，希望提供大眾正確的資訊管道；探霧者工作隊則選擇利用版畫、讀劇與速寫走讀等多元活動，將生硬的學術知識轉化為公眾易理解的形式。</p>
+
+                        <p>探霧者工作隊成員楊矞菁解釋，比起學術路線，團隊的主要目的是與公眾對話，「像你今天可能不會看一個學術論文，但你可能會去看讀劇。」因此他們以熱愛的藝術為媒介，希望讓認為白恐知識難以入口的民眾願意接觸。</p>
+
+                        <div class="bg-gray-100 p-6 rounded-xl border border-gray-200/50 text-sm md:text-base text-gray-600 my-8">
+                            <strong>註二：</strong>讀劇（Play Reading）是一種以劇本文本為核心的舞台演出形式。
+                        </div>
+
+                        <p>陳文成博士紀念基金會自2008年首度舉辦「人權之路－青年體驗營」，並於每年暑假帶領青年遠赴曾關押政治受難者的綠島。張龍僑解釋，學員會模擬受難者撰寫家書，並被關在無冷氣、體感約40度的監獄空間，從生理上的壓迫來同理受難者。</p>
+                    </div>
+
+                    <div class="my-16 text-center">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="bg-white border border-gray-200 p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                                <div class="text-3xl mb-4">✉️</div>
+                                <h4 class="font-bold text-gray-800 mb-2">模擬家書一</h4>
+                                <p class="text-xs text-gray-400">「親愛的家人，見字如面。這裡的海風很鹹，牢房很熱...」</p>
+                            </div>
+                            <div class="bg-white border border-gray-200 p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                                <div class="text-3xl mb-4">✉️</div>
+                                <h4 class="font-bold text-gray-800 mb-2">模擬家書二</h4>
+                                <p class="text-xs text-gray-400">「不知家中的稻子收割了沒？切記保重身體，莫要為我悲傷...」</p>
+                            </div>
+                            <div class="bg-white border border-gray-200 p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                                <div class="text-3xl mb-4">✉️</div>
+                                <h4 class="font-bold text-gray-800 mb-2">模擬家書三</h4>
+                                <p class="text-xs text-gray-400">「這或許是我最後能寫給你們的信。願未來的孩子能呼吸自由的空氣...」</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-8 text-base md:text-lg text-gray-600 leading-loose text-justify">
+                        <p>「你身在臺灣卻不知道臺灣的歷史，這件事實在是太荒謬了。」楊矞菁直言，在他看來，了解白恐或轉型正義議題並非僅是拓展歷史知識，而是促進大眾對所處社會發展脈絡 of 認識。</p>
+
+                        <p>林佳和則把理解白恐的過程，比喻為在對身體進行「清創」。若遲遲不處理，膿瘡會逐漸持續蔓延至整個社會，削弱青年對於威權的認知。當人們理解白恐不是單一的人權侵害事件，開始並將自己擺放進這段臺灣的歷史進程，才能讓青年回答「我們是誰？我們怎麼走過來的？」</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="page-11-comments" class="bg-white py-24 border-t border-gray-200">
+                <div class="max-w-3xl mx-auto px-6 md:px-8">
+                    <div class="text-center mb-12">
+                        <h2 class="serif-title text-3xl font-bold text-gray-800 mb-4">白色恐怖的記憶不會自然被留下</h2>
+                        <p class="text-gray-500">對你而言，白色恐怖是什麼？</p>
+                    </div>
+
+                    <!-- 互動留言輸入框 -->
+                    <div class="bg-[#FAFAFA] border border-gray-200 rounded-2xl p-6 mb-12 shadow-sm">
+                        <textarea id="comment-textarea" class="w-full h-40 bg-white border border-gray-200 rounded-xl p-4 focus:outline-none focus:border-[#9B2C2C] text-gray-700 transition-colors" placeholder="寫下你的想法，與當代青年一同留下記憶的足跡..."></textarea>
+                        <div class="text-right mt-4">
+                            <button id="btn-submit-comment" class="px-8 py-3 bg-[#9B2C2C] hover:bg-red-900 text-white font-medium rounded-lg shadow-sm hover:shadow transition-all">送出留言</button>
+                        </div>
+                    </div>
+
+                    <h3 class="font-bold text-xl text-gray-800 mb-8 border-b border-gray-100 pb-4 flex items-center">
+                        <span class="w-2.5 h-6 bg-[#9B2C2C] inline-block mr-3 rounded-sm"></span>
+                        即時留言牆
+                    </h3>
+
+                    <div id="comments-wall-grid" class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-[#FAFAFA] p-6 rounded-2xl border border-gray-100 shadow-sm">
+                            <p class="text-gray-600 text-sm md:text-base leading-relaxed text-justify">「以前只覺得是歷史課本上的名詞，今天做完問卷和看完走讀介紹，才發現原來 these 遺址就在我每天上學通勤的路上...」</p>
+                            <div class="mt-4 flex justify-between text-xs text-gray-400">
+                                <span>政大學生 A</span>
+                                <span>剛剛</span>
+                            </div>
+                        </div>
+                        <div class="bg-[#FAFAFA] p-6 rounded-2xl border border-gray-100 shadow-sm">
+                            <p class="text-gray-600 text-sm md:text-base leading-relaxed text-justify">「模擬家書的部分真的很讓人動容。如果不是他們當年的堅持，也許今天我們在網路上連自由留言的機會都沒有。」</p>
+                            <div class="mt-4 flex justify-between text-xs text-gray-400">
+                                <span>台大 B 網友</span>
+                                <span>10分鐘前</span>
+                            </div>
+                        </div>
+                        <div class="bg-[#FAFAFA] p-6 rounded-2xl border border-gray-100 shadow-sm">
+                            <p class="text-gray-600 text-sm md:text-base leading-relaxed text-justify">「如何走出同溫層確實是最難的課題。希望以後能有多一點像桌遊補課這樣的互動方式，讓沒興趣的朋友也願意踏出第一步。」</p>
+                            <div class="mt-4 flex justify-between text-xs text-gray-400">
+                                <span>高中歷史老師</span>
+                                <span>1小時前</span>
+                            </div>
+                        </div>
+                        <div class="bg-[#FAFAFA] p-6 rounded-2xl border border-gray-100 shadow-sm">
+                            <p class="text-gray-600 text-sm md:text-base leading-relaxed text-justify">「歷史的傷口需要清創，而不是假裝它存在。這代人的歷史認同需要我們自己去拼湊完整。」</p>
+                            <div class="mt-4 flex justify-between text-xs text-gray-400">
+                                <span>自由工作者</span>
+                                <span>3小時前</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 專題落款尾部 (永久置於 page-5 底部) -->
+        <div class="max-w-3xl mx-auto px-6 md:px-8 py-16 text-center border-t border-gray-200/60 mt-16">
+            <p class="text-xs tracking-[0.3em] text-gray-400 font-medium">報導團隊｜融媒體新聞學專題小組 敬製</p>
+            <p class="text-[10px] text-gray-300 tracking-widest mt-2 font-mono">© 2026 THE WEIGHT OF MEMORY. ALL RIGHTS RESERVED.</p>
+        </div>
+
     </section>
 
     <!-- ==========================================
@@ -763,8 +885,16 @@
                     targetPage.classList.add('flex');
                 } else if (pageKey === '5-education') {
                     targetPage.classList.add('flex');
+                    
+                    // 如果是從四大入口之「返回按鈕」點擊返回時
                     if (scrollToAnchor) {
-                        // 平滑滾動至卡片區域錨點
+                        // A. 解鎖下方隱藏內容
+                        const unlockedDiv = document.getElementById('unlocked-content');
+                        const dynamicArrow = document.getElementById('unlocked-arrow-indicator');
+                        if (unlockedDiv) unlockedDiv.classList.remove('hidden');
+                        if (dynamicArrow) dynamicArrow.classList.remove('hidden');
+
+                        // B. 平滑滾動至卡片區域錨點
                         setTimeout(() => {
                             const anchor = document.getElementById('approaches-anchor');
                             if (anchor) {
@@ -941,7 +1071,7 @@
                     title: "二、你在日常生活中，是否能輕易辨識出殘留的「威權痕跡」？（例如硬幣肖像、街道命名等）",
                     options: [
                         { text: "幾乎沒注意過，也覺得這些符號無傷大雅", stat: 60, response: "你與 60% 的同儕一樣，威權符號已經成功披上「日常生活」的糖衣，令人難以察覺。" },
-                        { text: "有時會意識到，但不會特別與白色恐怖 or 壓迫產生連結", stat: 28, response: "你落在中間的 28% 區間。我們熟悉這些符號，卻很少追問它在轉型正義中的正當性。" },
+                        { text: "有時會意識到，但不會特別與白色恐怖 or 壓迫產生連結", stat: 28, response: "你落在中間的 28% 區間。我們熟悉 these 符號，卻很少追問它在轉型正義中的正當性。" },
                         { text: "能清晰辨認，並認為這是威權遺產在民主社會的矛盾留存", stat: 12, response: "你屬於稀有的 12%。你擁有『辨認出威權痕跡』的能力，這正是轉型正義與當代青年最重要的聯結點。" }
                     ]
                 },
@@ -1047,6 +1177,53 @@
             btnProceedToEdu.addEventListener('click', () => {
                 window.switchView(5);
             });
+
+            // --- 解鎖章節平滑滾動導引 ---
+            window.scrollToUnlockedPerspectiveFive = function() {
+                const target = document.getElementById('page-10-perspective-five');
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            };
+
+            // --- 留言牆互動送出邏輯 ---
+            const btnSubmitComment = document.getElementById('btn-submit-comment');
+            const commentTextarea = document.getElementById('comment-textarea');
+            const commentsWallGrid = document.getElementById('comments-wall-grid');
+
+            if (btnSubmitComment && commentTextarea && commentsWallGrid) {
+                btnSubmitComment.addEventListener('click', () => {
+                    const text = commentTextarea.value.trim();
+                    if (!text) {
+                        commentTextarea.placeholder = "請輸入想法內容後再送出留言...";
+                        commentTextarea.classList.add('border-red-400');
+                        setTimeout(() => {
+                            commentTextarea.classList.remove('border-red-400');
+                            commentTextarea.placeholder = "寫下你的想法，與當代青年一同留下記憶的足跡...";
+                        }, 2000);
+                        return;
+                    }
+
+                    // 創立新的評論卡片元素
+                    const newComment = document.createElement('div');
+                    newComment.className = "bg-white p-6 rounded-2xl border-2 border-[#9B2C2C]/30 shadow-md fade-in-active";
+                    newComment.innerHTML = `
+                        <p class="text-gray-600 text-sm md:text-base leading-relaxed text-justify">${text}</p>
+                        <div class="mt-4 flex justify-between text-xs text-gray-400">
+                            <span class="text-[#9B2C2C] font-semibold">讀者留言</span>
+                            <span>剛剛</span>
+                        </div>
+                    `;
+                    
+                    // 插入至最前面
+                    commentsWallGrid.insertBefore(newComment, commentsWallGrid.firstChild);
+                    commentTextarea.value = "";
+                    
+                    // 平滑滾動置中剛送出的留言
+                    newComment.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                });
+            }
+
         });
     </script>
 </body>
