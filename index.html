@@ -467,9 +467,9 @@
                 </div>
 
                 <!-- 解鎖提示動畫 (與 page-3 時間軸引導的文字顏色、位置與箭頭完全一致) -->
-                <div class="flex flex-col items-center justify-center text-center w-full mt-12">
-                    <span class="text-gray-400 text-xs tracking-widest mb-2 font-medium">向下滾動閱讀報導</span>
-                    <svg class="w-5 h-5 text-[#9B2C2C] animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div id="unlocked-arrow-indicator" class="hidden flex-col items-center justify-center text-center w-full mt-16 animate-bounce cursor-pointer text-gray-400" onclick="scrollToUnlockedPerspectiveFive()">
+                    <span class="text-xs tracking-widest mb-2 font-medium">向下滾動閱讀報導</span>
+                    <svg class="w-5 h-5 text-[#9B2C2C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
                     </svg>
                 </div>
@@ -885,16 +885,21 @@
                     targetPage.classList.add('flex');
                 } else if (pageKey === '5-education') {
                     targetPage.classList.add('flex');
-                    
-                    // 如果是從四大入口之「返回按鈕」點擊返回時
                     if (scrollToAnchor) {
-                        // A. 解鎖下方隱藏內容
+                        // 1. 顯示原本隱藏的置中箭頭
+                        const arrowIndicator = document.getElementById('unlocked-arrow-indicator');
+                        if (arrowIndicator) {
+                            arrowIndicator.classList.remove('hidden');
+                            arrowIndicator.classList.add('flex');
+                        }
+                
+                        // 2. 解鎖並顯示 Part V 內容與留言牆
                         const unlockedDiv = document.getElementById('unlocked-content');
-                        const dynamicArrow = document.getElementById('unlocked-arrow-indicator');
-                        if (unlockedDiv) unlockedDiv.classList.remove('hidden');
-                        if (dynamicArrow) dynamicArrow.classList.remove('hidden');
-
-                        // B. 平滑滾動至卡片區域錨點
+                        if (unlockedDiv) {
+                            unlockedDiv.classList.remove('hidden');
+                        }
+                
+                        // 3. 平滑滾動至卡片區域錨點
                         setTimeout(() => {
                             const anchor = document.getElementById('approaches-anchor');
                             if (anchor) {
