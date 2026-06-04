@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>記憶的重量：青年為何要認識白色恐怖</title>
+    <!-- 引入 Tailwind CSS 進行現代化響應式排版 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Google Fonts 中文字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #FAFAFA; /* 溫潤的米白底色，減少純白的刺眼感，呼應紙張質感 */
+            color: #1A202C; /* 深炭灰文字，提高閱讀對比與舒適度 */
+            overflow-x: hidden;
+        }
+        
+        .serif-title {
+            font-family: 'Noto Serif TC', serif;
+        }
+
+        /* 漸進式淡入動畫 */
+        .fade-in-active {
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 自訂打字機游標闪爍 */
+        .cursor-blink::after {
+            content: '|';
+            animation: blink 0.8s infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* 隱藏捲軸但保持滾動功能 */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* 頁面切換過渡 */
+        .section-view {
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+        }
+
+        /* 閃白過場動畫 */
+        .flash-white {
+            animation: flashWhite 1.5s ease-in-out forwards;
+        }
+        
+        @keyframes flashWhite {
+            0% { opacity: 0; background-color: transparent; }
+            40% { opacity: 1; background-color: white; }
+            60% { opacity: 1; background-color: white; }
+            100% { opacity: 0; background-color: transparent; }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#9B2C2C]/20 selection:text-[#9B2C2C]">
+
+    <!-- 全螢幕閃白遮罩 (預設隱藏，層級最高) -->
+    <div id="flash-overlay" class="fixed inset-0 z-[100] pointer-events-none hidden bg-white opacity-0"></div>
+
+    <section id="page-1-landing" class="section-view min-h-screen flex flex-col justify-between items-center bg-[#FAFAFA] relative overflow-hidden px-4 py-12 z-10">
+        <!-- 背景裝飾：微弱的幾何點矩陣，帶出檔案庫與歷史拼圖的感覺 -->
+        <div class="absolute inset-0 z-0 opacity-[0.03]" style="background-image: radial-gradient(#9B2C2C 2px, transparent 2px); background-size: 30px 30px;"></div>
+        
+        <!-- 頂部副標 -->
+        <div class="z-10 text-center mt-12">
+            <span class="text-xs md:text-sm tracking-[0.3em] text-[#9B2C2C] font-semibold uppercase">INTERACTIVE MULTIMEDIA FEATURE</span>
+        </div>
+
+        <!-- 主標題區 -->
+        <div class="z-10 text-center max-w-4xl px-4 my-auto">
+            <h1 class="serif-title text-4xl md:text-7xl font-extrabold text-[#1A202C] leading-tight tracking-wider mb-6">
+                記憶的重量
+            </h1>
+            <p class="text-lg md:text-2xl font-light text-gray-500 tracking-[0.2em] mb-4">
+                青年為何需要認識白色恐怖？
+            </p>
+            <div class="w-16 h-[2px] bg-[#9B2C2C] mx-auto my-8"></div>
+            <p class="text-sm md:text-base text-gray-400 max-w-md mx-auto leading-relaxed">
+                這是一段關於我們如何擁有今日呼吸的探索。<br>點擊下方按鈕，回到那個無法自由呼吸的起點。
+            </p>
+        </div>
+
+        <!-- 進入故事按鈕 -->
+        <div class="z-10 mb-12">
+            <button id="btn-enter-story" class="group relative px-10 py-5 bg-[#1A202C] hover:bg-[#9B2C2C] text-white rounded-lg overflow-hidden shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <span class="relative flex items-center justify-center text-sm tracking-[0.2em] font-medium">
+                    點擊進入故事
+                    <svg class="w-5 h-5 ml-3 transform group-hover:translate-x-1.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </span>
+            </button>
+        </div>
+    </section>
+
+    <!-- 調整：在此區塊新增 cursor-pointer 與 select-none 手勢與防選取樣式 -->
+    <section id="page-2-story" class="section-view hidden fixed inset-0 w-full h-full bg-black z-20 flex flex-col justify-end cursor-pointer select-none">
+        <!-- 背景圖片：已置換為 融媒體動畫圖片.png -->
+        <div class="absolute inset-0 z-0 w-full h-full flex items-center justify-center overflow-hidden">
+            <img src="融媒體動畫圖片.png" alt="白色恐怖時期青年被捕場景" class="w-full h-full object-cover opacity-85 transition-opacity duration-1000" onerror="this.src='https://placehold.co/1920x1080/1a202c/ffffff?text=圖片載入中...請確保「融媒體動畫圖片_2.png」位於同一目錄下'">
+            <!-- 暗部遮罩，加強文字可讀性 -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+        </div>
+        
+        <!-- 劇情對話框架（下半部 1/4 處） -->
+        <div class="absolute bottom-[8%] w-full flex justify-center z-30 px-4 md:px-8">
+            <div id="story-dialog-box" class="bg-black/85 border border-gray-700/60 rounded-xl p-6 md:p-8 max-w-4xl w-full hover:bg-black/95 transition-all duration-300 backdrop-blur-md shadow-[0_15px_30px_rgba(0,0,0,0.5)]">
+                <!-- 角色或引言提示 -->
+                <div class="flex items-center justify-between mb-3 border-b border-gray-800 pb-2">
+                    <span class="text-xs tracking-widest text-[#9B2C2C] font-semibold uppercase">時代的縮影</span>
+                    <span class="text-xs text-gray-500">畫面點擊任意處繼續</span>
+                </div>
+                <!-- 故事本文 -->
+                <p id="story-text" class="text-gray-100 text-base md:text-xl leading-relaxed min-h-[90px] md:min-h-[110px] text-justify font-light cursor-blink">
+                    <!-- 文字將由 JS 動態填入 -->
+                </p>
+                <!-- 下一步箭頭 -->
+                <div class="text-right mt-4 flex items-center justify-end text-gray-400 text-xs tracking-wider">
+                    <span id="story-progress-hint" class="animate-pulse">點擊滑鼠繼續</span>
+                    <svg class="w-4 h-4 ml-2 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="page-3-article-1" class="section-view hidden flex-col bg-[#FAFAFA] w-full z-10">
+        
+        <!-- 時間計算器巨幕 (首屏) -->
+        <div class="min-h-screen flex flex-col items-center justify-center relative border-b border-gray-200/60 px-4 bg-gradient-to-b from-gray-50 to-[#FAFAFA]">
+            <div class="text-center max-w-3xl">
+                <p class="text-xs md:text-sm text-gray-500 font-semibold tracking-[0.4em] mb-4 uppercase">TIME ELAPSED SINCE AUTHORITARIAN RULE</p>
+                <h2 class="serif-title text-3xl md:text-6xl font-bold text-[#1A202C] mb-12 leading-tight">
+                    距離白色恐怖結束，<br class="md:hidden">至今已...
+                </h2>
+                <!-- 天數計數器 -->
+                <div class="flex items-baseline justify-center space-x-3 my-12 bg-white/40 py-8 px-12 rounded-3xl border border-gray-100 shadow-sm max-w-lg mx-auto">
+                    <span id="days-counter" class="serif-title text-5xl md:text-8xl font-black text-[#9B2C2C] tracking-tight">0</span>
+                    <span class="text-xl md:text-3xl font-bold text-gray-700">天</span>
+                </div>
+                <p class="text-xs md:text-sm text-gray-400 max-w-md mx-auto leading-relaxed">
+                    自 <strong class="text-gray-700">1992 年 11 月 7 日</strong> 金馬地區正式解除戒嚴（視為白恐結束之終點），歷史的巨輪已向前滾動了如此漫長的歲月。
+                </p>
+            </div>
+            <!-- 往下滾動引導 -->
+            <div class="absolute bottom-10 animate-bounce flex flex-col items-center text-gray-400 cursor-pointer" onclick="scrollToArticle()">
+                <span class="text-xs tracking-widest mb-2 font-medium">向下滾動閱讀報導</span>
+                <svg class="w-5 h-5 text-[#9B2C2C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </div>
+        </div>
+
+        <!-- 深度專題內容區 -->
+        <div id="article-body-start" class="max-w-3xl mx-auto px-6 md:px-8 py-24">
+            
+            <!-- 引言 -->
+            <p class="text-lg md:text-xl leading-loose mb-10 text-justify text-gray-800 font-normal">
+                1992年《中華民國刑法》第100條正式廢除，白恐時期也隨之結束，自此臺灣開始踏入民主社會，而在這前後出生的世代則被稱為<span class="bg-[#9B2C2C]/10 px-1 py-0.5 rounded text-[#9B2C2C] font-semibold">「民主富二代」</span>或是<span class="bg-[#9B2C2C]/10 px-1 py-0.5 rounded text-[#9B2C2C] font-semibold">「民主原住民」</span>。
+            </p>
+
+            <!-- 學生引言區塊 -->
+            <div class="border-l-4 border-[#9B2C2C] pl-6 my-12 bg-gradient-to-r from-gray-100 to-transparent py-4 pr-4 rounded-r-lg">
+                <p class="serif-title text-xl md:text-2xl font-medium leading-relaxed italic text-gray-800">
+                    「民主於我而言好像是很稀鬆平常的事。」
+                </p>
+                <p class="text-xs md:text-sm mt-4 text-gray-500 font-medium">— 國立政治大學財政學系學生 陳彥蓉</p>
+            </div>
+
+            <!-- 本文段落 1 -->
+            <p class="text-base md:text-lg leading-loose mb-12 text-justify text-gray-600">
+                他認為與他一樣年齡介於18到29歲的青年，普遍很難想像沒有民主會是什麼樣子。法律白話文運動成員珞亦以自身經驗比喻，小時候因為家長不曾讓他受餓，所以不認為吃飯有什麼重要性，甚至產生反感，他認為青年與民主的關係也是如此，青年享有民主的成果，卻不一定理解民主是從威權中爭取而來的，<strong class="text-gray-900 border-b-2 border-[#9B2C2C]/30 pb-0.5">「當大家沒有被建立『什麼是威權』的認知，就不知道什麼是民主。」</strong>
+            </p>
+
+            <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-16"></div>
+
+            <h3 class="serif-title text-2xl md:text-3xl font-bold mb-8 text-[#1A202C] tracking-wide flex items-center">
+                <span class="w-2.5 h-6 bg-[#9B2C2C] inline-block mr-3 rounded-sm"></span>
+                威權的糖衣與陷阱
+            </h3>
+            
+            <p class="text-base md:text-lg leading-loose mb-8 text-justify text-gray-600">
+                「民主體制的價值常常是被低估的；反之，威權的價值常常被莫名其妙的高估。」國立臺灣大學政治學系教授黃長玲表示，時常有人稱讚威權國家的建設如高樓大廈、交通設施等建造得快速又華麗，看起來比臺灣進步許多，然而這樣的論述卻忽略威權體制對尊嚴自由及生命財產的威脅與侵害。
+            </p>
+
+            <!-- 教授觀點卡片 -->
+            <div class="bg-white p-8 rounded-2xl my-12 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+                <div class="flex items-start space-x-4">
+                    <div class="bg-[#9B2C2C]/10 text-[#9B2C2C] p-3 rounded-xl mt-1">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-base md:text-lg leading-relaxed text-gray-800 font-medium mb-3">
+                            「納粹德國的統治者不在乎人民的自由，但是他在乎人民接不接受他，所以就餵給人民名為社會福利的毒藥。」
+                        </p>
+                        <p class="text-xs text-gray-500 font-medium">— 國立政治大學法律學系副教授 林佳和</p>
+                    </div>
+                </div>
+                <p class="text-sm md:text-base text-gray-600 mt-6 leading-relaxed bg-gray-50 p-4 rounded-xl border border-gray-100 text-justify">
+                    林佳和以納粹為例，說明威權統治者往往會用社會福利或經濟利益來餵食人民，當人民只在乎利益與好處，無視正當程序的重要性，就很容易落入威權體制的陷阱。
+                </p>
+            </div>
+
+            <p class="text-base md:text-lg leading-loose mb-12 text-justify text-gray-600">
+                白恐之所以仍與青年相關，不只因為它是臺灣史重要的一部份，更因為威權留下的影響仍可能延續到當代社會。<strong>「從小到大父母都告訴我，絕對不要碰政治、不要關心公共事務，關心自己就好。」</strong>林佳和回憶起父母對政治的畏懼，是威權滲入日常生活後留下的陰影。
+            </p>
+
+            <p class="text-base md:text-lg leading-loose mb-12 text-justify text-gray-600">
+                黃長玲以錢幣為例，現今威權統治者的肖像仍出現在新臺幣兩百元紙鈔和十元硬幣，民眾卻不一定會意識到威權的遺留。林佳和認為青年理解這段歷史的意義，不在於記憶苦難故事，而是為了能<strong>辨認出至今仍可能存在的威權痕跡。</strong>
+            </p>
+
+            <div class="my-16 bg-[#1A202C] text-white p-8 md:p-12 rounded-3xl shadow-xl relative overflow-hidden">
+                <div class="absolute right-0 top-0 w-32 h-32 bg-[#9B2C2C]/10 rounded-full blur-3xl"></div>
+                <h4 class="serif-title text-xl md:text-2xl font-bold mb-6 text-[#FAFAFA] border-b border-gray-800 pb-4">
+                    記者觀察：青年問卷調查
+                </h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <p class="text-sm md:text-base text-gray-300 leading-relaxed text-justify mb-4">
+                            根據本報記者所做〈青年對白恐時期之認知問卷調查〉，有超過半數的青年並不關心白恐議題。雖然教科書中有相關內容，但彷彿 these 故事只是停留在考試卷上的題目，無法深入青年的心裡。
+                        </p>
+                    </div>
+                    <!-- 圓餅圖模擬 -->
+                    <div class="flex flex-col items-center justify-center bg-gray-900/50 py-6 rounded-2xl border border-gray-800">
+                        <div class="relative w-36 h-36 rounded-full flex items-center justify-center mb-4" style="background: conic-gradient(#9B2C2C 0% 55%, #4B5563 55% 100%);">
+                            <div class="absolute inset-4 bg-[#1A202C] rounded-full flex flex-col items-center justify-center">
+                                <span class="text-2xl md:text-3xl font-black text-[#9B2C2C]">55%</span>
+                                <span class="text-[10px] text-gray-400 mt-1">不關心或無感</span>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gray-400">超過半數青年表示無心理連結</span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-base md:text-lg leading-loose mb-8 text-justify text-gray-600">
+                黃長玲提醒，比起只告訴青年他們應該關心，不如先理解他們為什麼會覺得與自己無關，除了未曾經歷過威權時代、低估民主體制的價值，以及政治冷漠等，教育體制下的扁平化與缺乏在地連結也是需要關注的原因。
+            </p>
+            
+            <p class="text-base md:text-lg leading-loose mb-16 text-justify text-gray-600">
+                林佳和認為相較 <strong>X世代 <sup class="text-xs text-[#9B2C2C] font-semibold cursor-help bg-[#9B2C2C]/10 px-1.5 py-0.5 rounded" title="X世代：泛指1960年代中期至1980年代出生的人">註一</sup></strong> 前出生的人，現代青年其實有更好的民主觀念，要如何讓青年感受到沉重歷史與自身的連結，成為最大挑戰。
+            </p>
+
+            <div class="border-t border-gray-200 pt-6 mb-16">
+                <p class="text-xs text-gray-500 leading-relaxed">
+                    <strong>註一：</strong>X世代泛指1960年代中期至1980年代出生的人。
+                </p>
+            </div>
+
+            <!-- 通往問卷的醒目按鈕 -->
+            <div class="text-center pt-4">
+                <button id="btn-go-to-quiz" class="inline-flex items-center px-8 py-5 bg-[#9B2C2C] hover:bg-red-900 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                    <span>你對白恐的認知落在哪？做個 1 分鐘測驗</span>
+                    <svg class="w-5 h-5 ml-3 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="page-4-quiz-container" class="section-view hidden min-h-screen bg-gray-100 flex-col justify-center items-center py-16 px-4 z-10">
+        
+        <!-- 測驗說明首頁 -->
+        <div id="quiz-intro-box" class="max-w-2xl w-full bg-white rounded-3xl p-8 md:p-12 shadow-xl text-center border border-gray-200/50">
+            <span class="inline-block px-4 py-1.5 bg-[#9B2C2C]/10 text-[#9B2C2C] text-xs font-bold tracking-widest rounded-full uppercase mb-6">互動問卷檢測</span>
+            <h2 class="serif-title text-3xl md:text-4xl font-extrabold text-gray-800 mb-6">在同儕中，你的歷史認知落在哪裡？</h2>
+            <p class="text-gray-600 text-base md:text-lg mb-10 leading-relaxed text-justify md:text-center">
+                我們收集了眾多臺灣青年對白色恐怖認知之問卷回覆。<br>花費一分鐘回答以下 3 個核心問題，我們將精準計算出你的觀點在當代青年樣本中所佔的百分比。
+            </p>
+            
+            <button id="btn-start-quiz" class="w-full py-4 bg-[#1A202C] hover:bg-[#9B2C2C] text-white font-bold rounded-xl transition-colors duration-300 shadow-md">
+                開始線上檢測
+            </button>
+        </div>
+
+        <!-- 實體測驗問題盒 -->
+        <div id="quiz-question-box" class="hidden max-w-2xl w-full bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-200/50 relative">
+            <!-- 進度條 -->
+            <div class="w-full bg-gray-100 h-2 rounded-full mb-8 overflow-hidden">
+                <div id="quiz-progress-bar" class="bg-[#9B2C2C] h-full transition-all duration-300" style="width: 33.3%;"></div>
+            </div>
+
+            <!-- 問題標題 -->
+            <span id="quiz-question-number" class="text-xs text-[#9B2C2C] font-bold tracking-widest uppercase block mb-2">QUESTION 1 / 3</span>
+            <h3 id="quiz-question-title" class="serif-title text-xl md:text-2xl font-bold text-gray-800 mb-8 leading-snug">
+                <!-- 問題題目 -->
+            </h3>
+
+            <!-- 選項按鈕容器 -->
+            <div id="quiz-options-container" class="space-y-4">
+                <!-- 由 JS 動態生成按鈕 -->
+            </div>
+        </div>
+
+        <!-- 測驗結果呈現 -->
+        <div id="quiz-result-box" class="hidden max-w-2xl w-full bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-200/50 text-center">
+            <span class="inline-block px-4 py-1.5 bg-[#9B2C2C]/10 text-[#9B2C2C] text-xs font-bold tracking-widest rounded-full uppercase mb-6">分析報告</span>
+            <h3 class="serif-title text-2xl md:text-3xl font-bold text-gray-800 mb-6">診斷完成！你的認知分佈</h3>
+            
+            <div class="bg-gray-50 py-8 px-6 rounded-2xl border border-gray-100 my-8">
+                <!-- 動態百分比分析 -->
+                <p id="quiz-result-percentage" class="text-lg text-gray-700 leading-relaxed mb-4 text-justify">
+                    <!-- 填寫評語 -->
+                </p>
+                <div class="flex items-center justify-center space-x-2 my-6">
+                    <span class="text-xs text-gray-400">同儕相同觀點比例</span>
+                    <span id="quiz-result-stat-num" class="serif-title text-4xl md:text-5xl font-black text-[#9B2C2C]">0%</span>
+                </div>
+            </div>
+
+            <p class="text-xs md:text-sm text-gray-400 mb-8">
+                這項結果說明了當代青年與歷史事實之間，依舊存在著厚重的資訊不對等與距離感。
+            </p>
+
+            <button id="btn-proceed-to-edu" class="w-full py-4 bg-[#9B2C2C] hover:bg-red-900 text-white font-bold rounded-xl transition-all duration-300 shadow-md">
+                繼續閱讀：翻開課本的真相
+            </button>
+        </div>
+    </section>
+
+    <section id="page-5-education" class="section-view hidden flex-col bg-[#FAFAFA] min-h-screen pb-32">
+        <div class="max-w-3xl mx-auto px-6 md:px-8 py-24">
+            
+            <div class="mb-16">
+                <span class="text-[#9B2C2C] font-semibold tracking-[0.3em] text-xs uppercase block mb-3">Part II</span>
+                <h2 class="serif-title text-3xl md:text-5xl font-bold text-gray-800 leading-tight">
+                    課本裡的幾行字：<br>教育如何讓歷史變扁平？
+                </h2>
+                <div class="w-12 h-1 bg-[#9B2C2C] mt-6"></div>
+            </div>
+
+            <!-- 教育工作者引言 -->
+            <div class="border-l-4 border-gray-300 pl-6 py-2 mb-12">
+                <p class="serif-title text-lg md:text-xl text-gray-700 leading-relaxed italic mb-3">
+                    「我記得國小社會課本就有提到白色恐怖，但就是用簡單一句帶過。」
+                </p>
+                <p class="text-xs text-gray-500 font-medium">— 探霧者工作隊成員 黃新惠（聚焦南投在地白恐歷史、由國立暨南國際大學歷史學系學生組成）</p>
+            </div>
+
+            <p class="text-base md:text-lg leading-loose mb-8 text-justify text-gray-600">
+                直至高中他對白恐的理解仍停留在「戒嚴、解嚴」等片段印象。〈青年問卷調查〉也呈現類似結果，不願主動接觸白恐或轉型正義相關內容者，多數認為這段歷史與自身過於遙遠，甚至無關。而對許多青年而言，學校教育往往是認識白恐議題的第一個入口。當距離感存在，國民義務教育又是主要資訊來源時，白恐是如何在課堂中被講述與呈現？
+            </p>
+
+            <p class="text-base md:text-lg leading-loose mb-8 text-justify text-gray-600">
+                國立臺南女子高級中學公民科教師兼國教署人權教育資源中心執行秘書楊素芳說明，白恐與轉型正義在高中課綱並非只出現在單一科目。普通型高中會以歷史、公民和國文等科目進行教學，技職學校則幾乎沒有任何直接相關的課程。對此，林佳和認為教育絕對是推動社會理解白恐議題的重要途徑，但要透過教育真正建立對歷史的認識與反思，現實上仍受到制度與教學環境因素影響。
+            </p>
+
+            <!-- 深度解析卡片 -->
+            <div class="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-gray-200/60 my-12 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2.5 h-full bg-[#9B2C2C]"></div>
+                <p class="text-base md:text-lg text-gray-700 leading-loose text-justify relative z-10 mb-6 font-medium">
+                    楊素芳也指出，白恐相關議題的教學往往比一般課程需要投入更多準備時間。除了必須處理歷史背景、人權概念與不同觀點外，教師也需面對課程時數有限、議題具爭議性等現實條件。
+                </p>
+                <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                    <p class="serif-title text-lg text-gray-900 font-bold mb-2">「（白恐課程）大部分都不是很重要的考試範圍，它甚至又有一點沉重。」</p>
+                    <p class="text-sm text-gray-500">
+                        他表示，當學生缺乏足夠學習動機，而社會對相關議題的討論和溝通又不足時，教師在教學現場必須更加謹慎。
+                    </p>
+                </div>
+            </div>
+
+            <p class="text-base md:text-lg leading-loose mb-8 text-justify text-gray-600">
+                這樣的教學限制，常導致白恐被簡略為某個年份或事件名稱，缺乏背後的人物經歷與脈絡，使青年對歷史產生距離感。例如在課本中會出現的「雷震事件」，學生通常只記得發生的年份或《自由中國》等關鍵字，卻很少有機會了解其中的人物經歷。
+            </p>
+            
+            <p class="text-base md:text-lg leading-loose mb-12 text-justify text-gray-600">
+                「高中時看到課本就想說怎麼只有一頁！」人權之路-青年體驗營參與者蘇悅說他觀察白恐雖然常被提及，但多數人對它的理解與說明僅停留在表面。楊素芳進一步説：「整個大環境其實沒有給予教學面很好的支持或友善的空間。」現今社會對白恐議題仍存在不同意見，他認為教育者必須先願意正視威權時期所造成的傷害與爭議，不可將其草草帶過，才能妥善傳達歷史記憶。
+            </p>
+            
+            <!-- 教育單元收尾 -->
+            <div class="text-center text-gray-400 mt-24 pt-8 border-t border-gray-200/60 text-sm">
+                <p class="tracking-widest font-light mb-2">— 專題待續 (後續依照 Figma Wireframe 持續開發) —</p>
+                <p class="text-xs text-gray-300">本階段設計至：國民義務教育是青年接觸到白恐的第一步</p>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- 網頁元素選擇 ---
+            const pages = {
+                1: document.getElementById('page-1-landing'),
+                2: document.getElementById('page-2-story'),
+                3: document.getElementById('page-3-article-1'),
+                4: document.getElementById('page-4-quiz-container'),
+                5: document.getElementById('page-5-education')
+            };
+            
+            const btnEnterStory = document.getElementById('btn-enter-story');
+            const storyDialogBox = document.getElementById('story-dialog-box');
+            const storyText = document.getElementById('story-text');
+            const storyProgressHint = document.getElementById('story-progress-hint');
+            const btnGoToQuiz = document.getElementById('btn-go-to-quiz');
+            
+            const quizIntroBox = document.getElementById('quiz-intro-box');
+            const quizQuestionBox = document.getElementById('quiz-question-box');
+            const quizResultBox = document.getElementById('quiz-result-box');
+            const btnStartQuiz = document.getElementById('btn-start-quiz');
+            const btnProceedToEdu = document.getElementById('btn-proceed-to-edu');
+
+            // --- 頁面顯示與切換機制 ---
+            function switchView(targetPageNum) {
+                // 1. 隱藏所有的區塊
+                Object.keys(pages).forEach(num => {
+                    const page = pages[num];
+                    page.classList.add('hidden');
+                    page.classList.remove('flex', 'fade-in-active');
+                });
+
+                // 2. 顯示特定的目標區塊
+                const targetPage = pages[targetPageNum];
+                targetPage.classList.remove('hidden');
+
+                // 3. 根據頁面特性套用排版與初始化
+                if (targetPageNum === 3) {
+                    targetPage.classList.add('flex');
+                    window.scrollTo({ top: 0, behavior: 'instant' });
+                    startDaysCalculation(); // 啟動時間計數器
+                } else if (targetPageNum === 4 || targetPageNum === 1) {
+                    targetPage.classList.add('flex');
+                } else if (targetPageNum === 5) {
+                    targetPage.classList.add('flex');
+                    window.scrollTo({ top: 0, behavior: 'instant' });
+                } else {
+                    targetPage.classList.add('fade-in-active');
+                }
+            }
+
+            // --- 頁面 1 到 頁面 2 ---
+            btnEnterStory.addEventListener('click', () => {
+                switchView(2);
+                initStoryScript();
+            });
+
+            // --- 頁面 2：動畫與故事腳本 ---
+            // 腳本對白設定，完美契合「融媒體動畫圖片_2.png」的畫面
+            const storyLineups = [
+                {
+                    speaker: "時代的縮影",
+                    content: "巷弄的陰暗處，一場沒有預警的搜捕打破了日常。兩名面無表情、代表國家威權的憲警，粗暴地架住一名驚慌失措的年輕人。牆上斑駁的『反共抗俄』標語，冷冷地凝視著這一切。"
+                },
+                {
+                    speaker: "被逮捕者的獨白",
+                    content: "「我究竟做錯了什麼？」他只是個普通的青年，或許讀了幾本不該讀的書，或許在私底下說了幾句不該說的話。他惶恐地呼喊與掙扎，卻只換來憲警冰冷的手銬。在那個年代，一個人的消失，往往只需要幾秒鐘……"
+                }
+            ];
+
+            let currentScriptIdx = 0;
+            let textTypingInProgress = false;
+            let currentTypewriterTimeout = null; // 用來儲存 setTimeout 的 ID，以便隨時中斷
+            let typeWriterResolve = null; // 用來手動 resolve Promise
+            
+            // 打字機特效實現 (加入可中斷/快轉機制)
+            function runTypewriter(text, htmlTarget, speed = 40) {
+                return new Promise(resolve => {
+                    textTypingInProgress = true;
+                    typeWriterResolve = resolve; // 暴露 resolve 函數
+                    htmlTarget.innerHTML = '';
+                    let charIndex = 0;
+                    
+                    function appendChar() {
+                        if (!textTypingInProgress) return; // 如果被中斷，直接退出迴圈
+
+                        if (charIndex < text.length) {
+                            htmlTarget.innerHTML += text.charAt(charIndex);
+                            charIndex++;
+                            currentTypewriterTimeout = setTimeout(appendChar, speed);
+                        } else {
+                            finishTyping(resolve);
+                        }
+                    }
+                    appendChar();
+                });
+            }
+
+            // 完成/快轉打字機的方法
+            function finishTyping(resolveFunc) {
+                textTypingInProgress = false;
+                clearTimeout(currentTypewriterTimeout);
+                if (resolveFunc) resolveFunc();
+            }
+
+            async function initStoryScript() {
+                currentScriptIdx = 0;
+                storyProgressHint.innerHTML = "點擊滑鼠繼續";
+                await runTypewriter(storyLineups[currentScriptIdx].content, storyText);
+            }
+
+            // 調整 1：將原本綁定在 storyDialogBox 的事件改綁到整個 page-2-story 背景上，點擊全螢幕任意處皆可快轉/前進
+            pages[2].addEventListener('click', async () => {
+                if (textTypingInProgress) {
+                    // 如果正在打字，中斷打字機，直接顯示全部文字
+                    finishTyping(typeWriterResolve);
+                    storyText.innerHTML = storyLineups[currentScriptIdx].content;
+                } else {
+                    // 如果打字已經完成，則推進到下一句
+                    currentScriptIdx++;
+                    if (currentScriptIdx < storyLineups.length) {
+                        if (currentScriptIdx === storyLineups.length - 1) {
+                            storyProgressHint.innerHTML = "點擊進入歷史時空";
+                        }
+                        await runTypewriter(storyLineups[currentScriptIdx].content, storyText);
+                    } else {
+                        // 調整 2：故事結束，啟動「全螢幕閃白效果」並平滑切換轉入時間軸頁面
+                        triggerFlashTransition();
+                    }
+                }
+            });
+
+            // 調整 3：新增閃白過渡邏輯
+            function triggerFlashTransition() {
+                const flashOverlay = document.getElementById('flash-overlay');
+                flashOverlay.classList.remove('hidden');
+                flashOverlay.classList.add('flash-white');
+
+                // 在閃白最高峰（約600ms）時切換下方的 HTML 視圖
+                setTimeout(() => {
+                    switchView(3);
+                }, 600);
+
+                // 動畫結束後（1500ms）重設閃白遮罩
+                setTimeout(() => {
+                    flashOverlay.classList.add('hidden');
+                    flashOverlay.classList.remove('flash-white');
+                }, 1500);
+            }
+
+            // --- 頁面 3：時間計算器動態數值 ---
+            function getDaysBetween(startDayStr) {
+                const start = new Date(startDayStr);
+                const today = new Date();
+                const totalMs = Math.abs(today - start);
+                return Math.ceil(totalMs / (1000 * 60 * 60 * 24));
+            }
+
+            let countingAnimationTriggered = false;
+            function startDaysCalculation() {
+                if (countingAnimationTriggered) return; // 防止重複執行
+                
+                const dayValueElement = document.getElementById('days-counter');
+                const calculatedDays = getDaysBetween('1992-11-07');
+                
+                // 數字跳動動畫設定
+                let startVal = 0;
+                const endVal = calculatedDays;
+                const duration = 2000; // 2秒
+                let startTime = null;
+
+                function step(timestamp) {
+                    if (!startTime) startTime = timestamp;
+                    const elapsed = timestamp - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    // 指數緩和動畫讓數字減速更有美感
+                    const easeOutExpo = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+                    const currentNum = Math.floor(easeOutExpo * (endVal - startVal) + startVal);
+                    
+                    dayValueElement.innerHTML = currentNum.toLocaleString();
+                    
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                }
+                window.requestAnimationFrame(step);
+                countingAnimationTriggered = true;
+            }
+
+            // 輔助滾動方法
+            window.scrollToArticle = function() {
+                const target = document.getElementById('article-body-start');
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // --- 頁面 3 轉 頁面 4 (前往測驗) ---
+            btnGoToQuiz.addEventListener('click', () => {
+                switchView(4);
+            });
+
+            // --- 頁面 4：三題實體測驗與結果呈現 ---
+            const quizData = [
+                {
+                    title: "一、你覺得「白色恐怖、戒嚴」等歷史名詞，與你當前的日常生活的關係是？",
+                    options: [
+                        { text: "非常遙遠，完全沒有感受到關聯性", stat: 55, response: "你跟大多數青年相同。這段歷史在教科書中多是考試題目，極易使人無感。" },
+                        { text: "有些距離，但在日常生活與歷史建物中偶尔會察覺", stat: 30, response: "你屬於具備敏銳覺察力的 30% 青年。這段歷史在城市的角落仍留下許多微小的指紋。" },
+                        { text: "關係緊密，深深覺得當下的民主和生活都建立在此歷史之上", stat: 15, response: "你是僅占 15% 的高敏銳度青年。你明白今日理所當然的自由，都是前人從威權夾縫中爭取的。" }
+                    ]
+                },
+                {
+                    title: "二、你在日常生活中，是否能輕易辨識出殘留的「威權痕跡」？（例如硬幣肖像、街道命名等）",
+                    options: [
+                        { text: "幾乎沒注意過，也覺得這些符號無傷大雅", stat: 60, response: "你與 60% 的同儕一樣，威權符號已經成功披上「日常生活」的糖衣，令人難以察覺。" },
+                        { text: "有時會意識到，但不會特別與白色恐怖或壓迫產生連結", stat: 28, response: "你落在中間的 28% 區間。我們熟悉這些符號，卻很少追問它在轉型正義中的正當性。" },
+                        { text: "能清晰辨認，並認為這是威權遺產在民主社會的矛盾留存", stat: 12, response: "你屬於稀有的 12%。你擁有『辨認出威權痕跡』的能力，這正是轉型正義與當代青年最重要的聯結點。" }
+                    ]
+                },
+                {
+                    title: "三、若是你發現身邊的同儕對此歷史感到完全冷漠、甚至排斥討論時，你的態度是？",
+                    options: [
+                        { text: "完全理解，畢竟沉重的歷史無法對日常有實質利益幫助", stat: 50, response: "你的看法跟 50% 青年一致。確實，在威權的和平糖衣下，冷漠常常被視為維持現狀最省力的選擇。" },
+                        { text: "感到可惜，但無能為力，因為缺乏有效的溝通管道", stat: 35, response: "你道出了 35% 青年的無奈。當社會溝通環境不足，歷史往往只剩冰冷的名字。" },
+                        { text: "希望可以找到與這代生活連結的切入點，重新述說故事", stat: 15, response: "你屬於極具實踐精神的 15% 青年。你正是我們正在尋找、致力於尋找『屬於這代理解方式』的夥伴。" }
+                    ]
+                }
+            ];
+
+            let activeQuestionIdx = 0;
+            let quizAnswersSelected = [];
+
+            btnStartQuiz.addEventListener('click', () => {
+                quizIntroBox.classList.add('hidden');
+                quizQuestionBox.classList.remove('hidden');
+                loadQuizQuestion(0);
+            });
+
+            function loadQuizQuestion(idx) {
+                const progressPercent = ((idx + 1) / quizData.length) * 100;
+                document.getElementById('quiz-progress-bar').style.width = `${progressPercent}%`;
+                document.getElementById('quiz-question-number').innerHTML = `QUESTION ${idx + 1} / ${quizData.length}`;
+                
+                const currentQ = quizData[idx];
+                document.getElementById('quiz-question-title').innerHTML = currentQ.title;
+
+                const optionsContainer = document.getElementById('quiz-options-container');
+                optionsContainer.innerHTML = '';
+
+                currentQ.options.forEach((opt, oIdx) => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full text-left p-5 bg-gray-50 hover:bg-[#9B2C2C]/5 hover:border-[#9B2C2C] border border-gray-200 rounded-xl transition-all duration-200 font-medium text-gray-700 text-sm md:text-base flex justify-between items-center group";
+                    btn.innerHTML = `
+                        <span class="pr-4 leading-relaxed">${opt.text}</span>
+                        <svg class="w-5 h-5 text-gray-300 group-hover:text-[#9B2C2C] shrink-0 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    `;
+                    btn.addEventListener('click', () => handleOptionSelection(opt));
+                    optionsContainer.appendChild(btn);
+                });
+            }
+
+            function handleOptionSelection(option) {
+                quizAnswersSelected.push(option);
+                
+                activeQuestionIdx++;
+                if (activeQuestionIdx < quizData.length) {
+                    loadQuizQuestion(activeQuestionIdx);
+                } else {
+                    renderQuizResults();
+                }
+            }
+
+            function renderQuizResults() {
+                quizQuestionBox.classList.add('hidden');
+                quizResultBox.classList.remove('hidden');
+
+                // 計算加權與生成分析報告
+                let averageSamplePercentage = 0;
+                let summaryAnalysis = "";
+
+                quizAnswersSelected.forEach((ans, index) => {
+                    averageSamplePercentage += ans.stat;
+                });
+                
+                // 平均相同回答率
+                const finalPercentage = Math.round(averageSamplePercentage / quizAnswersSelected.length);
+                
+                if (finalPercentage >= 45) {
+                    summaryAnalysis = "你的分析結果顯示：你與大多數同儕青年擁有相似的觀點。你切實感受到了歷史在現代教育下的「扁平化」與無感。正因為如此，我們如何透過更好的敘事與在地連結，敲碎這層距離感，是本篇報導的核心焦點。";
+                } else {
+                    summaryAnalysis = "你的分析結果顯示：你一位具有高度歷史覺察力的青年！在多數人都容易忽略威權痕跡的當代，你仍能對環境與制度保持警醒。讓我們一起跟隨下方的教育探討，看看歷史是如何被简化，以及如何建立嶄新的理解管道。";
+                }
+
+                document.getElementById('quiz-result-percentage').innerHTML = summaryAnalysis;
+
+                // 數值跳動動畫
+                let currentVal = 0;
+                const targetVal = finalPercentage;
+                const statElement = document.getElementById('quiz-result-stat-num');
+                const animDuration = 1500;
+                let startTime = null;
+
+                function animateStat(timestamp) {
+                    if (!startTime) startTime = timestamp;
+                    const elapsed = timestamp - startTime;
+                    const progress = Math.min(elapsed / animDuration, 1);
+                    const currentNum = Math.floor(progress * targetVal);
+                    
+                    statElement.innerHTML = `${currentNum}%`;
+                    
+                    if (progress < 1) {
+                        window.requestAnimationFrame(animateStat);
+                    }
+                }
+                window.requestAnimationFrame(animateStat);
+            }
+
+            // --- 頁面 4 轉 頁面 5 ---
+            btnProceedToEdu.addEventListener('click', () => {
+                switchView(5);
+            });
+        });
+    </script>
+</body>
+</html>
