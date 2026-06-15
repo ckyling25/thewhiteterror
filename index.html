@@ -107,7 +107,7 @@
     </section>
 
     <!-- 故事對話情境 -->
-    <section id="story-section" class="section-view hidden fixed inset-0 w-full h-full bg-black z-20 flex flex-col justify-end cursor-pointer select-none">
+    <section id="page-2-story" class="section-view hidden fixed inset-0 w-full h-full bg-black z-20 flex flex-col justify-end cursor-pointer select-none">
         <!-- 背景圖片 -->
         <div class="absolute inset-0 z-0 w-full h-full flex items-center justify-center overflow-hidden">
             <img src="融媒體動畫圖片.png" alt="白色恐怖時期青年被捕場景" class="w-full h-full object-cover opacity-85 transition-opacity duration-1000" onerror="this.src='https://placehold.co/1920x1080/1a202c/ffffff?text=圖片載入中...請確保「融媒體動畫圖片.png」位於同一目錄下'">
@@ -847,14 +847,19 @@
             const btnStartQuiz = document.getElementById('btn-start-quiz');
             const btnProceedToEdu = document.getElementById('btn-proceed-to-edu');
 
-            // --- 新增：首頁滑鼠與手機滾動偵測，平滑銜接故事頁面 ---
+            // --- 新增：首頁滑鼠與手機滾動偵測 (已加入防連點保護) ---
+            let isTransitioning = false; // 建立一個鎖定變數
+            
             // 1. 監聽電腦版滑鼠滾輪
             window.addEventListener('wheel', function(e) {
                 const page1 = document.getElementById('page-1-landing');
-                // 如果目前停留在第一頁，並且滑鼠「向下」滾動 (e.deltaY > 0)
-                if (!page1.classList.contains('hidden') && e.deltaY > 0) {
-                    // 自動觸發按鈕點擊，執行你原本寫好的 switchView 與故事邏輯
+                // 如果目前在第一頁、向下滑動、且沒有在過場中
+                if (!page1.classList.contains('hidden') && e.deltaY > 0 && !isTransitioning) {
+                    isTransitioning = true; // 鎖定
                     document.getElementById('btn-enter-story').click();
+                    
+                    // 2秒後解除鎖定，避免使用者立刻滾動又觸發
+                    setTimeout(() => { isTransitioning = false; }, 2000); 
                 }
             });
             
@@ -867,9 +872,13 @@
             window.addEventListener('touchend', function(e) {
                 const touchEndY = e.changedTouches[0].clientY;
                 const page1 = document.getElementById('page-1-landing');
-                // 如果目前在第一頁，且手指「向上」滑動 (即畫面往下滾，滑動距離 > 50px 防止誤觸)
-                if (!page1.classList.contains('hidden') && (touchStartY - touchEndY > 50)) {
+                
+                // 手指向上滑動 (距離大於 50)
+                if (!page1.classList.contains('hidden') && (touchStartY - touchEndY > 50) && !isTransitioning) {
+                    isTransitioning = true;
                     document.getElementById('btn-enter-story').click();
+                    
+                    setTimeout(() => { isTransitioning = false; }, 2000);
                 }
             }, { passive: true });
 
