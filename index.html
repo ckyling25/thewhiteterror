@@ -97,12 +97,12 @@
 
         <!-- 進入故事按鈕 -->
         <div class="z-10 mb-12">
-            <a href="#story-section" class="mt-8 flex flex-col items-center justify-center animate-bounce text-stone-400 hover:text-stone-100 transition-colors cursor-pointer group">
-                <span class="text-xs md:text-sm tracking-widest mb-2 font-light opacity-85 group-hover:opacity-100">向下滾動進入故事</span>
-                <svg class="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 13l-7 7m0 0l-7-7m7 7V3"></path>
+            <div id="btn-enter-story" class="mt-8 inline-flex flex-col items-center text-gray-500 hover:text-[#9B2C2C] transition-colors duration-300 animate-bounce cursor-pointer z-20">
+                <span class="mb-2 text-sm md:text-base font-medium tracking-widest serif-title">向下滾動</span>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
                 </svg>
-            </a>
+            </div>
         </div>
     </section>
 
@@ -846,6 +846,32 @@
             const quizResultBox = document.getElementById('quiz-result-box');
             const btnStartQuiz = document.getElementById('btn-start-quiz');
             const btnProceedToEdu = document.getElementById('btn-proceed-to-edu');
+
+            // --- 新增：首頁滑鼠與手機滾動偵測，平滑銜接故事頁面 ---
+            // 1. 監聽電腦版滑鼠滾輪
+            window.addEventListener('wheel', function(e) {
+                const page1 = document.getElementById('page-1-landing');
+                // 如果目前停留在第一頁，並且滑鼠「向下」滾動 (e.deltaY > 0)
+                if (!page1.classList.contains('hidden') && e.deltaY > 0) {
+                    // 自動觸發按鈕點擊，執行你原本寫好的 switchView 與故事邏輯
+                    document.getElementById('btn-enter-story').click();
+                }
+            });
+            
+            // 2. 監聽手機版螢幕觸控滑動
+            let touchStartY = 0;
+            window.addEventListener('touchstart', function(e) {
+                touchStartY = e.touches[0].clientY;
+            }, { passive: true });
+            
+            window.addEventListener('touchend', function(e) {
+                const touchEndY = e.changedTouches[0].clientY;
+                const page1 = document.getElementById('page-1-landing');
+                // 如果目前在第一頁，且手指「向上」滑動 (即畫面往下滾，滑動距離 > 50px 防止誤觸)
+                if (!page1.classList.contains('hidden') && (touchStartY - touchEndY > 50)) {
+                    document.getElementById('btn-enter-story').click();
+                }
+            }, { passive: true });
 
             // --- 頁面顯示與切換機制 (容錯自適應：支援 5 與 '5-education' 同步映射) ---
             window.switchView = function(targetPageNum, scrollToAnchor = false) {
