@@ -97,19 +97,17 @@
 
         <!-- 進入故事按鈕 -->
         <div class="z-10 mb-12">
-            <button id="btn-enter-story" class="group relative px-10 py-5 bg-[#1A202C] hover:bg-[#9B2C2C] text-white rounded-lg overflow-hidden shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                <span class="relative flex items-center justify-center text-sm tracking-[0.2em] font-medium">
-                    點擊進入故事
-                    <svg class="w-5 h-5 ml-3 transform group-hover:translate-x-1.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                    </svg>
-                </span>
-            </button>
+            <a href="#story-section" class="mt-8 flex flex-col items-center justify-center animate-bounce text-stone-400 hover:text-stone-100 transition-colors cursor-pointer group">
+                <span class="text-xs md:text-sm tracking-widest mb-2 font-light opacity-85 group-hover:opacity-100">向下滾動進入故事</span>
+                <svg class="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 13l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </a>
         </div>
     </section>
 
     <!-- 故事對話情境 -->
-    <section id="page-2-story" class="section-view hidden fixed inset-0 w-full h-full bg-black z-20 flex flex-col justify-end cursor-pointer select-none">
+    <section id="story-section" class="section-view hidden fixed inset-0 w-full h-full bg-black z-20 flex flex-col justify-end cursor-pointer select-none">
         <!-- 背景圖片 -->
         <div class="absolute inset-0 z-0 w-full h-full flex items-center justify-center overflow-hidden">
             <img src="融媒體動畫圖片.png" alt="白色恐怖時期青年被捕場景" class="w-full h-full object-cover opacity-85 transition-opacity duration-1000" onerror="this.src='https://placehold.co/1920x1080/1a202c/ffffff?text=圖片載入中...請確保「融媒體動畫圖片.png」位於同一目錄下'">
