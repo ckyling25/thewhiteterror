@@ -162,12 +162,21 @@
             background: url('quiz-arrow.webp') center / contain no-repeat;
             opacity: 0;
             transform: translateX(-50%);
-            animation: quizArrowIn 0.7s ease-out 0.12s forwards;
+            clip-path: inset(0 0 100% 0);
+            animation: quizArrowIn 0.75s ease-in-out 0.12s forwards;
         }
 
         @keyframes quizArrowIn {
+            0% {
+                opacity: 0;
+                clip-path: inset(0 0 100% 0);
+            }
+            12% {
+                opacity: 1;
+            }
             to {
                 opacity: 1;
+                clip-path: inset(0 0 0 0);
             }
         }
 
