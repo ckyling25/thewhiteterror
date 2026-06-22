@@ -127,7 +127,7 @@
 
         .quiz-option {
             position: relative;
-            overflow: hidden;
+            overflow: visible;
             isolation: isolate;
             min-height: 76px;
             border: 1px solid rgba(67, 55, 42, 0.38);
@@ -149,6 +149,7 @@
         }
 
         .quiz-option.is-selected {
+            z-index: 10;
             border-color: #77716a;
             background: #b9b4ad;
             color: #29251f;
