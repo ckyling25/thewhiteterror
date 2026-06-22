@@ -146,56 +146,14 @@
             outline: none;
         }
 
-        .quiz-option.is-correct {
-            border-color: rgba(54, 115, 69, 0.62);
-            color: #244b2d;
-            background:
-                linear-gradient(rgba(116, 174, 128, 0.3), rgba(116, 174, 128, 0.3)),
-                #fff;
-            box-shadow: inset 0 0 0 1px rgba(54, 115, 69, 0.38);
-        }
-
-        .quiz-option.is-wrong {
-            border-color: rgba(155, 60, 60, 0.58);
-            color: #762e2e;
-            background:
-                linear-gradient(rgba(202, 119, 119, 0.27), rgba(202, 119, 119, 0.27)),
-                #fff;
-            box-shadow: inset 0 0 0 1px rgba(155, 60, 60, 0.34);
-        }
-
-        .quiz-option.is-correct::after {
-            content: '';
-            position: absolute;
-            top: calc(100% + 11px);
-            left: 50%;
-            width: 25px;
-            height: 35px;
-            background: url('quiz-arrow.webp') center / contain no-repeat;
-            opacity: 0;
-            transform: translateX(-50%);
-            -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 42%, transparent 72%);
-            mask-image: linear-gradient(to bottom, #000 0%, #000 42%, transparent 72%);
-            -webkit-mask-size: 100% 300%;
-            mask-size: 100% 300%;
-            -webkit-mask-position: 0 100%;
-            mask-position: 0 100%;
-            -webkit-mask-repeat: no-repeat;
-            mask-repeat: no-repeat;
-            animation: quizArrowIn 0.42s ease-out 0.05s forwards;
-        }
-
-        @keyframes quizArrowIn {
-            from {
-                opacity: 0;
-                -webkit-mask-position: 0 100%;
-                mask-position: 0 100%;
-            }
-            to {
-                opacity: 1;
-                -webkit-mask-position: 0 0;
-                mask-position: 0 0;
-            }
+        .quiz-option.is-selected {
+            border-color: #77716a;
+            background: #b9b4ad;
+            color: #29251f;
+            box-shadow:
+                inset 0 3px 8px rgba(41, 37, 31, 0.24),
+                0 1px 3px rgba(57, 45, 31, 0.08);
+            transform: translateY(1px);
         }
 
         .quiz-feedback {
@@ -227,6 +185,17 @@
 
         .quiz-panel + .quiz-panel {
             border-top: 1px solid rgba(67, 55, 42, 0.18);
+        }
+
+        .quiz-feedback-answer {
+            font-size: clamp(1.5rem, 3vw, 1.875rem);
+            line-height: 1.35;
+        }
+
+        .quiz-feedback-copy {
+            color: #57534e;
+            font-size: clamp(1.125rem, 2.2vw, 1.25rem);
+            line-height: 1.8;
         }
 
         .quiz-scale {
@@ -295,7 +264,6 @@
 
             .quiz-options { grid-template-columns: 1fr; gap: 0.65rem; }
             .quiz-option { min-height: 56px; }
-            .quiz-option.is-correct::after { display: none; }
             .quiz-scale { width: 100%; }
             .quiz-scale-segment { font-size: 0.65rem; }
         }
@@ -2223,22 +2191,23 @@
                 item.classList.add('is-answered');
                 item.querySelectorAll('.quiz-option').forEach(button => {
                     button.disabled = true;
-                    button.classList.add(button.dataset.answer === question.correct ? 'is-correct' : 'is-wrong');
+                    if (button.dataset.answer === answer) {
+                        button.classList.add('is-selected');
+                    }
                 });
 
                 item.querySelector('.quiz-feedback-slot').innerHTML = `
                     <div class="quiz-feedback is-waiting" aria-live="polite">
                         <section class="quiz-panel">
-                            <p class="serif-title text-lg md:text-xl font-black text-stone-800">
+                            <p class="quiz-feedback-answer serif-title font-black text-stone-800">
                                 正確答案：${question.correct}
                             </p>
-                            <p class="text-sm md:text-base text-stone-600 leading-relaxed mt-2">${question.explanation}</p>
+                            <p class="quiz-feedback-copy mt-3">${question.explanation}</p>
                         </section>
                         <section class="quiz-panel">
-                            <p class="serif-title text-lg md:text-xl font-black text-stone-800">有多少填答者和你做出相同選擇？</p>
-                            <p class="text-sm md:text-base text-stone-700 mt-2">
+                            <p class="quiz-feedback-copy">
                                 在〈青年對白恐時期之認知問卷調查〉中，有
-                                <strong class="text-[#9B2C2C] text-xl">${selected.stat}%</strong>
+                                <strong class="text-[#9B2C2C]">${selected.stat}%</strong>
                                 的填答者和你一樣選擇「${answer}」。
                             </p>
                             <div class="quiz-scale">
