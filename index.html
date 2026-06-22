@@ -160,13 +160,14 @@
 
         .quiz-fingerprint {
             position: absolute;
-            z-index: 3;
+            z-index: 20;
             left: var(--fingerprint-x);
             top: var(--fingerprint-y);
-            width: clamp(82px, 68%, 116px);
+            width: clamp(52px, 42%, 72px);
             height: auto;
             pointer-events: none;
             user-select: none;
+            mix-blend-mode: normal;
             opacity: 0;
             transform:
                 translate(-50%, -50%)
