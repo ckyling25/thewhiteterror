@@ -127,6 +127,8 @@
 
         .quiz-option {
             position: relative;
+            overflow: hidden;
+            isolation: isolate;
             min-height: 76px;
             border: 1px solid rgba(67, 55, 42, 0.38);
             border-radius: 0.65rem;
@@ -154,6 +156,57 @@
                 inset 0 3px 8px rgba(41, 37, 31, 0.24),
                 0 1px 3px rgba(57, 45, 31, 0.08);
             transform: translateY(1px);
+        }
+
+        .quiz-fingerprint {
+            position: absolute;
+            z-index: 3;
+            left: var(--fingerprint-x);
+            top: var(--fingerprint-y);
+            width: clamp(82px, 68%, 116px);
+            height: auto;
+            pointer-events: none;
+            user-select: none;
+            opacity: 0;
+            transform:
+                translate(-50%, -50%)
+                rotate(var(--fingerprint-rotation))
+                scale(0.42);
+            transform-origin: center;
+            animation: fingerprintStamp 0.56s cubic-bezier(0.2, 0.8, 0.25, 1) forwards;
+        }
+
+        @keyframes fingerprintStamp {
+            0% {
+                opacity: 0;
+                filter: blur(1.5px);
+                transform:
+                    translate(-50%, -50%)
+                    rotate(var(--fingerprint-rotation))
+                    scale(0.42);
+            }
+            58% {
+                opacity: 0.8;
+                filter: blur(0);
+                transform:
+                    translate(-50%, -50%)
+                    rotate(var(--fingerprint-rotation))
+                    scale(1.08);
+            }
+            100% {
+                opacity: 0.68;
+                filter: blur(0);
+                transform:
+                    translate(-50%, -50%)
+                    rotate(var(--fingerprint-rotation))
+                    scale(1);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .quiz-fingerprint {
+                animation-duration: 0.01ms;
+            }
         }
 
         .quiz-feedback {
@@ -2175,11 +2228,40 @@
 
                 quizList.appendChild(item);
                 item.querySelectorAll('.quiz-option').forEach(button => {
-                    button.addEventListener('click', () => answerQuizQuestion(index, button.dataset.answer, item));
+                    button.addEventListener('click', event => {
+                        answerQuizQuestion(index, button.dataset.answer, item, button, event);
+                    });
                 });
             }
 
-            function answerQuizQuestion(index, answer, item) {
+            function stampFingerprint(button, event) {
+                const rect = button.getBoundingClientRect();
+                const hasPointerPosition = event.clientX !== 0 || event.clientY !== 0;
+                const clickX = hasPointerPosition ? event.clientX - rect.left : rect.width / 2;
+                const clickY = hasPointerPosition ? event.clientY - rect.top : rect.height / 2;
+                const fingerprint = document.createElement('img');
+
+                fingerprint.src = 'fingerprint-stamp.png';
+                fingerprint.alt = '';
+                fingerprint.setAttribute('aria-hidden', 'true');
+                fingerprint.className = 'quiz-fingerprint';
+                fingerprint.style.setProperty(
+                    '--fingerprint-x',
+                    `${Math.max(0, Math.min(rect.width, clickX))}px`
+                );
+                fingerprint.style.setProperty(
+                    '--fingerprint-y',
+                    `${Math.max(0, Math.min(rect.height, clickY))}px`
+                );
+                fingerprint.style.setProperty(
+                    '--fingerprint-rotation',
+                    `${(Math.random() * 14 - 7).toFixed(2)}deg`
+                );
+
+                button.appendChild(fingerprint);
+            }
+
+            function answerQuizQuestion(index, answer, item, selectedButton, event) {
                 if (item.classList.contains('is-answered')) return;
                 const question = quizData[index];
                 const selected = question.options.find(option => option.text === answer);
@@ -2188,6 +2270,7 @@
                     .slice(0, selectedIndex)
                     .reduce((sum, option) => sum + option.stat, 0) + selected.stat / 2;
 
+                stampFingerprint(selectedButton, event);
                 item.classList.add('is-answered');
                 item.querySelectorAll('.quiz-option').forEach(button => {
                     button.disabled = true;
