@@ -1268,9 +1268,7 @@
                         <p id="culture-player-status" class="culture-player-status mt-5 text-center text-sm font-bold text-gray-600" aria-live="polite">
                             選擇下方任一作品開始播放
                         </p>
-                        <audio id="culture-audio" preload="metadata">
-                            <source src="夜官巡場.mp3" type="audio/mpeg">
-                        </audio>
+                        <audio id="culture-audio" preload="metadata"></audio>
                     </div>
 
                     <div class="grid md:grid-cols-2 gap-6">
@@ -1521,19 +1519,19 @@
                 '昨暝阿爸無轉來': {
                     title: '昨暝阿爸無轉來',
                     artist: '美秀集團',
-                    src: '昨暝阿爸無轉來.mp3',
+                    src: 'audio/昨暝阿爸無轉來音樂片段.m4a',
                     desc: '〈昨暝阿爸無轉來〉從孩子與家人的等待出發，轉譯威權時期政治犯被帶走後突然缺席的共同經驗。歌曲沒有把焦點停在逮捕現場，而是描寫父親一夜未歸後留下的空位、疑問與漫長等待，呈現白色恐怖如何從受難者延伸至整個家庭。'
                 },
                 '明朗俱樂部': {
                     title: '明朗俱樂部',
                     artist: '雷光夏',
-                    src: '明朗俱樂部.mp3',
+                    src: 'audio/明朗俱樂部音樂片段.m4a',
                     desc: '雷光夏以自身家族經驗為背景創作〈明朗俱樂部〉，用以紀念在白色恐怖中遭槍決的外祖父李漢湖。「明朗俱樂部」是當時一群青年交流時事與思想的聚會組織，後被政府認定為共產黨外圍組織；李漢湖遭指控參與其中，並以「知匪不報」等罪名判刑，於 1951 年遭槍決。歌曲從家族記憶出發，重新追尋一位被國家暴力帶走、長期難以被家人公開談論的外祖父。'
                 },
                 '出巡': {
                     title: '出巡',
                     artist: '拍謝少年',
-                    src: '出巡.mp3',
+                    src: 'audio/出巡音樂片段.m4a',
                     desc: '〈出巡〉以白色恐怖政治受難者蔡寬裕的生命故事為重要背景。蔡寬裕年輕時因政治案件遭囚禁，出獄後仍長年投入受難者平反與人權工作。歌曲借「出巡」的行進意象，陪伴受難者走出禁聲年代，也向那些沒有等到正義、仍在歷史中守望的人致意。'
                 }
             };
@@ -1685,8 +1683,7 @@
                 if (activeMusicTrack !== name) {
                     activeMusicTrack = name;
                     activeMusicButton = button;
-                    const source = audio.querySelector('source');
-                    if (source) source.src = work.src;
+                    audio.src = work.src;
                     audio.load();
                     audio.play().catch(() => {
                         const status = document.getElementById('culture-player-status');
