@@ -1654,6 +1654,7 @@
 
             let activeMusicTrack = '';
             let activeMusicButton = null;
+            const QUIZ_STAMP_REVEAL_DELAY = 920;
 
             function setMusicPlayerState(name, isPlaying) {
                 const work = musicWorks[name];
@@ -2304,25 +2305,25 @@
                 `;
 
                 if (index + 1 < quizData.length) {
-                    renderQuizQuestion(index + 1);
                     setTimeout(() => {
+                        renderQuizQuestion(index + 1);
                         const feedback = item.querySelector('.quiz-feedback');
                         if (feedback) {
                             feedback.classList.remove('is-waiting');
                             const feedbackTop = feedback.getBoundingClientRect().top + window.scrollY;
                             window.scrollTo({ top: Math.max(0, feedbackTop - 24), behavior: 'smooth' });
                         }
-                    }, 570);
+                    }, QUIZ_STAMP_REVEAL_DELAY);
                 } else {
-                    quizCompleteActions.classList.remove('hidden');
                     setTimeout(() => {
+                        quizCompleteActions.classList.remove('hidden');
                         const feedback = item.querySelector('.quiz-feedback');
                         if (feedback) {
                             feedback.classList.remove('is-waiting');
                             const feedbackTop = feedback.getBoundingClientRect().top + window.scrollY;
                             window.scrollTo({ top: Math.max(0, feedbackTop - 24), behavior: 'smooth' });
                         }
-                    }, 570);
+                    }, QUIZ_STAMP_REVEAL_DELAY);
                 }
             }
 
