@@ -939,6 +939,9 @@
             .music-piece-card .music-play-button {
                 margin-top: auto;
             }
+            .music-play-button.is-playing {
+                background: #9B2C2C;
+            }
             .film-scroll-story {
                 position: relative;
                 height: 430vh;
@@ -1668,11 +1671,24 @@
                 });
                 document.querySelectorAll('.music-play-button').forEach(button => {
                     button.textContent = button === activeMusicButton && isPlaying ? '暫停' : '播放';
+                    button.classList.toggle('is-playing', button === activeMusicButton && isPlaying);
                 });
                 turntable?.classList.toggle('is-playing', isPlaying);
                 record?.classList.toggle('is-playing', isPlaying);
                 if (label) label.innerHTML = `${work.title}<br>${work.artist}`;
                 if (status) status.textContent = isPlaying ? `正在播放：${work.artist}〈${work.title}〉` : `已暫停：${work.artist}〈${work.title}〉`;
+            }
+
+            function pauseMusicWhenLeavingPanel() {
+                const audio = document.getElementById('culture-audio');
+                const panel = document.getElementById('culture-music-panel');
+                if (!audio || !panel || audio.paused) return;
+
+                const rect = panel.getBoundingClientRect();
+                const isPanelVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+                if (!isPanelVisible) {
+                    audio.pause();
+                }
             }
 
             function toggleMusicTrack(name, button) {
@@ -1707,7 +1723,9 @@
                 }
                 renderFilmWork(0);
                 window.addEventListener('scroll', requestFilmScrollUpdate, { passive: true });
+                window.addEventListener('scroll', pauseMusicWhenLeavingPanel, { passive: true });
                 window.addEventListener('resize', requestFilmScrollUpdate);
+                window.addEventListener('resize', pauseMusicWhenLeavingPanel);
                 document.addEventListener('keydown', event => {
                     if (event.key === 'Escape') closeFilmTrailerModal();
                 });
