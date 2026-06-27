@@ -1113,7 +1113,7 @@
             }
             .culture-copy-panel {
                 display: block;
-                width: min(100%, 66rem);
+                width: min(100%, var(--copy-width, 66rem));
                 margin-inline: auto;
                 padding: clamp(1.5rem, 4vw, 2.6rem) clamp(1.25rem, 4vw, 3rem);
                 background: rgba(255, 255, 255, 0.72);
@@ -1126,6 +1126,15 @@
                 line-height: 1.9;
                 color: #29251f;
                 text-align: center;
+            }
+            .culture-report-copy.text-white {
+                color: #fff;
+            }
+            .culture-copy-wide { --copy-width: 76rem; }
+            .culture-copy-medium { --copy-width: 64rem; }
+            .culture-copy-nowrap {
+                --copy-width: 78rem;
+                white-space: nowrap;
             }
             .keep-together {
                 white-space: nowrap;
@@ -1192,18 +1201,16 @@
                 display: block;
                 width: fit-content;
                 margin: 0 auto;
-                padding: .55rem 1rem;
-                background: linear-gradient(145deg, rgba(255,255,255,.16), rgba(255,255,255,.04));
-                border: 1px solid rgba(255,255,255,.2);
-                box-shadow:
-                    0 12px 24px rgba(0,0,0,.28),
-                    inset 0 1px 0 rgba(255,255,255,.22);
-                font-size: clamp(.9rem, 1.35vw, 1.12rem);
+                padding: 0;
+                background: transparent;
+                border: 0;
+                box-shadow: none;
+                font-size: clamp(.78rem, 1.05vw, .96rem);
                 font-weight: 700;
                 text-align: center;
                 letter-spacing: .04em;
-                text-shadow: 0 2px 8px rgba(0,0,0,.4);
-                transform: translateY(-1.45rem);
+                text-shadow: 0 2px 10px rgba(0,0,0,.55);
+                transform: translateY(-.45rem);
             }
             .film-scroll-story {
                 position: relative;
@@ -1226,9 +1233,9 @@
                 min-height: 700px;
                 overflow: hidden;
                 display: grid;
-                grid-template-rows: auto minmax(275px, 37vh) minmax(330px, 40vh);
+                grid-template-rows: minmax(26px, 4vh) minmax(270px, 36vh) minmax(300px, 36vh);
                 align-content: center;
-                row-gap: .75rem;
+                row-gap: 1rem;
                 padding: 1.25rem clamp(1.5rem, 5vw, 4.5rem);
             }
             .film-carousel {
@@ -1236,13 +1243,13 @@
                 width: min(100%, 1120px);
                 height: 100%;
                 min-height: 255px;
-                margin: .7rem auto 0;
+                margin: 0 auto;
                 perspective: 1200px;
             }
             .film-wheel-card {
                 position: absolute;
                 left: 50%;
-                top: 52%;
+                top: 46%;
                 width: clamp(150px, 16vw, 225px);
                 aspect-ratio: 2 / 3;
                 border: 0;
@@ -1305,13 +1312,13 @@
                 filter: grayscale(.82) brightness(.48);
             }
             .film-scroll-detail {
-                width: min(100%, 1240px);
+                width: min(100%, 1080px);
                 height: 100%;
-                min-height: 320px;
+                min-height: 292px;
                 margin: 0 auto;
                 overflow: hidden;
-                padding: clamp(.75rem, 1.35vw, 1.15rem);
-                column-gap: clamp(1.25rem, 2.5vw, 2.25rem);
+                padding: clamp(.72rem, 1.1vw, .95rem);
+                column-gap: clamp(.9rem, 1.7vw, 1.35rem);
                 border: 1px solid rgba(255,255,255,.82);
                 box-shadow:
                     0 28px 65px rgba(4,10,15,.34),
@@ -1321,6 +1328,8 @@
                 transform: translateY(-2px);
             }
             .film-trailer-card {
+                width: min(100%, 430px);
+                justify-self: center;
                 border: 1px solid rgba(255,255,255,.72);
                 box-shadow:
                     0 22px 46px rgba(5,11,16,.38),
@@ -1381,7 +1390,7 @@
             }
             .film-detail-copy {
                 overflow: visible;
-                padding: clamp(.4rem, .8vw, .75rem);
+                padding: clamp(.45rem, .75vw, .65rem);
             }
             .film-detail-label {
                 margin-bottom: .3rem;
@@ -1394,13 +1403,13 @@
                 font-size: .82rem;
             }
             #film-title {
-                font-size: clamp(1.7rem, 2.1vw, 2.25rem);
+                font-size: clamp(1.45rem, 1.8vw, 1.95rem);
                 line-height: 1.18;
             }
             #film-desc,
             #film-youth {
-                font-size: clamp(.86rem, 1vw, .98rem);
-                line-height: 1.65;
+                font-size: clamp(.78rem, .88vw, .9rem);
+                line-height: 1.52;
             }
             .film-progress-dot {
                 width: 7px;
@@ -1421,6 +1430,9 @@
                 transform: translateX(-50%);
             }
             @media (max-width: 1024px) {
+                .culture-copy-nowrap {
+                    white-space: normal;
+                }
                 .culture-floating-nav {
                     top: 1rem;
                     right: 1rem;
@@ -1455,7 +1467,7 @@
                     width: clamp(132px, 18vw, 185px);
                 }
                 .film-scroll-detail {
-                    min-height: 380px;
+                    min-height: 340px;
                 }
             }
             @media (max-width: 767px) {
@@ -1548,7 +1560,7 @@
                 .film-sticky-stage {
                     min-height: 620px;
                     padding: .75rem;
-                    grid-template-rows: auto minmax(185px, 27vh) minmax(365px, 55vh);
+                    grid-template-rows: minmax(24px, 4vh) minmax(180px, 27vh) minmax(350px, 54vh);
                     row-gap: .75rem;
                 }
                 .film-sticky-stage > .flex {
@@ -1572,7 +1584,7 @@
                     border-left-width: 1px;
                 }
                 .film-scroll-detail {
-                    min-height: 365px;
+                    min-height: 350px;
                     padding: .7rem;
                     row-gap: .7rem;
                     overflow: auto;
@@ -1586,6 +1598,7 @@
                 }
                 .film-trailer-card {
                     order: -1;
+                    width: min(100%, 420px);
                 }
                 .film-trailer-enlarge {
                     padding: .45rem .6rem;
@@ -1637,7 +1650,7 @@
                 }
                 .film-sticky-stage {
                     min-height: 640px;
-                    grid-template-rows: auto minmax(150px, 24vh) minmax(410px, 58vh);
+                    grid-template-rows: minmax(22px, 4vh) minmax(150px, 24vh) minmax(405px, 58vh);
                 }
                 .film-carousel {
                     min-height: 155px;
@@ -1689,11 +1702,11 @@
         <!-- 文化入口開場文字 -->
         <div id="culture-scroll-intro" class="culture-scroll-intro">
             <div class="culture-scroll-intro-stage">
-                <p class="culture-scroll-copy culture-copy-panel culture-report-copy is-active">
+                <p class="culture-scroll-copy culture-copy-panel culture-copy-medium culture-report-copy is-active">
                     為了降低年輕世代認識白恐歷史的門檻，<span class="keep-together">不少</span>音樂和影視作品嘗試透過檔案資料的「轉譯」，期待激發青年對相關議題的興趣。
                 </p>
 
-                <p class="culture-scroll-copy culture-copy-panel culture-report-copy">
+                <p class="culture-scroll-copy culture-copy-panel culture-copy-wide culture-report-copy">
                     例如獨立樂團裝咖人的專輯《夜官巡場》，以及美秀集團的歌曲〈昨暝阿爸無轉來〉等，分別以受難者故事與政治犯家庭的普遍經歷為藍本，將歷史元素融入歌詞中。
                 </p>
             </div>
@@ -1773,7 +1786,7 @@
 
         <!-- 音樂與影視之間的引言 -->
         <div class="culture-text-block culture-reveal bg-[#0F141A]">
-            <div class="culture-text-copy culture-copy-panel">
+            <div class="culture-text-copy culture-copy-panel culture-copy-nowrap">
                 <p class="culture-report-copy mb-8">
                     陳彥蓉認為，音樂是現今年輕人的共同語言，更是讓他們了解這段歷史的一大途徑。
                 </p>
@@ -1786,7 +1799,7 @@
         <!-- 影視內容 -->
         <div id="culture-film-panel" class="culture-panel bg-[#111820] border-t border-white/10 scroll-mt-20">
             <div class="culture-text-block culture-reveal min-h-0">
-                <p class="culture-text-copy serif-title text-xl md:text-3xl font-bold leading-relaxed text-white">
+                <p class="culture-text-copy culture-copy-wide culture-report-copy text-white">
                     影視作品如《超級大國民》、《返校》、《流麻溝十五號》、《餘燼》、《星空下的黑潮島嶼》及《大濛》等，分別以不同的敘事角度，呈現威權時期人民所面臨的不公與壓迫。
                 </p>
             </div>
@@ -1827,7 +1840,7 @@
                     </div>
 
                     <div class="film-scroll-detail grid md:grid-cols-[1.12fr_0.88fr] bg-white text-[#1A202C] shadow-2xl">
-                        <div class="film-detail-copy flex flex-col justify-center p-5 md:p-7">
+                        <div class="film-detail-copy flex flex-col justify-center">
                             <p id="film-meta" class="text-[#9B2C2C] font-bold tracking-widest mb-1">1994｜電影</p>
                             <h4 id="film-title" class="serif-title font-black mb-3">超級大國民</h4>
                             <p class="film-detail-label">作品故事</p>
