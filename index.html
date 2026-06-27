@@ -130,13 +130,14 @@
         }
 
         .quiz-list {
+            --quiz-divider-gap: clamp(2.1rem, 4vh, 2.8rem);
             width: min(100%, 960px);
             margin-inline: auto;
         }
 
         .quiz-item + .quiz-item {
-            margin-top: 1.8rem;
-            padding-top: 1.8rem;
+            margin-top: var(--quiz-divider-gap);
+            padding-top: var(--quiz-divider-gap);
             border-top: 1px solid rgba(67, 55, 42, 0.32);
         }
 
@@ -368,6 +369,7 @@
             }
 
             .quiz-list {
+                --quiz-divider-gap: clamp(1.5rem, 3.8vh, 2.1rem);
                 width: min(100%, 720px);
             }
 
@@ -3147,7 +3149,9 @@
             function scrollQuizToFeedback(feedback) {
                 if (!feedback) return;
                 const feedbackTop = feedback.getBoundingClientRect().top + window.scrollY;
-                const offset = window.innerWidth <= 640 ? 10 : 16;
+                const offset = window.innerWidth <= 640
+                    ? 28
+                    : Math.min(72, Math.max(48, window.innerHeight * 0.07));
                 window.scrollTo({ top: Math.max(0, feedbackTop - offset), behavior: 'smooth' });
             }
 
