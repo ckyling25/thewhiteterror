@@ -1058,10 +1058,7 @@
             .culture-scroll-intro {
                 position: relative;
                 height: 185vh;
-                background:
-                    radial-gradient(circle at 18% 18%, rgba(155, 44, 44, 0.2), transparent 30rem),
-                    radial-gradient(circle at 82% 72%, rgba(255, 255, 255, 0.08), transparent 24rem),
-                    #0F141A;
+                background: #F4F1EC !important;
             }
             .culture-scroll-intro-stage {
                 position: sticky;
@@ -1074,14 +1071,16 @@
             }
             .culture-scroll-copy {
                 grid-area: 1 / 1;
-                max-width: 58rem;
+                max-width: 52rem;
                 text-align: center;
-                color: #fff;
+                color: #29251f;
                 opacity: 0;
                 transform: translateY(24px);
                 transition: opacity .65s ease, transform .65s ease;
                 pointer-events: none;
-                text-wrap: balance;
+                word-break: normal;
+                overflow-wrap: normal;
+                line-break: strict;
             }
             .culture-scroll-copy.is-active {
                 opacity: 1;
@@ -1093,6 +1092,7 @@
                 min-height: 48vh;
                 padding: clamp(4rem, 9vw, 7rem) clamp(1.25rem, 5vw, 3rem);
                 text-align: center;
+                background: #F4F1EC !important;
                 opacity: 0;
                 transform: translateY(26px);
                 transition: opacity .75s ease, transform .75s ease;
@@ -1105,39 +1105,64 @@
                 min-height: auto;
             }
             .culture-text-copy {
-                max-width: 58rem;
-                text-wrap: balance;
+                max-width: 52rem;
+                color: #29251f;
+                word-break: normal;
+                overflow-wrap: normal;
+                line-break: strict;
+            }
+            .culture-copy-panel {
+                display: block;
+                width: min(100%, 56rem);
+                margin-inline: auto;
+                padding: clamp(1.5rem, 4vw, 2.6rem) clamp(1.25rem, 4vw, 3rem);
+                background: rgba(255, 255, 255, 0.72);
+                box-shadow: 0 16px 38px rgba(57, 45, 31, 0.1);
+            }
+            .culture-report-copy {
+                font-family: 'Noto Serif TC', serif;
+                font-size: clamp(1.5rem, 3vw, 2.25rem);
+                font-weight: 700;
+                line-height: 1.8;
+                color: #29251f;
+                text-align: center;
+            }
+            .keep-together {
+                white-space: nowrap;
             }
             #culture-music-panel {
-                padding: 2.35rem 1.5rem;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                padding: 1.7rem 1.5rem;
             }
             .culture-music-heading {
-                margin-bottom: .75rem;
+                margin-bottom: .55rem;
             }
             .culture-music-heading h3 {
-                font-size: clamp(2rem, 3.4vw, 3rem);
+                font-size: clamp(1.85rem, 3vw, 2.6rem);
             }
             .culture-sound-note {
-                margin-bottom: .85rem;
-                font-size: .86rem;
+                margin-bottom: .65rem;
+                font-size: .78rem;
             }
             .culture-music-layout {
                 align-items: start;
-                grid-template-columns: minmax(220px, 270px) 1fr;
-                gap: 1.4rem;
+                grid-template-columns: minmax(200px, 250px) 1fr;
+                gap: 1.05rem;
             }
             .music-card-grid {
                 align-items: stretch;
-                gap: .95rem;
+                gap: .7rem;
             }
             .music-piece-card h4 {
-                font-size: clamp(1rem, 1.35vw, 1.22rem);
+                font-size: clamp(.95rem, 1.22vw, 1.13rem);
                 line-height: 1.28;
                 margin-bottom: .12rem;
             }
             .music-piece-card p {
-                font-size: .86rem;
-                line-height: 1.45;
+                font-size: .8rem;
+                line-height: 1.4;
             }
             .music-piece-card > p:first-child {
                 font-size: .68rem;
@@ -1150,7 +1175,15 @@
                 margin-bottom: .7rem;
             }
             .music-piece-card .music-play-button {
-                padding-block: .55rem;
+                padding-block: .48rem;
+                font-size: .86rem;
+            }
+            .film-scroll-hint {
+                color: #e7d6d6;
+                font-size: clamp(1rem, 1.8vw, 1.45rem);
+                font-weight: 700;
+                text-align: center;
+                letter-spacing: .04em;
             }
             .film-scroll-story {
                 position: relative;
@@ -1627,14 +1660,6 @@
             .culture-wave span:nth-child(5) { animation-delay: .48s; }
         </style>
 
-        <!-- 返回按鈕 -->
-        <button onclick="window.switchView('5-education', true)" class="fixed top-6 left-6 z-40 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/40 hover:bg-black/70 border border-white/10 backdrop-blur-md text-sm text-gray-200 transition-all">
-            <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-            </svg>
-            返回上一頁
-        </button>
-
         <!-- 文化入口頁內導覽 -->
         <nav class="culture-floating-nav inline-flex items-center p-1 rounded-full bg-black/55 border border-white/15 backdrop-blur-md shadow-lg" aria-label="文化入口內容導覽">
             <button onclick="showCultureTab('music')" class="px-5 py-2 rounded-full text-sm font-bold text-white hover:bg-white/15 transition-colors">音樂</button>
@@ -1644,12 +1669,12 @@
         <!-- 文化入口開場文字 -->
         <div id="culture-scroll-intro" class="culture-scroll-intro">
             <div class="culture-scroll-intro-stage">
-                <p class="culture-scroll-copy is-active serif-title text-2xl md:text-4xl font-bold leading-relaxed">
-                為了降低年輕世代認識白恐歷史的門檻，不少音樂和影視作品嘗試透過檔案資料的「轉譯」，期待激發青年對相關議題的興趣。
+                <p class="culture-scroll-copy culture-copy-panel culture-report-copy is-active">
+                    為了降低年輕世代認識白恐歷史的門檻，<span class="keep-together">不少</span>音樂和影視作品嘗試透過檔案資料的「轉譯」，期待激發青年對相關議題的興趣。
                 </p>
 
-                <p class="culture-scroll-copy serif-title text-2xl md:text-4xl font-bold leading-relaxed">
-                例如獨立樂團裝咖人的專輯《夜官巡場》，以及美秀集團的歌曲〈昨暝阿爸無轉來〉等，分別以受難者故事與政治犯家庭的普遍經歷為藍本，將歷史元素融入歌詞中。
+                <p class="culture-scroll-copy culture-copy-panel culture-report-copy">
+                    例如獨立樂團裝咖人的專輯《夜官巡場》，以及美秀集團的歌曲〈昨暝阿爸無轉來〉等，分別以受難者故事與政治犯家庭的普遍經歷為藍本，將歷史元素融入歌詞中。
                 </p>
             </div>
         </div>
@@ -1687,7 +1712,6 @@
 
                     <div class="music-card-grid grid md:grid-cols-2 gap-6">
                         <article class="music-piece-card bg-white rounded-3xl p-6 md:p-7 border border-gray-200 shadow-sm transition-all" data-work="《夜官巡場》－〈林秀媚〉">
-                            <p class="text-xs text-[#9B2C2C] font-bold tracking-[0.2em] mb-2">SONG</p>
                             <h4 class="serif-title text-2xl font-black mb-1">《夜官巡場》－〈林秀媚〉</h4>
                             <p class="text-sm text-gray-500 mb-5">裝咖人</p>
                             <p class="text-sm md:text-base text-gray-600 leading-loose text-justify mb-6">
@@ -1697,7 +1721,6 @@
                         </article>
 
                         <article class="music-piece-card bg-white rounded-3xl p-6 md:p-7 border border-gray-200 shadow-sm transition-all" data-work="昨暝阿爸無轉來">
-                            <p class="text-xs text-[#9B2C2C] font-bold tracking-[0.2em] mb-2">SONG</p>
                             <h4 class="serif-title text-2xl font-black mb-1">〈昨暝阿爸無轉來〉</h4>
                             <p class="text-sm text-gray-500 mb-5">美秀集團</p>
                             <p class="text-sm md:text-base text-gray-600 leading-loose text-justify mb-6">
@@ -1707,7 +1730,6 @@
                         </article>
 
                         <article class="music-piece-card bg-white rounded-3xl p-6 md:p-7 border border-gray-200 shadow-sm transition-all" data-work="明朗俱樂部">
-                            <p class="text-xs text-[#9B2C2C] font-bold tracking-[0.2em] mb-2">SONG</p>
                             <h4 class="serif-title text-2xl font-black mb-1">〈明朗俱樂部〉</h4>
                             <p class="text-sm text-gray-500 mb-5">雷光夏</p>
                             <p class="text-sm md:text-base text-gray-600 leading-loose text-justify mb-6">
@@ -1717,7 +1739,6 @@
                         </article>
 
                         <article class="music-piece-card bg-white rounded-3xl p-6 md:p-7 border border-gray-200 shadow-sm transition-all" data-work="出巡">
-                            <p class="text-xs text-[#9B2C2C] font-bold tracking-[0.2em] mb-2">SONG</p>
                             <h4 class="serif-title text-2xl font-black mb-1">〈出巡〉</h4>
                             <p class="text-sm text-gray-500 mb-5">拍謝少年</p>
                             <p class="text-sm md:text-base text-gray-600 leading-loose text-justify mb-6">
@@ -1732,12 +1753,12 @@
 
         <!-- 音樂與影視之間的引言 -->
         <div class="culture-text-block culture-reveal bg-[#0F141A]">
-            <div class="culture-text-copy">
-                <p class="serif-title text-xl md:text-3xl font-bold leading-relaxed text-white mb-8">
+            <div class="culture-text-copy culture-copy-panel">
+                <p class="culture-report-copy mb-8">
                     陳彥蓉認為，音樂是現今年輕人的共同語言，更是讓他們了解這段歷史的一大途徑。
                 </p>
                 <blockquote class="py-2">
-                    <p class="serif-title text-xl md:text-3xl leading-relaxed text-white">「你很難找到有人是沒有喜歡的樂團或音樂。」</p>
+                    <p class="culture-report-copy">「你很難找到有人是沒有喜歡的樂團或音樂。」</p>
                 </blockquote>
             </div>
         </div>
@@ -1752,12 +1773,8 @@
 
             <div id="film-scroll-story" class="film-scroll-story">
                 <div class="film-sticky-stage">
-                    <div class="flex items-end justify-between gap-5 w-full max-w-6xl mx-auto mb-1">
-                        <div>
-                            <span class="text-[10px] md:text-xs text-[#E7B7B7] font-semibold tracking-[0.3em] uppercase block mb-1">FILM / SERIES</span>
-                            <h3 class="serif-title text-2xl md:text-4xl font-black">影視作品</h3>
-                        </div>
-                        <p class="hidden md:block text-xs text-gray-400">向下滾動，依序觀看六部作品</p>
+                    <div class="w-full max-w-6xl mx-auto mb-1">
+                        <p class="film-scroll-hint">向下滾動，依序觀看六部作品</p>
                     </div>
 
                     <div id="film-carousel" class="film-carousel" aria-label="影視作品海報輪盤">
@@ -1844,25 +1861,14 @@
             </div>
 
             <div class="culture-text-block culture-reveal min-h-0 pb-24">
-                <div class="culture-text-copy">
-                    <p class="text-gray-300 leading-loose text-center md:text-xl">
+                <div class="culture-text-copy culture-copy-panel">
+                    <p class="culture-report-copy">
                         黃長玲指出，雖然部分作品的論述仍相對粗淺，但其核心功能在於激發大眾對國家暴力的警惕，可作為年輕人接觸議題的第一步。
                     </p>
                 </div>
             </div>
         </div>
-
-        <div class="bg-[#0F141A] px-6 py-20 border-t border-white/10">
-            <div class="max-w-4xl mx-auto text-center">
-                <h3 class="serif-title text-3xl md:text-4xl font-black mb-6">從作品中，看見歷史的另一種接近路徑</h3>
-                <p class="text-gray-300 leading-loose text-justify md:text-center mb-10">
-                    文化作品不必取代歷史教育，但它能讓原本覺得白恐遙遠的青年，先透過熟悉的影像、旋律與故事產生情感連結，再進一步理解威權時代人民所承受的不公與壓迫。
-                </p>
-                <button onclick="window.switchView('5-education', true)" class="inline-flex items-center gap-3 px-8 py-4 bg-white text-[#1A202C] hover:bg-[#9B2C2C] hover:text-white font-bold rounded-full shadow-lg transition-all">
-                    返回多維路徑探索
-                </button>
-            </div>
-        </div>
+        <div id="culture-next-sentinel" class="h-px" aria-hidden="true"></div>
 
         <script>
             const filmWorks = {
@@ -1989,6 +1995,26 @@
                 }, { threshold: 0.28 });
 
                 blocks.forEach(block => observer.observe(block));
+            }
+
+            function initCultureAutoAdvance() {
+                const sentinel = document.getElementById('culture-next-sentinel');
+                if (!sentinel || !('IntersectionObserver' in window)) return;
+
+                let hasAdvanced = false;
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        const approachPage = document.getElementById('page-approach-1');
+                        const isCultureVisible = approachPage && !approachPage.classList.contains('hidden');
+                        if (entry.isIntersecting && isCultureVisible && !hasAdvanced) {
+                            hasAdvanced = true;
+                            observer.disconnect();
+                            window.switchView('5-education', true);
+                        }
+                    });
+                }, { threshold: 1 });
+
+                observer.observe(sentinel);
             }
 
             const filmOrder = ['超級大國民', '返校', '流麻溝十五號', '餘燼', '星空下的黑潮島嶼', '大濛'];
@@ -2173,6 +2199,7 @@
                 renderFilmWork(0);
                 updateCultureIntroText();
                 initCultureTextReveals();
+                initCultureAutoAdvance();
                 window.addEventListener('scroll', requestFilmScrollUpdate, { passive: true });
                 window.addEventListener('scroll', pauseMusicWhenLeavingPanel, { passive: true });
                 window.addEventListener('scroll', updateCultureIntroText, { passive: true });
