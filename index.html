@@ -1219,13 +1219,14 @@
                 font-size: clamp(1.9rem, 3.05vw, 2.75rem);
             }
             .culture-sound-note {
-                margin-bottom: 1rem;
+                margin-bottom: 1.6rem;
                 font-size: .92rem;
             }
             .culture-music-layout {
                 align-items: start;
                 grid-template-columns: minmax(300px, 350px) 1fr;
                 gap: 2rem;
+                transform: translateY(.45rem);
             }
             .music-card-grid {
                 align-items: stretch;
@@ -1293,9 +1294,9 @@
                 min-height: 720px;
                 overflow: hidden;
                 display: grid;
-                grid-template-rows: 26px minmax(285px, 30vh) auto;
+                grid-template-rows: 26px minmax(300px, 31vh) auto;
                 align-content: start;
-                row-gap: 1.3rem;
+                row-gap: 1.6rem;
                 padding: clamp(1rem, 2vh, 1.45rem) clamp(1.5rem, 5vw, 4.5rem) 1rem;
             }
             .film-carousel {
@@ -1303,7 +1304,7 @@
                 z-index: 20;
                 width: min(100%, 1080px);
                 height: 100%;
-                min-height: 285px;
+                min-height: 300px;
                 margin: 0 auto;
                 perspective: 1200px;
             }
@@ -2316,6 +2317,20 @@
                 else audio.pause();
             }
 
+            window.updateCultureControlsVisibility = function() {
+                const culturePage = document.getElementById('page-approach-1');
+                const controls = document.querySelectorAll('#page-approach-1 .approach-return-nav, #page-approach-1 .culture-floating-nav');
+                if (!culturePage || !controls.length) return;
+
+                const rect = culturePage.getBoundingClientRect();
+                const isCultureActive = !culturePage.classList.contains('hidden');
+                const viewportFullyInsideCulture = isCultureActive && rect.top <= 4 && rect.bottom >= window.innerHeight - 4;
+
+                controls.forEach(control => {
+                    control.classList.toggle('culture-controls-hidden', !viewportFullyInsideCulture);
+                });
+            };
+
             document.addEventListener('DOMContentLoaded', () => {
                 const audio = document.getElementById('culture-audio');
                 if (audio) {
@@ -2330,11 +2345,11 @@
                 window.addEventListener('scroll', requestFilmScrollUpdate, { passive: true });
                 window.addEventListener('scroll', pauseMusicWhenLeavingPanel, { passive: true });
                 window.addEventListener('scroll', updateCultureIntroText, { passive: true });
-                window.addEventListener('scroll', updateCultureControlsVisibility, { passive: true });
+                window.addEventListener('scroll', window.updateCultureControlsVisibility, { passive: true });
                 window.addEventListener('resize', requestFilmScrollUpdate);
                 window.addEventListener('resize', pauseMusicWhenLeavingPanel);
                 window.addEventListener('resize', updateCultureIntroText);
-                window.addEventListener('resize', updateCultureControlsVisibility);
+                window.addEventListener('resize', window.updateCultureControlsVisibility);
                 document.addEventListener('keydown', event => {
                     if (event.key === 'Escape') closeFilmTrailerModal();
                 });
@@ -2552,17 +2567,7 @@
             mountInlineApproachSections();
 
             function updateCultureControlsVisibility() {
-                const culturePage = document.getElementById('page-approach-1');
-                const controls = document.querySelectorAll('#page-approach-1 .approach-return-nav, #page-approach-1 .culture-floating-nav');
-                if (!culturePage || !controls.length) return;
-
-                const rect = culturePage.getBoundingClientRect();
-                const isCultureActive = !culturePage.classList.contains('hidden');
-                const isInsideCulture = isCultureActive && rect.top < window.innerHeight * 0.35 && rect.bottom > window.innerHeight;
-
-                controls.forEach(control => {
-                    control.classList.toggle('culture-controls-hidden', !isInsideCulture);
-                });
+                window.updateCultureControlsVisibility?.();
             }
 
             window.showInlineApproach = function(pageKey) {
