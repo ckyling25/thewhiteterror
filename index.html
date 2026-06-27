@@ -85,6 +85,32 @@
             z-index: 90;
         }
 
+        .approach-return-nav {
+            position: fixed !important;
+            top: 1.5rem;
+            left: 1.5rem;
+            z-index: 95;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: .58rem 1.05rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, .16);
+            background: rgba(0, 0, 0, .55);
+            color: #fff;
+            font-size: .9rem;
+            font-weight: 800;
+            letter-spacing: .08em;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, .18);
+            backdrop-filter: blur(12px);
+            transition: background .2s ease, transform .2s ease;
+        }
+
+        .approach-return-nav:hover {
+            background: rgba(155, 44, 44, .88);
+            transform: translateY(-1px);
+        }
+
         .quiz-list {
             width: min(100%, 960px);
             margin-inline: auto;
@@ -1136,6 +1162,14 @@
                 --copy-width: 78rem;
                 white-space: nowrap;
             }
+            .culture-quote-panel {
+                display: grid;
+                place-items: center;
+                gap: 1.25rem;
+            }
+            .culture-quote-panel .culture-report-copy {
+                margin: 0;
+            }
             .keep-together {
                 white-space: nowrap;
             }
@@ -1205,12 +1239,12 @@
                 background: transparent;
                 border: 0;
                 box-shadow: none;
-                font-size: clamp(.78rem, 1.05vw, .96rem);
+                font-size: clamp(.66rem, .82vw, .78rem);
                 font-weight: 700;
                 text-align: center;
                 letter-spacing: .04em;
                 text-shadow: 0 2px 10px rgba(0,0,0,.55);
-                transform: translateY(-.45rem);
+                transform: none;
             }
             .film-scroll-story {
                 position: relative;
@@ -1233,24 +1267,24 @@
                 min-height: 700px;
                 overflow: hidden;
                 display: grid;
-                grid-template-rows: minmax(26px, 4vh) minmax(270px, 36vh) minmax(300px, 36vh);
+                grid-template-rows: minmax(20px, 3vh) minmax(248px, 34vh) minmax(270px, 34vh);
                 align-content: center;
-                row-gap: 1rem;
+                row-gap: 1.35rem;
                 padding: 1.25rem clamp(1.5rem, 5vw, 4.5rem);
             }
             .film-carousel {
                 position: relative;
-                width: min(100%, 1120px);
+                width: min(100%, 1080px);
                 height: 100%;
-                min-height: 255px;
+                min-height: 238px;
                 margin: 0 auto;
                 perspective: 1200px;
             }
             .film-wheel-card {
                 position: absolute;
                 left: 50%;
-                top: 46%;
-                width: clamp(150px, 16vw, 225px);
+                top: 48%;
+                width: clamp(142px, 15vw, 205px);
                 aspect-ratio: 2 / 3;
                 border: 0;
                 padding: 0;
@@ -1312,13 +1346,14 @@
                 filter: grayscale(.82) brightness(.48);
             }
             .film-scroll-detail {
-                width: min(100%, 1080px);
+                width: min(100%, 1000px);
                 height: 100%;
-                min-height: 292px;
+                min-height: 270px;
                 margin: 0 auto;
                 overflow: hidden;
-                padding: clamp(.72rem, 1.1vw, .95rem);
-                column-gap: clamp(.9rem, 1.7vw, 1.35rem);
+                padding: 1rem;
+                column-gap: 1rem;
+                align-items: center;
                 border: 1px solid rgba(255,255,255,.82);
                 box-shadow:
                     0 28px 65px rgba(4,10,15,.34),
@@ -1328,7 +1363,7 @@
                 transform: translateY(-2px);
             }
             .film-trailer-card {
-                width: min(100%, 430px);
+                width: min(100%, 360px);
                 justify-self: center;
                 border: 1px solid rgba(255,255,255,.72);
                 box-shadow:
@@ -1390,26 +1425,28 @@
             }
             .film-detail-copy {
                 overflow: visible;
-                padding: clamp(.45rem, .75vw, .65rem);
+                padding: 1rem;
             }
             .film-detail-label {
-                margin-bottom: .3rem;
+                margin-bottom: .22rem;
                 color: #9B2C2C;
-                font-size: .7rem;
+                font-size: .68rem;
                 font-weight: 800;
                 letter-spacing: .14em;
             }
             #film-meta {
-                font-size: .82rem;
+                font-size: .76rem;
+                margin-bottom: .35rem;
             }
             #film-title {
-                font-size: clamp(1.45rem, 1.8vw, 1.95rem);
+                font-size: clamp(1.32rem, 1.55vw, 1.75rem);
                 line-height: 1.18;
+                margin-bottom: .55rem;
             }
             #film-desc,
             #film-youth {
-                font-size: clamp(.78rem, .88vw, .9rem);
-                line-height: 1.52;
+                font-size: clamp(.74rem, .82vw, .84rem);
+                line-height: 1.48;
             }
             .film-progress-dot {
                 width: 7px;
@@ -1471,6 +1508,12 @@
                 }
             }
             @media (max-width: 767px) {
+                .approach-return-nav {
+                    top: .9rem;
+                    left: .9rem;
+                    padding: .5rem .8rem;
+                    font-size: .75rem;
+                }
                 .culture-floating-nav {
                     top: auto;
                     right: auto;
@@ -1694,6 +1737,8 @@
         </style>
 
         <!-- 文化入口頁內導覽 -->
+        <button onclick="window.switchView('5-education', true)" class="approach-return-nav" type="button">返回入口頁面</button>
+
         <nav class="culture-floating-nav inline-flex items-center p-1 rounded-full bg-black/55 border border-white/15 backdrop-blur-md shadow-lg" aria-label="文化入口內容導覽">
             <button onclick="showCultureTab('music')" class="px-5 py-2 rounded-full text-sm font-bold text-white hover:bg-white/15 transition-colors">音樂</button>
             <button onclick="showCultureTab('film')" class="px-5 py-2 rounded-full text-sm font-bold text-white hover:bg-white/15 transition-colors">影視</button>
@@ -1703,11 +1748,14 @@
         <div id="culture-scroll-intro" class="culture-scroll-intro">
             <div class="culture-scroll-intro-stage">
                 <p class="culture-scroll-copy culture-copy-panel culture-copy-medium culture-report-copy is-active">
-                    為了降低年輕世代認識白恐歷史的門檻，<span class="keep-together">不少</span>音樂和影視作品嘗試透過檔案資料的「轉譯」，期待激發青年對相關議題的興趣。
+                    為了降低年輕世代認識白恐歷史的門檻，不少音樂和影視作品嘗試<br>
+                    透過檔案資料的「轉譯」，期待激發青年對相關議題的興趣。
                 </p>
 
                 <p class="culture-scroll-copy culture-copy-panel culture-copy-wide culture-report-copy">
-                    例如獨立樂團裝咖人的專輯《夜官巡場》，以及美秀集團的歌曲〈昨暝阿爸無轉來〉等，分別以受難者故事與政治犯家庭的普遍經歷為藍本，將歷史元素融入歌詞中。
+                    例如獨立樂團裝咖人的專輯《夜官巡場》，以及美秀集團的歌曲<br>
+                    〈昨暝阿爸無轉來〉等，分別以受難者故事與政治犯家庭的<br>
+                    普遍經歷為藍本，將歷史元素融入歌詞中。
                 </p>
             </div>
         </div>
@@ -1748,7 +1796,7 @@
                             <h4 class="serif-title text-2xl font-black mb-1">《夜官巡場》－〈林秀媚〉</h4>
                             <p class="text-sm text-gray-500 mb-5">裝咖人</p>
                             <p class="text-sm md:text-base text-gray-600 leading-loose text-justify mb-6">
-                                歌曲取材自林秀媚的口述歷史，並以她的視角出發，呈現出其面對愛人離去的悲痛。林秀媚是二二八受難者、嘉義市參議員盧鈵欽的妻子。盧鈵欽在前往水上機場與政府談判後，便再也沒有平安返家，最終於未經審判的情況下，在嘉義火車站前遭公開槍決。
+                                歌曲取材自林秀媚的口述歷史，並以其視角出發，呈現出面對愛人離去的悲痛與思念。林秀媚是二二八受難者、嘉義市參議員盧鈵欽的妻子。盧鈵欽在前往水上機場與政府談判後，便再也沒有平安返家，最終於未經審判的情況下，在嘉義火車站前遭公開槍決。
                             </p>
                             <button onclick="toggleMusicTrack('《夜官巡場》－〈林秀媚〉', this)" class="music-play-button w-full py-3 rounded-xl bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors">播放</button>
                         </article>
@@ -1786,20 +1834,18 @@
 
         <!-- 音樂與影視之間的引言 -->
         <div class="culture-text-block culture-reveal bg-[#0F141A]">
-            <div class="culture-text-copy culture-copy-panel culture-copy-nowrap">
-                <p class="culture-report-copy mb-8">
+            <div class="culture-text-copy culture-copy-panel culture-copy-nowrap culture-quote-panel">
+                <p class="culture-report-copy">
                     陳彥蓉認為，音樂是現今年輕人的共同語言，更是讓他們了解這段歷史的一大途徑。
                 </p>
-                <blockquote class="py-2">
-                    <p class="culture-report-copy">「你很難找到有人是沒有喜歡的樂團或音樂。」</p>
-                </blockquote>
+                <p class="culture-report-copy">「你很難找到有人是沒有喜歡的樂團或音樂。」</p>
             </div>
         </div>
 
         <!-- 影視內容 -->
         <div id="culture-film-panel" class="culture-panel bg-[#111820] border-t border-white/10 scroll-mt-20">
             <div class="culture-text-block culture-reveal min-h-0">
-                <p class="culture-text-copy culture-copy-wide culture-report-copy text-white">
+                <p class="culture-text-copy culture-copy-wide culture-report-copy">
                     影視作品如《超級大國民》、《返校》、《流麻溝十五號》、《餘燼》、《星空下的黑潮島嶼》及《大濛》等，分別以不同的敘事角度，呈現威權時期人民所面臨的不公與壓迫。
                 </p>
             </div>
@@ -1966,7 +2012,7 @@
                     title: '林秀媚',
                     artist: '裝咖人',
                     src: 'audio/裝咖人《夜官巡場》－〈林秀媚〉音樂片段.mp3',
-                    desc: '歌曲取材自林秀媚的口述歷史，並以她的視角出發，呈現出其面對愛人離去的悲痛。林秀媚是二二八受難者、嘉義市參議員盧鈵欽的妻子。盧鈵欽在前往水上機場與政府談判後，便再也沒有平安返家，最終於未經審判的情況下，在嘉義火車站前遭公開槍決。'
+                    desc: '歌曲取材自林秀媚的口述歷史，並以其視角出發，呈現出面對愛人離去的悲痛與思念。林秀媚是二二八受難者、嘉義市參議員盧鈵欽的妻子。盧鈵欽在前往水上機場與政府談判後，便再也沒有平安返家，最終於未經審判的情況下，在嘉義火車站前遭公開槍決。'
                 },
                 '昨暝阿爸無轉來': {
                     title: '昨暝阿爸無轉來',
@@ -2250,6 +2296,7 @@
          頁面 7：身歷其境詳細頁
          ========================================== -->
     <section id="page-approach-2" class="hidden min-h-screen bg-[#FAFAFA] flex flex-col justify-start py-24 px-6">
+        <button onclick="window.switchView('5-education', true)" class="approach-return-nav" type="button">返回入口頁面</button>
         <div class="max-w-3xl mx-auto space-y-12">
             <!-- Header -->
             <div class="space-y-4">
@@ -2305,6 +2352,7 @@
          頁面 8：現場震撼詳細頁
          ========================================== -->
     <section id="page-approach-3" class="hidden min-h-screen bg-[#FAFAFA] flex flex-col justify-start py-24 px-6">
+        <button onclick="window.switchView('5-education', true)" class="approach-return-nav" type="button">返回入口頁面</button>
         <div class="max-w-3xl mx-auto space-y-12">
             <!-- Header -->
             <div class="space-y-4">
@@ -2360,6 +2408,7 @@
          頁面 9：理性重構詳細頁
          ========================================== -->
     <section id="page-approach-4" class="hidden min-h-screen bg-[#FAFAFA] flex flex-col justify-start py-24 px-6">
+        <button onclick="window.switchView('5-education', true)" class="approach-return-nav" type="button">返回入口頁面</button>
         <div class="max-w-3xl mx-auto space-y-12">
             <!-- Header -->
             <div class="space-y-4">
