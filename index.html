@@ -1083,27 +1083,46 @@
                 font-size: .78rem;
             }
             .music-piece-card {
+                position: relative;
                 display: grid;
-                grid-template-columns: minmax(110px, 150px) minmax(0, 1fr);
-                gap: 1rem;
+                grid-template-columns: 46% 1fr;
+                grid-template-rows: 1fr auto;
+                column-gap: 1.2rem;
                 align-items: stretch;
                 min-height: 100%;
-                padding: 1rem;
+                padding: 1.35rem 1rem 1rem;
+                overflow: hidden;
+                background: rgba(222, 222, 220, .92);
+                border-radius: 0;
             }
             .music-piece-card.is-playing {
                 border-color: #9B2C2C;
                 box-shadow: 0 15px 35px rgba(155,44,44,.13);
             }
+            .music-piece-card::after {
+                content: "";
+                position: absolute;
+                left: 39%;
+                top: 33%;
+                width: clamp(82px, 10vw, 128px);
+                aspect-ratio: 1;
+                border-radius: 999px;
+                background: radial-gradient(circle, #111 0 58%, #000 59% 100%);
+                transform: translate(-20%, -50%);
+                z-index: 0;
+                pointer-events: none;
+            }
             .music-cover-box {
+                position: relative;
+                z-index: 2;
+                grid-row: 1 / span 2;
                 min-height: 100%;
-                aspect-ratio: 1 / 1;
+                aspect-ratio: 3 / 5.35;
                 display: grid;
                 place-items: center;
                 padding: 1rem;
-                background:
-                    linear-gradient(135deg, rgba(155,44,44,.16), rgba(26,32,44,.12)),
-                    rgba(244,241,236,.82);
-                border: 1px solid rgba(155,44,44,.18);
+                background: rgba(255,255,255,.96);
+                border: 0;
                 color: rgba(45,55,72,.76);
                 font-family: 'Noto Serif TC', serif;
                 font-weight: 800;
@@ -1112,21 +1131,29 @@
                 overflow: hidden;
             }
             .music-card-content {
+                position: relative;
+                z-index: 2;
                 display: flex;
                 flex-direction: column;
                 min-width: 0;
             }
+            .music-card-content h4 {
+                margin-top: 1.2rem;
+            }
             .music-player-row {
+                position: relative;
+                z-index: 3;
+                grid-column: 2;
                 display: grid;
-                grid-template-columns: auto minmax(110px, 1fr) auto;
+                grid-template-columns: auto minmax(58px, 1fr) auto;
                 align-items: center;
-                gap: .72rem;
+                gap: .38rem;
                 margin-top: auto;
-                padding-top: .85rem;
+                padding-top: .55rem;
             }
             .music-piece-card .music-play-button {
-                width: 2.9rem;
-                height: 2.9rem;
+                width: 1.55rem;
+                height: 1.55rem;
                 border-radius: 999px;
                 display: inline-flex;
                 align-items: center;
@@ -1137,13 +1164,13 @@
             }
             .music-play-button::before {
                 content: "▶";
-                margin-left: .12rem;
-                font-size: 1.05rem;
+                margin-left: .08rem;
+                font-size: .58rem;
             }
             .music-play-button.is-playing::before {
                 content: "Ⅱ";
                 margin-left: 0;
-                font-size: 1rem;
+                font-size: .58rem;
             }
             .music-play-button.is-playing {
                 background: #9B2C2C;
@@ -1152,12 +1179,12 @@
                 --music-progress: 0%;
                 display: flex;
                 align-items: center;
-                gap: 3px;
-                height: 2.4rem;
+                gap: 2px;
+                height: 1.25rem;
                 overflow: hidden;
             }
             .music-waveform span {
-                width: 3px;
+                width: 2px;
                 height: calc(var(--bar-height, 38) * 1%);
                 min-height: 4px;
                 border-radius: 999px;
@@ -1171,7 +1198,7 @@
             }
             .music-time {
                 color: #2D3748;
-                font-size: .78rem;
+                font-size: .58rem;
                 font-weight: 700;
                 white-space: nowrap;
                 font-variant-numeric: tabular-nums;
@@ -1304,22 +1331,21 @@
             }
             .culture-music-layout {
                 align-items: start;
-                grid-template-columns: minmax(300px, 350px) 1fr;
-                gap: 2rem;
                 transform: translateY(.45rem);
             }
             .music-card-grid {
                 align-items: stretch;
-                gap: 1.15rem;
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                gap: 1.5rem;
             }
             .music-piece-card h4 {
-                font-size: clamp(1.18rem, 1.65vw, 1.55rem);
+                font-size: clamp(1.05rem, 1.28vw, 1.28rem);
                 line-height: 1.28;
                 margin-bottom: .2rem;
             }
             .music-piece-card p {
-                font-size: .95rem;
-                line-height: 1.62;
+                font-size: .78rem;
+                line-height: 1.6;
             }
             .music-piece-card > p:first-child {
                 font-size: .68rem;
@@ -1475,6 +1501,7 @@
             .film-trailer-card {
                 width: min(100%, 440px);
                 justify-self: center;
+                cursor: zoom-in;
                 border: 1px solid rgba(255,255,255,.72);
                 box-shadow:
                     0 22px 46px rgba(5,11,16,.38),
@@ -1483,6 +1510,7 @@
                     inset 0 1px 0 rgba(255,255,255,.45);
             }
             .film-trailer-enlarge {
+                display: none;
                 position: absolute;
                 right: .75rem;
                 top: .75rem;
@@ -1597,6 +1625,9 @@
                     gap: 1.75rem;
                     grid-template-columns: 1fr;
                 }
+                .music-card-grid {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
                 .culture-turntable {
                     width: min(100%, 330px);
                     border-radius: 1.6rem;
@@ -1673,6 +1704,9 @@
                 .culture-music-layout {
                     gap: 1.5rem;
                 }
+                .music-card-grid {
+                    grid-template-columns: 1fr;
+                }
                 .culture-turntable {
                     width: min(78vw, 310px);
                     border-radius: 1.35rem;
@@ -1696,13 +1730,13 @@
                     width: 8px;
                 }
                 .music-piece-card {
-                    grid-template-columns: 1fr;
+                    grid-template-columns: minmax(105px, 34%) 1fr;
                     border-radius: 1.25rem;
                     padding: 1.2rem;
                 }
                 .music-cover-box {
-                    min-height: 130px;
-                    aspect-ratio: 16 / 7;
+                    min-height: 190px;
+                    aspect-ratio: 3 / 5;
                 }
                 .music-piece-card h4 {
                     font-size: 1.35rem;
@@ -1802,7 +1836,19 @@
                     width: min(82vw, 280px);
                 }
                 .music-piece-card {
+                    grid-template-columns: 1fr;
                     padding: 1.05rem;
+                }
+                .music-piece-card::after {
+                    left: 50%;
+                    top: 34%;
+                    transform: translate(-50%, -50%);
+                    opacity: .18;
+                }
+                .music-cover-box {
+                    grid-row: auto;
+                    min-height: 130px;
+                    aspect-ratio: 16 / 7;
                 }
                 .music-player-row {
                     grid-template-columns: auto minmax(82px, 1fr);
@@ -1913,8 +1959,8 @@
                     </p>
                     <audio id="culture-audio" preload="metadata"></audio>
 
-                    <div class="music-card-grid grid md:grid-cols-2 gap-6">
-                        <article class="music-piece-card bg-white rounded-3xl p-6 md:p-7 border border-gray-200 shadow-sm transition-all" data-work="《夜官巡場》－〈林秀媚〉">
+                    <div class="music-card-grid grid gap-6">
+                        <article class="music-piece-card border border-gray-200 shadow-sm transition-all" data-work="《夜官巡場》－〈林秀媚〉">
                             <div class="music-cover-box">林秀媚<br>口述歷史</div>
                             <div class="music-card-content">
                                 <h4 class="serif-title text-2xl font-black mb-1">《夜官巡場》－〈林秀媚〉</h4>
@@ -1930,7 +1976,7 @@
                             </div>
                         </article>
 
-                        <article class="music-piece-card bg-white rounded-3xl p-6 md:p-7 border border-gray-200 shadow-sm transition-all" data-work="昨暝阿爸無轉來">
+                        <article class="music-piece-card border border-gray-200 shadow-sm transition-all" data-work="昨暝阿爸無轉來">
                             <div class="music-cover-box">昨暝阿爸<br>無轉來</div>
                             <div class="music-card-content">
                                 <h4 class="serif-title text-2xl font-black mb-1">〈昨暝阿爸無轉來〉</h4>
@@ -1946,7 +1992,7 @@
                             </div>
                         </article>
 
-                        <article class="music-piece-card bg-white rounded-3xl p-6 md:p-7 border border-gray-200 shadow-sm transition-all" data-work="明朗俱樂部">
+                        <article class="music-piece-card border border-gray-200 shadow-sm transition-all" data-work="明朗俱樂部">
                             <div class="music-cover-box">明朗<br>俱樂部</div>
                             <div class="music-card-content">
                                 <h4 class="serif-title text-2xl font-black mb-1">〈明朗俱樂部〉</h4>
@@ -1962,7 +2008,7 @@
                             </div>
                         </article>
 
-                        <article class="music-piece-card bg-white rounded-3xl p-6 md:p-7 border border-gray-200 shadow-sm transition-all" data-work="出巡">
+                        <article class="music-piece-card border border-gray-200 shadow-sm transition-all" data-work="出巡">
                             <div class="music-cover-box">出巡<br>不義遺址</div>
                             <div class="music-card-content">
                                 <h4 class="serif-title text-2xl font-black mb-1">〈出巡〉</h4>
@@ -2044,14 +2090,10 @@
                                 作品直視倖存者的罪惡感與跨世代創傷，讓白色恐怖不只是政治事件，也成為一段關於記憶、責任與修復的人生故事。
                             </p>
                         </div>
-                        <div class="film-trailer-card aspect-video bg-black overflow-hidden relative self-center w-full">
-                            <button type="button" onclick="openFilmTrailerModal()" class="film-trailer-enlarge" aria-label="在頁面中放大觀看預告片">
-                                <span aria-hidden="true">⛶</span>
-                                放大觀看
-                            </button>
+                        <div class="film-trailer-card aspect-video bg-black overflow-hidden relative self-center w-full" role="button" tabindex="0" onclick="openFilmTrailerModal()" onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openFilmTrailerModal(); }" aria-label="放大觀看目前作品預告片">
                             <iframe
                                 id="film-trailer"
-                                class="absolute inset-0 w-full h-full"
+                                class="absolute inset-0 w-full h-full pointer-events-none"
                                 src="https://www.youtube.com/embed/PXDJXU72haw?playsinline=1&rel=0&origin=https%3A%2F%2Fckyling25.github.io"
                                 title="《超級大國民》電影預告"
                                 loading="lazy"
