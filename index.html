@@ -93,6 +93,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            gap: .45rem;
             padding: .58rem 1.05rem;
             border-radius: 999px;
             border: 1px solid rgba(255, 255, 255, .16);
@@ -109,6 +110,12 @@
         .approach-return-nav:hover {
             background: rgba(155, 44, 44, .88);
             transform: translateY(-1px);
+        }
+
+        .approach-return-nav::before {
+            content: "←";
+            font-size: 1.05em;
+            line-height: 1;
         }
 
         .quiz-list {
@@ -741,7 +748,7 @@
             <div id="approaches-anchor" class="h-4"></div>
 
             <!-- 四大靠近方式導覽區塊 -->
-            <section class="py-12 border-t border-gray-200/60 mt-16">
+            <section id="approach-selector" class="py-12 border-t border-gray-200/60 mt-16">
                 <div class="text-center space-y-4 mb-16">
                     <span class="text-xs text-[#9B2C2C] font-semibold tracking-[0.3em] uppercase block">多維路徑探索</span>
                     <h2 class="serif-title text-3xl font-black text-[#2D3748] tracking-wider">
@@ -756,7 +763,7 @@
                 <!-- 四大靠近方式卡片 (桌機並列排版，莫蘭迪冷灰藍底色) -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                     <!-- 卡片 1 -->
-                    <button onclick="window.switchView('approach-1')" id="card-1" class="approach-card group flex flex-col items-start text-left p-6 bg-[#EBF1F5] border-2 border-slate-300 rounded-xl transition-all duration-300 hover:border-[#9B2C2C] hover:bg-white hover:shadow-lg focus:outline-none">
+                    <button onclick="window.showInlineApproach('approach-1')" id="card-1" class="approach-card group flex flex-col items-start text-left p-6 bg-[#EBF1F5] border-2 border-slate-300 rounded-xl transition-all duration-300 hover:border-[#9B2C2C] hover:bg-white hover:shadow-lg focus:outline-none">
                         <div class="w-10 h-10 rounded-lg bg-[#9B2C2C]/5 flex items-center justify-center mb-4 group-hover:bg-[#9B2C2C]/10 transition-colors">
                             <svg class="w-5 h-5 text-[#9B2C2C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path>
@@ -1239,7 +1246,7 @@
                 background: transparent;
                 border: 0;
                 box-shadow: none;
-                font-size: clamp(.66rem, .82vw, .78rem);
+                font-size: clamp(.68rem, .86vw, .82rem);
                 font-weight: 700;
                 text-align: center;
                 letter-spacing: .04em;
@@ -1264,27 +1271,27 @@
                 position: sticky;
                 top: 0;
                 height: 100vh;
-                min-height: 700px;
+                min-height: 840px;
                 overflow: hidden;
                 display: grid;
-                grid-template-rows: minmax(20px, 3vh) minmax(248px, 34vh) minmax(270px, 34vh);
-                align-content: center;
-                row-gap: 1.35rem;
-                padding: 1.25rem clamp(1.5rem, 5vw, 4.5rem);
+                grid-template-rows: 32px minmax(340px, 38vh) auto;
+                align-content: start;
+                row-gap: 2rem;
+                padding: clamp(4.7rem, 6vh, 5.8rem) clamp(1.5rem, 5vw, 4.5rem) 2rem;
             }
             .film-carousel {
                 position: relative;
                 width: min(100%, 1080px);
                 height: 100%;
-                min-height: 238px;
+                min-height: 340px;
                 margin: 0 auto;
                 perspective: 1200px;
             }
             .film-wheel-card {
                 position: absolute;
                 left: 50%;
-                top: 48%;
-                width: clamp(142px, 15vw, 205px);
+                top: 52%;
+                width: clamp(150px, 15.5vw, 218px);
                 aspect-ratio: 2 / 3;
                 border: 0;
                 padding: 0;
@@ -1346,13 +1353,13 @@
                 filter: grayscale(.82) brightness(.48);
             }
             .film-scroll-detail {
-                width: min(100%, 1000px);
-                height: 100%;
-                min-height: 270px;
+                width: min(100%, 1080px);
+                height: auto;
+                min-height: 320px;
                 margin: 0 auto;
-                overflow: hidden;
-                padding: 1rem;
-                column-gap: 1rem;
+                overflow: visible;
+                padding: 1.35rem;
+                column-gap: 1.35rem;
                 align-items: center;
                 border: 1px solid rgba(255,255,255,.82);
                 box-shadow:
@@ -1360,10 +1367,10 @@
                     0 8px 18px rgba(4,10,15,.2),
                     inset 0 1px 0 rgba(255,255,255,.95),
                     inset 0 -1px 0 rgba(40,50,58,.1);
-                transform: translateY(-2px);
+                transform: none;
             }
             .film-trailer-card {
-                width: min(100%, 360px);
+                width: min(100%, 410px);
                 justify-self: center;
                 border: 1px solid rgba(255,255,255,.72);
                 box-shadow:
@@ -1425,28 +1432,26 @@
             }
             .film-detail-copy {
                 overflow: visible;
-                padding: 1rem;
+                padding: .9rem;
             }
             .film-detail-label {
-                margin-bottom: .22rem;
+                margin-bottom: .3rem;
                 color: #9B2C2C;
-                font-size: .68rem;
+                font-size: .72rem;
                 font-weight: 800;
                 letter-spacing: .14em;
             }
             #film-meta {
-                font-size: .76rem;
-                margin-bottom: .35rem;
+                font-size: .82rem;
             }
             #film-title {
-                font-size: clamp(1.32rem, 1.55vw, 1.75rem);
+                font-size: clamp(1.45rem, 1.8vw, 1.95rem);
                 line-height: 1.18;
-                margin-bottom: .55rem;
             }
             #film-desc,
             #film-youth {
-                font-size: clamp(.74rem, .82vw, .84rem);
-                line-height: 1.48;
+                font-size: clamp(.78rem, .88vw, .9rem);
+                line-height: 1.52;
             }
             .film-progress-dot {
                 width: 7px;
@@ -1497,14 +1502,23 @@
                     height: 460vh;
                 }
                 .film-sticky-stage {
-                    min-height: 660px;
+                    min-height: 820px;
+                    grid-template-rows: 30px minmax(300px, 36vh) auto;
+                    row-gap: 1.75rem;
+                    padding-top: 4.5rem;
                     padding-inline: clamp(1rem, 3vw, 2rem);
+                }
+                .film-carousel {
+                    min-height: 300px;
                 }
                 .film-wheel-card {
                     width: clamp(132px, 18vw, 185px);
                 }
                 .film-scroll-detail {
-                    min-height: 340px;
+                    min-height: 330px;
+                }
+                .film-trailer-card {
+                    width: min(100%, 380px);
                 }
             }
             @media (max-width: 767px) {
@@ -1737,7 +1751,7 @@
         </style>
 
         <!-- 文化入口頁內導覽 -->
-        <button onclick="window.switchView('5-education', true)" class="approach-return-nav" type="button">返回入口頁面</button>
+        <button onclick="window.returnToApproachSelector()" class="approach-return-nav" type="button">返回入口頁面</button>
 
         <nav class="culture-floating-nav inline-flex items-center p-1 rounded-full bg-black/55 border border-white/15 backdrop-blur-md shadow-lg" aria-label="文化入口內容導覽">
             <button onclick="showCultureTab('music')" class="px-5 py-2 rounded-full text-sm font-bold text-white hover:bg-white/15 transition-colors">音樂</button>
@@ -2088,7 +2102,20 @@
                         const isCultureVisible = approachPage && !approachPage.classList.contains('hidden');
                         if (entry.isIntersecting && isCultureVisible && window.cultureAutoAdvanceReady) {
                             window.cultureAutoAdvanceReady = false;
-                            window.switchView('5-education', true);
+                            const isInlineCulture = approachPage.classList.contains('culture-inline-detail');
+                            const educationPage = document.getElementById('page-5-education');
+
+                            if (isInlineCulture && educationPage && !educationPage.classList.contains('hidden')) {
+                                const unlockedDiv = document.getElementById('unlocked-content');
+                                const arrowIndicator = document.getElementById('unlocked-arrow-indicator');
+                                if (unlockedDiv) unlockedDiv.classList.remove('hidden');
+                                if (arrowIndicator) {
+                                    arrowIndicator.classList.remove('hidden');
+                                    arrowIndicator.classList.add('flex');
+                                }
+                            } else {
+                                window.switchView('5-education', true);
+                            }
                         }
                     });
                 }, { threshold: 1 });
@@ -2296,7 +2323,7 @@
          頁面 7：身歷其境詳細頁
          ========================================== -->
     <section id="page-approach-2" class="hidden min-h-screen bg-[#FAFAFA] flex flex-col justify-start py-24 px-6">
-        <button onclick="window.switchView('5-education', true)" class="approach-return-nav" type="button">返回入口頁面</button>
+        <button onclick="window.returnToApproachSelector()" class="approach-return-nav" type="button">返回入口頁面</button>
         <div class="max-w-3xl mx-auto space-y-12">
             <!-- Header -->
             <div class="space-y-4">
@@ -2352,7 +2379,7 @@
          頁面 8：現場震撼詳細頁
          ========================================== -->
     <section id="page-approach-3" class="hidden min-h-screen bg-[#FAFAFA] flex flex-col justify-start py-24 px-6">
-        <button onclick="window.switchView('5-education', true)" class="approach-return-nav" type="button">返回入口頁面</button>
+        <button onclick="window.returnToApproachSelector()" class="approach-return-nav" type="button">返回入口頁面</button>
         <div class="max-w-3xl mx-auto space-y-12">
             <!-- Header -->
             <div class="space-y-4">
@@ -2408,7 +2435,7 @@
          頁面 9：理性重構詳細頁
          ========================================== -->
     <section id="page-approach-4" class="hidden min-h-screen bg-[#FAFAFA] flex flex-col justify-start py-24 px-6">
-        <button onclick="window.switchView('5-education', true)" class="approach-return-nav" type="button">返回入口頁面</button>
+        <button onclick="window.returnToApproachSelector()" class="approach-return-nav" type="button">返回入口頁面</button>
         <div class="max-w-3xl mx-auto space-y-12">
             <!-- Header -->
             <div class="space-y-4">
@@ -2487,6 +2514,79 @@
             
             const btnProceedToEdu = document.getElementById('btn-proceed-to-edu');
 
+            function mountInlineApproachSections() {
+                const educationPage = document.getElementById('page-5-education');
+                const unlockedContent = document.getElementById('unlocked-content');
+                const culturePage = document.getElementById('page-approach-1');
+
+                if (educationPage && unlockedContent && culturePage && culturePage.parentElement !== educationPage) {
+                    educationPage.insertBefore(culturePage, unlockedContent);
+                    culturePage.classList.add('culture-inline-detail');
+                    culturePage.classList.add('hidden');
+                }
+            }
+
+            mountInlineApproachSections();
+
+            window.showInlineApproach = function(pageKey) {
+                mountInlineApproachSections();
+
+                const selector = document.getElementById('approach-selector');
+                const targetPage = pages[pageKey];
+
+                if (!targetPage) return;
+
+                Object.keys(pages).forEach(key => {
+                    if (key.startsWith('approach-') && pages[key]) {
+                        pages[key].classList.add('hidden');
+                        pages[key].classList.remove('fade-in-active');
+                    }
+                });
+
+                if (selector) {
+                    selector.classList.add('hidden');
+                }
+
+                targetPage.classList.remove('hidden');
+                if (pageKey === 'approach-1') {
+                    targetPage.classList.remove('fade-in-active');
+                    window.cultureAutoAdvanceReady = true;
+                } else {
+                    targetPage.classList.add('fade-in-active');
+                }
+
+                setTimeout(() => {
+                    targetPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 60);
+            };
+
+            window.returnToApproachSelector = function() {
+                const selector = document.getElementById('approach-selector');
+                const culturePage = document.getElementById('page-approach-1');
+                const isInlineCulture = culturePage && culturePage.classList.contains('culture-inline-detail');
+
+                if (isInlineCulture && selector && !document.getElementById('page-5-education').classList.contains('hidden')) {
+                    Object.keys(pages).forEach(key => {
+                        if (key.startsWith('approach-') && pages[key]) {
+                            pages[key].classList.add('hidden');
+                            pages[key].classList.remove('fade-in-active');
+                        }
+                    });
+
+                    selector.classList.remove('hidden');
+                    window.cultureAutoAdvanceReady = false;
+                    if (typeof stopCultureMusic === 'function') {
+                        stopCultureMusic();
+                    }
+
+                    setTimeout(() => {
+                        selector.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 60);
+                } else {
+                    window.switchView('5-education', true);
+                }
+            };
+
             // --- 新增：首頁滑鼠與手機滾動偵測 (已加入防連點保護) ---
             let isTransitioning = false; // 建立一個鎖定變數
             
@@ -2558,6 +2658,19 @@
                     targetPage.classList.add('flex');
                 } else if (pageKey === '5-education') {
                     targetPage.classList.add('flex');
+                    mountInlineApproachSections();
+
+                    const selector = document.getElementById('approach-selector');
+                    if (selector) {
+                        selector.classList.remove('hidden');
+                    }
+                    Object.keys(pages).forEach(key => {
+                        if (key.startsWith('approach-') && pages[key]) {
+                            pages[key].classList.add('hidden');
+                            pages[key].classList.remove('fade-in-active');
+                        }
+                    });
+
                     if (scrollToAnchor) {
                         // 1. 顯示原本隱藏的置中箭頭
                         const arrowIndicator = document.getElementById('unlocked-arrow-indicator');
