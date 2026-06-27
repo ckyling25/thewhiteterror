@@ -934,10 +934,10 @@
             }
             .culture-turntable {
                 position: relative;
-                width: min(100%, 390px);
+                width: min(100%, 300px);
                 aspect-ratio: 1;
                 margin-inline: auto;
-                border-radius: 2rem;
+                border-radius: 1.45rem;
                 background: linear-gradient(145deg, #f7f3eb, #d8d0c3);
                 border: 1px solid #c8bfb1;
                 box-shadow: 0 24px 55px rgba(55, 45, 35, 0.2), inset 0 1px 0 rgba(255,255,255,0.9);
@@ -1033,12 +1033,14 @@
                 transform: translateX(-50%);
             }
             .culture-player-status {
-                min-height: 1.5rem;
+                min-height: 1.35rem;
+                font-size: .78rem;
             }
             .music-piece-card {
                 display: flex;
                 flex-direction: column;
                 min-height: 100%;
+                padding: .9rem;
             }
             .music-piece-card.is-playing {
                 border-color: #9B2C2C;
@@ -1053,11 +1055,102 @@
             .culture-landing-copy {
                 text-wrap: balance;
             }
+            .culture-scroll-intro {
+                position: relative;
+                height: 185vh;
+                background:
+                    radial-gradient(circle at 18% 18%, rgba(155, 44, 44, 0.2), transparent 30rem),
+                    radial-gradient(circle at 82% 72%, rgba(255, 255, 255, 0.08), transparent 24rem),
+                    #0F141A;
+            }
+            .culture-scroll-intro-stage {
+                position: sticky;
+                top: 0;
+                min-height: 100vh;
+                display: grid;
+                place-items: center;
+                padding: clamp(2rem, 6vw, 5rem);
+                overflow: hidden;
+            }
+            .culture-scroll-copy {
+                grid-area: 1 / 1;
+                max-width: 58rem;
+                text-align: center;
+                color: #fff;
+                opacity: 0;
+                transform: translateY(24px);
+                transition: opacity .65s ease, transform .65s ease;
+                pointer-events: none;
+                text-wrap: balance;
+            }
+            .culture-scroll-copy.is-active {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .culture-text-block {
+                display: grid;
+                place-items: center;
+                min-height: 48vh;
+                padding: clamp(4rem, 9vw, 7rem) clamp(1.25rem, 5vw, 3rem);
+                text-align: center;
+                opacity: 0;
+                transform: translateY(26px);
+                transition: opacity .75s ease, transform .75s ease;
+            }
+            .culture-text-block.is-visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .culture-text-block.min-h-0 {
+                min-height: auto;
+            }
+            .culture-text-copy {
+                max-width: 58rem;
+                text-wrap: balance;
+            }
+            #culture-music-panel {
+                padding: 2.35rem 1.5rem;
+            }
+            .culture-music-heading {
+                margin-bottom: .75rem;
+            }
+            .culture-music-heading h3 {
+                font-size: clamp(2rem, 3.4vw, 3rem);
+            }
+            .culture-sound-note {
+                margin-bottom: .85rem;
+                font-size: .86rem;
+            }
             .culture-music-layout {
                 align-items: start;
+                grid-template-columns: minmax(220px, 270px) 1fr;
+                gap: 1.4rem;
             }
             .music-card-grid {
                 align-items: stretch;
+                gap: .95rem;
+            }
+            .music-piece-card h4 {
+                font-size: clamp(1rem, 1.35vw, 1.22rem);
+                line-height: 1.28;
+                margin-bottom: .12rem;
+            }
+            .music-piece-card p {
+                font-size: .86rem;
+                line-height: 1.45;
+            }
+            .music-piece-card > p:first-child {
+                font-size: .68rem;
+                margin-bottom: .35rem;
+            }
+            .music-piece-card h4 + p {
+                margin-bottom: .45rem;
+            }
+            .music-piece-card h4 + p + p {
+                margin-bottom: .7rem;
+            }
+            .music-piece-card .music-play-button {
+                padding-block: .55rem;
             }
             .film-scroll-story {
                 position: relative;
@@ -1288,13 +1381,14 @@
                     font-size: clamp(1.45rem, 4.2vw, 2.35rem);
                 }
                 #culture-music-panel {
-                    padding: 5rem 1.25rem;
+                    padding: 3rem 1.25rem;
                 }
                 .culture-music-layout {
                     gap: 2rem;
+                    grid-template-columns: 1fr;
                 }
                 .culture-turntable {
-                    width: min(100%, 330px);
+                    width: min(100%, 260px);
                     border-radius: 1.6rem;
                 }
                 .film-scroll-story {
@@ -1328,13 +1422,27 @@
                     min-height: 100svh;
                     padding: 5.5rem 1rem 6.5rem;
                 }
+                .culture-scroll-intro {
+                    height: 170vh;
+                }
+                .culture-scroll-intro-stage {
+                    padding: 5.5rem 1.2rem 6.5rem;
+                }
+                .culture-scroll-copy {
+                    font-size: clamp(1.35rem, 7vw, 2rem);
+                    line-height: 1.65;
+                }
+                .culture-text-block {
+                    min-height: 42vh;
+                    padding: 3.5rem 1rem;
+                }
                 .culture-landing-copy {
                     font-size: clamp(1.35rem, 7vw, 2rem);
                     line-height: 1.65;
                     margin-bottom: 2rem;
                 }
                 #culture-music-panel {
-                    padding: 4rem 1rem 5rem;
+                    padding: 3rem 1rem 4rem;
                     scroll-margin-top: 0;
                 }
                 .culture-music-layout {
@@ -1364,7 +1472,7 @@
                 }
                 .music-piece-card {
                     border-radius: 1.25rem;
-                    padding: 1.25rem;
+                    padding: 1.15rem;
                 }
                 .music-piece-card h4 {
                     font-size: 1.35rem;
@@ -1452,6 +1560,13 @@
                     font-size: clamp(1.18rem, 6.3vw, 1.65rem);
                     line-height: 1.75;
                 }
+                .culture-scroll-intro {
+                    height: 165vh;
+                }
+                .culture-scroll-copy {
+                    font-size: clamp(1.18rem, 6.3vw, 1.65rem);
+                    line-height: 1.75;
+                }
                 .culture-turntable {
                     width: min(82vw, 260px);
                 }
@@ -1526,36 +1641,28 @@
             <button onclick="showCultureTab('film')" class="px-5 py-2 rounded-full text-sm font-bold text-white hover:bg-white/15 transition-colors">影視</button>
         </nav>
 
-        <!-- 主畫面 Landing -->
-        <div class="culture-landing relative min-h-[62vh] flex flex-col items-center justify-center px-6 py-24">
-            <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 26px 26px;"></div>
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(155,44,44,0.45),transparent_34%),radial-gradient(circle_at_80%_70%,rgba(255,255,255,0.13),transparent_30%)]"></div>
-
-            <p class="culture-landing-copy relative z-10 max-w-5xl mx-auto mb-14 text-center serif-title text-2xl md:text-4xl font-bold leading-relaxed text-white">
+        <!-- 文化入口開場文字 -->
+        <div id="culture-scroll-intro" class="culture-scroll-intro">
+            <div class="culture-scroll-intro-stage">
+                <p class="culture-scroll-copy is-active serif-title text-2xl md:text-4xl font-bold leading-relaxed">
                 為了降低年輕世代認識白恐歷史的門檻，不少音樂和影視作品嘗試透過檔案資料的「轉譯」，期待激發青年對相關議題的興趣。
-            </p>
+                </p>
 
-            <p class="culture-landing-copy relative z-10 max-w-5xl mx-auto text-center serif-title text-2xl md:text-4xl font-bold leading-relaxed text-white">
+                <p class="culture-scroll-copy serif-title text-2xl md:text-4xl font-bold leading-relaxed">
                 例如獨立樂團裝咖人的專輯《夜官巡場》，以及美秀集團的歌曲〈昨暝阿爸無轉來〉等，分別以受難者故事與政治犯家庭的普遍經歷為藍本，將歷史元素融入歌詞中。
-            </p>
-
-            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-center text-gray-400 animate-bounce">
-                <span class="text-xs tracking-widest">向下探索作品與故事</span>
-                <svg class="w-5 h-5 mx-auto mt-2 text-[#E7B7B7]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                </svg>
+                </p>
             </div>
         </div>
 
         <!-- 音樂內容 -->
         <div id="culture-music-panel" class="culture-panel bg-[#F4F1EC] text-[#1A202C] px-6 py-24 border-t border-gray-200 scroll-mt-20">
             <div class="max-w-7xl mx-auto">
-                <div class="mb-10">
+                <div class="culture-music-heading">
                     <span class="text-xs text-[#9B2C2C] font-semibold tracking-[0.3em] uppercase block mb-3">MUSIC / ALBUM</span>
                     <h3 class="serif-title text-3xl md:text-5xl font-black">音樂作品</h3>
                 </div>
 
-                <p class="mb-8 text-center text-sm md:text-base font-bold text-[#9B2C2C] tracking-wide">
+                <p class="culture-sound-note text-center font-bold text-[#9B2C2C] tracking-wide">
                     🔊 請開啟聲音，以聆聽作品片段
                 </p>
 
@@ -1624,22 +1731,21 @@
         </div>
 
         <!-- 音樂與影視之間的引言 -->
-        <div class="bg-[#0F141A] px-6 py-20 border-y border-white/10">
-            <div class="max-w-4xl mx-auto text-center">
-                <p class="serif-title text-xl md:text-2xl font-bold leading-relaxed text-white mb-8">
+        <div class="culture-text-block culture-reveal bg-[#0F141A]">
+            <div class="culture-text-copy">
+                <p class="serif-title text-xl md:text-3xl font-bold leading-relaxed text-white mb-8">
                     陳彥蓉認為，音樂是現今年輕人的共同語言，更是讓他們了解這段歷史的一大途徑。
                 </p>
                 <blockquote class="py-2">
                     <p class="serif-title text-xl md:text-3xl leading-relaxed text-white">「你很難找到有人是沒有喜歡的樂團或音樂。」</p>
-                    <p class="text-sm text-gray-400 mt-4">— 國立政治大學財政學系學生陳彥蓉</p>
                 </blockquote>
             </div>
         </div>
 
         <!-- 影視內容 -->
         <div id="culture-film-panel" class="culture-panel bg-[#111820] border-t border-white/10 scroll-mt-20">
-            <div class="max-w-7xl mx-auto px-6 pt-20 pb-12">
-                <p class="max-w-5xl mx-auto text-center serif-title text-xl md:text-3xl font-bold leading-relaxed text-white">
+            <div class="culture-text-block culture-reveal min-h-0">
+                <p class="culture-text-copy serif-title text-xl md:text-3xl font-bold leading-relaxed text-white">
                     影視作品如《超級大國民》、《返校》、《流麻溝十五號》、《餘燼》、《星空下的黑潮島嶼》及《大濛》等，分別以不同的敘事角度，呈現威權時期人民所面臨的不公與壓迫。
                 </p>
             </div>
@@ -1737,9 +1843,9 @@
                 </div>
             </div>
 
-            <div class="max-w-7xl mx-auto px-6 pb-24">
-                <div class="mt-14 bg-black/30 border border-white/10 rounded-3xl p-8 md:p-10">
-                    <p class="text-gray-300 leading-loose text-center md:text-lg">
+            <div class="culture-text-block culture-reveal min-h-0 pb-24">
+                <div class="culture-text-copy">
+                    <p class="text-gray-300 leading-loose text-center md:text-xl">
                         黃長玲指出，雖然部分作品的論述仍相對粗淺，但其核心功能在於激發大眾對國家暴力的警惕，可作為年輕人接觸議題的第一步。
                     </p>
                 </div>
@@ -1846,6 +1952,43 @@
             function showCultureTab(tab) {
                 const target = document.getElementById(tab === 'film' ? 'culture-film-panel' : 'culture-music-panel');
                 target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            function updateCultureIntroText() {
+                const intro = document.getElementById('culture-scroll-intro');
+                if (!intro) return;
+                const copies = intro.querySelectorAll('.culture-scroll-copy');
+                if (!copies.length) return;
+
+                const rect = intro.getBoundingClientRect();
+                const travel = Math.max(1, intro.offsetHeight - window.innerHeight);
+                const progress = Math.max(0, Math.min(1, -rect.top / travel));
+                const activeIndex = progress < 0.52 ? 0 : 1;
+
+                copies.forEach((copy, index) => {
+                    copy.classList.toggle('is-active', index === activeIndex);
+                });
+            }
+
+            function initCultureTextReveals() {
+                const blocks = document.querySelectorAll('.culture-reveal');
+                if (!blocks.length) return;
+
+                if (!('IntersectionObserver' in window)) {
+                    blocks.forEach(block => block.classList.add('is-visible'));
+                    return;
+                }
+
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.28 });
+
+                blocks.forEach(block => observer.observe(block));
             }
 
             const filmOrder = ['超級大國民', '返校', '流麻溝十五號', '餘燼', '星空下的黑潮島嶼', '大濛'];
@@ -2028,10 +2171,14 @@
                     audio.addEventListener('ended', () => setMusicPlayerState(activeMusicTrack, false));
                 }
                 renderFilmWork(0);
+                updateCultureIntroText();
+                initCultureTextReveals();
                 window.addEventListener('scroll', requestFilmScrollUpdate, { passive: true });
                 window.addEventListener('scroll', pauseMusicWhenLeavingPanel, { passive: true });
+                window.addEventListener('scroll', updateCultureIntroText, { passive: true });
                 window.addEventListener('resize', requestFilmScrollUpdate);
                 window.addEventListener('resize', pauseMusicWhenLeavingPanel);
+                window.addEventListener('resize', updateCultureIntroText);
                 document.addEventListener('keydown', event => {
                     if (event.key === 'Escape') closeFilmTrailerModal();
                 });
