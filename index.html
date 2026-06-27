@@ -1085,13 +1085,13 @@
             .music-piece-card {
                 position: relative;
                 display: grid;
-                grid-template-columns: minmax(118px, 31%) minmax(0, 1fr);
+                grid-template-columns: minmax(128px, 34%) minmax(0, 1fr);
                 grid-template-rows: auto 1fr;
-                column-gap: clamp(1rem, 1.7vw, 1.45rem);
-                row-gap: .55rem;
+                column-gap: clamp(1.05rem, 1.8vw, 1.55rem);
+                row-gap: clamp(.85rem, 1.3vw, 1.15rem);
                 align-items: start;
-                min-height: clamp(245px, 27vh, 310px);
-                padding: clamp(1rem, 1.8vw, 1.35rem);
+                min-height: clamp(255px, 28vh, 320px);
+                padding: clamp(1.05rem, 1.9vw, 1.45rem);
                 overflow: hidden;
                 background: rgba(255, 252, 246, .78);
                 border: 1px solid rgba(255,255,255,.78) !important;
@@ -1104,63 +1104,96 @@
                 box-shadow: 0 15px 35px rgba(155,44,44,.13);
             }
             .music-piece-card::after {
-                content: "";
-                position: absolute;
-                left: clamp(112px, 20%, 168px);
-                top: clamp(72px, 33%, 108px);
-                width: clamp(74px, 8vw, 112px);
-                aspect-ratio: 1;
-                border-radius: 999px;
-                background: radial-gradient(circle, #191919 0 6%, #050505 7% 62%, #000 63% 100%);
-                box-shadow: 8px 10px 18px rgba(0,0,0,.18);
-                transform: translate(-8%, -50%);
-                z-index: 1;
-                pointer-events: none;
+                content: none;
             }
             .music-cover-box {
                 position: relative;
                 z-index: 3;
-                grid-row: 1 / 3;
+                grid-column: 1;
+                grid-row: 1;
                 align-self: start;
-                width: min(100%, 148px);
-                aspect-ratio: 3 / 4.55;
+                width: min(100%, 150px);
+                aspect-ratio: 1;
                 display: grid;
                 place-items: center;
-                padding: .9rem;
-                background: rgba(255,255,255,.96);
+                padding: 0;
+                background: transparent;
                 border: 0;
                 color: rgba(45,55,72,.76);
                 font-family: 'Noto Serif TC', serif;
                 font-weight: 800;
                 line-height: 1.35;
                 text-align: center;
-                overflow: hidden;
+                overflow: visible;
+                isolation: isolate;
+            }
+            .music-cover-box::before {
+                content: "";
+                position: absolute;
+                right: -33%;
+                top: 50%;
+                width: 72%;
+                aspect-ratio: 1;
+                border-radius: 999px;
+                background:
+                    radial-gradient(circle at center, #2b2b2b 0 7%, #080808 8% 15%, transparent 16%),
+                    repeating-radial-gradient(circle at center, #111 0 3px, #2c2c2c 4px 5px, #060606 6px 10px);
+                box-shadow: 8px 8px 18px rgba(0,0,0,.22);
+                transform: translateY(-50%);
+                z-index: 0;
+                pointer-events: none;
+            }
+            .music-cover-box > span,
+            .music-cover-box img {
+                position: relative;
+                z-index: 1;
+                width: 100%;
+                height: 100%;
+                background: rgba(255,255,255,.96);
                 box-shadow: 0 10px 20px rgba(47, 38, 27, .14);
+            }
+            .music-cover-box > span {
+                display: grid;
+                place-items: center;
+                padding: .7rem;
+            }
+            .music-cover-box img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
             }
             .music-card-content {
                 position: relative;
                 z-index: 4;
                 grid-column: 2;
-                grid-row: 1 / 3;
+                grid-row: 1;
                 display: flex;
                 flex-direction: column;
                 min-width: 0;
                 height: 100%;
             }
             .music-card-content h4 {
-                margin-top: .55rem;
+                margin-top: .15rem;
             }
             .music-player-row {
                 position: relative;
                 z-index: 3;
-                grid-column: 2;
                 display: grid;
-                grid-template-columns: auto minmax(86px, 1fr) auto;
+                grid-template-columns: auto minmax(92px, 1fr) auto;
                 align-items: center;
                 gap: .55rem;
-                align-self: end;
-                margin-top: auto;
+                margin-top: .8rem;
                 padding-top: .15rem;
+            }
+            .music-description {
+                position: relative;
+                z-index: 4;
+                grid-column: 1 / -1;
+                grid-row: 2;
+                margin: 0;
+                padding-top: clamp(.8rem, 1.1vw, 1rem);
+                border-top: 1px dashed rgba(45, 55, 72, .22);
             }
             .music-piece-card .music-play-button {
                 width: 2.05rem;
@@ -1350,7 +1383,7 @@
             .music-card-grid {
                 align-items: stretch;
                 grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: clamp(1.05rem, 2.1vw, 1.75rem);
+                gap: clamp(1rem, 1.8vw, 1.5rem);
             }
             .music-piece-card h4 {
                 font-size: clamp(1.12rem, 1.45vw, 1.42rem);
@@ -1742,13 +1775,9 @@
                     border-radius: 1.25rem;
                     padding: 1.2rem;
                 }
-                .music-piece-card::after {
-                    left: clamp(106px, 21%, 145px);
-                    width: clamp(70px, 15vw, 98px);
-                }
                 .music-cover-box {
                     width: min(100%, 132px);
-                    aspect-ratio: 3 / 4.45;
+                    aspect-ratio: 1;
                 }
                 .music-piece-card h4 {
                     font-size: 1.22rem;
@@ -1851,21 +1880,17 @@
                     grid-template-columns: 1fr;
                     padding: 1.05rem;
                 }
-                .music-piece-card::after {
-                    left: clamp(112px, 32%, 150px);
-                    top: 4.75rem;
-                    transform: translate(-10%, -50%);
-                    opacity: .95;
-                    width: 86px;
-                }
                 .music-cover-box {
                     grid-row: auto;
-                    width: min(46%, 128px);
-                    aspect-ratio: 3 / 4.2;
+                    width: min(48%, 128px);
+                    aspect-ratio: 1;
                     margin-bottom: .75rem;
                 }
                 .music-card-content {
                     grid-column: 1;
+                    grid-row: auto;
+                }
+                .music-description {
                     grid-row: auto;
                 }
                 .music-player-row {
@@ -1967,79 +1992,73 @@
                     <h3 class="serif-title text-3xl md:text-5xl font-black">當歷史化作一首歌曲</h3>
                 </div>
 
-                <p class="culture-sound-note text-center font-bold text-[#9B2C2C] tracking-wide">
-                    🔊 開啟聲音，點擊聆聽相關作品吧！
-                </p>
-
                 <div class="culture-music-layout">
-                    <p id="culture-player-status" class="culture-player-status text-center text-sm font-bold text-gray-600" aria-live="polite">
-                        選擇下方任一作品開始播放
-                    </p>
+                    <p id="culture-player-status" class="sr-only" aria-live="polite"></p>
                     <audio id="culture-audio" preload="metadata"></audio>
 
                     <div class="music-card-grid grid gap-6">
                         <article class="music-piece-card border border-gray-200 shadow-sm transition-all" data-work="《夜官巡場》－〈林秀媚〉">
-                            <div class="music-cover-box">林秀媚<br>口述歷史</div>
+                            <div class="music-cover-box"><span>林秀媚<br>口述歷史</span></div>
                             <div class="music-card-content">
                                 <h4 class="serif-title text-2xl font-black mb-1">《夜官巡場》－〈林秀媚〉</h4>
                                 <p class="text-sm text-gray-500 mb-5">裝咖人</p>
-                                <p class="text-sm md:text-base text-gray-600 leading-loose text-justify mb-6">
-                                    歌曲取材自林秀媚的口述歷史，並以其視角出發，呈現出面對愛人離去的悲痛與思念。林秀媚是二二八受難者、嘉義市參議員盧鈵欽的妻子。盧鈵欽在前往水上機場與政府談判後，便再也沒有平安返家，最終於未經審判的情況下，在嘉義火車站前遭公開槍決。
-                                </p>
                                 <div class="music-player-row">
                                     <button onclick="toggleMusicTrack('《夜官巡場》－〈林秀媚〉', this)" class="music-play-button bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors" aria-label="播放《夜官巡場》－〈林秀媚〉">播放</button>
                                     <div class="music-waveform" aria-hidden="true"></div>
                                     <span class="music-time">0:00 / 0:00</span>
                                 </div>
                             </div>
+                            <p class="music-description text-sm md:text-base text-gray-600 leading-loose text-justify">
+                                歌曲取材自林秀媚的口述歷史，並以其視角出發，呈現出面對愛人離去的悲痛與思念。林秀媚是二二八受難者、嘉義市參議員盧鈵欽的妻子。盧鈵欽在前往水上機場與政府談判後，便再也沒有平安返家，最終於未經審判的情況下，在嘉義火車站前遭公開槍決。
+                            </p>
                         </article>
 
                         <article class="music-piece-card border border-gray-200 shadow-sm transition-all" data-work="昨暝阿爸無轉來">
-                            <div class="music-cover-box">昨暝阿爸<br>無轉來</div>
+                            <div class="music-cover-box"><img src="images/mei-hsiu-zha-ming-a-ba.jpg" alt="〈昨暝阿爸無轉來〉歌曲圖片"></div>
                             <div class="music-card-content">
                                 <h4 class="serif-title text-2xl font-black mb-1">〈昨暝阿爸無轉來〉</h4>
                                 <p class="text-sm text-gray-500 mb-5">美秀集團</p>
-                                <p class="text-sm md:text-base text-gray-600 leading-loose text-justify mb-6">
-                                    作品以孩子的視角展開，透過天真卻無奈的口吻，反覆唱出「昨暝阿爸無轉來」，訴說對父親遲遲未歸的思念，以及不知道父親身在何處的恐懼與不安，呈現出白色恐怖如何從受難者影響至整個家庭。
-                                </p>
                                 <div class="music-player-row">
                                     <button onclick="toggleMusicTrack('昨暝阿爸無轉來', this)" class="music-play-button bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors" aria-label="播放昨暝阿爸無轉來">播放</button>
                                     <div class="music-waveform" aria-hidden="true"></div>
                                     <span class="music-time">0:00 / 0:00</span>
                                 </div>
                             </div>
+                            <p class="music-description text-sm md:text-base text-gray-600 leading-loose text-justify">
+                                作品以孩子的視角展開，透過天真卻無奈的口吻，反覆唱出「昨暝阿爸無轉來」，訴說對父親遲遲未歸的思念，以及不知道父親身在何處的恐懼與不安，呈現出白色恐怖如何從受難者影響至整個家庭。
+                            </p>
                         </article>
 
                         <article class="music-piece-card border border-gray-200 shadow-sm transition-all" data-work="明朗俱樂部">
-                            <div class="music-cover-box">明朗<br>俱樂部</div>
+                            <div class="music-cover-box"><span>明朗<br>俱樂部</span></div>
                             <div class="music-card-content">
                                 <h4 class="serif-title text-2xl font-black mb-1">〈明朗俱樂部〉</h4>
                                 <p class="text-sm text-gray-500 mb-5">雷光夏</p>
-                                <p class="text-sm md:text-base text-gray-600 leading-loose text-justify mb-6">
-                                    作品用以紀念雷光夏未曾謀面的外祖父李漢湖，歌名源自臺鐵基層員工的互助團體「明朗俱樂部」。當年團體遭政府認定為共產黨外圍組織，李漢湖則被指控參與其中，並以「知匪不報」等罪名判刑，於1950年遭槍決。
-                                </p>
                                 <div class="music-player-row">
                                     <button onclick="toggleMusicTrack('明朗俱樂部', this)" class="music-play-button bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors" aria-label="播放明朗俱樂部">播放</button>
                                     <div class="music-waveform" aria-hidden="true"></div>
                                     <span class="music-time">0:00 / 0:00</span>
                                 </div>
                             </div>
+                            <p class="music-description text-sm md:text-base text-gray-600 leading-loose text-justify">
+                                作品用以紀念雷光夏未曾謀面的外祖父李漢湖，歌名源自臺鐵基層員工的互助團體「明朗俱樂部」。當年團體遭政府認定為共產黨外圍組織，李漢湖則被指控參與其中，並以「知匪不報」等罪名判刑，於1950年遭槍決。
+                            </p>
                         </article>
 
                         <article class="music-piece-card border border-gray-200 shadow-sm transition-all" data-work="出巡">
-                            <div class="music-cover-box">出巡<br>不義遺址</div>
+                            <div class="music-cover-box"><span>出巡<br>不義遺址</span></div>
                             <div class="music-card-content">
                                 <h4 class="serif-title text-2xl font-black mb-1">〈出巡〉</h4>
                                 <p class="text-sm text-gray-500 mb-5">拍謝少年</p>
-                                <p class="text-sm md:text-base text-gray-600 leading-loose text-justify mb-6">
-                                    MV邀請政治受難者蔡寬裕親自出演男主角。歌曲結合臺灣廟會「出巡」的意象，透過遶境儀式走訪不義遺址，撫慰受難者的靈魂，喚醒大眾對於這段歷史的重視。
-                                </p>
                                 <div class="music-player-row">
                                     <button onclick="toggleMusicTrack('出巡', this)" class="music-play-button bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors" aria-label="播放出巡">播放</button>
                                     <div class="music-waveform" aria-hidden="true"></div>
                                     <span class="music-time">0:00 / 0:00</span>
                                 </div>
                             </div>
+                            <p class="music-description text-sm md:text-base text-gray-600 leading-loose text-justify">
+                                MV邀請政治受難者蔡寬裕親自出演男主角。歌曲結合臺灣廟會「出巡」的意象，透過遶境儀式走訪不義遺址，撫慰受難者的靈魂，喚醒大眾對於這段歷史的重視。
+                            </p>
                         </article>
                     </div>
                 </div>
