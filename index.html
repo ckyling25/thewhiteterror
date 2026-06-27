@@ -1105,7 +1105,7 @@
             .culture-scroll-copy {
                 grid-area: 1 / 1;
                 max-width: 64rem;
-                text-align: center;
+                text-align: left;
                 color: #29251f;
                 opacity: 0;
                 transform: translateY(24px);
@@ -1145,12 +1145,15 @@
                 line-break: strict;
             }
             .culture-copy-panel {
-                display: block;
-                width: min(100%, var(--copy-width, 66rem));
+                display: inline-block;
+                width: fit-content;
+                max-width: min(100%, var(--copy-width, 66rem));
                 margin-inline: auto;
+                justify-self: center;
                 padding: clamp(1.5rem, 4vw, 2.6rem) clamp(1.25rem, 4vw, 3rem);
                 background: rgba(255, 255, 255, 0.72);
                 box-shadow: 0 16px 38px rgba(57, 45, 31, 0.1);
+                text-align: left;
             }
             .culture-report-copy {
                 font-family: 'Noto Serif TC', serif;
@@ -1158,7 +1161,7 @@
                 font-weight: 700;
                 line-height: 1.9;
                 color: #29251f;
-                text-align: center;
+                text-align: left;
             }
             .culture-report-copy.text-white {
                 color: #fff;
@@ -1171,7 +1174,7 @@
             }
             .culture-quote-panel {
                 display: grid;
-                place-items: center;
+                justify-items: start;
                 gap: 1.25rem;
             }
             .culture-quote-panel .culture-report-copy {
@@ -1195,6 +1198,7 @@
             }
             .culture-music-heading {
                 margin-bottom: .8rem;
+                text-align: center;
             }
             .culture-music-heading h3 {
                 font-size: clamp(2.15rem, 3.5vw, 3.15rem);
@@ -1778,12 +1782,11 @@
         <div id="culture-music-panel" class="culture-panel text-[#1A202C] border-t border-gray-200 scroll-mt-20">
             <div class="max-w-7xl mx-auto">
                 <div class="culture-music-heading">
-                    <span class="text-xs text-[#9B2C2C] font-semibold tracking-[0.3em] uppercase block mb-3">MUSIC / ALBUM</span>
-                    <h3 class="serif-title text-3xl md:text-5xl font-black">音樂作品</h3>
+                    <h3 class="serif-title text-3xl md:text-5xl font-black">當歷史化作一首歌曲</h3>
                 </div>
 
                 <p class="culture-sound-note text-center font-bold text-[#9B2C2C] tracking-wide">
-                    🔊 請開啟聲音，以聆聽作品片段
+                    🔊 請開啟聲音，點擊聆聽相關作品
                 </p>
 
                 <div class="culture-music-layout grid xl:grid-cols-[390px_1fr] gap-10 items-start">
