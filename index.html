@@ -85,7 +85,10 @@
             z-index: 90;
         }
 
-        .quiz-list { width: min(100%, 960px); }
+        .quiz-list {
+            width: min(100%, 960px);
+            margin-inline: auto;
+        }
 
         .quiz-item + .quiz-item {
             margin-top: 2rem;
@@ -105,6 +108,10 @@
             opacity: 0;
             transform: translateY(28px);
             animation: quizCardIn 0.65s ease forwards;
+        }
+
+        .quiz-card h3 {
+            overflow-wrap: anywhere;
         }
 
         @keyframes quizCardIn {
@@ -311,17 +318,118 @@
             transform: translateX(-50%);
         }
 
-        @media (max-width: 640px) {
-            .quiz-card {
-                min-height: 500px;
-                padding: 7rem 2.3rem 5.5rem;
-                background-size: 100% 100%;
+        @media (max-width: 900px) {
+            #page-4-quiz-container {
+                padding-inline: 1rem;
             }
 
-            .quiz-options { grid-template-columns: 1fr; gap: 0.65rem; }
-            .quiz-option { min-height: 56px; }
-            .quiz-scale { width: 100%; }
-            .quiz-scale-segment { font-size: 0.65rem; }
+            .quiz-list {
+                width: min(100%, 720px);
+            }
+
+            .quiz-card {
+                min-height: 440px;
+                padding: 5.8rem 3.2rem 5.2rem;
+            }
+
+            .quiz-options {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+                margin-top: 1.5rem;
+            }
+
+            .quiz-option {
+                min-height: 58px;
+            }
+
+            .quiz-scale {
+                width: 92%;
+            }
+        }
+
+        @media (max-width: 640px) {
+            #page-4-quiz-container {
+                padding-top: 3rem;
+                padding-bottom: 4rem;
+            }
+
+            .quiz-card {
+                min-height: auto;
+                padding: 5.8rem 2.15rem 4.6rem;
+                background-size: 100% 100%;
+                filter: drop-shadow(0 12px 16px rgba(31, 24, 17, 0.18));
+            }
+
+            .quiz-card h3 {
+                font-size: 1.12rem;
+                line-height: 1.75;
+            }
+
+            .quiz-options {
+                grid-template-columns: 1fr;
+                gap: 0.65rem;
+            }
+
+            .quiz-option {
+                min-height: 54px;
+                font-size: 0.95rem;
+            }
+
+            .quiz-fingerprint {
+                width: clamp(44px, 30%, 58px);
+            }
+
+            .quiz-feedback {
+                margin-top: 1rem;
+                border-radius: 0.85rem;
+            }
+
+            .quiz-panel {
+                padding: 1rem;
+            }
+
+            .quiz-feedback-answer {
+                font-size: clamp(1.25rem, 7vw, 1.55rem);
+            }
+
+            .quiz-feedback-copy {
+                font-size: 1rem;
+                line-height: 1.7;
+            }
+
+            .quiz-scale {
+                width: 100%;
+                height: 38px;
+                margin-top: 3.6rem;
+            }
+
+            .quiz-scale-segment {
+                font-size: 0.62rem;
+                letter-spacing: -0.02em;
+            }
+
+            .quiz-marker {
+                font-size: 0.66rem;
+                padding: 0.28rem 0.45rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .quiz-card {
+                padding: 5rem 1.45rem 4rem;
+                background: rgba(255, 253, 248, 0.92);
+                border: 1px solid rgba(67, 55, 42, 0.2);
+                border-radius: 1.25rem;
+            }
+
+            .quiz-card h3 {
+                font-size: 1rem;
+            }
+
+            .quiz-kicker {
+                font-size: 0.68rem;
+                letter-spacing: 0.16em;
+            }
         }
     </style>
 </head>
@@ -942,6 +1050,15 @@
             .music-play-button.is-playing {
                 background: #9B2C2C;
             }
+            .culture-landing-copy {
+                text-wrap: balance;
+            }
+            .culture-music-layout {
+                align-items: start;
+            }
+            .music-card-grid {
+                align-items: stretch;
+            }
             .film-scroll-story {
                 position: relative;
                 height: 430vh;
@@ -1157,16 +1274,124 @@
                 z-index: 60;
                 transform: translateX(-50%);
             }
+            @media (max-width: 1024px) {
+                .culture-floating-nav {
+                    top: 1rem;
+                    right: 1rem;
+                }
+                .culture-landing {
+                    min-height: 56vh;
+                    padding-block: 5.5rem;
+                }
+                .culture-landing-copy {
+                    max-width: 46rem;
+                    font-size: clamp(1.45rem, 4.2vw, 2.35rem);
+                }
+                #culture-music-panel {
+                    padding: 5rem 1.25rem;
+                }
+                .culture-music-layout {
+                    gap: 2rem;
+                }
+                .culture-turntable {
+                    width: min(100%, 330px);
+                    border-radius: 1.6rem;
+                }
+                .film-scroll-story {
+                    height: 460vh;
+                }
+                .film-sticky-stage {
+                    min-height: 660px;
+                    padding-inline: clamp(1rem, 3vw, 2rem);
+                }
+                .film-wheel-card {
+                    width: clamp(132px, 18vw, 185px);
+                }
+                .film-scroll-detail {
+                    min-height: 380px;
+                }
+            }
             @media (max-width: 767px) {
+                .culture-floating-nav {
+                    top: auto;
+                    right: auto;
+                    left: 50%;
+                    bottom: 1rem;
+                    transform: translateX(-50%);
+                    z-index: 120;
+                }
+                .culture-floating-nav button {
+                    padding: .55rem 1rem;
+                    font-size: .82rem;
+                }
+                .culture-landing {
+                    min-height: 100svh;
+                    padding: 5.5rem 1rem 6.5rem;
+                }
+                .culture-landing-copy {
+                    font-size: clamp(1.35rem, 7vw, 2rem);
+                    line-height: 1.65;
+                    margin-bottom: 2rem;
+                }
+                #culture-music-panel {
+                    padding: 4rem 1rem 5rem;
+                    scroll-margin-top: 0;
+                }
+                .culture-music-layout {
+                    gap: 1.5rem;
+                }
+                .culture-turntable {
+                    width: min(78vw, 300px);
+                    border-radius: 1.35rem;
+                }
+                .culture-record {
+                    border-width: 5px;
+                }
+                .culture-record-label {
+                    inset: 33%;
+                    border-width: 6px;
+                    font-size: .58rem;
+                }
+                .culture-tonearm-base {
+                    width: 46px;
+                    height: 46px;
+                    border-width: 4px;
+                }
+                .culture-tonearm-rod {
+                    right: 21px;
+                    top: 36px;
+                    width: 8px;
+                }
+                .music-piece-card {
+                    border-radius: 1.25rem;
+                    padding: 1.25rem;
+                }
+                .music-piece-card h4 {
+                    font-size: 1.35rem;
+                    line-height: 1.35;
+                }
+                .music-piece-card p {
+                    line-height: 1.8;
+                }
                 #culture-film-panel {
                     background-attachment: scroll;
                     background-position: center top;
+                    scroll-margin-top: 0;
+                }
+                #culture-film-panel > .max-w-7xl {
+                    padding: 4rem 1rem 1.5rem;
+                }
+                .film-scroll-story {
+                    height: 520vh;
                 }
                 .film-sticky-stage {
                     min-height: 620px;
                     padding: .75rem;
                     grid-template-rows: auto minmax(185px, 27vh) minmax(365px, 55vh);
                     row-gap: .75rem;
+                }
+                .film-sticky-stage > .flex {
+                    align-items: flex-start;
                 }
                 .film-carousel {
                     min-height: 190px;
@@ -1189,6 +1414,7 @@
                     min-height: 365px;
                     padding: .7rem;
                     row-gap: .7rem;
+                    overflow: auto;
                     transform: none;
                     box-shadow:
                         0 16px 36px rgba(4,10,15,.3),
@@ -1196,6 +1422,84 @@
                 }
                 .film-scroll-detail iframe {
                     min-height: 150px;
+                }
+                .film-trailer-card {
+                    order: -1;
+                }
+                .film-trailer-enlarge {
+                    padding: .45rem .6rem;
+                    font-size: .7rem;
+                }
+                .film-progress-track {
+                    bottom: .15rem;
+                }
+                .film-trailer-modal-panel {
+                    width: min(96vw, 720px);
+                }
+            }
+            @media (max-width: 520px) {
+                .culture-floating-nav {
+                    width: calc(100% - 2rem);
+                    justify-content: center;
+                }
+                .culture-floating-nav button {
+                    flex: 1;
+                }
+                .culture-landing {
+                    padding-inline: .95rem;
+                }
+                .culture-landing-copy {
+                    font-size: clamp(1.18rem, 6.3vw, 1.65rem);
+                    line-height: 1.75;
+                }
+                .culture-turntable {
+                    width: min(82vw, 260px);
+                }
+                .music-piece-card {
+                    padding: 1.05rem;
+                }
+                .music-piece-card h4 {
+                    font-size: 1.18rem;
+                }
+                .music-play-button {
+                    padding-block: .7rem;
+                }
+                .film-scroll-story {
+                    height: 560vh;
+                }
+                .film-sticky-stage {
+                    min-height: 640px;
+                    grid-template-rows: auto minmax(150px, 24vh) minmax(410px, 58vh);
+                }
+                .film-carousel {
+                    min-height: 155px;
+                }
+                .film-wheel-card {
+                    width: clamp(82px, 27vw, 116px);
+                }
+                .film-scroll-detail {
+                    min-height: 410px;
+                    padding: .58rem;
+                    border-radius: .75rem;
+                }
+                .film-detail-copy {
+                    padding: .65rem;
+                }
+                #film-title {
+                    font-size: clamp(1.35rem, 8vw, 1.75rem);
+                }
+                #film-desc,
+                #film-youth {
+                    font-size: .82rem;
+                    line-height: 1.6;
+                }
+                #film-tags {
+                    gap: .35rem;
+                    margin-bottom: .7rem;
+                }
+                #film-tags span {
+                    padding: .3rem .55rem;
+                    font-size: .68rem;
                 }
             }
             .culture-wave span {
@@ -1223,15 +1527,15 @@
         </nav>
 
         <!-- 主畫面 Landing -->
-        <div class="relative min-h-[62vh] flex flex-col items-center justify-center px-6 py-24">
+        <div class="culture-landing relative min-h-[62vh] flex flex-col items-center justify-center px-6 py-24">
             <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 26px 26px;"></div>
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(155,44,44,0.45),transparent_34%),radial-gradient(circle_at_80%_70%,rgba(255,255,255,0.13),transparent_30%)]"></div>
 
-            <p class="relative z-10 max-w-5xl mx-auto mb-14 text-center serif-title text-2xl md:text-4xl font-bold leading-relaxed text-white">
+            <p class="culture-landing-copy relative z-10 max-w-5xl mx-auto mb-14 text-center serif-title text-2xl md:text-4xl font-bold leading-relaxed text-white">
                 為了降低年輕世代認識白恐歷史的門檻，不少音樂和影視作品嘗試透過檔案資料的「轉譯」，期待激發青年對相關議題的興趣。
             </p>
 
-            <p class="relative z-10 max-w-5xl mx-auto text-center serif-title text-2xl md:text-4xl font-bold leading-relaxed text-white">
+            <p class="culture-landing-copy relative z-10 max-w-5xl mx-auto text-center serif-title text-2xl md:text-4xl font-bold leading-relaxed text-white">
                 例如獨立樂團裝咖人的專輯《夜官巡場》，以及美秀集團的歌曲〈昨暝阿爸無轉來〉等，分別以受難者故事與政治犯家庭的普遍經歷為藍本，將歷史元素融入歌詞中。
             </p>
 
@@ -1255,7 +1559,7 @@
                     🔊 請開啟聲音，以聆聽作品片段
                 </p>
 
-                <div class="grid xl:grid-cols-[390px_1fr] gap-10 items-start">
+                <div class="culture-music-layout grid xl:grid-cols-[390px_1fr] gap-10 items-start">
                     <div class="xl:sticky xl:top-24">
                         <div id="culture-turntable" class="culture-turntable">
                             <div id="music-record" class="culture-record">
@@ -1274,7 +1578,7 @@
                         <audio id="culture-audio" preload="metadata"></audio>
                     </div>
 
-                    <div class="grid md:grid-cols-2 gap-6">
+                    <div class="music-card-grid grid md:grid-cols-2 gap-6">
                         <article class="music-piece-card bg-white rounded-3xl p-6 md:p-7 border border-gray-200 shadow-sm transition-all" data-work="《夜官巡場》－〈林秀媚〉">
                             <p class="text-xs text-[#9B2C2C] font-bold tracking-[0.2em] mb-2">SONG</p>
                             <h4 class="serif-title text-2xl font-black mb-1">《夜官巡場》－〈林秀媚〉</h4>
@@ -1601,7 +1905,9 @@
                 }
 
                 const mobile = window.innerWidth < 768;
-                const spacing = mobile ? 78 : 155;
+                const spacing = mobile
+                    ? Math.max(54, Math.min(78, window.innerWidth * 0.21))
+                    : Math.max(120, Math.min(155, window.innerWidth * 0.1));
                 document.querySelectorAll('.film-wheel-card').forEach((card, cardIndex) => {
                     const offset = cardIndex - safeIndex;
                     const distance = Math.abs(offset);
