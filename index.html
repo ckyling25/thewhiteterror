@@ -934,10 +934,10 @@
             }
             .culture-turntable {
                 position: relative;
-                width: min(100%, 300px);
+                width: min(100%, 350px);
                 aspect-ratio: 1;
                 margin-inline: auto;
-                border-radius: 1.45rem;
+                border-radius: 1.8rem;
                 background: linear-gradient(145deg, #f7f3eb, #d8d0c3);
                 border: 1px solid #c8bfb1;
                 box-shadow: 0 24px 55px rgba(55, 45, 35, 0.2), inset 0 1px 0 rgba(255,255,255,0.9);
@@ -1040,7 +1040,7 @@
                 display: flex;
                 flex-direction: column;
                 min-height: 100%;
-                padding: .9rem;
+                padding: 1.28rem;
             }
             .music-piece-card.is-playing {
                 border-color: #9B2C2C;
@@ -1071,7 +1071,7 @@
             }
             .culture-scroll-copy {
                 grid-area: 1 / 1;
-                max-width: 52rem;
+                max-width: 64rem;
                 text-align: center;
                 color: #29251f;
                 opacity: 0;
@@ -1105,7 +1105,7 @@
                 min-height: auto;
             }
             .culture-text-copy {
-                max-width: 52rem;
+                max-width: 64rem;
                 color: #29251f;
                 word-break: normal;
                 overflow-wrap: normal;
@@ -1113,7 +1113,7 @@
             }
             .culture-copy-panel {
                 display: block;
-                width: min(100%, 56rem);
+                width: min(100%, 66rem);
                 margin-inline: auto;
                 padding: clamp(1.5rem, 4vw, 2.6rem) clamp(1.25rem, 4vw, 3rem);
                 background: rgba(255, 255, 255, 0.72);
@@ -1121,9 +1121,9 @@
             }
             .culture-report-copy {
                 font-family: 'Noto Serif TC', serif;
-                font-size: clamp(1.5rem, 3vw, 2.25rem);
+                font-size: clamp(1.2rem, 2.15vw, 1.65rem);
                 font-weight: 700;
-                line-height: 1.8;
+                line-height: 1.9;
                 color: #29251f;
                 text-align: center;
             }
@@ -1134,49 +1134,56 @@
                 min-height: 100vh;
                 display: flex;
                 align-items: center;
-                padding: 1.7rem 1.5rem;
+                padding: 2rem 1.75rem;
+                background-color: #F4F1EC;
+                background-image:
+                    linear-gradient(rgba(244, 241, 236, 0.14), rgba(244, 241, 236, 0.14)),
+                    url('images/music-section-background.png');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
             }
             .culture-music-heading {
-                margin-bottom: .55rem;
+                margin-bottom: .8rem;
             }
             .culture-music-heading h3 {
-                font-size: clamp(1.85rem, 3vw, 2.6rem);
+                font-size: clamp(2.15rem, 3.5vw, 3.15rem);
             }
             .culture-sound-note {
-                margin-bottom: .65rem;
-                font-size: .78rem;
+                margin-bottom: 1rem;
+                font-size: .92rem;
             }
             .culture-music-layout {
                 align-items: start;
-                grid-template-columns: minmax(200px, 250px) 1fr;
-                gap: 1.05rem;
+                grid-template-columns: minmax(300px, 350px) 1fr;
+                gap: 2rem;
             }
             .music-card-grid {
                 align-items: stretch;
-                gap: .7rem;
+                gap: 1.15rem;
             }
             .music-piece-card h4 {
-                font-size: clamp(.95rem, 1.22vw, 1.13rem);
+                font-size: clamp(1.18rem, 1.65vw, 1.55rem);
                 line-height: 1.28;
-                margin-bottom: .12rem;
+                margin-bottom: .2rem;
             }
             .music-piece-card p {
-                font-size: .8rem;
-                line-height: 1.4;
+                font-size: .95rem;
+                line-height: 1.62;
             }
             .music-piece-card > p:first-child {
                 font-size: .68rem;
                 margin-bottom: .35rem;
             }
             .music-piece-card h4 + p {
-                margin-bottom: .45rem;
+                margin-bottom: .65rem;
             }
             .music-piece-card h4 + p + p {
-                margin-bottom: .7rem;
+                margin-bottom: .95rem;
             }
             .music-piece-card .music-play-button {
-                padding-block: .48rem;
-                font-size: .86rem;
+                padding-block: .7rem;
+                font-size: .95rem;
             }
             .film-scroll-hint {
                 color: #e7d6d6;
@@ -1184,6 +1191,7 @@
                 font-weight: 700;
                 text-align: center;
                 letter-spacing: .04em;
+                transform: translateY(-1.2rem);
             }
             .film-scroll-story {
                 position: relative;
@@ -1414,14 +1422,14 @@
                     font-size: clamp(1.45rem, 4.2vw, 2.35rem);
                 }
                 #culture-music-panel {
-                    padding: 3rem 1.25rem;
+                    padding: 2.5rem 1.25rem;
                 }
                 .culture-music-layout {
-                    gap: 2rem;
+                    gap: 1.75rem;
                     grid-template-columns: 1fr;
                 }
                 .culture-turntable {
-                    width: min(100%, 260px);
+                    width: min(100%, 330px);
                     border-radius: 1.6rem;
                 }
                 .film-scroll-story {
@@ -1482,7 +1490,7 @@
                     gap: 1.5rem;
                 }
                 .culture-turntable {
-                    width: min(78vw, 300px);
+                    width: min(78vw, 310px);
                     border-radius: 1.35rem;
                 }
                 .culture-record {
@@ -1505,7 +1513,7 @@
                 }
                 .music-piece-card {
                     border-radius: 1.25rem;
-                    padding: 1.15rem;
+                    padding: 1.2rem;
                 }
                 .music-piece-card h4 {
                     font-size: 1.35rem;
@@ -1601,7 +1609,7 @@
                     line-height: 1.75;
                 }
                 .culture-turntable {
-                    width: min(82vw, 260px);
+                    width: min(82vw, 280px);
                 }
                 .music-piece-card {
                     padding: 1.05rem;
@@ -1680,7 +1688,7 @@
         </div>
 
         <!-- 音樂內容 -->
-        <div id="culture-music-panel" class="culture-panel bg-[#F4F1EC] text-[#1A202C] px-6 py-24 border-t border-gray-200 scroll-mt-20">
+        <div id="culture-music-panel" class="culture-panel text-[#1A202C] border-t border-gray-200 scroll-mt-20">
             <div class="max-w-7xl mx-auto">
                 <div class="culture-music-heading">
                     <span class="text-xs text-[#9B2C2C] font-semibold tracking-[0.3em] uppercase block mb-3">MUSIC / ALBUM</span>
