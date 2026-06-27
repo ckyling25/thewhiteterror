@@ -85,6 +85,17 @@
             z-index: 90;
         }
 
+        .culture-floating-nav,
+        .approach-return-nav {
+            transition: opacity .22s ease, transform .22s ease, visibility .22s ease;
+        }
+
+        .culture-controls-hidden {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
+
         .approach-return-nav {
             position: fixed !important;
             top: 1.5rem;
@@ -1180,6 +1191,10 @@
             .culture-quote-panel .culture-report-copy {
                 margin: 0;
             }
+            .culture-quote-line {
+                justify-self: center;
+                text-align: center;
+            }
             .keep-together {
                 white-space: nowrap;
             }
@@ -1201,7 +1216,7 @@
                 text-align: center;
             }
             .culture-music-heading h3 {
-                font-size: clamp(2.15rem, 3.5vw, 3.15rem);
+                font-size: clamp(1.9rem, 3.05vw, 2.75rem);
             }
             .culture-sound-note {
                 margin-bottom: 1rem;
@@ -1278,16 +1293,17 @@
                 min-height: 720px;
                 overflow: hidden;
                 display: grid;
-                grid-template-rows: 28px minmax(300px, 32vh) auto;
+                grid-template-rows: 26px minmax(285px, 30vh) auto;
                 align-content: start;
-                row-gap: 1.05rem;
-                padding: clamp(1.65rem, 3vh, 2.25rem) clamp(1.5rem, 5vw, 4.5rem) 1.25rem;
+                row-gap: 1.3rem;
+                padding: clamp(1rem, 2vh, 1.45rem) clamp(1.5rem, 5vw, 4.5rem) 1rem;
             }
             .film-carousel {
                 position: relative;
+                z-index: 20;
                 width: min(100%, 1080px);
                 height: 100%;
-                min-height: 300px;
+                min-height: 285px;
                 margin: 0 auto;
                 perspective: 1200px;
             }
@@ -1357,13 +1373,15 @@
                 filter: grayscale(.82) brightness(.48);
             }
             .film-scroll-detail {
+                position: relative;
+                z-index: 45;
                 width: min(100%, 1080px);
                 height: auto;
                 min-height: 292px;
                 margin: 0 auto;
                 overflow: visible;
-                padding: 1.1rem;
-                column-gap: 1.15rem;
+                padding: .82rem;
+                column-gap: .9rem;
                 align-items: center;
                 border: 1px solid rgba(255,255,255,.82);
                 box-shadow:
@@ -1374,7 +1392,7 @@
                 transform: none;
             }
             .film-trailer-card {
-                width: min(100%, 390px);
+                width: min(100%, 440px);
                 justify-self: center;
                 border: 1px solid rgba(255,255,255,.72);
                 box-shadow:
@@ -1436,7 +1454,7 @@
             }
             .film-detail-copy {
                 overflow: visible;
-                padding: .9rem;
+                padding: .62rem;
             }
             .film-detail-label {
                 margin-bottom: .3rem;
@@ -1446,16 +1464,16 @@
                 letter-spacing: .14em;
             }
             #film-meta {
-                font-size: .82rem;
+                font-size: .9rem;
             }
             #film-title {
-                font-size: clamp(1.45rem, 1.8vw, 1.95rem);
+                font-size: clamp(1.62rem, 2vw, 2.18rem);
                 line-height: 1.18;
             }
             #film-desc,
             #film-youth {
-                font-size: clamp(.78rem, .88vw, .9rem);
-                line-height: 1.52;
+                font-size: clamp(.88rem, .98vw, 1rem);
+                line-height: 1.58;
             }
             .film-progress-dot {
                 width: 7px;
@@ -1506,23 +1524,23 @@
                     height: 460vh;
                 }
                 .film-sticky-stage {
-                    min-height: 820px;
-                    grid-template-rows: 30px minmax(300px, 36vh) auto;
-                    row-gap: 1.75rem;
-                    padding-top: 4.5rem;
+                    min-height: 720px;
+                    grid-template-rows: 26px minmax(280px, 31vh) auto;
+                    row-gap: 1.15rem;
+                    padding-top: 1.35rem;
                     padding-inline: clamp(1rem, 3vw, 2rem);
                 }
                 .film-carousel {
-                    min-height: 300px;
+                    min-height: 280px;
                 }
                 .film-wheel-card {
                     width: clamp(132px, 18vw, 185px);
                 }
                 .film-scroll-detail {
-                    min-height: 330px;
+                    min-height: 300px;
                 }
                 .film-trailer-card {
-                    width: min(100%, 380px);
+                    width: min(100%, 410px);
                 }
             }
             @media (max-width: 767px) {
@@ -1855,7 +1873,7 @@
                 <p class="culture-report-copy">
                     陳彥蓉認為，音樂是現今年輕人的共同語言，更是讓他們了解這段歷史的一大途徑。
                 </p>
-                <p class="culture-report-copy">「你很難找到有人是沒有喜歡的樂團或音樂。」</p>
+                <p class="culture-report-copy culture-quote-line">「你很難找到有人是沒有喜歡的樂團或音樂。」</p>
             </div>
         </div>
 
@@ -2312,9 +2330,11 @@
                 window.addEventListener('scroll', requestFilmScrollUpdate, { passive: true });
                 window.addEventListener('scroll', pauseMusicWhenLeavingPanel, { passive: true });
                 window.addEventListener('scroll', updateCultureIntroText, { passive: true });
+                window.addEventListener('scroll', updateCultureControlsVisibility, { passive: true });
                 window.addEventListener('resize', requestFilmScrollUpdate);
                 window.addEventListener('resize', pauseMusicWhenLeavingPanel);
                 window.addEventListener('resize', updateCultureIntroText);
+                window.addEventListener('resize', updateCultureControlsVisibility);
                 document.addEventListener('keydown', event => {
                     if (event.key === 'Escape') closeFilmTrailerModal();
                 });
@@ -2531,6 +2551,20 @@
 
             mountInlineApproachSections();
 
+            function updateCultureControlsVisibility() {
+                const culturePage = document.getElementById('page-approach-1');
+                const controls = document.querySelectorAll('#page-approach-1 .approach-return-nav, #page-approach-1 .culture-floating-nav');
+                if (!culturePage || !controls.length) return;
+
+                const rect = culturePage.getBoundingClientRect();
+                const isCultureActive = !culturePage.classList.contains('hidden');
+                const isInsideCulture = isCultureActive && rect.top < window.innerHeight * 0.35 && rect.bottom > window.innerHeight;
+
+                controls.forEach(control => {
+                    control.classList.toggle('culture-controls-hidden', !isInsideCulture);
+                });
+            }
+
             window.showInlineApproach = function(pageKey) {
                 mountInlineApproachSections();
 
@@ -2554,11 +2588,13 @@
                 if (pageKey === 'approach-1') {
                     targetPage.classList.remove('fade-in-active');
                     window.cultureAutoAdvanceReady = true;
+                    updateCultureControlsVisibility();
                 } else {
                     targetPage.classList.add('fade-in-active');
                 }
 
                 setTimeout(() => {
+                    updateCultureControlsVisibility();
                     targetPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 60);
             };
@@ -2581,6 +2617,7 @@
                     if (typeof stopCultureMusic === 'function') {
                         stopCultureMusic();
                     }
+                    updateCultureControlsVisibility();
 
                     setTimeout(() => {
                         selector.scrollIntoView({ behavior: 'smooth', block: 'start' });
