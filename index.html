@@ -1085,7 +1085,7 @@
             .music-piece-card {
                 position: relative;
                 display: grid;
-                grid-template-columns: minmax(128px, 34%) minmax(0, 1fr);
+                grid-template-columns: minmax(136px, 34%) minmax(0, 1fr);
                 grid-template-rows: auto 1fr;
                 column-gap: clamp(1.05rem, 1.8vw, 1.55rem);
                 row-gap: clamp(.85rem, 1.3vw, 1.15rem);
@@ -1130,7 +1130,7 @@
             .music-cover-box::before {
                 content: "";
                 position: absolute;
-                right: -33%;
+                right: -22%;
                 top: 50%;
                 width: 72%;
                 aspect-ratio: 1;
@@ -1170,6 +1170,7 @@
                 grid-row: 1;
                 display: flex;
                 flex-direction: column;
+                justify-content: center;
                 min-width: 0;
                 height: 100%;
             }
@@ -1180,10 +1181,10 @@
                 position: relative;
                 z-index: 3;
                 display: grid;
-                grid-template-columns: auto minmax(92px, 1fr) auto;
+                grid-template-columns: auto minmax(150px, 1fr) max-content;
                 align-items: center;
-                gap: .55rem;
-                margin-top: .8rem;
+                gap: .42rem;
+                margin-top: 1.05rem;
                 padding-top: .15rem;
             }
             .music-description {
@@ -1196,8 +1197,8 @@
                 border-top: 1px dashed rgba(45, 55, 72, .22);
             }
             .music-piece-card .music-play-button {
-                width: 2.05rem;
-                height: 2.05rem;
+                width: 2.35rem;
+                height: 2.35rem;
                 border-radius: 999px;
                 display: inline-flex;
                 align-items: center;
@@ -1209,12 +1210,12 @@
             .music-play-button::before {
                 content: "▶";
                 margin-left: .1rem;
-                font-size: .72rem;
+                font-size: .82rem;
             }
             .music-play-button.is-playing::before {
                 content: "";
-                width: .52rem;
-                height: .76rem;
+                width: .58rem;
+                height: .86rem;
                 margin-left: 0;
                 background: linear-gradient(90deg, currentColor 0 34%, transparent 34% 66%, currentColor 66% 100%);
                 border-radius: 1px;
@@ -1226,12 +1227,12 @@
                 --music-progress: 0%;
                 display: flex;
                 align-items: center;
-                gap: 2px;
-                height: 1.45rem;
+                gap: 3px;
+                height: 1.62rem;
                 overflow: hidden;
             }
             .music-waveform span {
-                width: 2px;
+                width: 3px;
                 height: calc(var(--bar-height, 38) * 1%);
                 min-height: 4px;
                 border-radius: 999px;
@@ -1245,7 +1246,7 @@
             }
             .music-time {
                 color: #2D3748;
-                font-size: .68rem;
+                font-size: .75rem;
                 font-weight: 700;
                 white-space: nowrap;
                 font-variant-numeric: tabular-nums;
@@ -1366,19 +1367,19 @@
                 background-repeat: no-repeat;
             }
             .culture-music-heading {
-                margin-bottom: .8rem;
+                margin-bottom: .55rem;
                 text-align: center;
             }
             .culture-music-heading h3 {
                 font-size: clamp(1.9rem, 3.05vw, 2.75rem);
             }
             .culture-sound-note {
-                margin-bottom: 1.6rem;
-                font-size: .92rem;
+                margin: 0 0 clamp(.85rem, 1.4vw, 1.2rem);
+                font-size: clamp(.86rem, 1vw, .98rem);
             }
             .culture-music-layout {
                 align-items: start;
-                transform: translateY(.45rem);
+                transform: translateY(0);
             }
             .music-card-grid {
                 align-items: stretch;
@@ -1386,18 +1387,19 @@
                 gap: clamp(1rem, 1.8vw, 1.5rem);
             }
             .music-piece-card h4 {
-                font-size: clamp(1.12rem, 1.45vw, 1.42rem);
+                font-size: clamp(1.28rem, 1.7vw, 1.62rem);
                 line-height: 1.28;
-                margin-bottom: .25rem;
+                margin-bottom: .35rem;
             }
             .music-piece-card p {
                 font-size: clamp(.82rem, .9vw, .95rem);
                 line-height: 1.72;
             }
             .music-piece-card h4 + p {
-                margin-bottom: .7rem;
+                margin-bottom: .55rem;
                 color: #2D3748;
                 font-weight: 700;
+                font-size: clamp(.95rem, 1.05vw, 1.08rem);
             }
             .music-piece-card h4 + p + p {
                 margin-bottom: .8rem;
@@ -1992,13 +1994,17 @@
                     <h3 class="serif-title text-3xl md:text-5xl font-black">當歷史化作一首歌曲</h3>
                 </div>
 
+                <p class="culture-sound-note text-center font-bold text-[#9B2C2C] tracking-wide">
+                    🔊 開啟聲音，點擊聆聽相關作品吧！
+                </p>
+
                 <div class="culture-music-layout">
                     <p id="culture-player-status" class="sr-only" aria-live="polite"></p>
                     <audio id="culture-audio" preload="metadata"></audio>
 
                     <div class="music-card-grid grid gap-6">
                         <article class="music-piece-card border border-gray-200 shadow-sm transition-all" data-work="《夜官巡場》－〈林秀媚〉">
-                            <div class="music-cover-box"><span>林秀媚<br>口述歷史</span></div>
+                            <div class="music-cover-box"><img src="images/lin-hsiu-mei-song.jpg" alt="《夜官巡場》－〈林秀媚〉歌曲圖片"></div>
                             <div class="music-card-content">
                                 <h4 class="serif-title text-2xl font-black mb-1">《夜官巡場》－〈林秀媚〉</h4>
                                 <p class="text-sm text-gray-500 mb-5">裝咖人</p>
@@ -2030,7 +2036,7 @@
                         </article>
 
                         <article class="music-piece-card border border-gray-200 shadow-sm transition-all" data-work="明朗俱樂部">
-                            <div class="music-cover-box"><span>明朗<br>俱樂部</span></div>
+                            <div class="music-cover-box"><img src="images/ming-lang-club-song.jpg" alt="〈明朗俱樂部〉歌曲圖片"></div>
                             <div class="music-card-content">
                                 <h4 class="serif-title text-2xl font-black mb-1">〈明朗俱樂部〉</h4>
                                 <p class="text-sm text-gray-500 mb-5">雷光夏</p>
@@ -2046,7 +2052,7 @@
                         </article>
 
                         <article class="music-piece-card border border-gray-200 shadow-sm transition-all" data-work="出巡">
-                            <div class="music-cover-box"><span>出巡<br>不義遺址</span></div>
+                            <div class="music-cover-box"><img src="images/chhut-sun-song.jpg" alt="〈出巡〉歌曲圖片"></div>
                             <div class="music-card-content">
                                 <h4 class="serif-title text-2xl font-black mb-1">〈出巡〉</h4>
                                 <p class="text-sm text-gray-500 mb-5">拍謝少年</p>
