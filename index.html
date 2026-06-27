@@ -1187,11 +1187,23 @@
             }
             .film-scroll-hint {
                 color: #e7d6d6;
-                font-size: clamp(1rem, 1.8vw, 1.45rem);
+                position: relative;
+                z-index: 80;
+                display: block;
+                width: fit-content;
+                margin: 0 auto;
+                padding: .55rem 1rem;
+                background: linear-gradient(145deg, rgba(255,255,255,.16), rgba(255,255,255,.04));
+                border: 1px solid rgba(255,255,255,.2);
+                box-shadow:
+                    0 12px 24px rgba(0,0,0,.28),
+                    inset 0 1px 0 rgba(255,255,255,.22);
+                font-size: clamp(.9rem, 1.35vw, 1.12rem);
                 font-weight: 700;
                 text-align: center;
                 letter-spacing: .04em;
-                transform: translateY(-1.2rem);
+                text-shadow: 0 2px 8px rgba(0,0,0,.4);
+                transform: translateY(-1.45rem);
             }
             .film-scroll-story {
                 position: relative;
@@ -1214,9 +1226,9 @@
                 min-height: 700px;
                 overflow: hidden;
                 display: grid;
-                grid-template-rows: auto minmax(285px, 38vh) minmax(360px, 44vh);
+                grid-template-rows: auto minmax(275px, 37vh) minmax(330px, 40vh);
                 align-content: center;
-                row-gap: 1.15rem;
+                row-gap: .75rem;
                 padding: 1.25rem clamp(1.5rem, 5vw, 4.5rem);
             }
             .film-carousel {
@@ -1224,13 +1236,13 @@
                 width: min(100%, 1120px);
                 height: 100%;
                 min-height: 255px;
-                margin: 0 auto;
+                margin: .7rem auto 0;
                 perspective: 1200px;
             }
             .film-wheel-card {
                 position: absolute;
                 left: 50%;
-                top: 42%;
+                top: 52%;
                 width: clamp(150px, 16vw, 225px);
                 aspect-ratio: 2 / 3;
                 border: 0;
@@ -1295,10 +1307,10 @@
             .film-scroll-detail {
                 width: min(100%, 1240px);
                 height: 100%;
-                min-height: 350px;
+                min-height: 320px;
                 margin: 0 auto;
                 overflow: hidden;
-                padding: clamp(.9rem, 1.7vw, 1.4rem);
+                padding: clamp(.75rem, 1.35vw, 1.15rem);
                 column-gap: clamp(1.25rem, 2.5vw, 2.25rem);
                 border: 1px solid rgba(255,255,255,.82);
                 box-shadow:
@@ -1965,7 +1977,9 @@
 
             function showCultureTab(tab) {
                 const target = document.getElementById(tab === 'film' ? 'culture-film-panel' : 'culture-music-panel');
-                target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                if (!target) return;
+                const targetTop = target.getBoundingClientRect().top + window.scrollY;
+                window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
             }
 
             function updateCultureIntroText() {
@@ -2009,14 +2023,12 @@
                 const sentinel = document.getElementById('culture-next-sentinel');
                 if (!sentinel || !('IntersectionObserver' in window)) return;
 
-                let hasAdvanced = false;
                 const observer = new IntersectionObserver(entries => {
                     entries.forEach(entry => {
                         const approachPage = document.getElementById('page-approach-1');
                         const isCultureVisible = approachPage && !approachPage.classList.contains('hidden');
-                        if (entry.isIntersecting && isCultureVisible && !hasAdvanced) {
-                            hasAdvanced = true;
-                            observer.disconnect();
+                        if (entry.isIntersecting && isCultureVisible && window.cultureAutoAdvanceReady) {
+                            window.cultureAutoAdvanceReady = false;
                             window.switchView('5-education', true);
                         }
                     });
@@ -2511,6 +2523,7 @@
                 } else if (pageKey === 'approach-1') {
                     // 文化入口含固定式頁內導覽；避免 transform 讓 fixed 導覽隨頁面捲走
                     targetPage.classList.remove('fade-in-active');
+                    window.cultureAutoAdvanceReady = true;
                     window.scrollTo({ top: 0, behavior: 'instant' });
                 } else {
                     targetPage.classList.add('fade-in-active');
