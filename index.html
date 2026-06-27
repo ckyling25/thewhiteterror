@@ -135,15 +135,15 @@
         }
 
         .quiz-item + .quiz-item {
-            margin-top: 2rem;
-            padding-top: 2rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
             border-top: 1px solid rgba(67, 55, 42, 0.32);
         }
 
         .quiz-card {
             position: relative;
-            min-height: 500px;
-            padding: clamp(4.5rem, 8vw, 6.5rem) clamp(4rem, 10vw, 8.5rem);
+            min-height: clamp(360px, 42vh, 455px);
+            padding: clamp(3.2rem, 5.6vw, 4.8rem) clamp(3.6rem, 9vw, 7rem);
             background: url('quiz-paper.webp') center / 100% 100% no-repeat;
             filter: drop-shadow(0 18px 22px rgba(31, 24, 17, 0.2));
             display: flex;
@@ -173,14 +173,14 @@
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 0.9rem;
-            margin-top: 2rem;
+            margin-top: 1.35rem;
         }
 
         .quiz-option {
             position: relative;
             overflow: visible;
             isolation: isolate;
-            min-height: 76px;
+            min-height: 64px;
             border: 1px solid rgba(67, 55, 42, 0.38);
             border-radius: 0.65rem;
             background: linear-gradient(rgba(255, 253, 248, 0.94), rgba(255, 253, 248, 0.94)), #fff;
@@ -264,7 +264,7 @@
         }
 
         .quiz-feedback {
-            margin-top: 1.5rem;
+            margin-top: 1rem;
             border: 1px solid rgba(67, 55, 42, 0.3);
             border-radius: 1rem;
             background: rgba(255, 255, 255, 0.88);
@@ -287,7 +287,7 @@
         }
 
         .quiz-panel {
-            padding: 1.2rem 1.5rem;
+            padding: 1rem 1.35rem;
         }
 
         .quiz-panel + .quiz-panel {
@@ -313,7 +313,7 @@
             width: 82%;
             border: 1px solid rgba(67, 55, 42, 0.38);
             border-radius: 0.4rem;
-            margin: 4.2rem auto 0;
+            margin: 3.25rem auto 0;
         }
 
         .quiz-feedback .quiz-scale {
@@ -372,8 +372,8 @@
             }
 
             .quiz-card {
-                min-height: 440px;
-                padding: 5.8rem 3.2rem 5.2rem;
+                min-height: 390px;
+                padding: 4.5rem 3rem 4.2rem;
             }
 
             .quiz-options {
@@ -399,7 +399,7 @@
 
             .quiz-card {
                 min-height: auto;
-                padding: 5.8rem 2.15rem 4.6rem;
+                padding: 4.8rem 2rem 3.9rem;
                 background-size: 100% 100%;
                 filter: drop-shadow(0 12px 16px rgba(31, 24, 17, 0.18));
             }
@@ -411,11 +411,11 @@
 
             .quiz-options {
                 grid-template-columns: 1fr;
-                gap: 0.65rem;
+                gap: 0.55rem;
             }
 
             .quiz-option {
-                min-height: 54px;
+                min-height: 50px;
                 font-size: 0.95rem;
             }
 
@@ -444,7 +444,7 @@
             .quiz-scale {
                 width: 100%;
                 height: 38px;
-                margin-top: 3.6rem;
+                margin-top: 3.1rem;
             }
 
             .quiz-scale-segment {
@@ -460,7 +460,7 @@
 
         @media (max-width: 420px) {
             .quiz-card {
-                padding: 5rem 1.45rem 4rem;
+                padding: 4rem 1.35rem 3.4rem;
                 background: rgba(255, 253, 248, 0.92);
                 border: 1px solid rgba(67, 55, 42, 0.2);
                 border-radius: 1.25rem;
@@ -695,7 +695,7 @@
             <p class="text-sm md:text-base text-stone-600 leading-relaxed">作答後立即查看解答，以及和你做出相同選擇的填答者比例。</p>
         </header>
 
-        <div id="quiz-list" class="quiz-list space-y-8"></div>
+        <div id="quiz-list" class="quiz-list"></div>
 
         <div id="quiz-complete-actions" class="hidden w-full max-w-xl text-center pt-10">
             <p class="serif-title text-xl font-bold text-stone-800 mb-5">四題都完成了，繼續翻開課本裡的歷史。</p>
@@ -3144,6 +3144,13 @@
                 button.appendChild(fingerprint);
             }
 
+            function scrollQuizToFeedback(feedback) {
+                if (!feedback) return;
+                const feedbackTop = feedback.getBoundingClientRect().top + window.scrollY;
+                const offset = window.innerWidth <= 640 ? 10 : 16;
+                window.scrollTo({ top: Math.max(0, feedbackTop - offset), behavior: 'smooth' });
+            }
+
             function answerQuizQuestion(index, answer, item, selectedButton, event) {
                 if (item.classList.contains('is-answered')) return;
                 const question = quizData[index];
@@ -3192,8 +3199,7 @@
                         const feedback = item.querySelector('.quiz-feedback');
                         if (feedback) {
                             feedback.classList.remove('is-waiting');
-                            const feedbackTop = feedback.getBoundingClientRect().top + window.scrollY;
-                            window.scrollTo({ top: Math.max(0, feedbackTop - 24), behavior: 'smooth' });
+                            scrollQuizToFeedback(feedback);
                         }
                     }, QUIZ_STAMP_REVEAL_DELAY);
                 } else {
@@ -3202,8 +3208,7 @@
                         const feedback = item.querySelector('.quiz-feedback');
                         if (feedback) {
                             feedback.classList.remove('is-waiting');
-                            const feedbackTop = feedback.getBoundingClientRect().top + window.scrollY;
-                            window.scrollTo({ top: Math.max(0, feedbackTop - 24), behavior: 'smooth' });
+                            scrollQuizToFeedback(feedback);
                         }
                     }, QUIZ_STAMP_REVEAL_DELAY);
                 }
