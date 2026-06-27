@@ -1081,20 +1081,98 @@
                 font-size: .78rem;
             }
             .music-piece-card {
-                display: flex;
-                flex-direction: column;
+                display: grid;
+                grid-template-columns: minmax(110px, 150px) minmax(0, 1fr);
+                gap: 1rem;
+                align-items: stretch;
                 min-height: 100%;
-                padding: 1.28rem;
+                padding: 1rem;
             }
             .music-piece-card.is-playing {
                 border-color: #9B2C2C;
                 box-shadow: 0 15px 35px rgba(155,44,44,.13);
             }
-            .music-piece-card .music-play-button {
+            .music-cover-box {
+                min-height: 100%;
+                aspect-ratio: 1 / 1;
+                display: grid;
+                place-items: center;
+                padding: 1rem;
+                background:
+                    linear-gradient(135deg, rgba(155,44,44,.16), rgba(26,32,44,.12)),
+                    rgba(244,241,236,.82);
+                border: 1px solid rgba(155,44,44,.18);
+                color: rgba(45,55,72,.76);
+                font-family: 'Noto Serif TC', serif;
+                font-weight: 800;
+                line-height: 1.35;
+                text-align: center;
+                overflow: hidden;
+            }
+            .music-card-content {
+                display: flex;
+                flex-direction: column;
+                min-width: 0;
+            }
+            .music-player-row {
+                display: grid;
+                grid-template-columns: auto minmax(110px, 1fr) auto;
+                align-items: center;
+                gap: .72rem;
                 margin-top: auto;
+                padding-top: .85rem;
+            }
+            .music-piece-card .music-play-button {
+                width: 2.9rem;
+                height: 2.9rem;
+                border-radius: 999px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                flex: 0 0 auto;
+                font-size: 0;
+                line-height: 1;
+            }
+            .music-play-button::before {
+                content: "▶";
+                margin-left: .12rem;
+                font-size: 1.05rem;
+            }
+            .music-play-button.is-playing::before {
+                content: "Ⅱ";
+                margin-left: 0;
+                font-size: 1rem;
             }
             .music-play-button.is-playing {
                 background: #9B2C2C;
+            }
+            .music-waveform {
+                --music-progress: 0%;
+                display: flex;
+                align-items: center;
+                gap: 3px;
+                height: 2.4rem;
+                overflow: hidden;
+            }
+            .music-waveform span {
+                width: 3px;
+                height: calc(var(--bar-height, 38) * 1%);
+                min-height: 4px;
+                border-radius: 999px;
+                background: #a9a9a9;
+                opacity: .82;
+                transition: background .18s ease, opacity .18s ease;
+            }
+            .music-waveform span.is-filled {
+                background: #9B2C2C;
+                opacity: 1;
+            }
+            .music-time {
+                color: #2D3748;
+                font-size: .78rem;
+                font-weight: 700;
+                white-space: nowrap;
+                font-variant-numeric: tabular-nums;
             }
             .culture-landing-copy {
                 text-wrap: balance;
@@ -1616,8 +1694,13 @@
                     width: 8px;
                 }
                 .music-piece-card {
+                    grid-template-columns: 1fr;
                     border-radius: 1.25rem;
                     padding: 1.2rem;
+                }
+                .music-cover-box {
+                    min-height: 130px;
+                    aspect-ratio: 16 / 7;
                 }
                 .music-piece-card h4 {
                     font-size: 1.35rem;
@@ -1719,6 +1802,15 @@
                 .music-piece-card {
                     padding: 1.05rem;
                 }
+                .music-player-row {
+                    grid-template-columns: auto minmax(82px, 1fr);
+                    gap: .55rem;
+                }
+                .music-time {
+                    grid-column: 2;
+                    justify-self: end;
+                    margin-top: -.35rem;
+                }
                 .music-piece-card h4 {
                     font-size: 1.18rem;
                 }
@@ -1813,60 +1905,75 @@
                     🔊 開啟聲音，點擊聆聽相關作品吧！
                 </p>
 
-                <div class="culture-music-layout grid xl:grid-cols-[390px_1fr] gap-10 items-start">
-                    <div class="xl:sticky xl:top-24">
-                        <div id="culture-turntable" class="culture-turntable">
-                            <div id="music-record" class="culture-record">
-                                <div id="music-record-label" class="culture-record-label">林秀媚<br>裝咖人</div>
-                            </div>
-                            <div class="culture-tonearm" aria-hidden="true">
-                                <div class="culture-tonearm-base"></div>
-                                <div class="culture-tonearm-rod">
-                                    <div class="culture-tonearm-head"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <p id="culture-player-status" class="culture-player-status mt-5 text-center text-sm font-bold text-gray-600" aria-live="polite">
-                            選擇下方任一作品開始播放
-                        </p>
-                        <audio id="culture-audio" preload="metadata"></audio>
-                    </div>
+                <div class="culture-music-layout">
+                    <p id="culture-player-status" class="culture-player-status text-center text-sm font-bold text-gray-600" aria-live="polite">
+                        選擇下方任一作品開始播放
+                    </p>
+                    <audio id="culture-audio" preload="metadata"></audio>
 
                     <div class="music-card-grid grid md:grid-cols-2 gap-6">
                         <article class="music-piece-card bg-white rounded-3xl p-6 md:p-7 border border-gray-200 shadow-sm transition-all" data-work="《夜官巡場》－〈林秀媚〉">
-                            <h4 class="serif-title text-2xl font-black mb-1">《夜官巡場》－〈林秀媚〉</h4>
-                            <p class="text-sm text-gray-500 mb-5">裝咖人</p>
-                            <p class="text-sm md:text-base text-gray-600 leading-loose text-justify mb-6">
-                                歌曲取材自林秀媚的口述歷史，並以其視角出發，呈現出面對愛人離去的悲痛與思念。林秀媚是二二八受難者、嘉義市參議員盧鈵欽的妻子。盧鈵欽在前往水上機場與政府談判後，便再也沒有平安返家，最終於未經審判的情況下，在嘉義火車站前遭公開槍決。
-                            </p>
-                            <button onclick="toggleMusicTrack('《夜官巡場》－〈林秀媚〉', this)" class="music-play-button w-full py-3 rounded-xl bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors">播放</button>
+                            <div class="music-cover-box">林秀媚<br>口述歷史</div>
+                            <div class="music-card-content">
+                                <h4 class="serif-title text-2xl font-black mb-1">《夜官巡場》－〈林秀媚〉</h4>
+                                <p class="text-sm text-gray-500 mb-5">裝咖人</p>
+                                <p class="text-sm md:text-base text-gray-600 leading-loose text-justify mb-6">
+                                    歌曲取材自林秀媚的口述歷史，並以其視角出發，呈現出面對愛人離去的悲痛與思念。林秀媚是二二八受難者、嘉義市參議員盧鈵欽的妻子。盧鈵欽在前往水上機場與政府談判後，便再也沒有平安返家，最終於未經審判的情況下，在嘉義火車站前遭公開槍決。
+                                </p>
+                                <div class="music-player-row">
+                                    <button onclick="toggleMusicTrack('《夜官巡場》－〈林秀媚〉', this)" class="music-play-button bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors" aria-label="播放《夜官巡場》－〈林秀媚〉">播放</button>
+                                    <div class="music-waveform" aria-hidden="true"></div>
+                                    <span class="music-time">0:00 / 0:00</span>
+                                </div>
+                            </div>
                         </article>
 
                         <article class="music-piece-card bg-white rounded-3xl p-6 md:p-7 border border-gray-200 shadow-sm transition-all" data-work="昨暝阿爸無轉來">
-                            <h4 class="serif-title text-2xl font-black mb-1">〈昨暝阿爸無轉來〉</h4>
-                            <p class="text-sm text-gray-500 mb-5">美秀集團</p>
-                            <p class="text-sm md:text-base text-gray-600 leading-loose text-justify mb-6">
-                                作品以孩子的視角展開，透過天真卻無奈的口吻，反覆唱出「昨暝阿爸無轉來」，訴說對父親遲遲未歸的思念，以及不知道父親身在何處的恐懼與不安，呈現出白色恐怖如何從受難者影響至整個家庭。
-                            </p>
-                            <button onclick="toggleMusicTrack('昨暝阿爸無轉來', this)" class="music-play-button w-full py-3 rounded-xl bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors">播放</button>
+                            <div class="music-cover-box">昨暝阿爸<br>無轉來</div>
+                            <div class="music-card-content">
+                                <h4 class="serif-title text-2xl font-black mb-1">〈昨暝阿爸無轉來〉</h4>
+                                <p class="text-sm text-gray-500 mb-5">美秀集團</p>
+                                <p class="text-sm md:text-base text-gray-600 leading-loose text-justify mb-6">
+                                    作品以孩子的視角展開，透過天真卻無奈的口吻，反覆唱出「昨暝阿爸無轉來」，訴說對父親遲遲未歸的思念，以及不知道父親身在何處的恐懼與不安，呈現出白色恐怖如何從受難者影響至整個家庭。
+                                </p>
+                                <div class="music-player-row">
+                                    <button onclick="toggleMusicTrack('昨暝阿爸無轉來', this)" class="music-play-button bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors" aria-label="播放昨暝阿爸無轉來">播放</button>
+                                    <div class="music-waveform" aria-hidden="true"></div>
+                                    <span class="music-time">0:00 / 0:00</span>
+                                </div>
+                            </div>
                         </article>
 
                         <article class="music-piece-card bg-white rounded-3xl p-6 md:p-7 border border-gray-200 shadow-sm transition-all" data-work="明朗俱樂部">
-                            <h4 class="serif-title text-2xl font-black mb-1">〈明朗俱樂部〉</h4>
-                            <p class="text-sm text-gray-500 mb-5">雷光夏</p>
-                            <p class="text-sm md:text-base text-gray-600 leading-loose text-justify mb-6">
-                                作品用以紀念雷光夏未曾謀面的外祖父李漢湖，歌名源自臺鐵基層員工的互助團體「明朗俱樂部」。當年團體遭政府認定為共產黨外圍組織，李漢湖則被指控參與其中，並以「知匪不報」等罪名判刑，於1950年遭槍決。
-                            </p>
-                            <button onclick="toggleMusicTrack('明朗俱樂部', this)" class="music-play-button w-full py-3 rounded-xl bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors">播放</button>
+                            <div class="music-cover-box">明朗<br>俱樂部</div>
+                            <div class="music-card-content">
+                                <h4 class="serif-title text-2xl font-black mb-1">〈明朗俱樂部〉</h4>
+                                <p class="text-sm text-gray-500 mb-5">雷光夏</p>
+                                <p class="text-sm md:text-base text-gray-600 leading-loose text-justify mb-6">
+                                    作品用以紀念雷光夏未曾謀面的外祖父李漢湖，歌名源自臺鐵基層員工的互助團體「明朗俱樂部」。當年團體遭政府認定為共產黨外圍組織，李漢湖則被指控參與其中，並以「知匪不報」等罪名判刑，於1950年遭槍決。
+                                </p>
+                                <div class="music-player-row">
+                                    <button onclick="toggleMusicTrack('明朗俱樂部', this)" class="music-play-button bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors" aria-label="播放明朗俱樂部">播放</button>
+                                    <div class="music-waveform" aria-hidden="true"></div>
+                                    <span class="music-time">0:00 / 0:00</span>
+                                </div>
+                            </div>
                         </article>
 
                         <article class="music-piece-card bg-white rounded-3xl p-6 md:p-7 border border-gray-200 shadow-sm transition-all" data-work="出巡">
-                            <h4 class="serif-title text-2xl font-black mb-1">〈出巡〉</h4>
-                            <p class="text-sm text-gray-500 mb-5">拍謝少年</p>
-                            <p class="text-sm md:text-base text-gray-600 leading-loose text-justify mb-6">
-                                MV邀請政治受難者蔡寬裕親自出演男主角。歌曲結合臺灣廟會「出巡」的意象，透過遶境儀式走訪不義遺址，撫慰受難者的靈魂，喚醒大眾對於這段歷史的重視。
-                            </p>
-                            <button onclick="toggleMusicTrack('出巡', this)" class="music-play-button w-full py-3 rounded-xl bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors">播放</button>
+                            <div class="music-cover-box">出巡<br>不義遺址</div>
+                            <div class="music-card-content">
+                                <h4 class="serif-title text-2xl font-black mb-1">〈出巡〉</h4>
+                                <p class="text-sm text-gray-500 mb-5">拍謝少年</p>
+                                <p class="text-sm md:text-base text-gray-600 leading-loose text-justify mb-6">
+                                    MV邀請政治受難者蔡寬裕親自出演男主角。歌曲結合臺灣廟會「出巡」的意象，透過遶境儀式走訪不義遺址，撫慰受難者的靈魂，喚醒大眾對於這段歷史的重視。
+                                </p>
+                                <div class="music-player-row">
+                                    <button onclick="toggleMusicTrack('出巡', this)" class="music-play-button bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors" aria-label="播放出巡">播放</button>
+                                    <div class="music-waveform" aria-hidden="true"></div>
+                                    <span class="music-time">0:00 / 0:00</span>
+                                </div>
+                            </div>
                         </article>
                     </div>
                 </div>
@@ -2256,13 +2363,53 @@
             let activeMusicTrack = '';
             let activeMusicButton = null;
             const QUIZ_STAMP_REVEAL_DELAY = 680;
+            const musicWaveformHeights = [38, 58, 28, 72, 46, 64, 35, 82, 52, 74, 42, 62, 31, 48, 70, 44, 56, 36, 78, 50, 66, 40, 59, 33, 45, 69, 37, 53];
+
+            function formatMusicTime(seconds) {
+                const safeSeconds = Number.isFinite(seconds) ? Math.max(0, seconds) : 0;
+                const minutes = Math.floor(safeSeconds / 60);
+                const secs = Math.floor(safeSeconds % 60);
+                return `${minutes}:${String(secs).padStart(2, '0')}`;
+            }
+
+            function initMusicWaveforms() {
+                document.querySelectorAll('.music-waveform').forEach(waveform => {
+                    if (waveform.children.length) return;
+                    musicWaveformHeights.forEach(height => {
+                        const bar = document.createElement('span');
+                        bar.style.setProperty('--bar-height', height);
+                        waveform.appendChild(bar);
+                    });
+                });
+                updateMusicProgress();
+            }
+
+            function updateMusicProgress() {
+                const audio = document.getElementById('culture-audio');
+                document.querySelectorAll('.music-piece-card').forEach(card => {
+                    const workName = card.dataset.work;
+                    const work = musicWorks[workName];
+                    const isActive = workName === activeMusicTrack && audio;
+                    const duration = isActive && Number.isFinite(audio.duration) ? audio.duration : (work?.duration || 30);
+                    const current = isActive ? audio.currentTime : 0;
+                    const progress = duration ? Math.max(0, Math.min(1, current / duration)) : 0;
+                    const bars = card.querySelectorAll('.music-waveform span');
+                    const time = card.querySelector('.music-time');
+
+                    bars.forEach((bar, index) => {
+                        const threshold = bars.length <= 1 ? 1 : index / (bars.length - 1);
+                        bar.classList.toggle('is-filled', isActive && threshold <= progress);
+                    });
+
+                    if (time) {
+                        time.textContent = `${formatMusicTime(current)} / ${formatMusicTime(duration)}`;
+                    }
+                });
+            }
 
             function setMusicPlayerState(name, isPlaying) {
                 const work = musicWorks[name];
                 if (!work) return;
-                const turntable = document.getElementById('culture-turntable');
-                const record = document.getElementById('music-record');
-                const label = document.getElementById('music-record-label');
                 const status = document.getElementById('culture-player-status');
                 document.querySelectorAll('.music-piece-card').forEach(card => {
                     card.classList.toggle('is-playing', isPlaying && card.dataset.work === name);
@@ -2271,10 +2418,8 @@
                     button.textContent = button === activeMusicButton && isPlaying ? '暫停' : '播放';
                     button.classList.toggle('is-playing', button === activeMusicButton && isPlaying);
                 });
-                turntable?.classList.toggle('is-playing', isPlaying);
-                record?.classList.toggle('is-playing', isPlaying);
-                if (label) label.innerHTML = `${work.title}<br>${work.artist}`;
                 if (status) status.textContent = isPlaying ? `正在播放：${work.artist}〈${work.title}〉` : `已暫停：${work.artist}〈${work.title}〉`;
+                updateMusicProgress();
             }
 
             function pauseMusicWhenLeavingPanel() {
@@ -2332,7 +2477,10 @@
                     audio.addEventListener('play', () => setMusicPlayerState(activeMusicTrack, true));
                     audio.addEventListener('pause', () => setMusicPlayerState(activeMusicTrack, false));
                     audio.addEventListener('ended', () => setMusicPlayerState(activeMusicTrack, false));
+                    audio.addEventListener('loadedmetadata', updateMusicProgress);
+                    audio.addEventListener('timeupdate', updateMusicProgress);
                 }
+                initMusicWaveforms();
                 renderFilmWork(0);
                 updateCultureIntroText();
                 initCultureTextReveals();
