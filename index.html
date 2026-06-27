@@ -1101,7 +1101,7 @@
             }
             .culture-scroll-intro {
                 position: relative;
-                height: 185vh;
+                height: 245vh;
                 background: #F4F1EC !important;
             }
             .culture-scroll-intro-stage {
@@ -1568,7 +1568,7 @@
                     padding: 5.5rem 1rem 6.5rem;
                 }
                 .culture-scroll-intro {
-                    height: 170vh;
+                    height: 235vh;
                 }
                 .culture-scroll-intro-stage {
                     padding: 5.5rem 1.2rem 6.5rem;
@@ -1707,7 +1707,7 @@
                     line-height: 1.75;
                 }
                 .culture-scroll-intro {
-                    height: 165vh;
+                    height: 225vh;
                 }
                 .culture-scroll-copy {
                     font-size: clamp(1.18rem, 6.3vw, 1.65rem);
@@ -1794,6 +1794,11 @@
                     〈昨暝阿爸無轉來〉等，分別以受難者故事與政治犯家庭的普遍<br>
                     經歷為藍本，將歷史元素融入歌詞中。
                 </p>
+
+                <p class="culture-scroll-copy culture-copy-panel culture-copy-wide culture-report-copy">
+                    陳彥蓉認為，音樂是現今年輕人的共同語言，更是讓他們了解這段<br>
+                    歷史的一大途徑，「就是你很難找到有人是沒有喜歡的樂團或音樂。」
+                </p>
             </div>
         </div>
 
@@ -1865,16 +1870,6 @@
                         </article>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- 音樂與影視之間的引言 -->
-        <div class="culture-text-block culture-reveal bg-[#0F141A]">
-            <div class="culture-text-copy culture-copy-panel culture-copy-nowrap culture-quote-panel">
-                <p class="culture-report-copy">
-                    陳彥蓉認為，音樂是現今年輕人的共同語言，更是讓他們了解這段歷史的一大途徑。
-                </p>
-                <p class="culture-report-copy culture-quote-line">「你很難找到有人是沒有喜歡的樂團或音樂。」</p>
             </div>
         </div>
 
@@ -2086,7 +2081,7 @@
                 const rect = intro.getBoundingClientRect();
                 const travel = Math.max(1, intro.offsetHeight - window.innerHeight);
                 const progress = Math.max(0, Math.min(1, -rect.top / travel));
-                const activeIndex = progress < 0.52 ? 0 : 1;
+                const activeIndex = Math.min(copies.length - 1, Math.floor(progress * copies.length));
 
                 copies.forEach((copy, index) => {
                     copy.classList.toggle('is-active', index === activeIndex);
