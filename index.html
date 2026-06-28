@@ -3593,173 +3593,582 @@
         </script>
     </section>
 
-    <!-- ==========================================
-         頁面 7：身歷其境詳細頁
-         ========================================== -->
-    <section id="page-approach-2" class="hidden min-h-screen bg-[#FAFAFA] flex flex-col justify-start py-24 px-6">
-        <button onclick="window.returnToApproachSelector()" class="approach-return-nav" type="button">返回入口頁面</button>
-        <div class="max-w-3xl mx-auto space-y-12">
-            <!-- Header -->
-            <div class="space-y-4">
-                <span class="text-xs text-[#9B2C2C] font-semibold tracking-[0.3em] uppercase block">身歷其境：遊戲與實境解謎</span>
-                <h2 class="serif-title text-3xl md:text-4xl font-black text-[#2D3748] tracking-wider leading-tight">
-                    在模擬抉擇中感知歷史窒息感
-                </h2>
-                <div class="w-12 h-1 bg-[#9B2C2C] mt-4"></div>
-            </div>
+<!-- ==========================================
+     頁面 7：身歷其境詳細頁（沉浸式改版）
+     用法：整個 <section> 取代原本的 page-approach-2
+     ========================================== -->
+<section id="page-approach-2" class="hidden min-h-screen bg-[#F4F1EC] text-[#1A202C]">
+  <style>
+    /* ── 身歷其境：捲動開場 ── */
+    #approach-2-scroll-intro {
+      position: relative;
+      height: 230vh;
+      background: #1a1410;
+    }
+    #approach-2-scroll-intro .a2-stage {
+      position: sticky;
+      top: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: clamp(2rem, 6vw, 5rem);
+      overflow: hidden;
+    }
+    .a2-scroll-copy {
+      grid-area: 1 / 1;
+      max-width: 64rem;
+      color: #f4efe6;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .65s ease, transform .65s ease;
+      pointer-events: none;
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.2rem, 2.15vw, 1.65rem);
+      font-weight: 700;
+      line-height: 1.9;
+    }
+    .a2-scroll-copy.is-active { opacity: 1; transform: translateY(0); }
+    .a2-copy-panel {
+      display: inline-block;
+      width: fit-content;
+      max-width: min(100%, 68rem);
+      margin-inline: auto;
+      padding: clamp(1.5rem, 4vw, 2.6rem) clamp(1.25rem, 4vw, 3rem);
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 16px 38px rgba(0,0,0,.28);
+      text-align: left;
+    }
+    /* ── 卡片區 ── */
+    #approach-2-cards {
+      background: #F4F1EC;
+      padding: clamp(4rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4rem);
+    }
+    .a2-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .a2-card {
+      background: #fff;
+      border: 1px solid rgba(67,55,42,.18);
+      border-radius: 1.25rem;
+      padding: clamp(1.5rem, 3vw, 2rem);
+      box-shadow: 0 8px 24px rgba(57,45,31,.08);
+      transition: box-shadow .25s ease, transform .25s ease;
+    }
+    .a2-card:hover {
+      box-shadow: 0 16px 40px rgba(57,45,31,.14);
+      transform: translateY(-3px);
+    }
+    .a2-card-icon {
+      font-size: 2rem;
+      margin-bottom: .75rem;
+    }
+    .a2-card h3 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+      font-weight: 900;
+      color: #9B2C2C;
+      margin-bottom: .6rem;
+    }
+    .a2-card p {
+      font-size: clamp(.9rem, 1.1vw, 1rem);
+      color: #4a4a4a;
+      line-height: 1.85;
+    }
+    .a2-card-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: .3rem .75rem;
+      background: rgba(155,44,44,.08);
+      color: #9B2C2C;
+      border-radius: 999px;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+    }
+    /* ── 尾部引言 ── */
+    .a2-outro {
+      background: #1a1410;
+      padding: clamp(4rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4rem);
+      text-align: center;
+    }
+    .a2-outro p {
+      max-width: 52rem;
+      margin: 0 auto;
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.2rem, 2vw, 1.6rem);
+      font-weight: 700;
+      color: rgba(244,239,230,.88);
+      line-height: 2;
+    }
+  </style>
 
-            <!-- Quote -->
-            <blockquote class="text-lg md:text-xl font-medium text-gray-700 italic border-l-4 border-[#9B2C2C] pl-4 py-2">
-                「當我握著紙牌決定是否告密時，手心的汗水是真的。在那個年代，一個錯誤決定就能毀掉一輩子。」
-            </blockquote>
+  <!-- 返回按鈕（固定左上角） -->
+  <button onclick="window.returnToApproachSelector()" class="approach-return-nav" type="button">返回入口頁面</button>
 
-            <!-- 詳細推薦列表 -->
-            <div class="space-y-8 pt-4">
-                <div class="bg-white p-6 md:p-8 rounded-xl border border-gray-200/80 shadow-sm transition-all duration-300 hover:shadow-md">
-                    <h3 class="font-bold text-[#9B2C2C] text-lg md:text-xl mb-3">🎲 互動桌遊《補課》</h3>
-                    <p class="text-sm md:text-base text-gray-600 leading-relaxed">
-                        這是一款讓玩家扮演戒嚴時期中學師生的策略互動遊戲。為保護私下成立的讀書會，玩家必須一邊讀書一邊與保密防諜的密報系統暗中周旋。在有限的時間中，體驗在猜忌、舉報與同儕情誼之間的兩難抉擇，深受校園青年的喜愛。
-                    </p>
-                </div>
+  <!-- 開場捲動文字 -->
+  <div id="approach-2-scroll-intro">
+    <div class="a2-stage">
+      <p class="a2-scroll-copy a2-copy-panel is-active">
+        「當我握著紙牌決定是否告密時，手心的汗水是真的。<br>
+        在那個年代，一個錯誤決定就能毀掉一輩子。」
+      </p>
+      <p class="a2-scroll-copy a2-copy-panel">
+        遊戲與實境解謎，是讓人「扮演」而非「旁觀」歷史的媒介。<br>
+        當你化身戒嚴時期的學生或教師，你才真正理解——<br>
+        那種隨時可能被舉報的窒息感，從不只是課本上的名詞。
+      </p>
+      <p class="a2-scroll-copy a2-copy-panel">
+        這些作品讓白色恐怖的「選擇壓力」變得具體可感知，<br>
+        讓年輕世代在遊戲規則裡，親歷威權日常的心理重量。
+      </p>
+    </div>
+  </div>
 
-                <div class="bg-white p-6 md:p-8 rounded-xl border border-gray-200/80 shadow-sm transition-all duration-300 hover:shadow-md">
-                    <h3 class="font-bold text-[#9B2C2C] text-lg md:text-xl mb-3">🧩 《異鄉人：綠島人權解謎》</h3>
-                    <p class="text-sm md:text-base text-gray-600 leading-relaxed">
-                        專為綠島不義遺址設計的現場實境解謎工具。青年讀者親自拿起道具，依據實地景點與道具提示，解鎖一位被強迫遣送綠島的青年受難者故事，藉由動手解谜與現地步行的回饋，加深對歷史空間物理重量的感知。
-                    </p>
-                </div>
+  <!-- 卡片內容區 -->
+  <div id="approach-2-cards">
+    <div style="max-width:1080px; margin:0 auto 2.5rem;">
+      <span style="color:#9B2C2C; font-size:.75rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase;">身歷其境：遊戲與實境解謎</span>
+      <h2 style="font-family:'Noto Serif TC',serif; font-size:clamp(1.6rem,2.8vw,2.4rem); font-weight:900; color:#2D3748; margin-top:.5rem; line-height:1.3;">在模擬抉擇中感知歷史窒息感</h2>
+      <div style="width:3rem; height:4px; background:#9B2C2C; margin-top:1rem;"></div>
+    </div>
 
-                <div class="bg-white p-6 md:p-8 rounded-xl border border-gray-200/80 shadow-sm transition-all duration-300 hover:shadow-md">
-                    <h3 class="font-bold text-[#9B2C2C] text-lg md:text-xl mb-3">💻 3D 冒險遊戲《夕生 Halflight》</h3>
-                    <p class="text-sm md:text-base text-gray-600 leading-relaxed">
-                        融入了台灣道地民俗信仰與威權時期壓抑氛圍的 3D 驚悚寫實解謎遊戲。在虛幻與現實交織的村莊中，玩家需要不斷突破層層的心靈禁錮與防備，拼湊出威權時代對大眾日常生活所造成的深刻陰影。
-                    </p>
-                </div>
-            </div>
+    <div class="a2-card-grid">
+      <div class="a2-card">
+        <div class="a2-card-icon">🎲</div>
+        <h3>互動桌遊《補課》</h3>
+        <p>一款讓玩家扮演戒嚴時期中學師生的策略互動遊戲。為保護私下成立的讀書會，玩家必須一邊讀書一邊與保密防諜的密報系統暗中周旋。在有限的時間中，體驗在猜忌、舉報與同儕情誼之間的兩難抉擇，深受校園青年的喜愛。</p>
+        <span class="a2-card-tag">桌遊・讀書會・告密抉擇</span>
+      </div>
 
-            <!-- Back Button -->
-            <div class="pt-12 text-center">
-                <button onclick="window.switchView('5-education', true)" class="inline-flex items-center gap-3 px-8 py-4 bg-[#2D3748] hover:bg-black text-white font-medium rounded-full shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
-                    <svg class="w-5 h-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                    </svg>
-                    <span class="tracking-widest text-sm md:text-base">返回多維路徑探索</span>
-                </button>
-            </div>
-        </div>
-    </section>
+      <div class="a2-card">
+        <div class="a2-card-icon">🧩</div>
+        <h3>《異鄉人：綠島人權解謎》</h3>
+        <p>專為綠島不義遺址設計的現場實境解謎工具。青年讀者親自拿起道具，依據實地景點與線索提示，解鎖一位被強迫遣送綠島的青年受難者故事，藉由動手解謎與現地步行，加深對歷史空間物理重量的感知。</p>
+        <span class="a2-card-tag">實境解謎・綠島・受難者故事</span>
+      </div>
 
-    <!-- ==========================================
-         頁面 8：現場震撼詳細頁
-         ========================================== -->
-    <section id="page-approach-3" class="hidden min-h-screen bg-[#FAFAFA] flex flex-col justify-start py-24 px-6">
-        <button onclick="window.returnToApproachSelector()" class="approach-return-nav" type="button">返回入口頁面</button>
-        <div class="max-w-3xl mx-auto space-y-12">
-            <!-- Header -->
-            <div class="space-y-4">
-                <span class="text-xs text-[#9B2C2C] font-semibold tracking-[0.3em] uppercase block">現場震撼：不義遺址與走讀</span>
-                <h2 class="serif-title text-3xl md:text-4xl font-black text-[#2D3748] tracking-wider leading-tight">
-                    用身體感官感知物理的禁錮
-                </h2>
-                <div class="w-12 h-1 bg-[#9B2C2C] mt-4"></div>
-            </div>
+      <div class="a2-card">
+        <div class="a2-card-icon">💻</div>
+        <h3>3D 冒險遊戲《夕生 Halflight》</h3>
+        <p>融入台灣道地民俗信仰與威權時期壓抑氛圍的 3D 驚悚寫實解謎遊戲。在虛幻與現實交織的村莊中，玩家需要不斷突破層層的心靈禁錮與防備，拼湊出威權時代對大眾日常生活所造成的深刻陰影。</p>
+        <span class="a2-card-tag">電玩・民俗・心理恐怖</span>
+      </div>
+    </div>
+  </div>
 
-            <!-- Quote -->
-            <blockquote class="text-lg md:text-xl font-medium text-gray-700 italic border-l-4 border-[#9B2C2C] pl-4 py-2">
-                「站在不到三坪卻擠了幾十人的押房裡，感受著看守所的冰冷，才真正看懂歷史課本上那句話的重量。」
-            </blockquote>
+  <!-- 尾部引言 -->
+  <div class="a2-outro">
+    <p>當你在遊戲裡做出選擇的那一刻，<br>你才真正懂得，那個時代的人有多不自由。</p>
+  </div>
 
-            <!-- 詳細推薦列表 -->
-            <div class="space-y-8 pt-4">
-                <div class="bg-white p-6 md:p-8 rounded-xl border border-gray-200/80 shadow-sm transition-all duration-300 hover:shadow-md">
-                    <h3 class="font-bold text-[#9B2C2C] text-lg md:text-xl mb-3">🏛️ 國家人權博物館（景美園區）</h3>
-                    <p class="text-sm md:text-base text-gray-600 leading-relaxed">
-                        實地走過看守所、軍事法庭等不義遺址。在這裡，曾進行過許多改變台灣歷史進程的審判（如美麗島大審）。親自站立在法庭上或探看密不透風的狹窄牢房，物理空間帶來的精神壓迫與震撼是教科書所遠遠無法比擬的。
-                    </p>
-                </div>
+  <script>
+    (function() {
+      function updateApproach2Scroll() {
+        const intro = document.getElementById('approach-2-scroll-intro');
+        if (!intro) return;
+        const copies = intro.querySelectorAll('.a2-scroll-copy');
+        if (!copies.length) return;
+        const rect = intro.getBoundingClientRect();
+        const travel = Math.max(1, intro.offsetHeight - window.innerHeight);
+        const progress = Math.max(0, Math.min(1, -rect.top / travel));
+        const activeIndex = Math.min(copies.length - 1, Math.floor(progress * copies.length));
+        copies.forEach((copy, i) => copy.classList.toggle('is-active', i === activeIndex));
+      }
+      window.addEventListener('scroll', updateApproach2Scroll, { passive: true });
+      window.addEventListener('resize', updateApproach2Scroll);
+      updateApproach2Scroll();
+    })();
+  </script>
+</section>
 
-                <div class="bg-white p-6 md:p-8 rounded-xl border border-gray-200/80 shadow-sm transition-all duration-300 hover:shadow-md">
-                    <h3 class="font-bold text-[#9B2C2C] text-lg md:text-xl mb-3">🚶‍♂️ 台北不義遺址城市散步走讀</h3>
-                    <p class="text-sm md:text-base text-gray-600 leading-relaxed">
-                        由民間團體組織的台北市區散步導覽。走過繁華的西門町、台北車站周邊，重新發掘藏匿在街道間的保密局舊址、軍法處、青島東路看守所舊址等。透過城市空間的今昔對比，驚覺威權的鬼魅曾離大眾的日常生活如此接近。
-                    </p>
-                </div>
+<!-- ==========================================
+     頁面 8：現場震撼詳細頁（沉浸式改版）
+     用法：整個 <section> 取代原本的 page-approach-3
+     ========================================== -->
+<section id="page-approach-3" class="hidden min-h-screen bg-[#F4F1EC] text-[#1A202C]">
+  <style>
+    /* ── 現場震撼：捲動開場 ── */
+    #approach-3-scroll-intro {
+      position: relative;
+      height: 230vh;
+      background: #0f1510;
+    }
+    #approach-3-scroll-intro .a3-stage {
+      position: sticky;
+      top: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: clamp(2rem, 6vw, 5rem);
+      overflow: hidden;
+    }
+    .a3-scroll-copy {
+      grid-area: 1 / 1;
+      max-width: 64rem;
+      color: #f4efe6;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .65s ease, transform .65s ease;
+      pointer-events: none;
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.2rem, 2.15vw, 1.65rem);
+      font-weight: 700;
+      line-height: 1.9;
+    }
+    .a3-scroll-copy.is-active { opacity: 1; transform: translateY(0); }
+    .a3-copy-panel {
+      display: inline-block;
+      width: fit-content;
+      max-width: min(100%, 68rem);
+      margin-inline: auto;
+      padding: clamp(1.5rem, 4vw, 2.6rem) clamp(1.25rem, 4vw, 3rem);
+      background: rgba(255,255,255,.09);
+      border: 1px solid rgba(255,255,255,.13);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 16px 38px rgba(0,0,0,.32);
+      text-align: left;
+    }
+    /* ── 卡片區 ── */
+    #approach-3-cards {
+      background: #F4F1EC;
+      padding: clamp(4rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4rem);
+    }
+    .a3-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .a3-card {
+      background: #fff;
+      border: 1px solid rgba(67,55,42,.18);
+      border-radius: 1.25rem;
+      padding: clamp(1.5rem, 3vw, 2rem);
+      box-shadow: 0 8px 24px rgba(57,45,31,.08);
+      transition: box-shadow .25s ease, transform .25s ease;
+    }
+    .a3-card:hover {
+      box-shadow: 0 16px 40px rgba(57,45,31,.14);
+      transform: translateY(-3px);
+    }
+    .a3-card-icon { font-size: 2rem; margin-bottom: .75rem; }
+    .a3-card h3 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+      font-weight: 900;
+      color: #9B2C2C;
+      margin-bottom: .6rem;
+    }
+    .a3-card p {
+      font-size: clamp(.9rem, 1.1vw, 1rem);
+      color: #4a4a4a;
+      line-height: 1.85;
+    }
+    .a3-card-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: .3rem .75rem;
+      background: rgba(155,44,44,.08);
+      color: #9B2C2C;
+      border-radius: 999px;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+    }
+    /* ── 尾部引言 ── */
+    .a3-outro {
+      background: #0f1510;
+      padding: clamp(4rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4rem);
+      text-align: center;
+    }
+    .a3-outro p {
+      max-width: 52rem;
+      margin: 0 auto;
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.2rem, 2vw, 1.6rem);
+      font-weight: 700;
+      color: rgba(244,239,230,.88);
+      line-height: 2;
+    }
+  </style>
 
-                <div class="bg-white p-6 md:p-8 rounded-xl border border-gray-200/80 shadow-sm transition-all duration-300 hover:shadow-md">
-                    <h3 class="font-bold text-[#9B2C2C] text-lg md:text-xl mb-3">🌲 馬場町紀念公園河濱走讀</h3>
-                    <p class="text-sm md:text-base text-gray-600 leading-relaxed">
-                        馬場町是昔日 1950 年代政治犯遭到槍決的刑場。如今這裡已開闢為綠意盎然的市民河濱休濱公園。走讀這片土地，在紀念碑的高聳土丘前，默哀並回想當年無數理想青年在拂曉時分留下的最後足跡，感知生命的消逝。
-                    </p>
-                </div>
-            </div>
+  <!-- 返回按鈕 -->
+  <button onclick="window.returnToApproachSelector()" class="approach-return-nav" type="button">返回入口頁面</button>
 
-            <!-- Back Button -->
-            <div class="pt-12 text-center">
-                <button onclick="window.switchView('5-education', true)" class="inline-flex items-center gap-3 px-8 py-4 bg-[#2D3748] hover:bg-black text-white font-medium rounded-full shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
-                    <svg class="w-5 h-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                    </svg>
-                    <span class="tracking-widest text-sm md:text-base">返回多維路徑探索</span>
-                </button>
-            </div>
-        </div>
-    </section>
+  <!-- 開場捲動文字 -->
+  <div id="approach-3-scroll-intro">
+    <div class="a3-stage">
+      <p class="a3-scroll-copy a3-copy-panel is-active">
+        「站在不到三坪卻擠了幾十人的押房裡，感受著看守所的冰冷，<br>
+        才真正看懂歷史課本上那句話的重量。」
+      </p>
+      <p class="a3-scroll-copy a3-copy-panel">
+        歷史的重量，不只存在於文字裡。<br>
+        那些窄到無法平躺的牢房、迴響腳步聲的審訊廊道，<br>
+        需要用身體去感受，才能真正理解。
+      </p>
+      <p class="a3-scroll-copy a3-copy-panel">
+        走進不義遺址，讓空間說話。<br>
+        那種冰冷、那種壓迫感，是任何課本都無法複製的歷史現場。
+      </p>
+    </div>
+  </div>
 
-    <!-- ==========================================
-         頁面 9：理性重構詳細頁
-         ========================================== -->
-    <section id="page-approach-4" class="hidden min-h-screen bg-[#FAFAFA] flex flex-col justify-start py-24 px-6">
-        <button onclick="window.returnToApproachSelector()" class="approach-return-nav" type="button">返回入口頁面</button>
-        <div class="max-w-3xl mx-auto space-y-12">
-            <!-- Header -->
-            <div class="space-y-4">
-                <span class="text-xs text-[#9B2C2C] font-semibold tracking-[0.3em] uppercase block">理性重構：口述歷史與研究</span>
-                <h2 class="serif-title text-3xl md:text-4xl font-black text-[#2D3748] tracking-wider leading-tight">
-                    以客觀檔案建立對政治謊言的免疫力
-                </h2>
-                <div class="w-12 h-1 bg-[#9B2C2C] mt-4"></div>
-            </div>
+  <!-- 卡片內容區 -->
+  <div id="approach-3-cards">
+    <div style="max-width:1080px; margin:0 auto 2.5rem;">
+      <span style="color:#9B2C2C; font-size:.75rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase;">現場震撼：不義遺址與走讀</span>
+      <h2 style="font-family:'Noto Serif TC',serif; font-size:clamp(1.6rem,2.8vw,2.4rem); font-weight:900; color:#2D3748; margin-top:.5rem; line-height:1.3;">用身體感官感知物理的禁錮</h2>
+      <div style="width:3rem; height:4px; background:#9B2C2C; margin-top:1rem;"></div>
+    </div>
 
-            <!-- Quote -->
-            <blockquote class="text-lg md:text-xl font-medium text-gray-700 italic border-l-4 border-[#9B2C2C] pl-4 py-2">
-                「當我們能親自翻閱檔案局被解密的監控報告時，那些扁平的口號就會被細緻的國家機器運作取代。」
-            </blockquote>
+    <div class="a3-card-grid">
+      <div class="a3-card">
+        <div class="a3-card-icon">🏛️</div>
+        <h3>國家人權博物館（景美園區）</h3>
+        <p>實地走過看守所、軍事法庭等不義遺址。曾發生美麗島大審等重要審判的空間至今完整保留。親自站立在法庭上或探看密不透風的狹窄牢房，物理空間帶來的精神壓迫是教科書所無法比擬的。</p>
+        <span class="a3-card-tag">博物館・景美・審判現場</span>
+      </div>
 
-            <!-- 詳細推薦列表 -->
-            <div class="space-y-8 pt-4">
-                <div class="bg-white p-6 md:p-8 rounded-xl border border-gray-200/80 shadow-sm transition-all duration-300 hover:shadow-md">
-                    <h3 class="font-bold text-[#9B2C2C] text-lg md:text-xl mb-3">📂 國家檔案管理局線上申調</h3>
-                    <p class="text-sm md:text-base text-gray-600 leading-relaxed">
-                        當代青年可依法向國家發展委員會檔案管理局申請調閱、翻閱已被解密的監控判決檔案。當親自檢視當年調查局、保密局對特定對象的一舉一動做出的詳細密報與層層上呈批示時，威權機器的驚人組織動員與監控細節便躍然紙上。
-                    </p>
-                </div>
+      <div class="a3-card">
+        <div class="a3-card-icon">🚶‍♂️</div>
+        <h3>台北不義遺址城市散步走讀</h3>
+        <p>由民間團體組織的台北市區散步導覽。走過繁華的西門町、台北車站周邊，重新發掘藏匿在街道間的保密局舊址、軍法處、青島東路看守所舊址等，透過城市空間的今昔對比，驚覺威權的痕跡離日常生活如此接近。</p>
+        <span class="a3-card-tag">走讀・台北・城市地景</span>
+      </div>
 
-                <div class="bg-white p-6 md:p-8 rounded-xl border border-gray-200/80 shadow-sm transition-all duration-300 hover:shadow-md">
-                    <h3 class="font-bold text-[#9B2C2C] text-lg md:text-xl mb-3">🎙️ 受難前輩多維口述歷史</h3>
-                    <p class="text-sm md:text-base text-gray-600 leading-relaxed">
-                        聆聽和研讀包含原住民、本省菁英、外省政治犯、新民主主義讀書會等不同政治立場受難者的真實口述錄影 or 逐字。透過這些最真實的平民生活記憶，抵抗宏大、單一的政治宣傳與意識形態。
-                    </p>
-                </div>
+      <div class="a3-card">
+        <div class="a3-card-icon">🌲</div>
+        <h3>馬場町紀念公園河濱走讀</h3>
+        <p>馬場町是1950年代政治犯遭到槍決的刑場，如今已開闢為市民河濱公園。走讀這片土地，在紀念碑的高聳土丘前，默哀並回想當年無數理想青年在拂曉時分留下的最後足跡，感知生命的消逝。</p>
+        <span class="a3-card-tag">走讀・馬場町・刑場記憶</span>
+      </div>
+    </div>
+  </div>
 
-                <div class="bg-white p-6 md:p-8 rounded-xl border border-gray-200/80 shadow-sm transition-all duration-300 hover:shadow-md">
-                    <h3 class="font-bold text-[#9B2C2C] text-lg md:text-xl mb-3">💻 臺灣轉型正義資料庫</h3>
-                    <p class="text-sm md:text-base text-gray-600 leading-relaxed">
-                        透過公開的線上資料庫系統，輸入前輩姓名，即可完整檢索當年的加害者決策鏈、審判軍法官、判決條款、最高當局（如蔣介石）核定手諭等。用最嚴謹的理性學術資料解構歷史悲劇，建立青年獨立思辨的能力。
-                    </p>
-                </div>
-            </div>
+  <!-- 尾部引言 -->
+  <div class="a3-outro">
+    <p>那些被圍牆封住的生命，<br>需要我們親身踏入那片土地，才能真正被看見。</p>
+  </div>
 
-            <!-- Back Button -->
-            <div class="pt-12 text-center">
-                <button onclick="window.switchView('5-education', true)" class="inline-flex items-center gap-3 px-8 py-4 bg-[#2D3748] hover:bg-black text-white font-medium rounded-full shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
-                    <svg class="w-5 h-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                    </svg>
-                    <span class="tracking-widest text-sm md:text-base">返回多維路徑探索</span>
-                </button>
-            </div>
-        </div>
-    </section>
+  <script>
+    (function() {
+      function updateApproach3Scroll() {
+        const intro = document.getElementById('approach-3-scroll-intro');
+        if (!intro) return;
+        const copies = intro.querySelectorAll('.a3-scroll-copy');
+        if (!copies.length) return;
+        const rect = intro.getBoundingClientRect();
+        const travel = Math.max(1, intro.offsetHeight - window.innerHeight);
+        const progress = Math.max(0, Math.min(1, -rect.top / travel));
+        const activeIndex = Math.min(copies.length - 1, Math.floor(progress * copies.length));
+        copies.forEach((copy, i) => copy.classList.toggle('is-active', i === activeIndex));
+      }
+      window.addEventListener('scroll', updateApproach3Scroll, { passive: true });
+      window.addEventListener('resize', updateApproach3Scroll);
+      updateApproach3Scroll();
+    })();
+  </script>
+</section>
+
+<!-- ==========================================
+     頁面 9：理性重構詳細頁（沉浸式改版）
+     用法：整個 <section> 取代原本的 page-approach-4
+     ========================================== -->
+<section id="page-approach-4" class="hidden min-h-screen bg-[#F4F1EC] text-[#1A202C]">
+  <style>
+    /* ── 理性重構：捲動開場 ── */
+    #approach-4-scroll-intro {
+      position: relative;
+      height: 230vh;
+      background: #0d1118;
+    }
+    #approach-4-scroll-intro .a4-stage {
+      position: sticky;
+      top: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: clamp(2rem, 6vw, 5rem);
+      overflow: hidden;
+    }
+    .a4-scroll-copy {
+      grid-area: 1 / 1;
+      max-width: 64rem;
+      color: #f4efe6;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .65s ease, transform .65s ease;
+      pointer-events: none;
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.2rem, 2.15vw, 1.65rem);
+      font-weight: 700;
+      line-height: 1.9;
+    }
+    .a4-scroll-copy.is-active { opacity: 1; transform: translateY(0); }
+    .a4-copy-panel {
+      display: inline-block;
+      width: fit-content;
+      max-width: min(100%, 68rem);
+      margin-inline: auto;
+      padding: clamp(1.5rem, 4vw, 2.6rem) clamp(1.25rem, 4vw, 3rem);
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 16px 38px rgba(0,0,0,.35);
+      text-align: left;
+    }
+    /* ── 卡片區 ── */
+    #approach-4-cards {
+      background: #F4F1EC;
+      padding: clamp(4rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4rem);
+    }
+    .a4-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .a4-card {
+      background: #fff;
+      border: 1px solid rgba(67,55,42,.18);
+      border-radius: 1.25rem;
+      padding: clamp(1.5rem, 3vw, 2rem);
+      box-shadow: 0 8px 24px rgba(57,45,31,.08);
+      transition: box-shadow .25s ease, transform .25s ease;
+    }
+    .a4-card:hover {
+      box-shadow: 0 16px 40px rgba(57,45,31,.14);
+      transform: translateY(-3px);
+    }
+    .a4-card-icon { font-size: 2rem; margin-bottom: .75rem; }
+    .a4-card h3 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+      font-weight: 900;
+      color: #9B2C2C;
+      margin-bottom: .6rem;
+    }
+    .a4-card p {
+      font-size: clamp(.9rem, 1.1vw, 1rem);
+      color: #4a4a4a;
+      line-height: 1.85;
+    }
+    .a4-card-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: .3rem .75rem;
+      background: rgba(155,44,44,.08);
+      color: #9B2C2C;
+      border-radius: 999px;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+    }
+    /* ── 尾部引言 ── */
+    .a4-outro {
+      background: #0d1118;
+      padding: clamp(4rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4rem);
+      text-align: center;
+    }
+    .a4-outro p {
+      max-width: 52rem;
+      margin: 0 auto;
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.2rem, 2vw, 1.6rem);
+      font-weight: 700;
+      color: rgba(244,239,230,.88);
+      line-height: 2;
+    }
+  </style>
+
+  <!-- 返回按鈕 -->
+  <button onclick="window.returnToApproachSelector()" class="approach-return-nav" type="button">返回入口頁面</button>
+
+  <!-- 開場捲動文字 -->
+  <div id="approach-4-scroll-intro">
+    <div class="a4-stage">
+      <p class="a4-scroll-copy a4-copy-panel is-active">
+        「當我們能親自翻閱檔案局被解密的監控報告時，<br>
+        那些扁平的口號就會被細緻的國家機器運作取代。」
+      </p>
+      <p class="a4-scroll-copy a4-copy-panel">
+        歷史不只是情感的，也是可以被驗證的。<br>
+        透過檔案、口述與資料庫，威權的運作邏輯<br>
+        一一浮現在數字、判決書與批示手諭之間。
+      </p>
+      <p class="a4-scroll-copy a4-copy-panel">
+        理解白色恐怖，不只是記住苦難，<br>
+        更是學會辨認那套機器如何運轉——<br>
+        因為它的零件，也許至今仍散落在這個社會裡。
+      </p>
+    </div>
+  </div>
+
+  <!-- 卡片內容區 -->
+  <div id="approach-4-cards">
+    <div style="max-width:1080px; margin:0 auto 2.5rem;">
+      <span style="color:#9B2C2C; font-size:.75rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase;">理性重構：口述歷史與研究</span>
+      <h2 style="font-family:'Noto Serif TC',serif; font-size:clamp(1.6rem,2.8vw,2.4rem); font-weight:900; color:#2D3748; margin-top:.5rem; line-height:1.3;">以客觀檔案建立對政治謊言的免疫力</h2>
+      <div style="width:3rem; height:4px; background:#9B2C2C; margin-top:1rem;"></div>
+    </div>
+
+    <div class="a4-card-grid">
+      <div class="a4-card">
+        <div class="a4-card-icon">📂</div>
+        <h3>國家檔案管理局線上申調</h3>
+        <p>當代青年可依法向國家發展委員會檔案管理局申請調閱已被解密的監控判決檔案。親自檢視當年調查局、保密局對特定對象的詳細密報與層層批示時，威權機器的驚人監控細節便躍然紙上。</p>
+        <span class="a4-card-tag">檔案・解密・監控機制</span>
+      </div>
+
+      <div class="a4-card">
+        <div class="a4-card-icon">🎙️</div>
+        <h3>受難前輩多維口述歷史</h3>
+        <p>聆聽和研讀包含原住民、本省菁英、外省政治犯、新民主主義讀書會等不同政治立場受難者的真實口述錄影與逐字稿。透過最真實的平民生活記憶，抵抗宏大、單一的政治宣傳。</p>
+        <span class="a4-card-tag">口述歷史・多元視角・記憶保存</span>
+      </div>
+
+      <div class="a4-card">
+        <div class="a4-card-icon">💻</div>
+        <h3>臺灣轉型正義資料庫</h3>
+        <p>透過公開的線上資料庫，輸入前輩姓名，即可完整檢索當年的加害者決策鏈、審判軍法官、判決條款、最高當局核定手諭等。用最嚴謹的學術資料解構歷史悲劇，建立獨立思辨的能力。</p>
+        <span class="a4-card-tag">資料庫・判決書・加害體系</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 尾部引言 -->
+  <div class="a4-outro">
+    <p>當你讀懂那一份份判決書，<br>你就讀懂了一整個時代的恐懼是如何被製造出來的。</p>
+  </div>
+
+  <script>
+    (function() {
+      function updateApproach4Scroll() {
+        const intro = document.getElementById('approach-4-scroll-intro');
+        if (!intro) return;
+        const copies = intro.querySelectorAll('.a4-scroll-copy');
+        if (!copies.length) return;
+        const rect = intro.getBoundingClientRect();
+        const travel = Math.max(1, intro.offsetHeight - window.innerHeight);
+        const progress = Math.max(0, Math.min(1, -rect.top / travel));
+        const activeIndex = Math.min(copies.length - 1, Math.floor(progress * copies.length));
+        copies.forEach((copy, i) => copy.classList.toggle('is-active', i === activeIndex));
+      }
+      window.addEventListener('scroll', updateApproach4Scroll, { passive: true });
+      window.addEventListener('resize', updateApproach4Scroll);
+      updateApproach4Scroll();
+    })();
+  </script>
+</section>
 
     <!-- ==========================================
          JavaScript 核心控制邏輯
