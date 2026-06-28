@@ -175,23 +175,552 @@
             text-align: center;
         }
 
-        .timeline-placeholder {
-            min-height: 70vh;
-            display: grid;
-            place-items: center;
-            padding: clamp(4rem, 8vw, 7rem) 1.5rem;
-            background: #f1ede5;
-            border-block: 1px solid rgba(45,55,72,.12);
+        .white-terror-timeline {
+            --tl-paper: #f4efe6;
+            --tl-ink: #f1ece4;
+            --tl-muted: rgba(244, 239, 230, .66);
+            --tl-line: rgba(244, 239, 230, .34);
+            --tl-accent: #b84a42;
+            --tl-accent-soft: rgba(184, 74, 66, .24);
+            --tl-bg-a: #21130f;
+            --tl-bg-b: #0d0d0c;
+            --tl-spot-x: 32%;
+            --tl-spot-y: 32%;
+            --tl-ghost: "1949";
+            --tl-event-image: none;
+            --tl-radius: 940px;
+            min-height: 100vh;
+            padding: clamp(3rem, 7vw, 6rem) 1.5rem;
+            background:
+                radial-gradient(circle at 20% 10%, rgba(156, 47, 42, .16), transparent 34vw),
+                radial-gradient(circle at 78% 82%, rgba(151, 119, 72, .12), transparent 38vw),
+                linear-gradient(135deg, #0f0d0c 0%, #191613 50%, #0f0e0d 100%);
+            color: var(--tl-ink);
+            overflow: hidden;
         }
 
-        .timeline-placeholder div {
-            width: min(100%, 860px);
-            padding: clamp(1.5rem, 4vw, 3rem);
-            border: 1px dashed rgba(155,44,44,.38);
-            color: #6b5b50;
-            text-align: center;
+        .timeline-module {
+            position: relative;
+            isolation: isolate;
+            width: min(1180px, 100%);
+            margin: 0 auto;
+            border-radius: 32px;
+            overflow: hidden;
+            background:
+                linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.022)),
+                rgba(17, 16, 15, .74);
+            box-shadow: 0 30px 90px rgba(0, 0, 0, .42);
+        }
+
+        .timeline-module::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(184,74,66,.18), transparent 28%),
+                radial-gradient(circle at 88% 78%, rgba(244,239,230,.08), transparent 32%);
+            z-index: -1;
+        }
+
+        .collapsed-panel {
+            position: relative;
+            min-height: min(76vh, 720px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: clamp(1.5rem, 4vw, 3rem);
+            padding: clamp(2rem, 5.5vw, 4.5rem) clamp(1.25rem, 5vw, 4rem);
+        }
+
+        .collapsed-panel::after {
+            content: "1949  至今";
+            position: absolute;
+            right: -2vw;
+            bottom: 2vh;
+            font-size: clamp(5rem, 17vw, 15rem);
+            line-height: 1;
+            letter-spacing: -.12em;
+            font-weight: 900;
+            color: rgba(244,239,230,.055);
+            z-index: -1;
+            white-space: nowrap;
+        }
+
+        .module-title {
+            margin: 0;
+            color: var(--tl-paper);
+            font-family: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+            font-size: clamp(1.35rem, 2.4vw, 2.2rem);
+            line-height: 1.35;
+            letter-spacing: .03em;
+            font-weight: 850;
+        }
+
+        .module-deck {
+            max-width: 720px;
+            margin: 1rem 0 0;
+            color: rgba(244,239,230,.7);
+            font-size: clamp(.98rem, 1.45vw, 1.15rem);
             line-height: 1.9;
-            background: rgba(255,255,255,.58);
+        }
+
+        .compact-timeline {
+            width: 100%;
+            overflow-x: auto;
+            padding: .5rem .125rem 1.25rem;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(244,239,230,.3) transparent;
+        }
+
+        .compact-track {
+            min-width: 940px;
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(8, minmax(100px, 1fr));
+            align-items: start;
+            padding: 0 .25rem;
+        }
+
+        .compact-track::before {
+            content: "";
+            position: absolute;
+            left: 5.6%;
+            right: 5.6%;
+            top: 76px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(244,239,230,.56), transparent);
+        }
+
+        .compact-item {
+            position: relative;
+            min-height: 142px;
+            border: 0;
+            background: transparent;
+            color: rgba(244,239,230,.78);
+            text-align: center;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .compact-date {
+            min-height: 44px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 0 5px;
+            font-weight: 800;
+            font-size: .9rem;
+            line-height: 1.2;
+        }
+
+        .compact-dot {
+            position: relative;
+            z-index: 1;
+            width: 13px;
+            height: 13px;
+            border-radius: 99px;
+            margin: 25px auto 14px;
+            background: rgba(244,239,230,.82);
+            box-shadow: 0 0 0 7px rgba(244,239,230,.07);
+            transition: transform .2s ease, background .2s ease;
+        }
+
+        .compact-label {
+            padding: 0 4px;
+            font-size: .88rem;
+            font-weight: 700;
+            line-height: 1.35;
+            color: rgba(244,239,230,.72);
+        }
+
+        .compact-item:hover .compact-dot {
+            transform: scale(1.25);
+            background: var(--tl-accent);
+        }
+
+        .compact-item.priority-1 .compact-date,
+        .compact-item.priority-1 .compact-label {
+            color: var(--tl-paper);
+        }
+
+        .compact-item.priority-1 .compact-dot {
+            width: 20px;
+            height: 20px;
+            margin-top: 21px;
+            background: var(--tl-accent);
+            box-shadow: 0 0 0 9px rgba(184,74,66,.18), 0 0 28px rgba(184,74,66,.48);
+        }
+
+        .expand-row {
+            display: flex;
+            justify-content: center;
+        }
+
+        .expand-button,
+        .collapse-button,
+        .nav-button,
+        .arrow-button {
+            font: inherit;
+        }
+
+        .expand-button,
+        .collapse-button {
+            border: 1px solid rgba(244,239,230,.22);
+            border-radius: 999px;
+            padding: .8rem 1.2rem;
+            background: rgba(244,239,230,.1);
+            color: var(--tl-paper);
+            cursor: pointer;
+            font-weight: 800;
+            letter-spacing: .04em;
+            transition: transform .2s ease, background .2s ease, border-color .2s ease;
+        }
+
+        .expand-button:hover,
+        .collapse-button:hover {
+            transform: translateY(-2px);
+            background: rgba(184,74,66,.22);
+            border-color: rgba(244,239,230,.36);
+        }
+
+        .expanded-panel {
+            display: none;
+            position: relative;
+            min-height: min(100vh, 900px);
+            background:
+                radial-gradient(circle at var(--tl-spot-x) var(--tl-spot-y), var(--tl-accent-soft), transparent 32%),
+                linear-gradient(135deg, var(--tl-bg-a), var(--tl-bg-b));
+        }
+
+        .timeline-module.is-expanded .collapsed-panel {
+            display: none;
+        }
+
+        .timeline-module.is-expanded .expanded-panel {
+            display: block;
+        }
+
+        .expanded-background {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            opacity: .38;
+            pointer-events: none;
+        }
+
+        .expanded-background::before {
+            content: var(--tl-ghost);
+            position: absolute;
+            left: 2vw;
+            bottom: 3vh;
+            font-size: clamp(7rem, 24vw, 22rem);
+            line-height: 1;
+            font-weight: 900;
+            letter-spacing: -.08em;
+            color: rgba(244,239,230,.08);
+        }
+
+        .expanded-background::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: var(--tl-event-image);
+            background-size: cover;
+            background-position: center;
+            opacity: .34;
+            filter: grayscale(.6) contrast(1.05);
+        }
+
+        .expanded-topbar {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1.25rem;
+            padding: clamp(1.25rem, 3.5vw, 2.5rem);
+        }
+
+        .expanded-topbar h2 {
+            margin: 0;
+            font-family: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+            font-size: clamp(1.2rem, 2.1vw, 1.9rem);
+            color: var(--tl-paper);
+        }
+
+        .expanded-hint {
+            max-width: 560px;
+            margin: .65rem 0 0;
+            color: rgba(244,239,230,.68);
+            font-size: .95rem;
+            line-height: 1.8;
+        }
+
+        .timeline-stage {
+            position: relative;
+            height: clamp(520px, 68vh, 690px);
+            perspective: 1800px;
+            z-index: 1;
+        }
+
+        .prism-shell {
+            position: absolute;
+            inset: 0;
+            cursor: grab;
+            touch-action: pan-y;
+        }
+
+        .prism-shell.is-dragging {
+            cursor: grabbing;
+        }
+
+        .prism-halo {
+            position: absolute;
+            left: 50%;
+            top: 52%;
+            width: min(72vw, 820px);
+            height: min(52vw, 520px);
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(244,239,230,.12), transparent 64%);
+            opacity: .74;
+            pointer-events: none;
+        }
+
+        .prism-carousel {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: min(720px, 66vw);
+            height: 460px;
+            transform-style: preserve-3d;
+            transform: translate(-50%, -50%) translateZ(calc(var(--tl-radius) * -1)) rotateY(0deg);
+            transition: transform .72s cubic-bezier(.2, .75, .2, 1);
+        }
+
+        .prism-face {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(1rem, 2.6vw, 1.9rem);
+            border: 1px solid rgba(244,239,230,.14);
+            border-left: 4px solid var(--tl-accent);
+            border-radius: 10px;
+            background: rgba(18, 17, 16, .86);
+            box-shadow: 0 28px 70px rgba(0, 0, 0, .38);
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+            opacity: .42;
+            filter: saturate(.85);
+            transition: opacity .32s ease, filter .32s ease;
+        }
+
+        .prism-face.is-active {
+            opacity: 1;
+            filter: saturate(1);
+        }
+
+        .event-meta {
+            color: var(--tl-accent);
+            font-weight: 900;
+            letter-spacing: .08em;
+            font-size: .96rem;
+        }
+
+        .prism-face h3 {
+            margin: .35rem 0 1rem;
+            color: var(--tl-paper);
+            font-family: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+            font-size: clamp(1.55rem, 3.1vw, 2.6rem);
+            line-height: 1.25;
+            font-weight: 900;
+        }
+
+        .event-image-wrap {
+            position: relative;
+            margin: 0 0 1rem;
+        }
+
+        .event-image-wrap img {
+            display: block;
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid rgba(244,239,230,.12);
+        }
+
+        .event-image-source {
+            position: absolute;
+            right: .6rem;
+            bottom: .6rem;
+            padding: .25rem .5rem;
+            border-radius: 999px;
+            background: rgba(17,16,15,.82);
+            border: 1px solid rgba(244,239,230,.16);
+            color: rgba(244,239,230,.82);
+            font-size: .72rem;
+            line-height: 1.2;
+        }
+
+        .event-copy {
+            margin: 0;
+            color: rgba(244,239,230,.79);
+            font-size: clamp(.95rem, 1.2vw, 1.05rem);
+            line-height: 1.85;
+            text-align: justify;
+        }
+
+        .rotate-status {
+            position: absolute;
+            right: clamp(1.2rem, 4vw, 3rem);
+            bottom: clamp(5.5rem, 9vw, 7.25rem);
+            color: rgba(244,239,230,.55);
+            font-weight: 900;
+            letter-spacing: .12em;
+        }
+
+        .event-controls {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 clamp(1.25rem, 3.5vw, 2.5rem) clamp(1.25rem, 3.5vw, 2.5rem);
+        }
+
+        .mini-nav-wrap {
+            flex: 1;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(244,239,230,.28) transparent;
+        }
+
+        .mini-nav {
+            display: flex;
+            gap: .6rem;
+            min-width: max-content;
+        }
+
+        .nav-button {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            grid-template-rows: auto auto;
+            column-gap: .5rem;
+            align-items: center;
+            min-width: 116px;
+            border: 1px solid rgba(244,239,230,.13);
+            border-radius: 999px;
+            padding: .55rem .7rem;
+            background: rgba(244,239,230,.06);
+            color: rgba(244,239,230,.72);
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .nav-button.is-active {
+            background: rgba(184,74,66,.18);
+            border-color: rgba(244,239,230,.32);
+            color: var(--tl-paper);
+        }
+
+        .nav-dot {
+            grid-row: 1 / 3;
+            width: .55rem;
+            height: .55rem;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .nav-date {
+            font-size: .72rem;
+            font-weight: 900;
+            line-height: 1.1;
+        }
+
+        .nav-title {
+            font-size: .8rem;
+            line-height: 1.25;
+            white-space: nowrap;
+        }
+
+        .arrow-group {
+            display: flex;
+            gap: .55rem;
+        }
+
+        .arrow-button {
+            width: 2.7rem;
+            height: 2.7rem;
+            border-radius: 50%;
+            border: 1px solid rgba(244,239,230,.2);
+            background: rgba(244,239,230,.08);
+            color: var(--tl-paper);
+            cursor: pointer;
+            font-size: 1.25rem;
+            font-weight: 900;
+        }
+
+        .arrow-button:not(:disabled):hover {
+            background: rgba(184,74,66,.22);
+        }
+
+        @media (max-width: 860px) {
+            .white-terror-timeline {
+                padding-inline: 1rem;
+            }
+
+            .expanded-topbar,
+            .event-controls {
+                flex-direction: column;
+            }
+
+            .timeline-stage {
+                height: auto;
+                min-height: 0;
+                padding: 0 1rem 1.25rem;
+                perspective: none;
+            }
+
+            .prism-shell {
+                position: relative;
+                cursor: auto;
+            }
+
+            .prism-carousel {
+                position: relative;
+                left: auto;
+                top: auto;
+                width: 100%;
+                height: auto;
+                transform: none !important;
+                display: grid;
+                gap: 1rem;
+            }
+
+            .prism-face {
+                position: relative;
+                display: none;
+                transform: none !important;
+                opacity: 1;
+            }
+
+            .prism-face.is-active {
+                display: block;
+            }
+
+            .prism-halo,
+            .rotate-status {
+                display: none;
+            }
+
+            .event-image-wrap img {
+                height: 220px;
+            }
         }
 
         .parallax-report {
@@ -923,10 +1452,53 @@
                 </p>
             </section>
 
-            <section class="timeline-placeholder">
-                <div>
-                    <p class="serif-title text-2xl font-black text-[#1A202C] mb-3">時間軸內容待補</p>
-                    <p>你在訊息中提到「以下是程式碼」，但這次沒有貼到時間軸程式碼；我先保留這個區塊，之後你貼上時間軸程式碼，我可以直接替換到這裡。</p>
+            <section class="white-terror-timeline" aria-label="白色恐怖大事記時間軸">
+                <div class="timeline-module" id="timelineModule">
+                    <div class="collapsed-panel" id="collapsedPanel">
+                        <div>
+                            <h2 class="module-title">白色恐怖大事記　Timeline：1949至今</h2>
+                            <p class="module-deck">白色恐怖的歷史脈絡，從戒嚴體制、校園與地方政治案件，延伸至民主化後的法律修正與記憶工作。</p>
+                        </div>
+
+                        <div class="compact-timeline" aria-label="簡版時間軸，可左右滑動瀏覽">
+                            <div class="compact-track" id="compactTrack"></div>
+                        </div>
+
+                        <div class="expand-row">
+                            <button class="expand-button" id="expandButton" type="button" aria-expanded="false" aria-controls="expandedPanel">
+                                點擊展開了解更多 <span aria-hidden="true">→</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="expanded-panel" id="expandedPanel" aria-hidden="true">
+                        <div class="expanded-background" id="expandedBackground"></div>
+                        <div class="expanded-topbar">
+                            <div>
+                                <h2>白色恐怖大事記　Timeline：1949至今</h2>
+                                <p class="expanded-hint">左右拖曳或點選下方節點，檔案卡會像多面柱一樣轉動；背景視覺會隨事件切換。</p>
+                            </div>
+                            <button class="collapse-button" id="collapseButton" type="button">收起時間軸</button>
+                        </div>
+
+                        <div class="timeline-stage">
+                            <div class="prism-shell" id="prismShell" aria-label="多面柱式詳細事件卡，可拖曳旋轉瀏覽">
+                                <div class="prism-halo" aria-hidden="true"></div>
+                                <div class="prism-carousel" id="prismCarousel"></div>
+                            </div>
+                            <div class="rotate-status" id="rotateStatus">01 / 08</div>
+                        </div>
+
+                        <div class="event-controls">
+                            <div class="mini-nav-wrap" aria-label="事件節點導覽">
+                                <div class="mini-nav" id="miniNav"></div>
+                            </div>
+                            <div class="arrow-group" aria-label="切換事件">
+                                <button class="arrow-button" id="prevButton" type="button" aria-label="上一個事件">←</button>
+                                <button class="arrow-button" id="nextButton" type="button" aria-label="下一個事件">→</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -3621,6 +4193,346 @@
                 const target = document.getElementById('article-body-start');
                 target.scrollIntoView({ behavior: 'smooth' });
             }
+
+            function initWhiteTerrorTimeline() {
+                const moduleEl = document.getElementById("timelineModule");
+                const compactTrack = document.getElementById("compactTrack");
+                const expandButton = document.getElementById("expandButton");
+                const collapseButton = document.getElementById("collapseButton");
+                const expandedPanel = document.getElementById("expandedPanel");
+                const prismShell = document.getElementById("prismShell");
+                const prismCarousel = document.getElementById("prismCarousel");
+                const miniNav = document.getElementById("miniNav");
+                const prevButton = document.getElementById("prevButton");
+                const nextButton = document.getElementById("nextButton");
+                const rotateStatus = document.getElementById("rotateStatus");
+
+                if (!moduleEl || !compactTrack || !prismCarousel || moduleEl.dataset.ready === "true") return;
+                moduleEl.dataset.ready = "true";
+
+                const timelineEvents = [
+                    {
+                        date: "1949年",
+                        shortDate: "1949",
+                        title: "白恐開始",
+                        fullTitle: "白色恐怖開始",
+                        importance: 2,
+                        bgText: "1949",
+                        accent: "#b84a42",
+                        bgA: "#21130f",
+                        bgB: "#0d0d0c",
+                        spotX: "32%",
+                        spotY: "22%",
+                        image: "images/1949-white-terror-start.jpg",
+                        imageSource: "維基百科",
+                        content: "中華民國頒佈《臺灣省戒嚴令》，並施行《懲治叛亂條例》，政治案件與思想控制逐漸成為社會日常的一部分。"
+                    },
+                    {
+                        date: "1949年4月6日",
+                        shortDate: "1949.04.06",
+                        title: "四六事件",
+                        fullTitle: "四六事件",
+                        importance: 2,
+                        bgText: "04.06",
+                        accent: "#a8483d",
+                        bgA: "#1d1716",
+                        bgB: "#0f0d0c",
+                        spotX: "58%",
+                        spotY: "30%",
+                        image: "images/1949-april-sixth.jpeg",
+                        imageSource: "新台灣和平基金會",
+                        content: "臺灣省警備總司令部派遣軍警進入臺灣省立師範學院及國立臺灣大學，逮捕學生，成為校園白色恐怖的重要開端。"
+                    },
+                    {
+                        date: "1952年",
+                        shortDate: "1952",
+                        title: "鹿窟事件",
+                        fullTitle: "鹿窟事件",
+                        importance: 2,
+                        bgText: "1952",
+                        accent: "#92704b",
+                        bgA: "#1c1711",
+                        bgB: "#0e0f0d",
+                        spotX: "78%",
+                        spotY: "48%",
+                        image: "images/1952-luku.jpeg",
+                        imageSource: "國家人權記憶庫",
+                        content: "逃亡的中國共產黨地下黨員躲藏於鹿窟山區，並吸收部分當地村民組成「台灣人民武裝保衛隊」。後遭政府軍隊嚴刑拷打，估計150名農民、礦工遭判刑與感訓，其中37人遭槍決死刑，98人入獄，導致該山村幾乎滅村。"
+                    },
+                    {
+                        date: "1979年",
+                        shortDate: "1979",
+                        title: "美麗島",
+                        fullTitle: "美麗島事件",
+                        importance: 3,
+                        bgText: "1979",
+                        accent: "#7c6859",
+                        bgA: "#171616",
+                        bgB: "#0f1111",
+                        spotX: "36%",
+                        spotY: "62%",
+                        image: "images/1979-kaohsiung-incident.jpg",
+                        imageSource: "維基百科",
+                        content: "《美麗島》雜誌社在高雄舉行世界人權日紀念日大會，未獲批准，但全臺黨外人士如施明德、呂秀蓮及陳菊等人，仍照計劃至高雄參加紀念活動，遭部隊鎮壓。"
+                    },
+                    {
+                        date: "1991年5月9日",
+                        shortDate: "1991.05.09",
+                        title: "獨台會案",
+                        fullTitle: "獨台會案",
+                        importance: 1,
+                        bgText: "1991",
+                        accent: "#d55a4d",
+                        bgA: "#27120f",
+                        bgB: "#10100f",
+                        spotX: "28%",
+                        spotY: "34%",
+                        image: "images/1991-independence-association.jpg",
+                        imageSource: "新台灣和平基金會",
+                        content: "法務部調查局進入清華大學校園拘捕歷史研究所學生廖偉程與數名人士，引發全臺各大學生罷課抗議，促成政府廢除《戡亂時期檢肅匪諜條例》。"
+                    },
+                    {
+                        date: "1991年5月22日",
+                        shortDate: "1991.05.22",
+                        title: "狹義結束",
+                        fullTitle: "（狹義）白色恐怖結束",
+                        importance: 2,
+                        bgText: "05.22",
+                        accent: "#b67a4e",
+                        bgA: "#1e1710",
+                        bgB: "#11100f",
+                        spotX: "74%",
+                        spotY: "36%",
+                        image: "images/1991-narrow-end.jpg",
+                        imageSource: "中華民國總統府公報",
+                        content: "廢除《戡亂時期檢肅匪諜條例》，標誌著狹義白色恐怖的結束，也使政治案件的壓制機制逐步鬆動。"
+                    },
+                    {
+                        date: "1992年",
+                        shortDate: "1992",
+                        title: "廣義結束",
+                        fullTitle: "（廣義）白色恐怖結束",
+                        importance: 1,
+                        bgText: "1992",
+                        accent: "#d65e50",
+                        bgA: "#241512",
+                        bgB: "#0e0f10",
+                        spotX: "20%",
+                        spotY: "62%",
+                        image: "images/1992-broad-end.jpg",
+                        imageSource: "100行動聯盟30週年",
+                        content: "由林山田、李鎮源、鍾肇政、陳傳岳等十人共同發起「一〇〇行動聯盟」，各界合力促成立法院修正《中華民國刑法》第一百條。"
+                    },
+                    {
+                        date: "2024年",
+                        shortDate: "2024",
+                        title: "記憶日",
+                        fullTitle: "制定白色恐怖記憶日",
+                        importance: 3,
+                        bgText: "2024",
+                        accent: "#8a6d58",
+                        bgA: "#191716",
+                        bgB: "#0d0e0f",
+                        spotX: "62%",
+                        spotY: "32%",
+                        image: "images/2024-memory-day.jpg",
+                        imageSource: "新台灣和平基金會",
+                        content: "行政院核定每年5月19日為「白色恐怖記憶日」，使白恐記憶以公共紀念形式被重新標記。"
+                    }
+                ];
+
+                const step = 360 / timelineEvents.length;
+                let activeIndex = 0;
+                let currentRotation = 0;
+                let dragStartX = 0;
+                let dragStartRotation = 0;
+                let isDragging = false;
+
+                function createCompactTimeline() {
+                    compactTrack.innerHTML = "";
+                    timelineEvents.forEach((event, index) => {
+                        const item = document.createElement("button");
+                        item.type = "button";
+                        item.className = `compact-item priority-${event.importance}`;
+                        item.setAttribute("aria-label", `展開並查看 ${event.date} ${event.fullTitle}`);
+                        item.innerHTML = `
+                            <div class="compact-date">${event.shortDate}</div>
+                            <div class="compact-dot" aria-hidden="true"></div>
+                            <div class="compact-label">${event.title}</div>
+                        `;
+                        item.addEventListener("click", () => openTimeline(index));
+                        compactTrack.appendChild(item);
+                    });
+                }
+
+                function createPrismTimeline() {
+                    prismCarousel.innerHTML = "";
+                    miniNav.innerHTML = "";
+
+                    timelineEvents.forEach((event, index) => {
+                        const face = document.createElement("article");
+                        face.className = `prism-face priority-${event.importance}`;
+                        face.dataset.index = index;
+                        face.style.transform = `rotateY(${index * step}deg) translateZ(var(--tl-radius))`;
+                        face.setAttribute("aria-labelledby", `event-title-${index}`);
+
+                        const media = event.image
+                            ? `<figure class="event-image-wrap"><img src="${event.image}" alt="${event.fullTitle}相關圖片" loading="lazy" />${event.imageSource ? `<figcaption class="event-image-source">圖片來源｜${event.imageSource}</figcaption>` : ``}</figure>`
+                            : "";
+
+                        face.innerHTML = `
+                            <div class="event-meta">${event.date}</div>
+                            <h3 id="event-title-${index}">${event.fullTitle}</h3>
+                            ${media}
+                            <p class="event-copy">${event.content}</p>
+                        `;
+                        prismCarousel.appendChild(face);
+
+                        const navButton = document.createElement("button");
+                        navButton.type = "button";
+                        navButton.className = "nav-button";
+                        navButton.dataset.index = index;
+                        navButton.setAttribute("aria-label", `跳到 ${event.date} ${event.fullTitle}`);
+                        navButton.innerHTML = `
+                            <span class="nav-dot" aria-hidden="true"></span>
+                            <span class="nav-date">${event.shortDate}</span>
+                            <span class="nav-title">${event.title}</span>
+                        `;
+                        navButton.addEventListener("click", () => goToEvent(index));
+                        miniNav.appendChild(navButton);
+                    });
+
+                    updateRadius();
+                    updateActiveEvent(0);
+                    setCarouselRotation(0);
+                }
+
+                function updateRadius() {
+                    const face = prismCarousel.querySelector(".prism-face");
+                    if (!face) return;
+                    const width = face.getBoundingClientRect().width || 700;
+                    const radius = (width / 2) / Math.tan(Math.PI / timelineEvents.length);
+                    moduleEl.style.setProperty("--tl-radius", `${Math.round(radius)}px`);
+                }
+
+                function openTimeline(index = 0) {
+                    moduleEl.classList.add("is-expanded");
+                    expandButton.setAttribute("aria-expanded", "true");
+                    expandedPanel.setAttribute("aria-hidden", "false");
+                    requestAnimationFrame(() => {
+                        updateRadius();
+                        goToEvent(index, true);
+                        moduleEl.scrollIntoView({ block: "start", behavior: "smooth" });
+                    });
+                }
+
+                function closeTimeline() {
+                    moduleEl.classList.remove("is-expanded");
+                    expandButton.setAttribute("aria-expanded", "false");
+                    expandedPanel.setAttribute("aria-hidden", "true");
+                    moduleEl.scrollIntoView({ block: "center", behavior: "smooth" });
+                }
+
+                function setCarouselRotation(rotation) {
+                    currentRotation = rotation;
+                    prismCarousel.style.transform = `translate(-50%, -50%) translateZ(calc(var(--tl-radius) * -1)) rotateY(${rotation}deg)`;
+                }
+
+                function goToEvent(index, instant = false) {
+                    const normalized = Math.max(0, Math.min(timelineEvents.length - 1, index));
+                    if (instant) prismCarousel.style.transition = "none";
+                    updateActiveEvent(normalized);
+                    setCarouselRotation(-normalized * step);
+                    if (instant) requestAnimationFrame(() => { prismCarousel.style.transition = ""; });
+                }
+
+                function updateActiveEvent(index) {
+                    activeIndex = Math.max(0, Math.min(timelineEvents.length - 1, index));
+                    const event = timelineEvents[activeIndex];
+                    moduleEl.style.setProperty("--tl-accent", event.accent);
+                    moduleEl.style.setProperty("--tl-accent-soft", `${event.accent}33`);
+                    moduleEl.style.setProperty("--tl-bg-a", event.bgA);
+                    moduleEl.style.setProperty("--tl-bg-b", event.bgB);
+                    moduleEl.style.setProperty("--tl-spot-x", event.spotX);
+                    moduleEl.style.setProperty("--tl-spot-y", event.spotY);
+                    moduleEl.style.setProperty("--tl-ghost", `"${event.bgText}"`);
+                    moduleEl.style.setProperty("--tl-event-image", event.image ? `url("${event.image}")` : "none");
+
+                    prismCarousel.querySelectorAll(".prism-face").forEach((face, i) => {
+                        face.classList.toggle("is-active", i === activeIndex);
+                    });
+                    miniNav.querySelectorAll(".nav-button").forEach((button, i) => {
+                        button.classList.toggle("is-active", i === activeIndex);
+                        if (i === activeIndex) button.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+                    });
+                    prevButton.disabled = activeIndex === 0;
+                    nextButton.disabled = activeIndex === timelineEvents.length - 1;
+                    prevButton.style.opacity = prevButton.disabled ? .42 : 1;
+                    nextButton.style.opacity = nextButton.disabled ? .42 : 1;
+                    rotateStatus.textContent = `${String(activeIndex + 1).padStart(2, "0")} / ${String(timelineEvents.length).padStart(2, "0")}`;
+                }
+
+                function nearestIndexFromRotation(rotation) {
+                    const raw = -rotation / step;
+                    return Math.max(0, Math.min(timelineEvents.length - 1, Math.round(raw)));
+                }
+
+                function handleDragMove(clientX) {
+                    const dx = clientX - dragStartX;
+                    const rotation = dragStartRotation + dx * 0.13;
+                    const minRotation = -(timelineEvents.length - 1) * step;
+                    const resisted = Math.max(minRotation - 12, Math.min(12, rotation));
+                    setCarouselRotation(resisted);
+                    const previewIndex = nearestIndexFromRotation(resisted);
+                    if (previewIndex !== activeIndex) updateActiveEvent(previewIndex);
+                }
+
+                prismShell.addEventListener("pointerdown", (event) => {
+                    if (window.matchMedia("(max-width: 860px)").matches) return;
+                    isDragging = true;
+                    dragStartX = event.clientX;
+                    dragStartRotation = currentRotation;
+                    prismShell.classList.add("is-dragging");
+                    prismShell.setPointerCapture(event.pointerId);
+                });
+
+                prismShell.addEventListener("pointermove", (event) => {
+                    if (!isDragging) return;
+                    handleDragMove(event.clientX);
+                });
+
+                function endDrag() {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    prismShell.classList.remove("is-dragging");
+                    goToEvent(nearestIndexFromRotation(currentRotation));
+                }
+
+                prismShell.addEventListener("pointerup", endDrag);
+                prismShell.addEventListener("pointercancel", endDrag);
+                prismShell.addEventListener("lostpointercapture", endDrag);
+                expandButton.addEventListener("click", () => openTimeline(0));
+                collapseButton.addEventListener("click", closeTimeline);
+                prevButton.addEventListener("click", () => goToEvent(activeIndex - 1));
+                nextButton.addEventListener("click", () => goToEvent(activeIndex + 1));
+
+                document.addEventListener("keydown", (event) => {
+                    if (!moduleEl.classList.contains("is-expanded")) return;
+                    if (event.key === "Escape") closeTimeline();
+                    if (event.key === "ArrowRight") goToEvent(activeIndex + 1);
+                    if (event.key === "ArrowLeft") goToEvent(activeIndex - 1);
+                });
+
+                window.addEventListener("resize", () => {
+                    updateRadius();
+                    goToEvent(activeIndex, true);
+                });
+
+                createCompactTimeline();
+                createPrismTimeline();
+            }
+
+            initWhiteTerrorTimeline();
 
             const cloudData = [
                 { word: "沒興趣", count: 18, color: "#4E342E", size: 175, left: 210, top: 90, reply: ["不是特別有興趣", "沒有興趣", "對這個沒有興趣"] },
