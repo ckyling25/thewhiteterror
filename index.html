@@ -93,13 +93,13 @@
             height: 100%;
             object-fit: cover;
             opacity: 0;
-            transform: scale(1.02);
-            transition: opacity .65s ease, transform 1.2s ease;
+            transform: none;
+            transition: opacity .65s ease;
         }
 
         .story-bg-frame img.is-active {
             opacity: .92;
-            transform: scale(1);
+            transform: none;
         }
 
         .story-bg-frame::after {
@@ -1539,7 +1539,7 @@
                     <div class="parallax-visual">
                         <div class="parallax-visual-placeholder">圖片待補</div>
                         <div class="parallax-chart-panel" aria-label="青年問卷調查圖表">
-                            <div class="flourish-embed flourish-chart" data-src="visualisation/29519626"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/29519626/thumbnail" width="100%" alt="chart visualization" /></noscript></div>
+                            <div class="flourish-embed flourish-chart" data-src="visualisation/29524543"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/29524543/thumbnail" width="100%" alt="chart visualization" /></noscript></div>
                         </div>
                     </div>
                     <div class="parallax-text">
@@ -1700,10 +1700,7 @@
         <div id="quiz-list" class="quiz-list"></div>
 
         <div id="quiz-complete-actions" class="hidden w-full max-w-xl text-center pt-10">
-            <p class="serif-title text-xl font-bold text-stone-800 mb-5">四題都完成了，繼續翻開課本裡的歷史。</p>
-            <button id="btn-proceed-to-edu" class="w-full py-4 bg-[#9B2C2C] hover:bg-red-900 text-white font-bold rounded-xl transition-all duration-300 shadow-md">
-                繼續閱讀：翻開課本的真相
-            </button>
+            <p class="serif-title text-xl font-bold text-stone-800 mb-2">四題都完成了，繼續向下滾動，翻開課本裡的歷史。</p>
         </div>
     </section>
 
@@ -3786,11 +3783,25 @@
             function mountQuizIntoArticle() {
                 const article = document.getElementById('article-body-start');
                 const quizPage = document.getElementById('page-4-quiz-container');
-                if (!article || !quizPage || quizPage.parentElement === article) return;
+                const educationPage = document.getElementById('page-5-education');
+                if (!article || !quizPage) return;
 
-                article.appendChild(quizPage);
+                if (quizPage.parentElement !== article) {
+                    article.appendChild(quizPage);
+                }
                 quizPage.classList.remove('section-view', 'hidden');
                 quizPage.classList.add('flex');
+
+                if (educationPage && educationPage.parentElement !== article) {
+                    article.appendChild(educationPage);
+                }
+                if (educationPage) {
+                    educationPage.classList.remove('section-view');
+                    if (educationPage.classList.contains('is-unlocked-after-quiz')) {
+                        educationPage.classList.remove('hidden');
+                        educationPage.classList.add('flex');
+                    }
+                }
             }
 
             function mountInlineApproachSections() {
@@ -3952,6 +3963,7 @@
                 } else if (pageKey === '4' || pageKey === '1') {
                     targetPage.classList.add('flex');
                 } else if (pageKey === '5-education') {
+                    targetPage.classList.add('is-unlocked-after-quiz');
                     targetPage.classList.add('flex');
                     mountInlineApproachSections();
 
@@ -4627,6 +4639,8 @@
 
                 cloud.dataset.ready = 'true';
                 adjustCloudScale();
+                requestAnimationFrame(adjustCloudScale);
+                setTimeout(adjustCloudScale, 250);
             }
 
             function showCloudDetail(node, d) {
@@ -4853,6 +4867,12 @@
                 } else {
                     setTimeout(() => {
                         quizCompleteActions.classList.remove('hidden');
+                        const educationPage = document.getElementById('page-5-education');
+                        if (educationPage) {
+                            educationPage.classList.add('is-unlocked-after-quiz');
+                            educationPage.classList.remove('hidden');
+                            educationPage.classList.add('flex');
+                        }
                         const feedback = item.querySelector('.quiz-feedback');
                         if (feedback) {
                             feedback.classList.remove('is-waiting');
@@ -4869,9 +4889,11 @@
             }
 
             // --- 頁面 4 轉 頁面 5 ---
-            btnProceedToEdu.addEventListener('click', () => {
-                window.switchView(5);
-            });
+            if (btnProceedToEdu) {
+                btnProceedToEdu.addEventListener('click', () => {
+                    window.switchView(5);
+                });
+            }
 
             // --- 解鎖章節平滑滾動導引 ---
             window.scrollToUnlockedPerspectiveFive = function() {
