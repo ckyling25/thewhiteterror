@@ -73,6 +73,334 @@
                 #eee9df;
         }
 
+        /* 開頭圖片故事 */
+        #page-2-story {
+            overscroll-behavior: contain;
+        }
+
+        .story-bg-frame {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            background: #111;
+        }
+
+        .story-bg-frame img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transform: scale(1.02);
+            transition: opacity .65s ease, transform 1.2s ease;
+        }
+
+        .story-bg-frame img.is-active {
+            opacity: .92;
+            transform: scale(1);
+        }
+
+        .story-bg-frame::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,.74), rgba(0,0,0,.28) 48%, rgba(0,0,0,.08));
+            pointer-events: none;
+        }
+
+        .story-progress-bar {
+            position: absolute;
+            left: clamp(1rem, 4vw, 4rem);
+            right: clamp(1rem, 4vw, 4rem);
+            bottom: clamp(1rem, 3vh, 1.6rem);
+            z-index: 40;
+            height: 5px;
+            border-radius: 999px;
+            overflow: hidden;
+            background: rgba(255,255,255,.28);
+            box-shadow: 0 8px 22px rgba(0,0,0,.24);
+        }
+
+        .story-progress-fill {
+            display: block;
+            width: 0%;
+            height: 100%;
+            background: #fff;
+            transition: width .45s ease;
+        }
+
+        .story-final-panel {
+            position: absolute;
+            inset: 0;
+            z-index: 35;
+            display: none;
+            place-items: center;
+            padding: clamp(1.5rem, 5vw, 4rem);
+            pointer-events: none;
+        }
+
+        .story-final-panel.is-active {
+            display: grid;
+        }
+
+        .story-final-copy {
+            width: fit-content;
+            max-width: min(92vw, 62rem);
+            padding: clamp(1.25rem, 3vw, 2.4rem) clamp(1.25rem, 4vw, 3rem);
+            background: rgba(255,255,255,.82);
+            color: #1A202C;
+            box-shadow: 0 20px 55px rgba(0,0,0,.28);
+            font-family: 'Noto Serif TC', serif;
+            font-size: clamp(1.2rem, 2.25vw, 1.9rem);
+            font-weight: 800;
+            line-height: 1.9;
+            text-align: left;
+        }
+
+        .democracy-intro {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: clamp(4rem, 8vw, 7rem) clamp(1.25rem, 6vw, 4rem);
+            background: #FAFAFA;
+        }
+
+        .democracy-intro p {
+            max-width: 62rem;
+            color: #2D3748;
+            font-size: clamp(1.05rem, 1.65vw, 1.45rem);
+            line-height: 2.15;
+            text-align: center;
+        }
+
+        .timeline-placeholder {
+            min-height: 70vh;
+            display: grid;
+            place-items: center;
+            padding: clamp(4rem, 8vw, 7rem) 1.5rem;
+            background: #f1ede5;
+            border-block: 1px solid rgba(45,55,72,.12);
+        }
+
+        .timeline-placeholder div {
+            width: min(100%, 860px);
+            padding: clamp(1.5rem, 4vw, 3rem);
+            border: 1px dashed rgba(155,44,44,.38);
+            color: #6b5b50;
+            text-align: center;
+            line-height: 1.9;
+            background: rgba(255,255,255,.58);
+        }
+
+        .parallax-report {
+            background: #FAFAFA;
+        }
+
+        .parallax-row {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 50% 50%;
+        }
+
+        .parallax-visual {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: grid;
+            place-items: center;
+            background: #d9d2c8;
+            overflow: hidden;
+        }
+
+        .parallax-visual-placeholder {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            place-items: center;
+            color: #6b5b50;
+            font-weight: 800;
+            letter-spacing: .12em;
+            background:
+                linear-gradient(135deg, rgba(255,255,255,.4), rgba(255,255,255,0)),
+                #d9d2c8;
+        }
+
+        .parallax-text {
+            padding: clamp(4rem, 8vw, 7rem) clamp(1.25rem, 5vw, 4rem);
+        }
+
+        .parallax-text p {
+            margin-bottom: 2rem;
+            color: #2D3748;
+            font-size: clamp(1rem, 1.25vw, 1.18rem);
+            line-height: 2.05;
+            text-align: justify;
+        }
+
+        .flourish-block {
+            margin-top: 4rem;
+            padding: 2rem 0;
+        }
+
+        .word-cloud-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(3rem, 6vw, 5rem) 1rem;
+            background: #f5f7fa;
+            overflow: hidden;
+        }
+
+        .word-cloud-section h2 {
+            text-align: center;
+            margin: 0 0 1rem;
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            color: #333;
+            font-weight: 900;
+        }
+
+        #cloud-wrapper {
+            flex: 1;
+            width: 100%;
+            min-height: 560px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #cloud {
+            width: 800px;
+            height: 520px;
+            position: relative;
+            transform-origin: center center;
+            transition: transform 0.3s ease;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            cursor: pointer;
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            user-select: none;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .circle:hover {
+            transform: scale(1.08);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+            z-index: 10;
+        }
+
+        .circle .word {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .circle .count {
+            font-size: 12px;
+            opacity: 0.85;
+        }
+
+        #detail {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 480px;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            display: none;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        #detail h2 {
+            margin-top: 0;
+            color: #5D4037;
+            border-bottom: 2px solid #D7CCC8;
+            padding-bottom: 10px;
+            font-size: 24px;
+        }
+
+        #detail ul {
+            line-height: 1.8;
+            padding-left: 20px;
+            color: #444;
+            font-size: 16px;
+        }
+
+        #detail button {
+            margin-top: 15px;
+            padding: 10px 30px;
+            border: none;
+            background: #5D4037;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        #cloud-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            display: none;
+            z-index: 900;
+            backdrop-filter: blur(2px);
+        }
+
+        .quiz-bridge-copy {
+            min-height: 46vh;
+            display: grid;
+            place-items: center;
+            padding: 4rem 1.5rem;
+            background: #FAFAFA;
+            text-align: center;
+        }
+
+        .quiz-bridge-copy p {
+            max-width: 52rem;
+            font-family: 'Noto Serif TC', serif;
+            font-size: clamp(1.35rem, 2.3vw, 2rem);
+            font-weight: 800;
+            line-height: 1.9;
+            color: #29251f;
+        }
+
+        @media (max-width: 900px) {
+            .parallax-row {
+                grid-template-columns: 1fr;
+            }
+
+            .parallax-visual {
+                position: relative;
+                height: 52vh;
+            }
+
+            #cloud-wrapper {
+                min-height: 470px;
+            }
+        }
+
         /* 避免頁面淡入動畫的 transform 讓文化入口固定導覽隨內容捲動 */
         #page-approach-1 {
             transform: none !important;
@@ -521,10 +849,13 @@
     <!-- 故事對話情境 -->
     <section id="page-2-story" class="section-view hidden fixed inset-0 w-full h-full bg-black z-20 flex flex-col justify-end cursor-pointer select-none">
         <!-- 背景圖片 -->
-        <div class="absolute inset-0 z-0 w-full h-full flex items-center justify-center overflow-hidden">
-            <img src="融媒體動畫圖片.png" alt="白色恐怖時期青年被捕場景" class="w-full h-full object-cover opacity-85 transition-opacity duration-1000" onerror="this.src='https://placehold.co/1920x1080/1a202c/ffffff?text=圖片載入中...請確保「融媒體動畫圖片.png」位於同一目錄下'">
-            <!-- 暗部遮罩，加強文字可讀性 -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+        <div class="story-bg-frame">
+            <img src="images/topic-story-1.png" alt="白色恐怖故事圖片一" class="is-active" data-story-bg="0">
+            <img src="images/topic-story-2.png" alt="白色恐怖故事圖片二" data-story-bg="1">
+            <img src="images/topic-story-3.png" alt="白色恐怖故事圖片三" data-story-bg="2">
+            <img src="images/topic-story-4.png" alt="白色恐怖故事圖片四" data-story-bg="3">
+            <img src="images/topic-story-5.png" alt="白色恐怖故事圖片五" data-story-bg="4">
+            <img src="images/topic-story-6.png" alt="白色恐怖故事圖片六" data-story-bg="5">
         </div>
         
         <!-- 劇情對話框架（下半部 1/4 處） -->
@@ -532,8 +863,8 @@
             <div id="story-dialog-box" class="bg-black/85 border border-gray-700/60 rounded-xl p-6 md:p-8 max-w-4xl w-full hover:bg-black/95 transition-all duration-300 backdrop-blur-md shadow-[0_15px_30px_rgba(0,0,0,0.5)]">
                 <!-- 角色或引言提示 -->
                 <div class="flex items-center justify-between mb-3 border-b border-gray-800 pb-2">
-                    <span class="text-xs tracking-widest text-[#9B2C2C] font-semibold uppercase">時代的縮影</span>
-                    <span class="text-xs text-gray-500">畫面點擊任意處繼續</span>
+                    <span id="story-speaker" class="text-xs tracking-widest text-[#9B2C2C] font-semibold uppercase">時代的縮影</span>
+                    <span class="text-xs text-gray-500">向下滾動繼續</span>
                 </div>
                 <!-- 故事本文 -->
                 <p id="story-text" class="text-gray-100 text-base md:text-xl leading-relaxed min-h-[90px] md:min-h-[110px] text-justify font-light cursor-blink">
@@ -541,12 +872,18 @@
                 </p>
                 <!-- 下一步箭頭 -->
                 <div class="text-right mt-4 flex items-center justify-end text-gray-400 text-xs tracking-wider">
-                    <span id="story-progress-hint" class="animate-pulse">點擊滑鼠繼續</span>
+                    <span id="story-progress-hint" class="animate-pulse">向下滾動，文字會自動跑完</span>
                     <svg class="w-4 h-4 ml-2 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </div>
             </div>
+        </div>
+        <div id="story-final-panel" class="story-final-panel">
+            <p id="story-final-copy" class="story-final-copy"></p>
+        </div>
+        <div class="story-progress-bar" aria-hidden="true">
+            <span id="story-progress-fill" class="story-progress-fill"></span>
         </div>
     </section>
 
@@ -578,8 +915,66 @@
             </div>
         </div>
 
-        <!-- 深度專題內容區 -->
-        <div id="article-body-start" class="max-w-3xl mx-auto px-6 md:px-8 py-24">
+        <!-- 倒數器後的新敘事內容 -->
+        <div id="article-body-start">
+            <section class="democracy-intro">
+                <p>
+                    1992年《中華民國刑法》第100條正式廢除，白恐時期也隨之結束，自此臺灣開始踏入民主社會，而在這前後出生的世代則被稱為民主富二代或是民主原住民。國立政治大學財政學系學生陳彥蓉談及這個稱呼，坦言道：「民主於我而言好像是很稀鬆平常的事。」他認為與他一樣年齡介於18到29歲的青年，普遍很難想像沒有民主會是什麼樣子。法律白話文運動成員珞亦以自身經驗比喻，小時候因為家長不曾讓他受餓，所以不認為吃飯有什麼重要性，甚至產生反感，他認為青年與民主的關係也是如此，青年享有民主的成果，卻不一定理解民主是從威權中爭取而來的，「當大家沒有被建立『什麼是威權』的認知，就不知道什麼是民主。」
+                </p>
+            </section>
+
+            <section class="timeline-placeholder">
+                <div>
+                    <p class="serif-title text-2xl font-black text-[#1A202C] mb-3">時間軸內容待補</p>
+                    <p>你在訊息中提到「以下是程式碼」，但這次沒有貼到時間軸程式碼；我先保留這個區塊，之後你貼上時間軸程式碼，我可以直接替換到這裡。</p>
+                </div>
+            </section>
+
+            <section class="parallax-report">
+                <div class="parallax-row">
+                    <div class="parallax-visual">
+                        <div class="parallax-visual-placeholder">圖片待補</div>
+                    </div>
+                    <div class="parallax-text">
+                        <p>「民主體制的價值常常是被低估的；反之，威權的價值常常被莫名其妙的高估。」國立臺灣大學政治學系教授黃長玲表示，時常有人稱讚威權國家的建設如高樓大廈、交通設施等建造得快速又華麗，看起來比臺灣進步許多，然而這樣的論述卻忽略威權體制對尊嚴自由及生命財產的威脅與侵害。</p>
+
+                        <p>「納粹德國的統治者不在乎人民的自由，但是他在乎人民接不接受他，所以就餵給人民名為社會福利的毒藥。」國立政治大學法律學系副教授林佳和則以納粹為例，威權統治者往往會用社會福利或經濟利益來餵食人民，當人民只在乎利益與好處，無視正當程序的重要性，就很容易落入威權體制的陷阱。</p>
+
+                        <p>白恐之所以仍與青年相關，不只因為它是臺灣史重要的一部份，更因為威權留下的影響仍可能延續到當代社會，「從小到大父母都告訴我，絕對不要碰政治、不要關心公共事務，關心自己就好。」林佳和回憶起父母對政治的畏懼，是威權滲入日常生活後留下的陰影。</p>
+
+                        <p>黃長玲以錢幣為例，現今威權統治者的肖像仍出現在新臺幣兩百元紙鈔和十元硬幣，民眾卻不一定會意識到威權的遺留。林佳和認為青年理解這段歷史的意義，不在於記憶苦難故事，而是為了能辨認出至今仍可能存在的威權痕跡。</p>
+
+                        <p>根據本報記者所做〈青年對白恐時期之認知問卷調查〉（以下簡稱〈青年問卷調查〉），有超過半數的青年並不關心白恐議題，雖然教科書中有相關內容，但彷彿這些故事只是停留在考試卷上的題目，無法深入青年的心裡。黃長玲提醒，比起只告訴青年他們應該關心，不如先理解他們為什麼會覺得與自己無關，除了未曾經歷過威權時代、低估民主體制的價值，以及政治冷漠等，教育體制下的扁平化與缺乏在地連結也是需要關注的原因。林佳和認為相較X世代（註一）前出生的人，現代青年其實有更好的民主觀念，要如何讓青年感受到沉重歷史與自身的連結，成為最大挑戰。</p>
+
+                        <p class="text-sm text-gray-500">註一：X世代泛指1960年代中期至1980年代出生的人。</p>
+
+                        <div class="flourish-block">
+                            <div class="flourish-embed flourish-chart" data-src="visualisation/29519626"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/29519626/thumbnail" width="100%" alt="chart visualization" /></noscript></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="word-cloud-section" class="word-cloud-section">
+                <h2>青年不關心白色恐怖的原因</h2>
+                <div id="cloud-wrapper">
+                    <div id="cloud"></div>
+                </div>
+                <div id="cloud-overlay" onclick="closeBox()"></div>
+                <div id="detail">
+                    <h2 id="title"></h2>
+                    <ul id="reply"></ul>
+                    <button onclick="closeBox()">關閉</button>
+                </div>
+            </section>
+
+            <section class="quiz-bridge-copy">
+                <p>也許不是不想關心，而是不知道從何開始……</p>
+            </section>
+        </div>
+
+        <!-- 舊版深度專題內容區：保留備份但不顯示 -->
+        <div id="legacy-article-body-start" class="hidden max-w-3xl mx-auto px-6 md:px-8 py-24">
             
             <!-- 引言 -->
             <p class="text-lg md:text-xl leading-loose mb-10 text-justify text-gray-800 font-normal">
@@ -2777,10 +3172,21 @@
             const btnEnterStory = document.getElementById('btn-enter-story');
             const storyDialogBox = document.getElementById('story-dialog-box');
             const storyText = document.getElementById('story-text');
+            const storySpeaker = document.getElementById('story-speaker');
             const storyProgressHint = document.getElementById('story-progress-hint');
             const btnGoToQuiz = document.getElementById('btn-go-to-quiz');
             
             const btnProceedToEdu = document.getElementById('btn-proceed-to-edu');
+
+            function mountQuizIntoArticle() {
+                const article = document.getElementById('article-body-start');
+                const quizPage = document.getElementById('page-4-quiz-container');
+                if (!article || !quizPage || quizPage.parentElement === article) return;
+
+                article.appendChild(quizPage);
+                quizPage.classList.remove('section-view', 'hidden');
+                quizPage.classList.add('flex');
+            }
 
             function mountInlineApproachSections() {
                 const educationPage = document.getElementById('page-5-education');
@@ -2795,6 +3201,7 @@
             }
 
             mountInlineApproachSections();
+            mountQuizIntoArticle();
 
             function updateCultureControlsVisibility() {
                 window.updateCultureControlsVisibility?.();
@@ -2927,6 +3334,14 @@
                 // 3. 根據頁面特性套用排版與初始化
                 if (pageKey === '3') {
                     targetPage.classList.add('flex');
+                    mountQuizIntoArticle();
+                    const inlineQuiz = document.getElementById('page-4-quiz-container');
+                    if (inlineQuiz) {
+                        inlineQuiz.classList.remove('hidden');
+                        inlineQuiz.classList.add('flex');
+                    }
+                    initWordCloud();
+                    startQuizIfNeeded();
                     window.scrollTo({ top: 0, behavior: 'instant' });
                     startDaysCalculation(); // 啟動時間計數器
                 } else if (pageKey === '4' || pageKey === '1') {
@@ -2989,15 +3404,49 @@
                 initStoryScript();
             });
 
-            // --- 頁面 2：動畫與故事腳本 ---
+            // --- 頁面 2：圖片故事腳本 ---
             const storyLineups = [
                 {
-                    speaker: "時代的縮影",
-                    content: "巷弄的陰暗處，一場沒有預警的搜捕打破了日常。兩名面無表情、代表國家威權的憲警，粗暴地架住一名驚慌失措的年輕人。牆上斑駁的『反共抗俄』標語，冷冷地凝視著這一切。"
+                    speaker: "第一幕｜被帶走",
+                    imageIndex: 0,
+                    content: "巷弄裡，一張寫著「反共抗俄」的標語貼在牆上。年輕人還來不及解釋，就被兩名憲警架住帶走；在那個年代，恐懼常常不是從審判開始，而是從一陣急促的腳步聲開始。"
                 },
                 {
-                    speaker: "被逮捕者的獨白",
-                    content: "「我究竟做錯了什麼？」他只是個普通的青年，或許讀了幾本不該讀的書，或許在私底下說了幾句不該說的話。他惶恐地呼喊與掙扎，卻只換來憲警冰冷的手銬。在那個年代，一個人的消失，往往只需要幾秒鐘……"
+                    speaker: "第二幕｜保密防諜",
+                    imageIndex: 1,
+                    content: "街角的標語提醒人們「保密防諜，人人有責」。他開始明白，話語也可能成為罪名，沉默也可能成為自保；每一次回頭，都像有人正在暗處記錄他的神情。"
+                },
+                {
+                    speaker: "第三幕｜被監視的日常",
+                    imageIndex: 2,
+                    content: "回到房間後，牆上長出一雙又一雙眼睛。收音機、電話、門縫和窗外都像在窺探他；白色恐怖不是只存在於牢房，也會滲進一個人最普通的生活裡。"
+                },
+                {
+                    speaker: "第四幕｜口號與疑問",
+                    imageIndex: 3,
+                    content: "廣播裡說著團結與建設，報紙上寫著新時代的承諾，可他手中的文件卻指向另一個現實：在漂亮口號背後，仍有人因思想、交友或一句話而被懷疑。"
+                },
+                {
+                    speaker: "第五幕｜牢裡的日子",
+                    imageIndex: 4,
+                    content: "被關押的日子裡，時間變得很慢。一碗飯、一副手銬、一間破舊房間，都成為記憶中難以抹去的痕跡；身體被困住，恐懼也被一天天磨進心裡。"
+                },
+                {
+                    speaker: "第六幕｜長輩的玩笑",
+                    imageIndex: 5,
+                    content: "多年後，這段往事被帶進客廳。長輩用半開玩笑的語氣說起被抓走、差點被槍斃，年輕人起初只當作故事，直到他開始追查，才發現家族記憶與國家暴力其實離自己很近。"
+                },
+                {
+                    speaker: "家族記憶之一",
+                    imageIndex: 5,
+                    final: true,
+                    content: "「阿祖被人抓走，阿公差點被人槍斃！」臺大學生會轉型正義小組負責人陳永謙的阿公，有時會半開玩笑的提起這段往事。小時候的他總認為阿公只是在說笑，直到長大後接觸到白色恐怖（以下簡稱白恐）相關歷史，才驚覺到自己的家人也是那段歷史中的受難者。"
+                },
+                {
+                    speaker: "家族記憶之二",
+                    imageIndex: 5,
+                    final: true,
+                    content: "長輩刻意淡化的細節，以及深埋心中、不願多談的恐懼，陳永謙為了解家族過去在白恐時期曾受的迫害，從國家檔案中調閱當年的自白書與審判紀錄。在翻閱的過程中他才逐漸明白，那句輕描淡寫的「被人抓走」背後，承載的是一整個世代難以言說的創傷。"
                 }
             ];
 
@@ -3005,6 +3454,7 @@
             let textTypingInProgress = false;
             let currentTypewriterTimeout = null; 
             let typeWriterResolve = null; 
+            let storyWheelLocked = false;
             
             // 打字機特效實現 (加入可中斷/快轉機制)
             function runTypewriter(text, htmlTarget, speed = 40) {
@@ -3038,27 +3488,76 @@
 
             async function initStoryScript() {
                 currentScriptIdx = 0;
-                storyProgressHint.innerHTML = "點擊滑鼠繼續";
-                await runTypewriter(storyLineups[currentScriptIdx].content, storyText);
+                renderStoryScene(0);
             }
 
-            // 點擊全螢幕任意處皆可快轉/前進
-            pages[2].addEventListener('click', async () => {
+            function updateStoryProgress() {
+                const fill = document.getElementById('story-progress-fill');
+                if (!fill) return;
+                fill.style.width = `${((currentScriptIdx + 1) / storyLineups.length) * 100}%`;
+            }
+
+            async function renderStoryScene(index) {
+                const scene = storyLineups[index];
+                if (!scene) return;
+
+                currentScriptIdx = index;
+                document.querySelectorAll('[data-story-bg]').forEach(img => {
+                    img.classList.toggle('is-active', Number(img.dataset.storyBg) === scene.imageIndex);
+                });
+
+                const finalPanel = document.getElementById('story-final-panel');
+                const finalCopy = document.getElementById('story-final-copy');
+                if (storySpeaker) storySpeaker.textContent = scene.speaker;
+                updateStoryProgress();
+
+                if (scene.final) {
+                    if (storyDialogBox) storyDialogBox.classList.add('hidden');
+                    if (finalPanel && finalCopy) {
+                        finalCopy.textContent = scene.content;
+                        finalPanel.classList.add('is-active');
+                    }
+                    if (storyProgressHint) storyProgressHint.textContent = index === storyLineups.length - 1 ? '再次向下滾動進入時間倒數器' : '向下滾動繼續';
+                    return;
+                }
+
+                if (storyDialogBox) storyDialogBox.classList.remove('hidden');
+                if (finalPanel) finalPanel.classList.remove('is-active');
+                if (storyProgressHint) storyProgressHint.textContent = '向下滾動，文字會自動跑完';
+                await runTypewriter(scene.content, storyText);
+                if (storyProgressHint) storyProgressHint.textContent = '再次向下滾動前往下一幕';
+            }
+
+            async function advanceStoryScene() {
                 if (textTypingInProgress) {
                     finishTyping(typeWriterResolve);
                     storyText.innerHTML = storyLineups[currentScriptIdx].content;
                 } else {
                     currentScriptIdx++;
                     if (currentScriptIdx < storyLineups.length) {
-                        if (currentScriptIdx === storyLineups.length - 1) {
-                            storyProgressHint.innerHTML = "點擊進入歷史時空";
-                        }
-                        await runTypewriter(storyLineups[currentScriptIdx].content, storyText);
+                        await renderStoryScene(currentScriptIdx);
                     } else {
                         // 故事結束，啟動「全螢幕閃白效果」並平滑切換轉入時間軸頁面
                         triggerFlashTransition();
                     }
                 }
+            }
+
+            // 點擊全螢幕任意處皆可快轉/前進
+            pages[2].addEventListener('click', advanceStoryScene);
+
+            pages[2].addEventListener('wheel', event => {
+                if (pages[2].classList.contains('hidden') || event.deltaY <= 0) return;
+                event.preventDefault();
+                if (storyWheelLocked) return;
+                storyWheelLocked = true;
+                advanceStoryScene();
+                setTimeout(() => { storyWheelLocked = false; }, 760);
+            }, { passive: false });
+
+            pages[2].addEventListener('touchend', event => {
+                if (pages[2].classList.contains('hidden')) return;
+                advanceStoryScene();
             });
 
             // 閃白過渡邏輯
@@ -3123,11 +3622,99 @@
                 target.scrollIntoView({ behavior: 'smooth' });
             }
 
+            const cloudData = [
+                { word: "沒興趣", count: 18, color: "#4E342E", size: 175, left: 210, top: 90, reply: ["不是特別有興趣", "沒有興趣", "對這個沒有興趣"] },
+                { word: "過去的事", count: 16, color: "#5D4037", size: 165, left: 365, top: 45, reply: ["覺得那是過去的事", "沒興趣，過去的事就讓它過去", "要往前看"] },
+                { word: "無關自己", count: 13, color: "#795548", size: 150, left: 510, top: 100, reply: ["和自己無關", "覺得沒有我的事", "沒有身歷其境所以不覺得需要深入了解"] },
+                { word: "不想知道", count: 9, color: "#A1887F", size: 135, left: 175, top: 245, reply: ["不想知道", "不想了解", "我不太想知道"] },
+                { word: "政治因素", count: 15, color: "#6D4C41", size: 160, left: 330, top: 200, reply: ["很多資訊會參雜政治議題，怕自己接收到偏頗資訊", "政治操作", "怕自己因沒有不同意見而變得偏頗"] },
+                { word: "歷史無感", count: 11, color: "#8D6E63", size: 140, left: 480, top: 235, reply: ["對政治和歷史不感興趣", "沒有特別想了解", "歷史議題吸引力不高"] },
+                { word: "資訊失真", count: 7, color: "#BCAAA4", size: 125, left: 85, top: 170, reply: ["失真", "解密資訊往往經過篩檢", "難判斷資訊真假"] },
+                { word: "太沉重", count: 5, color: "#D7CCC8", size: 120, left: 605, top: 190, reply: ["有點恐怖", "害怕悲劇", "內容太沉重"] }
+            ];
+
+            function initWordCloud() {
+                const cloud = document.getElementById("cloud");
+                if (!cloud || cloud.dataset.ready === 'true') return;
+
+                cloudData.forEach(d => {
+                    const div = document.createElement("div");
+                    div.className = "circle";
+                    div.style.width = `${d.size}px`;
+                    div.style.height = `${d.size}px`;
+                    div.style.background = d.color;
+                    div.style.left = `${d.left}px`;
+                    div.style.top = `${d.top}px`;
+                    div.dataset.origLeft = `${d.left}px`;
+                    div.dataset.origTop = `${d.top}px`;
+                    div.dataset.size = d.size;
+                    div.innerHTML = `<span class="word">${d.word}</span><span class="count">共有 ${d.count} 人提到</span>`;
+                    div.onclick = () => showCloudDetail(div, d);
+                    cloud.appendChild(div);
+                });
+
+                cloud.dataset.ready = 'true';
+                adjustCloudScale();
+            }
+
+            function showCloudDetail(node, d) {
+                const overlay = document.getElementById("cloud-overlay");
+                const detail = document.getElementById("detail");
+                const title = document.getElementById("title");
+                const reply = document.getElementById("reply");
+                if (!overlay || !detail || !title || !reply) return;
+
+                overlay.style.display = "block";
+                detail.style.display = "block";
+
+                document.querySelectorAll(".circle").forEach(c => {
+                    if (c !== node) {
+                        c.style.opacity = 0.05;
+                        c.style.pointerEvents = "none";
+                    }
+                });
+
+                const size = parseInt(node.dataset.size, 10);
+                node.style.left = `${400 - (size / 2)}px`;
+                node.style.top = `${260 - (size / 2)}px`;
+                node.style.transform = "scale(1.15)";
+                node.style.zIndex = "950";
+                title.innerHTML = `${d.word}（共 ${d.count} 人提及）`;
+                reply.innerHTML = d.reply.map(r => `<li>${r}</li>`).join('');
+            }
+
+            window.closeBox = function() {
+                const overlay = document.getElementById("cloud-overlay");
+                const detail = document.getElementById("detail");
+                if (overlay) overlay.style.display = "none";
+                if (detail) detail.style.display = "none";
+
+                document.querySelectorAll(".circle").forEach(c => {
+                    c.style.opacity = 1;
+                    c.style.pointerEvents = "auto";
+                    c.style.transform = "";
+                    c.style.zIndex = "";
+                    c.style.left = c.dataset.origLeft;
+                    c.style.top = c.dataset.origTop;
+                });
+            };
+
+            function adjustCloudScale() {
+                const wrapper = document.getElementById("cloud-wrapper");
+                const cloud = document.getElementById("cloud");
+                if (!wrapper || !cloud) return;
+                const scale = Math.min(wrapper.clientWidth / 800, wrapper.clientHeight / 520, 1);
+                cloud.style.transform = `scale(${scale})`;
+            }
+
             // --- 頁面 3 轉 頁面 4 (前往測驗) ---
-            btnGoToQuiz.addEventListener('click', () => {
-                window.switchView(4);
-                startQuizIfNeeded();
-            });
+            if (btnGoToQuiz) {
+                btnGoToQuiz.addEventListener('click', () => {
+                    mountQuizIntoArticle();
+                    startQuizIfNeeded();
+                    document.getElementById('page-4-quiz-container')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            }
 
             // --- 頁面 4：四題逐題展開互動測驗 ---
             const quizData = [
@@ -3359,6 +3946,10 @@
                     newComment.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 });
             }
+
+            initWordCloud();
+            adjustCloudScale();
+            window.addEventListener('resize', adjustCloudScale);
 
         });
     </script>
