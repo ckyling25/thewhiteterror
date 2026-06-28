@@ -1563,7 +1563,16 @@
             <section id="word-cloud-section" class="word-cloud-section">
                 <h2>青年不關心白色恐怖的原因</h2>
                 <div id="cloud-wrapper">
-                    <div id="cloud"></div>
+                    <div id="cloud">
+                        <div class="circle" data-word="資訊失真" data-count="7" data-size="125" data-left="85" data-top="170" data-replies="失真|解密資訊往往經過篩檢|難判斷資訊真假" style="width:125px;height:125px;background:#BCAAA4;left:85px;top:170px;"><span class="word">資訊失真</span><span class="count">共有 7 人提到</span></div>
+                        <div class="circle" data-word="沒興趣" data-count="18" data-size="175" data-left="210" data-top="90" data-replies="不是特別有興趣|沒有興趣|對這個沒有興趣" style="width:175px;height:175px;background:#4E342E;left:210px;top:90px;"><span class="word">沒興趣</span><span class="count">共有 18 人提到</span></div>
+                        <div class="circle" data-word="過去的事" data-count="16" data-size="165" data-left="365" data-top="45" data-replies="覺得那是過去的事|沒興趣，過去的事就讓它過去|要往前看" style="width:165px;height:165px;background:#5D4037;left:365px;top:45px;"><span class="word">過去的事</span><span class="count">共有 16 人提到</span></div>
+                        <div class="circle" data-word="無關自己" data-count="13" data-size="150" data-left="510" data-top="100" data-replies="和自己無關|覺得沒有我的事|沒有身歷其境所以不覺得需要深入了解" style="width:150px;height:150px;background:#795548;left:510px;top:100px;"><span class="word">無關自己</span><span class="count">共有 13 人提到</span></div>
+                        <div class="circle" data-word="不想知道" data-count="9" data-size="135" data-left="175" data-top="245" data-replies="不想知道|不想了解|我不太想知道" style="width:135px;height:135px;background:#A1887F;left:175px;top:245px;"><span class="word">不想知道</span><span class="count">共有 9 人提到</span></div>
+                        <div class="circle" data-word="政治因素" data-count="15" data-size="160" data-left="330" data-top="200" data-replies="很多資訊會參雜政治議題，怕自己接收到偏頗資訊|政治操作|怕自己因沒有不同意見而變得偏頗" style="width:160px;height:160px;background:#6D4C41;left:330px;top:200px;"><span class="word">政治因素</span><span class="count">共有 15 人提到</span></div>
+                        <div class="circle" data-word="歷史無感" data-count="11" data-size="140" data-left="480" data-top="235" data-replies="對政治和歷史不感興趣|沒有特別想了解|歷史議題吸引力不高" style="width:140px;height:140px;background:#8D6E63;left:480px;top:235px;"><span class="word">歷史無感</span><span class="count">共有 11 人提到</span></div>
+                        <div class="circle" data-word="太沉重" data-count="5" data-size="120" data-left="605" data-top="190" data-replies="有點恐怖|害怕悲劇|內容太沉重" style="width:120px;height:120px;background:#D7CCC8;left:605px;top:190px;"><span class="word">太沉重</span><span class="count">共有 5 人提到</span></div>
+                    </div>
                 </div>
                 <div id="cloud-overlay" onclick="closeBox()"></div>
                 <div id="detail">
@@ -4621,20 +4630,38 @@
                 const cloud = document.getElementById("cloud");
                 if (!cloud || cloud.dataset.ready === 'true') return;
 
-                cloudData.forEach(d => {
-                    const div = document.createElement("div");
-                    div.className = "circle";
-                    div.style.width = `${d.size}px`;
-                    div.style.height = `${d.size}px`;
-                    div.style.background = d.color;
-                    div.style.left = `${d.left}px`;
-                    div.style.top = `${d.top}px`;
-                    div.dataset.origLeft = `${d.left}px`;
-                    div.dataset.origTop = `${d.top}px`;
-                    div.dataset.size = d.size;
-                    div.innerHTML = `<span class="word">${d.word}</span><span class="count">共有 ${d.count} 人提到</span>`;
-                    div.onclick = () => showCloudDetail(div, d);
-                    cloud.appendChild(div);
+                if (!cloud.querySelector('.circle')) {
+                    cloudData.forEach(d => {
+                        const div = document.createElement("div");
+                        div.className = "circle";
+                        div.style.width = `${d.size}px`;
+                        div.style.height = `${d.size}px`;
+                        div.style.background = d.color;
+                        div.style.left = `${d.left}px`;
+                        div.style.top = `${d.top}px`;
+                        div.dataset.word = d.word;
+                        div.dataset.count = d.count;
+                        div.dataset.size = d.size;
+                        div.dataset.left = d.left;
+                        div.dataset.top = d.top;
+                        div.dataset.replies = d.reply.join('|');
+                        div.innerHTML = `<span class="word">${d.word}</span><span class="count">共有 ${d.count} 人提到</span>`;
+                        cloud.appendChild(div);
+                    });
+                }
+
+                cloud.querySelectorAll('.circle').forEach(div => {
+                    div.dataset.origLeft = `${div.dataset.left}px`;
+                    div.dataset.origTop = `${div.dataset.top}px`;
+                    div.style.left = div.dataset.origLeft;
+                    div.style.top = div.dataset.origTop;
+                    div.style.opacity = 1;
+                    div.style.pointerEvents = 'auto';
+                    div.onclick = () => showCloudDetail(div, {
+                        word: div.dataset.word,
+                        count: div.dataset.count,
+                        reply: (div.dataset.replies || '').split('|').filter(Boolean)
+                    });
                 });
 
                 cloud.dataset.ready = 'true';
@@ -4689,7 +4716,9 @@
                 const wrapper = document.getElementById("cloud-wrapper");
                 const cloud = document.getElementById("cloud");
                 if (!wrapper || !cloud) return;
-                const scale = Math.min(wrapper.clientWidth / 800, wrapper.clientHeight / 520, 1);
+                const wrapperWidth = wrapper.clientWidth || window.innerWidth || 800;
+                const wrapperHeight = wrapper.clientHeight || 560;
+                const scale = Math.max(0.62, Math.min(wrapperWidth / 800, wrapperHeight / 520, 1));
                 cloud.style.transform = `scale(${scale})`;
             }
 
