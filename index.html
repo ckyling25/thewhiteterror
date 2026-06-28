@@ -744,6 +744,8 @@
         }
 
         .parallax-visual-placeholder {
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
             display: grid;
@@ -754,6 +756,36 @@
             background:
                 linear-gradient(135deg, rgba(255,255,255,.4), rgba(255,255,255,0)),
                 #d9d2c8;
+            transition: opacity .45s ease, transform .45s ease;
+        }
+
+        .parallax-chart-panel {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            padding: clamp(1.25rem, 3vw, 2.5rem);
+            background: #f5f2ec;
+            opacity: 0;
+            transform: translateY(18px);
+            pointer-events: none;
+            transition: opacity .45s ease, transform .45s ease;
+        }
+
+        .parallax-chart-panel .flourish-embed {
+            width: min(100%, 760px);
+            min-height: min(78vh, 720px);
+        }
+
+        .parallax-report.show-chart .parallax-visual-placeholder {
+            opacity: 0;
+            transform: translateY(-18px);
+        }
+
+        .parallax-report.show-chart .parallax-chart-panel {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
         }
 
         .parallax-text {
@@ -1506,6 +1538,9 @@
                 <div class="parallax-row">
                     <div class="parallax-visual">
                         <div class="parallax-visual-placeholder">圖片待補</div>
+                        <div class="parallax-chart-panel" aria-label="青年問卷調查圖表">
+                            <div class="flourish-embed flourish-chart" data-src="visualisation/29519626"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/29519626/thumbnail" width="100%" alt="chart visualization" /></noscript></div>
+                        </div>
                     </div>
                     <div class="parallax-text">
                         <p>「民主體制的價值常常是被低估的；反之，威權的價值常常被莫名其妙的高估。」國立臺灣大學政治學系教授黃長玲表示，時常有人稱讚威權國家的建設如高樓大廈、交通設施等建造得快速又華麗，看起來比臺灣進步許多，然而這樣的論述卻忽略威權體制對尊嚴自由及生命財產的威脅與侵害。</p>
@@ -1516,13 +1551,11 @@
 
                         <p>黃長玲以錢幣為例，現今威權統治者的肖像仍出現在新臺幣兩百元紙鈔和十元硬幣，民眾卻不一定會意識到威權的遺留。林佳和認為青年理解這段歷史的意義，不在於記憶苦難故事，而是為了能辨認出至今仍可能存在的威權痕跡。</p>
 
-                        <p>根據本報記者所做〈青年對白恐時期之認知問卷調查〉（以下簡稱〈青年問卷調查〉），有超過半數的青年並不關心白恐議題，雖然教科書中有相關內容，但彷彿這些故事只是停留在考試卷上的題目，無法深入青年的心裡。黃長玲提醒，比起只告訴青年他們應該關心，不如先理解他們為什麼會覺得與自己無關，除了未曾經歷過威權時代、低估民主體制的價值，以及政治冷漠等，教育體制下的扁平化與缺乏在地連結也是需要關注的原因。林佳和認為相較X世代（註一）前出生的人，現代青年其實有更好的民主觀念，要如何讓青年感受到沉重歷史與自身的連結，成為最大挑戰。</p>
+                        <p class="chart-trigger">根據本報記者所做〈青年對白恐時期之認知問卷調查〉（以下簡稱〈青年問卷調查〉），有超過半數的青年並不關心白恐議題，雖然教科書中有相關內容，但彷彿這些故事只是停留在考試卷上的題目，無法深入青年的心裡。</p>
+
+                        <p>黃長玲提醒，比起只告訴青年他們應該關心，不如先理解他們為什麼會覺得與自己無關，除了未曾經歷過威權時代、低估民主體制的價值，以及政治冷漠等，教育體制下的扁平化與缺乏在地連結也是需要關注的原因。林佳和認為相較X世代（註一）前出生的人，現代青年其實有更好的民主觀念，要如何讓青年感受到沉重歷史與自身的連結，成為最大挑戰。</p>
 
                         <p class="text-sm text-gray-500">註一：X世代泛指1960年代中期至1980年代出生的人。</p>
-
-                        <div class="flourish-block">
-                            <div class="flourish-embed flourish-chart" data-src="visualisation/29519626"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/29519626/thumbnail" width="100%" alt="chart visualization" /></noscript></div>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -4533,6 +4566,33 @@
             }
 
             initWhiteTerrorTimeline();
+
+            function initParallaxChartSwap() {
+                const report = document.querySelector('.parallax-report');
+                const trigger = document.querySelector('.chart-trigger');
+                if (!report || !trigger) return;
+
+                const setChartState = () => {
+                    const rect = trigger.getBoundingClientRect();
+                    const middle = window.innerHeight * 0.58;
+                    report.classList.toggle('show-chart', rect.top < middle);
+                };
+
+                if ('IntersectionObserver' in window) {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) report.classList.add('show-chart');
+                        });
+                    }, { threshold: 0.25 });
+                    observer.observe(trigger);
+                }
+
+                window.addEventListener('scroll', setChartState, { passive: true });
+                window.addEventListener('resize', setChartState);
+                setChartState();
+            }
+
+            initParallaxChartSwap();
 
             const cloudData = [
                 { word: "沒興趣", count: 18, color: "#4E342E", size: 175, left: 210, top: 90, reply: ["不是特別有興趣", "沒有興趣", "對這個沒有興趣"] },
