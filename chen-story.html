@@ -608,6 +608,11 @@
         text-align: center;
       }
     }
+
+    html.is-embedded,
+    html.is-embedded body {
+      overflow: hidden;
+    }
   </style>
 </head>
 <body>
@@ -1102,6 +1107,34 @@
     }, { threshold: 0.22, rootMargin: "-80px 0px -25% 0px" });
 
     sections.forEach((section) => observer.observe(section));
+  </script>
+
+  <script>
+    if (window.parent !== window) {
+      document.documentElement.classList.add('is-embedded');
+    }
+
+    function postChenStoryHeight() {
+      const height = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.offsetHeight
+      );
+      window.parent?.postMessage({ type: 'chenStoryFrameResize', height }, '*');
+    }
+
+    window.addEventListener('load', () => {
+      postChenStoryHeight();
+      setTimeout(postChenStoryHeight, 120);
+      setTimeout(postChenStoryHeight, 600);
+    });
+    window.addEventListener('resize', postChenStoryHeight);
+
+    if ('ResizeObserver' in window) {
+      const observer = new ResizeObserver(() => postChenStoryHeight());
+      window.addEventListener('load', () => observer.observe(document.body));
+    }
   </script>
 </body>
 </html>

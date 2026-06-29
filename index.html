@@ -1021,10 +1021,11 @@
 
         .approach-inline-frame {
             width: 100%;
-            height: 100vh;
+            height: 1200px;
             min-height: 100vh;
             border: 0;
             display: block;
+            overflow: hidden;
             background: #F4F1EC;
         }
 
@@ -3606,7 +3607,7 @@
      ========================================== -->
 <section id="page-approach-2" class="hidden min-h-screen bg-[#F4F1EC] text-[#1A202C] approach-inline-shell">
   <button onclick="window.returnToApproachSelector()" class="approach-return-nav" type="button">返回入口頁面</button>
-  <iframe class="approach-inline-frame" src="chen-story.html" title="人物故事：我是陳欽生"></iframe>
+  <iframe id="chen-story-frame" class="approach-inline-frame" src="chen-story.html" title="人物故事：我是陳欽生" scrolling="no"></iframe>
 </section>
 
 <section id="page-approach-3" class="hidden min-h-screen bg-[#F4F1EC] text-[#1A202C]">
@@ -4068,6 +4069,31 @@
                 window.updateCultureControlsVisibility?.();
             }
 
+
+            window.addEventListener('message', event => {
+                if (!event.data || event.data.type !== 'chenStoryFrameResize') return;
+                const frame = document.getElementById('chen-story-frame');
+                if (!frame) return;
+                const nextHeight = Math.max(window.innerHeight, Number(event.data.height) || 0);
+                frame.style.height = nextHeight + 'px';
+            });
+
+            function resizeChenStoryFrame() {
+                const frame = document.getElementById('chen-story-frame');
+                if (!frame || !frame.contentDocument) return;
+
+                const doc = frame.contentDocument;
+                const nextHeight = Math.max(
+                    window.innerHeight,
+                    doc.body?.scrollHeight || 0,
+                    doc.documentElement?.scrollHeight || 0,
+                    doc.body?.offsetHeight || 0,
+                    doc.documentElement?.offsetHeight || 0
+                );
+                frame.style.height = nextHeight + 'px';
+            }
+            window.addEventListener('resize', resizeChenStoryFrame);
+
             window.showInlineApproach = function(pageKey) {
                 mountInlineApproachSections();
 
@@ -4088,6 +4114,12 @@
                 }
 
                 targetPage.classList.remove('hidden');
+
+                const unlockedDiv = document.getElementById('unlocked-content');
+                if (unlockedDiv) {
+                    unlockedDiv.classList.remove('hidden');
+                }
+
                 if (pageKey === 'approach-1') {
                     targetPage.classList.remove('fade-in-active');
                     window.cultureAutoAdvanceReady = true;
@@ -4098,6 +4130,9 @@
 
                 setTimeout(() => {
                     updateCultureControlsVisibility();
+                    if (pageKey === 'approach-2') {
+                        resizeChenStoryFrame();
+                    }
                     targetPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 60);
             };
