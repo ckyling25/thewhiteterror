@@ -4466,197 +4466,111 @@
 </section>
 
 <!-- ==========================================
-     頁面 9：理性重構詳細頁（沉浸式改版）
-     用法：整個 <section> 取代原本的 page-approach-4
+     頁面 9：生活角度互動測驗
      ========================================== -->
-<section id="page-approach-4" class="hidden min-h-screen bg-[#F4F1EC] text-[#1A202C]">
+<section id="page-approach-4" class="hidden min-h-screen bg-[#F4F1EC] text-[#1A202C] approach-inline-shell">
   <style>
-    /* ── 理性重構：捲動開場 ── */
-    #approach-4-scroll-intro {
-      position: relative;
-      height: 230vh;
-      background: #0d1118;
-    }
-    #approach-4-scroll-intro .a4-stage {
-      position: sticky;
-      top: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: clamp(2rem, 6vw, 5rem);
-      overflow: hidden;
-    }
-    .a4-scroll-copy {
-      grid-area: 1 / 1;
-      max-width: 64rem;
-      color: #f4efe6;
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity .65s ease, transform .65s ease;
-      pointer-events: none;
-      font-family: 'Noto Serif TC', serif;
-      font-size: clamp(1.2rem, 2.15vw, 1.65rem);
-      font-weight: 700;
-      line-height: 1.9;
-    }
-    .a4-scroll-copy.is-active { opacity: 1; transform: translateY(0); }
-    .a4-copy-panel {
-      display: inline-block;
-      width: fit-content;
-      max-width: min(100%, 68rem);
-      margin-inline: auto;
-      padding: clamp(1.5rem, 4vw, 2.6rem) clamp(1.25rem, 4vw, 3rem);
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.12);
-      backdrop-filter: blur(6px);
-      box-shadow: 0 16px 38px rgba(0,0,0,.35);
-      text-align: left;
-    }
-    /* ── 卡片區 ── */
-    #approach-4-cards {
+    #page-approach-4 {
       background: #F4F1EC;
-      padding: clamp(4rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4rem);
     }
-    .a4-card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      max-width: 1080px;
-      margin: 0 auto;
+    .life-quiz-entry {
+      min-height: 100vh;
+      padding: clamp(4.5rem, 7vw, 6.5rem) clamp(1rem, 4vw, 3rem) clamp(3rem, 5vw, 4rem);
     }
-    .a4-card {
-      background: #fff;
-      border: 1px solid rgba(67,55,42,.18);
-      border-radius: 1.25rem;
-      padding: clamp(1.5rem, 3vw, 2rem);
-      box-shadow: 0 8px 24px rgba(57,45,31,.08);
-      transition: box-shadow .25s ease, transform .25s ease;
-    }
-    .a4-card:hover {
-      box-shadow: 0 16px 40px rgba(57,45,31,.14);
-      transform: translateY(-3px);
-    }
-    .a4-card-icon { font-size: 2rem; margin-bottom: .75rem; }
-    .a4-card h3 {
-      font-family: 'Noto Serif TC', serif;
-      font-size: clamp(1.1rem, 1.6vw, 1.35rem);
-      font-weight: 900;
-      color: #9B2C2C;
-      margin-bottom: .6rem;
-    }
-    .a4-card p {
-      font-size: clamp(.9rem, 1.1vw, 1rem);
-      color: #4a4a4a;
-      line-height: 1.85;
-    }
-    .a4-card-tag {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: .3rem .75rem;
-      background: rgba(155,44,44,.08);
-      color: #9B2C2C;
-      border-radius: 999px;
-      font-size: .75rem;
-      font-weight: 700;
-      letter-spacing: .06em;
-    }
-    /* ── 尾部引言 ── */
-    .a4-outro {
-      background: #0d1118;
-      padding: clamp(4rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4rem);
+    .life-quiz-heading {
+      width: min(1040px, 100%);
+      margin: 0 auto 1.5rem;
       text-align: center;
     }
-    .a4-outro p {
-      max-width: 52rem;
-      margin: 0 auto;
+    .life-quiz-heading span {
+      color: #9B2C2C;
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+    .life-quiz-heading h2 {
+      margin: .65rem 0 .8rem;
       font-family: 'Noto Serif TC', serif;
-      font-size: clamp(1.2rem, 2vw, 1.6rem);
-      font-weight: 700;
-      color: rgba(244,239,230,.88);
-      line-height: 2;
+      font-size: clamp(1.8rem, 3.6vw, 3.1rem);
+      font-weight: 900;
+      line-height: 1.28;
+      color: #2D3748;
+    }
+    .life-quiz-heading p {
+      max-width: 45rem;
+      margin: 0 auto;
+      color: #5f6670;
+      line-height: 1.9;
+      font-size: clamp(.95rem, 1.25vw, 1.05rem);
+    }
+    .life-quiz-frame-wrap {
+      width: min(1040px, 100%);
+      margin: 0 auto;
+      border: 1px solid rgba(45, 55, 72, .18);
+      background: #1f1d19;
+      box-shadow: 0 24px 70px rgba(31, 24, 17, .22);
+      overflow: hidden;
+    }
+    #life-quiz-frame {
+      display: block;
+      width: 100%;
+      height: min(1120px, calc(100vh - 2rem));
+      min-height: 760px;
+      border: 0;
+      background: #1f1d19;
+    }
+    .life-quiz-note {
+      width: min(1040px, 100%);
+      margin: .85rem auto 0;
+      color: #7a8088;
+      font-size: .82rem;
+      text-align: center;
+    }
+    @media (max-width: 700px) {
+      .life-quiz-entry {
+        padding-inline: .75rem;
+      }
+      .life-quiz-frame-wrap {
+        border-left: 0;
+        border-right: 0;
+      }
+      #life-quiz-frame {
+        min-height: 720px;
+        height: calc(100vh - 1.5rem);
+      }
     }
   </style>
 
-  <!-- 返回按鈕 -->
   <button onclick="window.returnToApproachSelector()" class="approach-return-nav" type="button">返回入口頁面</button>
 
-  <!-- 開場捲動文字 -->
-  <div id="approach-4-scroll-intro">
-    <div class="a4-stage">
-      <p class="a4-scroll-copy a4-copy-panel is-active">
-        「當我們能親自翻閱檔案局被解密的監控報告時，<br>
-        那些扁平的口號就會被細緻的國家機器運作取代。」
-      </p>
-      <p class="a4-scroll-copy a4-copy-panel">
-        歷史不只是情感的，也是可以被驗證的。<br>
-        透過檔案、口述與資料庫，威權的運作邏輯<br>
-        一一浮現在數字、判決書與批示手諭之間。
-      </p>
-      <p class="a4-scroll-copy a4-copy-panel">
-        理解白色恐怖，不只是記住苦難，<br>
-        更是學會辨認那套機器如何運轉——<br>
-        因為它的零件，也許至今仍散落在這個社會裡。
-      </p>
+  <div class="life-quiz-entry">
+    <header class="life-quiz-heading">
+      <span>生活角度</span>
+      <h2>今天的你選擇說什麼？</h2>
+      <p>從書本、對話、信件、讀書會與日記進入一天的日常情境，感受白色恐怖時期人民如何在每個選擇中衡量表達、風險與關係。</p>
+    </header>
+
+    <div class="life-quiz-frame-wrap">
+      <iframe id="life-quiz-frame" title="今天的你選擇說什麼互動測驗" loading="lazy"></iframe>
     </div>
+    <p class="life-quiz-note">若畫面高度不足，可在框內捲動完成測驗。</p>
   </div>
 
-  <!-- 卡片內容區 -->
-  <div id="approach-4-cards">
-    <div style="max-width:1080px; margin:0 auto 2.5rem;">
-      <span style="color:#9B2C2C; font-size:.75rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase;">理性重構：口述歷史與研究</span>
-      <h2 style="font-family:'Noto Serif TC',serif; font-size:clamp(1.6rem,2.8vw,2.4rem); font-weight:900; color:#2D3748; margin-top:.5rem; line-height:1.3;">以客觀檔案建立對政治謊言的免疫力</h2>
-      <div style="width:3rem; height:4px; background:#9B2C2C; margin-top:1rem;"></div>
-    </div>
-
-    <div class="a4-card-grid">
-      <div class="a4-card">
-        <div class="a4-card-icon">📂</div>
-        <h3>國家檔案管理局線上申調</h3>
-        <p>當代青年可依法向國家發展委員會檔案管理局申請調閱已被解密的監控判決檔案。親自檢視當年調查局、保密局對特定對象的詳細密報與層層批示時，威權機器的驚人監控細節便躍然紙上。</p>
-        <span class="a4-card-tag">檔案・解密・監控機制</span>
-      </div>
-
-      <div class="a4-card">
-        <div class="a4-card-icon">🎙️</div>
-        <h3>受難前輩多維口述歷史</h3>
-        <p>聆聽和研讀包含原住民、本省菁英、外省政治犯、新民主主義讀書會等不同政治立場受難者的真實口述錄影與逐字稿。透過最真實的平民生活記憶，抵抗宏大、單一的政治宣傳。</p>
-        <span class="a4-card-tag">口述歷史・多元視角・記憶保存</span>
-      </div>
-
-      <div class="a4-card">
-        <div class="a4-card-icon">💻</div>
-        <h3>臺灣轉型正義資料庫</h3>
-        <p>透過公開的線上資料庫，輸入前輩姓名，即可完整檢索當年的加害者決策鏈、審判軍法官、判決條款、最高當局核定手諭等。用最嚴謹的學術資料解構歷史悲劇，建立獨立思辨的能力。</p>
-        <span class="a4-card-tag">資料庫・判決書・加害體系</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- 尾部引言 -->
-  <div class="a4-outro">
-    <p>當你讀懂那一份份判決書，<br>你就讀懂了一整個時代的恐懼是如何被製造出來的。</p>
-  </div>
-
+  <script type="application/json" id="life-quiz-srcdoc">"<!DOCTYPE html>\n<html lang=\"zh-Hant\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>今天的你選擇說什麼？</title>\n  <style>\n:root {\n  /* 克制的紙張、油墨與審查紅色系。 */\n  --paper: #e8ddbf;\n  --paper-deep: #d4c59d;\n  --ink: #1e1c18;\n  --muted-ink: #595143;\n  --red: #8d1e1e;\n  --black: #11100e;\n  --shadow: rgba(22, 18, 12, 0.35);\n  --line: rgba(63, 50, 32, 0.28);\n}\n\n* {\n  box-sizing: border-box;\n}\n\nbody {\n  min-height: 100vh;\n  margin: 0;\n  color: var(--ink);\n  font-family: Georgia, \"Times New Roman\", \"Noto Serif TC\", \"Songti TC\", serif;\n  background:\n    linear-gradient(rgba(30, 24, 14, 0.42), rgba(30, 24, 14, 0.62)),\n    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 4px),\n    radial-gradient(circle at top left, #5b5142 0, #2b2924 50%, #161512 100%);\n}\n\nbutton {\n  font: inherit;\n}\n\n.archive-shell {\n  display: grid;\n  min-height: 100vh;\n  padding: 36px 18px;\n  place-items: center;\n}\n\n.screen {\n  display: none;\n  width: min(880px, 100%);\n}\n\n.screen-active {\n  display: block;\n}\n\n.paper-panel {\n  /* 用層疊背景做出泛黃紙張、淡淡格線與檔案污痕。 */\n  position: relative;\n  overflow: hidden;\n  width: 100%;\n  border: 1px solid rgba(70, 54, 29, 0.45);\n  background:\n    linear-gradient(90deg, rgba(17, 16, 14, 0.08) 0 8%, transparent 8% 100%),\n    repeating-linear-gradient(0deg, transparent 0 31px, rgba(90, 70, 35, 0.16) 32px 33px),\n    radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.34), transparent 18%),\n    linear-gradient(135deg, #f2e8cb, var(--paper) 52%, #d9c89f);\n  box-shadow: 0 28px 60px var(--shadow);\n}\n\n.paper-panel::before,\n.paper-panel::after {\n  position: absolute;\n  content: \"\";\n  pointer-events: none;\n}\n\n.paper-panel::before {\n  inset: 0;\n  background:\n    repeating-radial-gradient(circle at 20% 30%, rgba(55, 37, 12, 0.09) 0 1px, transparent 1px 7px),\n    linear-gradient(80deg, transparent 0 70%, rgba(80, 54, 22, 0.11) 70% 71%, transparent 71% 100%);\n  mix-blend-mode: multiply;\n}\n\n.paper-panel::after {\n  /* 固定在卡片角落的紅色檔案章。 */\n  right: 34px;\n  bottom: 34px;\n  width: 190px;\n  height: 64px;\n  border: 4px double rgba(141, 30, 30, 0.52);\n  color: rgba(141, 30, 30, 0.52);\n  content: \"存 查\";\n  display: grid;\n  place-items: center;\n  font-family: \"Courier New\", \"Noto Sans Mono CJK TC\", monospace;\n  font-size: 1.6rem;\n  font-weight: 700;\n  letter-spacing: 0.28em;\n  transform: rotate(-8deg);\n}\n\n.intro-panel,\n.file-card,\n.result-card {\n  min-height: 560px;\n  padding: clamp(32px, 6vw, 72px);\n}\n\n.file-card {\n  background: linear-gradient(135deg, #f2e8cb, var(--paper) 52%, #d9c89f);\n}\n\n.file-card::before {\n  display: none;\n}\n\n.question-bg {\n  display: none;\n}\n\n.file-card[data-question=\"1\"] .question-bg,\n.file-card[data-question=\"2\"] .question-bg,\n.file-card[data-question=\"3\"] .question-bg,\n.file-card[data-question=\"4\"] .question-bg,\n.file-card[data-question=\"5\"] .question-bg {\n  position: absolute;\n  inset: 0;\n  z-index: 0;\n  display: block;\n  pointer-events: none;\n}\n\n.book,\n.listener,\n.letter-bg,\n.reading-bg,\n.diary-bg {\n  display: none;\n}\n\n.book,\n.listener,\n.letter-bg,\n.reading-bg,\n.diary-bg {\n  position: absolute;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: contain;\n  box-shadow: 0 10px 24px rgba(34, 25, 12, 0.22);\n  filter: sepia(0.25) contrast(0.9);\n  opacity: 0.58;\n}\n\n.file-card[data-question=\"1\"] .book,\n.file-card[data-question=\"2\"] .listener,\n.file-card[data-question=\"3\"] .letter-bg,\n.file-card[data-question=\"4\"] .reading-bg,\n.file-card[data-question=\"5\"] .diary-bg {\n  display: block;\n}\n\n.book-aq {\n  top: 34px;\n  left: clamp(16px, 5vw, 46px);\n  width: clamp(210px, 32vw, 310px);\n  aspect-ratio: 507 / 720;\n  background-image: url(\"阿Q正傳.jpg\");\n  transform: rotate(-11deg);\n}\n\n.book-romeo {\n  right: clamp(12px, 5vw, 44px);\n  bottom: 28px;\n  width: clamp(172px, 26vw, 238px);\n  aspect-ratio: 254 / 450;\n  background-image: url(\"羅密歐與茱麗葉.jpg\");\n  transform: rotate(10deg);\n}\n\n.listener {\n  filter: sepia(0.12) contrast(0.92);\n  opacity: 0.5;\n  box-shadow: none;\n}\n\n.listener-case {\n  top: 104px;\n  left: clamp(0px, 4vw, 34px);\n  width: clamp(300px, 46vw, 460px);\n  aspect-ratio: 1500 / 1099;\n  background-image: url(\"復古行李箱唱片機_真去背_裁切.png\");\n  transform: rotate(-8deg);\n}\n\n.listener-wire {\n  right: clamp(-22px, 3vw, 30px);\n  bottom: 104px;\n  width: clamp(280px, 42vw, 430px);\n  aspect-ratio: 1500 / 1091;\n  background-image: url(\"監聽器_真去背_裁切.png\");\n  transform: rotate(9deg);\n}\n\n.letter-bg {\n  inset: 54px 34px 42px 34px;\n  background-image: url(\"信件.png\");\n  background-size: cover;\n  filter: sepia(0.18) contrast(0.9);\n  opacity: 0.62;\n  transform: rotate(-3deg);\n}\n\n.reading-bg {\n  inset: 44px 24px 32px 24px;\n  background-image: url(\"讀書會.png\");\n  background-size: cover;\n  filter: sepia(0.18) contrast(0.88);\n  opacity: 0.58;\n  transform: rotate(2deg);\n}\n\n.diary-bg {\n  inset: 42px 26px 30px 26px;\n  background-image: url(\"書桌日記.png\");\n  background-size: cover;\n  filter: sepia(0.18) contrast(0.88);\n  opacity: 0.58;\n  transform: rotate(-2deg);\n}\n\n.intro-panel {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n\n.case-label,\n.scene-time,\n.feedback {\n  font-family: \"Courier New\", \"Noto Sans Mono CJK TC\", monospace;\n}\n\n.case-label {\n  margin: 0 0 18px;\n  color: var(--muted-ink);\n  font-size: 0.88rem;\n  letter-spacing: 0.16em;\n}\n\nh1,\nh2 {\n  position: relative;\n  margin: 0;\n  line-height: 1.18;\n  letter-spacing: 0;\n}\n\nh1 {\n  max-width: 12em;\n  font-size: clamp(3rem, 9vw, 6.8rem);\n  font-weight: 700;\n}\n\nh1::after {\n  display: block;\n  width: min(540px, 86%);\n  height: 18px;\n  margin-top: 14px;\n  background: var(--black);\n  content: \"\";\n}\n\n.subtitle,\n.scene-text,\n.result-description {\n  position: relative;\n  max-width: 720px;\n  color: #2f2a22;\n  font-size: clamp(1.05rem, 2.4vw, 1.3rem);\n  line-height: 1.9;\n}\n\n.subtitle {\n  margin: 34px 0 44px;\n}\n\n.primary-btn {\n  position: relative;\n  z-index: 1;\n  width: fit-content;\n  min-width: 148px;\n  border: 1px solid rgba(30, 24, 15, 0.74);\n  background: #1f1d19;\n  color: #f2ead7;\n  cursor: pointer;\n  font-family: \"Courier New\", \"Noto Sans Mono CJK TC\", monospace;\n  font-size: 1rem;\n  letter-spacing: 0.1em;\n  padding: 14px 24px;\n  transition: transform 160ms ease, background 160ms ease;\n}\n\n.primary-btn:hover,\n.primary-btn:focus-visible {\n  background: #3a3228;\n  transform: translateY(-1px);\n}\n\n.file-topline {\n  position: relative;\n  z-index: 1;\n  display: flex;\n  align-items: flex-start;\n  justify-content: space-between;\n  gap: 18px;\n}\n\n.stamp {\n  border: 3px solid rgba(141, 30, 30, 0.72);\n  color: rgba(141, 30, 30, 0.74);\n  font-family: \"Courier New\", \"Noto Sans Mono CJK TC\", monospace;\n  font-weight: 700;\n  padding: 8px 14px;\n  transform: rotate(6deg);\n}\n\n.time-block {\n  position: relative;\n  z-index: 1;\n  margin-top: 24px;\n}\n\n.scene-time {\n  margin: 0 0 10px;\n  color: var(--red);\n  font-size: 0.95rem;\n  font-weight: 700;\n  letter-spacing: 0.12em;\n}\n\n.time-block h2,\n.result-card h2 {\n  font-size: clamp(2rem, 5vw, 3.7rem);\n}\n\n.scene-text {\n  z-index: 1;\n  margin: 28px 0 28px;\n}\n\n.options-list {\n  position: relative;\n  z-index: 1;\n  display: grid;\n  gap: 12px;\n}\n\n.option-btn {\n  /* 選項維持像檔案夾中的打字紙條，不使用遊戲化按鈕樣式。 */\n  display: grid;\n  grid-template-columns: 1fr;\n  gap: 14px;\n  width: 100%;\n  border: 1px solid rgba(66, 50, 28, 0.42);\n  background: rgba(248, 240, 216, 0.56);\n  color: var(--ink);\n  cursor: pointer;\n  padding: 16px 18px;\n  text-align: left;\n  transition: border-color 140ms ease, background 140ms ease, transform 140ms ease;\n}\n\n.option-btn:hover,\n.option-btn:focus-visible {\n  border-color: rgba(141, 30, 30, 0.72);\n  background: rgba(255, 248, 226, 0.72);\n  transform: translateX(3px);\n}\n\n.option-btn:disabled {\n  cursor: default;\n  opacity: 0.72;\n  transform: none;\n}\n\n.option-text {\n  line-height: 1.65;\n}\n\n.feedback {\n  min-height: 28px;\n  margin: 22px 0 0;\n  color: var(--red);\n  font-size: 0.95rem;\n  font-weight: 700;\n  letter-spacing: 0.12em;\n  opacity: 0;\n  transform: translateY(4px);\n  transition: opacity 160ms ease, transform 160ms ease;\n}\n\n.feedback.visible {\n  opacity: 1;\n  transform: translateY(0);\n}\n\n.result-card {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n\n.result-description {\n  margin: 24px 0 34px;\n}\n\n.bars {\n  position: relative;\n  z-index: 1;\n  display: grid;\n  gap: 20px;\n  margin-bottom: 38px;\n}\n\n.bar-row {\n  display: grid;\n  gap: 9px;\n}\n\n.bar-label {\n  display: flex;\n  justify-content: space-between;\n  gap: 16px;\n  font-family: \"Courier New\", \"Noto Sans Mono CJK TC\", monospace;\n}\n\n.bar-track {\n  height: 18px;\n  border: 1px solid rgba(35, 30, 24, 0.55);\n  background:\n    repeating-linear-gradient(90deg, rgba(24, 22, 19, 0.11) 0 1px, transparent 1px 12px),\n    rgba(240, 231, 205, 0.84);\n}\n\n.bar-fill {\n  width: 0;\n  height: 100%;\n  transition: width 700ms ease;\n}\n\n.freedom-fill {\n  background: #4f4a3d;\n}\n\n.risk-fill {\n  background: #8d1e1e;\n}\n\n.relationship-fill {\n  background: #6b5534;\n}\n\n@media (max-width: 640px) {\n  /* 手機版保留檔案卡形式，並降低章與選項的佔位。 */\n  .archive-shell {\n    padding: 16px;\n  }\n\n  .intro-panel,\n  .file-card,\n  .result-card {\n    min-height: calc(100vh - 32px);\n    padding: 28px 22px;\n  }\n\n  .paper-panel::after {\n    right: 18px;\n    bottom: 22px;\n    width: 128px;\n    height: 46px;\n    font-size: 1.05rem;\n  }\n\n  h1::after {\n    height: 13px;\n  }\n\n  .file-topline {\n    align-items: flex-start;\n  }\n\n  .stamp {\n    padding: 6px 9px;\n    font-size: 0.82rem;\n  }\n\n  .option-btn {\n    grid-template-columns: 1fr;\n    gap: 6px;\n    padding: 14px;\n  }\n}\n\n</style>\n</head>\n<body>\n  <main class=\"archive-shell\">\n    <section id=\"start-screen\" class=\"screen screen-active intro-screen\" aria-labelledby=\"site-title\">\n      <div class=\"paper-panel intro-panel\">\n        <p class=\"case-label\">白色恐怖時期日常紀錄</p>\n        <h1 id=\"site-title\">今天的你<br>選擇說什麼？</h1>\n        <p class=\"subtitle\">在白色恐怖時期，日常生活中的每一句話、每一本書、每一封信，都需要小心衡量。</p>\n        <button id=\"start-btn\" class=\"primary-btn\" type=\"button\">開始你的一天</button>\n      </div>\n    </section>\n\n    <section id=\"quiz-screen\" class=\"screen\" aria-live=\"polite\">\n      <article id=\"question-card\" class=\"paper-panel file-card\">\n        <div class=\"question-bg\" aria-hidden=\"true\">\n          <span class=\"book book-aq\"></span>\n          <span class=\"book book-romeo\"></span>\n          <span class=\"listener listener-case\"></span>\n          <span class=\"listener listener-wire\"></span>\n          <span class=\"letter-bg\"></span>\n          <span class=\"reading-bg\"></span>\n          <span class=\"diary-bg\"></span>\n        </div>\n\n        <div class=\"file-topline\">\n          <span id=\"question-count\" class=\"case-label\"></span>\n          <span class=\"stamp\" aria-hidden=\"true\">審閱中</span>\n        </div>\n\n        <div class=\"time-block\">\n          <p id=\"scene-time\" class=\"scene-time\"></p>\n          <h2 id=\"scene-title\"></h2>\n        </div>\n\n        <p id=\"scene-text\" class=\"scene-text\"></p>\n        <div id=\"options\" class=\"options-list\"></div>\n        <p id=\"feedback\" class=\"feedback\" role=\"status\"></p>\n      </article>\n    </section>\n\n    <section id=\"result-screen\" class=\"screen\" aria-labelledby=\"result-title\">\n      <article class=\"paper-panel result-card\">\n        <p class=\"case-label\">一日紀錄結案</p>\n        <h2 id=\"result-title\"></h2>\n        <p id=\"result-description\" class=\"result-description\"></p>\n\n        <div class=\"bars\" aria-label=\"三項指標分數\">\n          <div class=\"bar-row\">\n            <div class=\"bar-label\">\n              <span>表達自由</span>\n              <strong id=\"freedom-value\">0</strong>\n            </div>\n            <div class=\"bar-track\">\n              <div id=\"freedom-bar\" class=\"bar-fill freedom-fill\"></div>\n            </div>\n          </div>\n\n          <div class=\"bar-row\">\n            <div class=\"bar-label\">\n              <span>安全風險</span>\n              <strong id=\"risk-value\">0</strong>\n            </div>\n            <div class=\"bar-track\">\n              <div id=\"risk-bar\" class=\"bar-fill risk-fill\"></div>\n            </div>\n          </div>\n\n          <div class=\"bar-row\">\n            <div class=\"bar-label\">\n              <span>關係代價</span>\n              <strong id=\"relationship-value\">0</strong>\n            </div>\n            <div class=\"bar-track\">\n              <div id=\"relationship-bar\" class=\"bar-fill relationship-fill\"></div>\n            </div>\n          </div>\n        </div>\n\n        <button id=\"restart-btn\" class=\"primary-btn\" type=\"button\">重新測驗</button>\n      </article>\n    </section>\n  </main>\n\n  <script>\n// 所有題目、選項與分數集中在這裡，方便日後改題或調整權重。\nconst questions = [\n  {\n    time: \"早上\",\n    title: \"家中桌上的書\",\n    text: \"你準備出門上學／上班，桌上放著一本朋友借你的書。母親提醒你：「最近外面風聲很緊，不要帶奇怪的書出門。」\",\n    options: [\n      {\n        text: \"把書帶出門，照常閱讀。\",\n        scores: { freedomScore: 20, riskScore: 20, relationshipCost: 2 },\n        feedback: \"可能遭關注\"\n      },\n      {\n        text: \"把書留在家裡，但晚上再讀。\",\n        scores: { freedomScore: 13, riskScore: 8, relationshipCost: 3 },\n        feedback: \"已記錄\"\n      },\n      {\n        text: \"把書還給朋友，避免麻煩。\",\n        scores: { freedomScore: 3, riskScore: 2, relationshipCost: 13 },\n        feedback: \"已記錄\"\n      },\n      {\n        text: \"先問朋友這本書是否安全。\",\n        scores: { freedomScore: 9, riskScore: 7, relationshipCost: 1 },\n        feedback: \"注意\"\n      }\n    ]\n  },\n  {\n    time: \"中午\",\n    title: \"學校同儕的抱怨\",\n    text: \"同學私下抱怨政府政策，問你怎麼看。旁邊還有幾個不熟的人。\",\n    options: [\n      {\n        text: \"說出自己的真實想法。\",\n        scores: { freedomScore: 22, riskScore: 22, relationshipCost: 0 },\n        feedback: \"可能遭關注\"\n      },\n      {\n        text: \"小聲提醒對方不要亂說。\",\n        scores: { freedomScore: 7, riskScore: 8, relationshipCost: 0 },\n        feedback: \"注意\"\n      },\n      {\n        text: \"假裝沒聽到，轉移話題。\",\n        scores: { freedomScore: 2, riskScore: 2, relationshipCost: 8 },\n        feedback: \"已記錄\"\n      },\n      {\n        text: \"附和幾句，但不說太多。\",\n        scores: { freedomScore: 11, riskScore: 12, relationshipCost: 2 },\n        feedback: \"注意\"\n      }\n    ]\n  },\n  {\n    time: \"下午\",\n    title: \"郵局裡的信\",\n    text: \"你收到海外親友的來信，對方問你最近台灣的情況。\",\n    options: [\n      {\n        text: \"詳細寫下你的觀察與不滿。\",\n        scores: { freedomScore: 23, riskScore: 24, relationshipCost: 0 },\n        feedback: \"可能遭關注\"\n      },\n      {\n        text: \"只寫家中近況，不談社會與政治。\",\n        scores: { freedomScore: 4, riskScore: 3, relationshipCost: 4 },\n        feedback: \"已記錄\"\n      },\n      {\n        text: \"寫得很隱晦，讓對方自己理解。\",\n        scores: { freedomScore: 14, riskScore: 12, relationshipCost: 1 },\n        feedback: \"注意\"\n      },\n      {\n        text: \"暫時不回信。\",\n        scores: { freedomScore: 1, riskScore: 1, relationshipCost: 14 },\n        feedback: \"已記錄\"\n      }\n    ]\n  },\n  {\n    time: \"傍晚\",\n    title: \"秘密讀書會\",\n    text: \"朋友邀你參加一場小型讀書會，說只是討論文學和社會問題。\",\n    options: [\n      {\n        text: \"參加，並帶一本想分享的書。\",\n        scores: { freedomScore: 22, riskScore: 23, relationshipCost: 0 },\n        feedback: \"可能遭關注\"\n      },\n      {\n        text: \"詢問還有哪些人會去。\",\n        scores: { freedomScore: 10, riskScore: 9, relationshipCost: 1 },\n        feedback: \"注意\"\n      },\n      {\n        text: \"拒絕，並提醒朋友小心。\",\n        scores: { freedomScore: 5, riskScore: 6, relationshipCost: 2 },\n        feedback: \"注意\"\n      },\n      {\n        text: \"不回應邀約，之後慢慢疏遠。\",\n        scores: { freedomScore: 0, riskScore: 1, relationshipCost: 22 },\n        feedback: \"已記錄\"\n      }\n    ]\n  },\n  {\n    time: \"晚上\",\n    title: \"抽屜裡的日記\",\n    text: \"你回到家，想在日記裡寫下今天的心情。你會怎麼寫？\",\n    options: [\n      {\n        text: \"完整寫下今天的不安與憤怒。\",\n        scores: { freedomScore: 22, riskScore: 17, relationshipCost: 0 },\n        feedback: \"可能遭關注\"\n      },\n      {\n        text: \"只寫生活瑣事。\",\n        scores: { freedomScore: 3, riskScore: 2, relationshipCost: 3 },\n        feedback: \"已記錄\"\n      },\n      {\n        text: \"用暗語記錄真正想法。\",\n        scores: { freedomScore: 13, riskScore: 8, relationshipCost: 1 },\n        feedback: \"注意\"\n      },\n      {\n        text: \"不寫，直接把日記收起來。\",\n        scores: { freedomScore: 0, riskScore: 0, relationshipCost: 6 },\n        feedback: \"已記錄\"\n      }\n    ]\n  }\n];\n\n// 結果文字集中管理，判斷門檻則放在 determineResult。\nconst results = {\n  silent: {\n    title: \"沉默求生\",\n    description: \"你讓自己維持在相對安全的位置，但代價是越來越少說、少問、少參與。你不是沒有想法，而是學會把想法藏起來。\"\n  },\n  cautious: {\n    title: \"謹慎觀望\",\n    description: \"你仍試著保留判斷，但每一句話都必須先計算後果。生活看似正常，實際上已充滿自我審查。\"\n  },\n  severed: {\n    title: \"關係切割\",\n    description: \"你選擇與可能帶來風險的人保持距離。這讓你比較安全，卻也讓朋友、鄰居與家人之間的信任逐漸瓦解。\"\n  },\n  exposed: {\n    title: \"風險承擔\",\n    description: \"你盡可能保留表達與行動，但也因此暴露在更高的監控與牽連風險之中。\"\n  }\n};\n\n// 三項指標在測驗過程中保持隱藏，只在結果頁呈現。\nlet currentQuestionIndex = 0;\nlet freedomScore = 0;\nlet riskScore = 0;\nlet relationshipCost = 0;\n\n// 預先取得畫面節點，避免每次換題重複查找。\nconst startScreen = document.querySelector(\"#start-screen\");\nconst quizScreen = document.querySelector(\"#quiz-screen\");\nconst resultScreen = document.querySelector(\"#result-screen\");\nconst startBtn = document.querySelector(\"#start-btn\");\nconst restartBtn = document.querySelector(\"#restart-btn\");\nconst questionCount = document.querySelector(\"#question-count\");\nconst sceneTime = document.querySelector(\"#scene-time\");\nconst sceneTitle = document.querySelector(\"#scene-title\");\nconst sceneText = document.querySelector(\"#scene-text\");\nconst questionCard = document.querySelector(\"#question-card\");\nconst optionsContainer = document.querySelector(\"#options\");\nconst feedback = document.querySelector(\"#feedback\");\n\nstartBtn.addEventListener(\"click\", startQuiz);\nrestartBtn.addEventListener(\"click\", startQuiz);\n\nfunction startQuiz() {\n  currentQuestionIndex = 0;\n  freedomScore = 0;\n  riskScore = 0;\n  relationshipCost = 0;\n  showScreen(quizScreen);\n  renderQuestion();\n}\n\nfunction showScreen(activeScreen) {\n  [startScreen, quizScreen, resultScreen].forEach((screen) => {\n    screen.classList.toggle(\"screen-active\", screen === activeScreen);\n  });\n}\n\nfunction renderQuestion() {\n  // 依目前題號渲染單張舊檔案卡。\n  const question = questions[currentQuestionIndex];\n  questionCard.dataset.question = String(currentQuestionIndex + 1);\n  questionCount.textContent = `檔案 ${currentQuestionIndex + 1} / ${questions.length}`;\n  sceneTime.textContent = question.time;\n  sceneTitle.textContent = question.title;\n  sceneText.textContent = question.text;\n  feedback.textContent = \"\";\n  feedback.classList.remove(\"visible\");\n  optionsContainer.innerHTML = \"\";\n\n  question.options.forEach((option) => {\n    const button = document.createElement(\"button\");\n    button.className = \"option-btn\";\n    button.type = \"button\";\n    button.innerHTML = `<span class=\"option-text\">${option.text}</span>`;\n    button.addEventListener(\"click\", () => chooseOption(option));\n    optionsContainer.appendChild(button);\n  });\n}\n\nfunction chooseOption(option) {\n  // 點選後先累積分數，再短暫顯示頁面內提示。\n  freedomScore += option.scores.freedomScore;\n  riskScore += option.scores.riskScore;\n  relationshipCost += option.scores.relationshipCost;\n\n  optionsContainer.querySelectorAll(\"button\").forEach((button) => {\n    button.disabled = true;\n  });\n\n  feedback.textContent = option.feedback;\n  feedback.classList.add(\"visible\");\n\n  window.setTimeout(() => {\n    currentQuestionIndex += 1;\n\n    if (currentQuestionIndex >= questions.length) {\n      showResult();\n      return;\n    }\n\n    renderQuestion();\n  }, 850);\n}\n\nfunction showResult() {\n  // 結束後才公開三項指標，維持測驗過程中的不確定感。\n  const scores = normalizeScores({\n    freedomScore,\n    riskScore,\n    relationshipCost\n  });\n  const result = determineResult(scores);\n\n  document.querySelector(\"#result-title\").textContent = result.title;\n  document.querySelector(\"#result-description\").textContent = result.description;\n  updateBar(\"freedom\", scores.freedomScore);\n  updateBar(\"risk\", scores.riskScore);\n  updateBar(\"relationship\", scores.relationshipCost);\n  showScreen(resultScreen);\n}\n\n// 將累積分數限制在 0 到 100，讓結果頁的條狀圖保持一致。\nfunction normalizeScores(scores) {\n  return {\n    freedomScore: clamp(scores.freedomScore),\n    riskScore: clamp(scores.riskScore),\n    relationshipCost: clamp(scores.relationshipCost)\n  };\n}\n\nfunction clamp(value) {\n  return Math.max(0, Math.min(100, value));\n}\n\n// 結果判斷集中在這裡，日後可依教學需求調整門檻。\nfunction determineResult(scores) {\n  if (scores.relationshipCost >= 45) {\n    return results.severed;\n  }\n\n  if (scores.freedomScore >= 70 && scores.riskScore >= 65) {\n    return results.exposed;\n  }\n\n  if (scores.freedomScore <= 25 && scores.riskScore <= 20) {\n    return results.silent;\n  }\n\n  return results.cautious;\n}\n\nfunction updateBar(type, value) {\n  const valueNode = document.querySelector(`#${type}-value`);\n  const barNode = document.querySelector(`#${type}-bar`);\n  valueNode.textContent = value;\n  barNode.style.width = `${value}%`;\n}\n\n<\/script>\n</body>\n</html>\n"</script>
   <script>
     (function() {
-      function updateApproach4Scroll() {
-        const intro = document.getElementById('approach-4-scroll-intro');
-        if (!intro) return;
-        const copies = intro.querySelectorAll('.a4-scroll-copy');
-        if (!copies.length) return;
-        const rect = intro.getBoundingClientRect();
-        const travel = Math.max(1, intro.offsetHeight - window.innerHeight);
-        const progress = Math.max(0, Math.min(1, -rect.top / travel));
-        const activeIndex = Math.min(copies.length - 1, Math.floor(progress * copies.length));
-        copies.forEach((copy, i) => copy.classList.toggle('is-active', i === activeIndex));
+      var frame = document.getElementById('life-quiz-frame');
+      var source = document.getElementById('life-quiz-srcdoc');
+      if (!frame || !source || frame.srcdoc) return;
+      try {
+        frame.srcdoc = JSON.parse(source.textContent || '""');
+      } catch (error) {
+        frame.setAttribute('title', '測驗載入失敗');
       }
-      window.addEventListener('scroll', updateApproach4Scroll, { passive: true });
-      window.addEventListener('resize', updateApproach4Scroll);
-      updateApproach4Scroll();
     })();
   </script>
 </section>
-
     <!-- ==========================================
          JavaScript 核心控制邏輯
          ========================================== -->
