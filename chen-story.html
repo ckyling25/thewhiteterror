@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>我是陳欽生 | 一場遲到十二年的歸途</title>
+  <style>
+    @font-face {
+      font-family: "Iansui";
+      src: url("https://cdn.jsdelivr.net/gh/ButTaiwan/iansui@main/Iansui-Regular.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "ChenTitleFont";
+      src: url("https://drive.google.com/uc?export=download&id=1VjTOSrqws_4XSTWeSGxieibSN05w1SZO") format("truetype");
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --paper: #f7f2e8;
+      --paper-strong: rgba(255, 252, 246, 0.96);
+      --ink: #211a14;
+      --muted: #6f6251;
+      --line: #d8cbb5;
+      --red: #842524;
+      --red-dark: #5f1719;
+      --green: #31594c;
+      --shadow: 0 18px 50px rgba(35, 27, 19, 0.14);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Noto Serif TC", "PingFang TC", "Microsoft JhengHei", serif;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(168, 121, 50, 0.16) 0 2px, transparent 3px),
+        radial-gradient(circle at 78% 26%, rgba(95, 73, 38, 0.10) 0 1px, transparent 3px),
+        radial-gradient(circle at 42% 78%, rgba(120, 82, 38, 0.12) 0 2px, transparent 4px),
+        linear-gradient(110deg, rgba(255, 252, 238, 0.86), rgba(226, 207, 164, 0.58) 48%, rgba(250, 239, 203, 0.9)),
+        repeating-linear-gradient(0deg, rgba(92, 63, 30, 0.025) 0 1px, transparent 1px 6px),
+        #ead9ad;
+      background-size: 360px 360px, 420px 420px, 520px 520px, cover, auto, auto;
+      background-attachment: fixed;
+      background-position: center;
+      line-height: 1.8;
+    }
+
+    a { color: inherit; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 14px clamp(18px, 4vw, 48px);
+      background: rgba(255, 252, 246, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-mark {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 0 5px rgba(132, 37, 36, 0.12);
+      flex: 0 0 auto;
+    }
+
+    .progress {
+      color: var(--muted);
+      font-size: 14px;
+      white-space: nowrap;
+      font-family: "Microsoft JhengHei", sans-serif;
+    }
+
+    .side-nav {
+      position: fixed;
+      right: 22px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 15;
+      display: grid;
+      gap: 14px;
+      padding: 14px 10px;
+      background: rgba(255, 252, 246, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1px solid #bba98c;
+      background: #e8dcc8;
+      opacity: 0.45;
+      pointer-events: none;
+      transition: transform 180ms ease, background 180ms ease, opacity 180ms ease;
+    }
+
+    .dot.unlocked {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .dot.active {
+      background: var(--red);
+      border-color: var(--red);
+      transform: scale(1.35);
+    }
+
+    main {
+      width: min(1080px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .chapter {
+      margin: clamp(56px, 9vw, 112px) 0;
+      scroll-margin-top: 96px;
+    }
+
+    .chapter.locked {
+      display: none;
+    }
+
+    .hero {
+      min-height: calc(100vh - 68px);
+      display: grid;
+      align-items: center;
+      padding: 48px 0 72px;
+    }
+
+    .hero-grid,
+    .layout,
+    .number-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.86fr);
+      gap: clamp(28px, 6vw, 72px);
+      align-items: center;
+    }
+
+    .layout.reverse {
+      grid-template-columns: minmax(280px, 0.86fr) minmax(0, 1fr);
+    }
+
+    .layout.reverse .text-panel { order: 2; }
+
+    .eyebrow,
+    .chapter-label {
+      display: inline-block;
+      margin-bottom: 14px;
+      color: var(--red);
+      font-family: "Microsoft JhengHei", sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1, h2, h3 {
+      font-family: "Noto Serif TC", "PingFang TC", "Microsoft JhengHei", serif;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 7em;
+      font-family: "ChenTitleFont", "Noto Serif TC", "PingFang TC", "Microsoft JhengHei", serif;
+      font-size: clamp(42px, 6vw, 76px);
+      font-weight: 900;
+      line-height: 1.22;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      max-width: 12em;
+      margin-bottom: 24px;
+      font-size: clamp(30px, 5vw, 54px);
+      line-height: 1.18;
+    }
+
+    h3 {
+      font-size: clamp(22px, 3vw, 32px);
+      line-height: 1.28;
+    }
+
+    .lead-stack,
+    .body-copy,
+    .interaction,
+    .timeline,
+    .check-list,
+    .result,
+    footer {
+      font-family: "Iansui", "Microsoft JhengHei", sans-serif;
+    }
+
+    .lead-stack {
+      margin-top: 26px;
+      display: grid;
+      gap: 12px;
+      max-width: 620px;
+      font-size: clamp(18px, 2.2vw, 22px);
+      line-height: 1.9;
+      font-weight: 400;
+    }
+
+    .body-copy {
+      display: grid;
+      gap: 18px;
+      font-size: 19px;
+      line-height: 1.9;
+      font-weight: 400;
+    }
+
+    .line {
+      display: block;
+    }
+
+    h1 .line,
+    h2 .line {
+      display: block;
+    }
+
+    h1 .line {
+      white-space: nowrap;
+    }
+
+    .body-copy strong,
+    .emphasis {
+      font-weight: 600;
+      color: var(--red-dark);
+    }
+
+    .text-panel {
+      padding: clamp(22px, 4vw, 42px);
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .photo {
+      margin: 0;
+      background: #fffdfa;
+      border: 1px solid rgba(140, 118, 82, 0.25);
+      box-shadow: var(--shadow);
+      padding: 12px;
+    }
+
+    .photo img {
+      display: block;
+      width: 100%;
+      min-height: 240px;
+      object-fit: cover;
+      filter: sepia(0.24) contrast(1.04) saturate(0.82);
+    }
+
+    .photo figcaption {
+      padding: 12px 4px 2px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      font-family: "Iansui", "Microsoft JhengHei", sans-serif;
+    }
+
+    .photo.tall img { aspect-ratio: 4 / 5; }
+    .photo.wide img { aspect-ratio: 16 / 9; }
+    .photo.small { max-width: 360px; justify-self: center; }
+    .photo.small img { aspect-ratio: 1 / 1; min-height: 220px; }
+
+    .full-quote {
+      min-height: 74vh;
+      display: grid;
+      align-items: center;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      padding: clamp(70px, 10vw, 120px) max(24px, calc((100vw - 1080px) / 2));
+      color: #fffaf2;
+      background:
+        linear-gradient(rgba(42, 21, 21, 0.6), rgba(42, 21, 21, 0.72)),
+        url("images/chen-story/hate-land.jpg");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .full-quote p {
+      max-width: 900px;
+      font-size: clamp(36px, 7vw, 78px);
+      line-height: 1.24;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .interaction {
+      margin-top: 26px;
+      padding: 22px;
+      background: rgba(241, 232, 216, 0.72);
+      border: 1px solid var(--line);
+    }
+
+    .interaction-title {
+      margin-bottom: 14px;
+      color: #493d30;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    .choice-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    button,
+    .link-button {
+      appearance: none;
+      border: 1px solid #bca989;
+      border-radius: 6px;
+      background: #fffaf0;
+      color: var(--ink);
+      padding: 12px 15px;
+      font: 700 16px/1.45 "Microsoft JhengHei", sans-serif;
+      cursor: pointer;
+      text-align: left;
+      text-decoration: none;
+      transition: background 160ms ease, border-color 160ms ease;
+    }
+
+    button:hover,
+    .link-button:hover {
+      background: #f1e5cf;
+      border-color: #987b52;
+    }
+
+    .primary {
+      background: var(--red);
+      color: #fffaf2;
+      border-color: var(--red);
+    }
+
+    .primary:hover {
+      background: var(--red-dark);
+      border-color: var(--red-dark);
+    }
+
+    .continue-row {
+      margin-top: 26px;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .result {
+      min-height: 0;
+      margin-top: 16px;
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.9;
+      opacity: 0;
+      transition: opacity 180ms ease;
+    }
+
+    .result.visible { opacity: 1; }
+
+    .result-box {
+      border-left: 4px solid var(--red);
+      padding-left: 14px;
+    }
+
+    .result-note {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .timeline {
+      margin-top: 32px;
+      display: grid;
+      gap: 0;
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 22px;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .timeline-row:last-child { border-bottom: 0; }
+
+    .year {
+      color: var(--red);
+      font: 800 26px/1 "Georgia", serif;
+    }
+
+    .timeline-row p {
+      font-size: 18px;
+      line-height: 1.85;
+    }
+
+    .big-number {
+      display: grid;
+      place-items: center;
+      min-height: 430px;
+      background:
+        linear-gradient(rgba(247, 242, 232, 0.9), rgba(247, 242, 232, 0.9)),
+        url("images/chen-story/time.gif");
+      background-size: cover;
+      background-position: center;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .big-number strong {
+      display: block;
+      color: var(--red);
+      font: 900 clamp(92px, 18vw, 190px)/0.9 "Georgia", serif;
+    }
+
+    .big-number span {
+      display: block;
+      margin-top: 16px;
+      color: var(--muted);
+      font-family: "Microsoft JhengHei", sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+    }
+
+    .check-list {
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      font-size: 18px;
+      line-height: 1.8;
+      color: #42372b;
+    }
+
+    .check-list li::before {
+      content: "✓";
+      color: var(--green);
+      font-weight: 800;
+      margin-right: 10px;
+    }
+
+    .age-input {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid #bca989;
+      border-radius: 6px;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--ink);
+      font: 700 16px/1.45 "Microsoft JhengHei", sans-serif;
+    }
+
+    input:focus {
+      outline: 2px solid rgba(132, 37, 36, 0.25);
+      border-color: var(--red);
+    }
+
+    .image-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .image-pair .photo:nth-child(2) {
+      transform: translateY(38px);
+    }
+
+    .final {
+      min-height: 88vh;
+      display: grid;
+      align-items: center;
+      padding-bottom: 72px;
+    }
+
+    .final-card {
+      max-width: 820px;
+      margin: 0 auto;
+      text-align: center;
+      padding: clamp(30px, 6vw, 64px);
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .final-card h2 {
+      margin: 0 auto 24px;
+      max-width: none;
+    }
+
+    .final-card .body-copy {
+      max-width: 660px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .pause-question {
+      margin: 34px auto 0;
+      max-width: 620px;
+      color: var(--red-dark);
+      font-family: "Noto Serif TC", "PingFang TC", "Microsoft JhengHei", serif;
+      font-size: clamp(22px, 3vw, 32px);
+      line-height: 1.55;
+      font-weight: 700;
+    }
+
+    .final-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .sources {
+      margin-top: 28px;
+      color: var(--muted);
+      font: 13px/1.7 "Microsoft JhengHei", sans-serif;
+    }
+
+    footer {
+      padding: 26px 18px 34px;
+      border-top: 1px solid var(--line);
+      background: rgba(255, 252, 246, 0.78);
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 900px) {
+      .side-nav { display: none; }
+      .hero-grid,
+      .layout,
+      .layout.reverse,
+      .number-stage {
+        grid-template-columns: 1fr;
+      }
+      .layout.reverse .text-panel { order: 0; }
+      .hero { min-height: auto; }
+      .photo.small { max-width: none; }
+      .image-pair .photo:nth-child(2) { transform: none; }
+    }
+
+    @media (max-width: 640px) {
+      .site-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .brand { font-size: 15px; }
+      main { width: min(100% - 28px, 1080px); }
+      .text-panel { padding: 22px 18px; }
+      .body-copy { font-size: 18px; line-height: 1.9; }
+      .lead-stack { font-size: 18px; }
+      h1 {
+        font-size: clamp(30px, 9.2vw, 48px);
+        max-width: 100%;
+      }
+      .timeline-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 18px;
+      }
+      .age-input,
+      .image-pair {
+        grid-template-columns: 1fr;
+      }
+      button,
+      .link-button {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>我是陳欽生：一場遲到十二年的歸途</span>
+    </div>
+    <div class="progress" id="progressIndicator">第一卷（解鎖進度：2/7）</div>
+  </header>
+
+  <nav class="side-nav" aria-label="章節導覽">
+    <a class="dot unlocked active" id="dot-1" href="#section-1" title="Chapter 1"></a>
+    <a class="dot unlocked" id="dot-2" href="#section-2" title="Chapter 2"></a>
+    <a class="dot" id="dot-3" href="#section-3" title="Chapter 3"></a>
+    <a class="dot" id="dot-4" href="#section-4" title="Chapter 4"></a>
+    <a class="dot" id="dot-5" href="#section-5" title="Chapter 5"></a>
+    <a class="dot" id="dot-6" href="#section-6" title="Chapter 6"></a>
+    <a class="dot" id="dot-7" href="#section-7" title="Chapter 7"></a>
+  </nav>
+
+  <main>
+    <section class="chapter hero" id="section-1">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Chapter 01 / 1967</span>
+          <h1>
+            <span class="line">我是陳欽生</span>
+          </h1>
+          <div class="lead-stack">
+            <p>
+              <span class="line">1967 年，</span>
+              <span class="line">我從馬來西亞怡保來到台灣求學。</span>
+            </p>
+            <p>
+              <span class="line">我以為自己只是離家，</span>
+              <span class="line">去一個新的地方念書。</span>
+            </p>
+            <p>
+              <span class="line">我不知道，</span>
+              <span class="line">等待我的不是單純的夢想，</span>
+              <span class="line"><strong class="emphasis">而是戒嚴年代。</strong></span>
+            </p>
+          </div>
+        </div>
+        <figure class="photo tall">
+          <img src="images/chen-story/before-taiwan.jpg" alt="書架與舊書，象徵留學與知識追尋" />
+          <figcaption>我來台灣前拍下照片，準備朝著夢想前行</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="chapter" id="section-2">
+      <div class="layout reverse">
+        <figure class="photo wide">
+          <img src="images/chen-story/student-id.JPG" alt="大學建築與校園階梯" />
+          <figcaption>我以僑生身分來台，在成功大學化工系求學。</figcaption>
+        </figure>
+        <div class="text-panel">
+          <div class="chapter-label">Chapter 02 / 留學</div>
+          <h2>
+            <span class="line">我只是想</span>
+            <span class="line">把人生往前走</span>
+          </h2>
+          <div class="body-copy">
+            <p>
+              <span class="line">離家求學的理由，</span>
+              <span class="line">其實沒有多麼複雜。</span>
+              <span class="line">我想看更遠的世界，</span>
+              <span class="line">也想讓家人放心。</span>
+            </p>
+            <p>
+              <span class="line">在台灣的日子，</span>
+              <span class="line">本來是課業、朋友、英文報紙與校園生活。</span>
+              <span class="line">我以為這些日常會繼續下去，</span>
+              <span class="line">直到畢業，</span>
+              <span class="line">直到回家。</span>
+            </p>
+          </div>
+
+          <div class="interaction">
+            <div class="interaction-title">如果你是當年的我，最像你的留學理由是什麼？</div>
+            <div class="choice-list">
+              <button type="button" data-study="world">探索更大的世界</button>
+              <button type="button" data-study="work">替未來找一份更好的工作</button>
+              <button type="button" data-study="family">完成家人的期待</button>
+            </div>
+            <div class="result" id="studyResult" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter locked" id="section-3">
+      <div class="full-quote">
+        <div>
+          <span class="eyebrow">Chapter 03 / 1971.03</span>
+          <p>
+            <span class="line">1971 年 3 月</span>
+            <span class="line">我的人生停止了</span>
+          </p>
+        </div>
+      </div>
+      <div class="layout" style="margin-top: 52px;">
+        <div class="text-panel">
+          <h2>
+            <span class="line">一句</span>
+            <span class="line">有人要見你</span>
+            <span class="line">改變了十二年</span>
+          </h2>
+          <div class="body-copy">
+            <p>
+              <span class="line">大學三年級時，</span>
+              <span class="line">台南美國新聞處爆炸案發生。</span>
+              <span class="line">我被帶走、偵訊，</span>
+              <span class="line">原本平凡的留學生活突然被切斷。</span>
+            </p>
+            <p>
+              <span class="line"><strong>最可怕的，</strong></span>
+              <span class="line"><strong>不是我不知道自己會被帶到哪裡。</strong></span>
+              <span class="line"><strong>而是我開始明白，</strong></span>
+              <span class="line"><strong>我的說法未必會被聽見。</strong></span>
+            </p>
+          </div>
+        </div>
+        <figure class="photo small">
+          <img src="images/chen-story/case-record.jpg" alt="法庭木槌與文件" />
+          <figcaption>案件、筆錄與審判，成為我此後人生的陰影。</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="chapter locked" id="section-4">
+      <div class="layout reverse">
+        <div class="image-pair">
+          <figure class="photo">
+            <img src="images/chen-story/hate-land.jpg" alt="昏暗走廊與牢房感的空間" />
+            <figcaption>我開始痛恨這片土地。</figcaption>
+          </figure>
+          <figure class="photo">
+            <img src="images/chen-story/mother.jpg" alt="舊照片與紙張" />
+            <figcaption>記憶裡最難承受的，往往是家人（媽媽）的身影。</figcaption>
+          </figure>
+        </div>
+        <div class="text-panel">
+          <div class="chapter-label">Chapter 04 / 失去</div>
+          <h2>
+            <span class="line">我失去的</span>
+            <span class="line">不只是自由</span>
+          </h2>
+          <div class="body-copy">
+            <p>
+              <span class="line">被羈押之後，</span>
+              <span class="line">我失去校園、課業、青春，</span>
+              <span class="line">也失去和母親正常相見的可能，</span>
+	  <span class="line">我不堪刑求曾自殺三次都未成功。</span>
+            </p>
+            <p>
+              <span class="line">如果一個人忽然被抽離日常，</span>
+              <span class="line">最先碎裂的也許不是時間，</span>
+              <span class="line">而是那些原本理所當然的關係。</span>
+            </p>
+          </div>
+
+          <div class="interaction">
+            <div class="interaction-title">如果只能保留一樣，你最害怕失去什麼？</div>
+            <div class="choice-list">
+              <button type="button" data-loss="freedom">自由</button>
+              <button type="button" data-loss="family">與家人的聯繫</button>
+              <button type="button" data-loss="future">原本安排好的未來</button>
+            </div>
+            <div class="result" id="lossResult" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter locked" id="section-5">
+      <div class="number-stage">
+        <div class="big-number">
+          <div>
+            <strong id="counter">0</strong>
+            <span>年刑期</span>
+          </div>
+        </div>
+        <div class="text-panel">
+          <div class="chapter-label">Chapter 05 / 1973-1983</div>
+          <h2>
+            <span class="line">十二年</span>
+            <span class="line">不是數字</span>
+          </h2>
+          <div class="body-copy">
+            <p>
+              <span class="line">1973 年，</span>
+              <span class="line">我被判刑。</span>
+              <span class="line">從二十出頭到三十多歲，</span>
+              <span class="line">人生最能向外展開的歲月，</span>
+              <span class="line">被關在一段漫長的等待裡。</span>
+            </p>
+            <p>
+              <span class="line">十二年可以讓同學畢業、工作、成家。</span>
+              <span class="line">也可以讓一個人出來時，</span>
+              <span class="line">發現世界已經往前走了很遠。</span>
+            </p>
+          </div>
+          <ul class="check-list" aria-label="十二年間可能發生的事">
+            <li>朋友可能已經結婚</li>
+            <li>同學可能工作十年</li>
+            <li>有人可能已經有了孩子</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter locked" id="section-6">
+      <div class="layout">
+        <div class="text-panel">
+          <div class="chapter-label">Chapter 06 / 重新開始</div>
+          <h2>
+            <span class="line">如果是你</span>
+            <span class="line">十二年後會幾歲</span>
+          </h2>
+          <div class="body-copy">
+            <p>
+              <span class="line">我出獄時，</span>
+              <span class="line">青春最密集的一段已經過去。</span>
+              <span class="line">重新開始不是一句鼓勵，</span>
+              <span class="line">而是一件非常具體、非常孤單的事。</span>
+            </p>
+          </div>
+
+          <div class="interaction">
+            <label class="interaction-title" for="ageInput">輸入你今年的年齡，看看十二年後的自己。</label>
+            <div class="age-input">
+              <input id="ageInput" type="number" min="1" max="100" placeholder="例如：22" />
+              <button type="button" class="primary" id="ageButton">計算</button>
+            </div>
+            <div class="result" id="ageResult" aria-live="polite"></div>
+          </div>
+        </div>
+        <figure class="photo tall">
+          <img src="images/chen-story/time.gif" alt="時鐘與時間流逝" />
+          <figcaption>當時間離開一個人，往往不會完整歸還。</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="chapter locked" id="section-7">
+      <div class="timeline" aria-label="陳欽生故事時間軸">
+        <div class="timeline-row">
+          <div class="year">1967</div>
+          <p>
+            <span class="line">我從馬來西亞來台，</span>
+            <span class="line">以僑生身分進入成功大學化工系求學。</span>
+          </p>
+        </div>
+        <div class="timeline-row">
+          <div class="year">1971</div>
+          <p>
+            <span class="line">台南美國新聞處爆炸案後，</span>
+            <span class="line">我被帶走，人生從校園轉入偵訊與羈押。</span>
+          </p>
+        </div>
+        <div class="timeline-row">
+          <div class="year">1973</div>
+          <p>
+            <span class="line">我被判刑，</span>
+            <span class="line">開始長達十二年的牢獄歲月。</span>
+          </p>
+        </div>
+        <div class="timeline-row">
+          <div class="year">1983</div>
+          <p>
+            <span class="line">我出獄後，</span>
+            <span class="line">面對身分、生活與重新回到社會的漫長困難。</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="final">
+        <div class="final-card">
+          <div class="chapter-label">Chapter 07 / 我是陳欽生</div>
+          <h2>
+            <span class="line">我不是案號</span>
+            <span class="line">我是陳欽生</span>
+          </h2>
+          <div class="body-copy">
+            <p>
+              <span class="line">後來，</span>
+              <span class="line">公開資料與相關討論持續指出此案存在疑點，</span>
+              <span class="line">案情真相至今仍有爭議。</span>
+              <span class="line">但我已經服完十二年刑期。</span>
+            </p>
+            <p>
+              <span class="line">出獄後，</span>
+              <span class="line">我繼續留在台灣，</span>
+              <span class="line">後來投入人權教育。</span>
+              <span class="line">我把自己的傷口，</span>
+              <span class="line">變成提醒後人的證詞。</span>
+            </p>
+          </div>
+          <div class="pause-question">
+            我不是個案，<br />
+            是白色恐怖時代下的犧牲品<br />
+            請你不要忘記這段歷史
+          </div>
+          <div class="final-actions">
+            <button type="button" id="resetButton">重新翻閱</button>
+            <a class="link-button primary" href="https://www.nhrm.gov.tw" target="_blank" rel="noreferrer">了解其他入口</a>
+          </div>
+          <div class="sources">
+            內容依公開資料改寫整理：
+            <a href="https://zh.wikipedia.org/wiki/%E9%99%B3%E6%AC%BD%E7%94%9F" target="_blank" rel="noreferrer">陳欽生</a>、
+            <a href="https://zh.wikipedia.org/wiki/%E5%8F%B0%E5%8D%97%E7%BE%8E%E5%9C%8B%E6%96%B0%E8%81%9E%E8%99%95" target="_blank" rel="noreferrer">台南美國新聞處爆炸事件</a>、
+            <a href="https://www.nhrm.gov.tw" target="_blank" rel="noreferrer">國家人權博物館</a>。
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    這是一份第一人稱互動式數位展覽網頁範例。使用者完成互動後，只會解鎖下一章，不會自動跳轉。
+  </footer>
+
+  <script>
+    const totalChapters = 7;
+    let unlockedProgress = 2;
+    let counterTimer = null;
+
+    const progressIndicator = document.getElementById("progressIndicator");
+    const dots = Array.from(document.querySelectorAll(".dot"));
+    const sections = Array.from(document.querySelectorAll(".chapter"));
+
+    const studyReplies = {
+      world: "你選擇了探索世界。對未知的好奇，也是我當年離家的心情。",
+      work: "你選擇了更好的未來。努力念書，原本只是想讓人生多一點可能。",
+      family: "你選擇了家人的期待。那時的我，也想學成之後回家陪伴母親。"
+    };
+
+    const lossReplies = {
+      freedom: "你選擇了自由。自由一旦失去，連明天要往哪裡去都不再由自己決定。",
+      family: "你選擇了家人。對我而言，最痛的記憶之一，是母親隔著玻璃探視我的那一刻。",
+      future: "你選擇了未來。原本安排好的未來，可能只需要一個下午就被全部改寫。"
+    };
+
+    function updateProgress() {
+      progressIndicator.textContent = `第一卷（解鎖進度：${unlockedProgress}/${totalChapters}）`;
+    }
+
+    function unlockChapter(number) {
+      const chapter = document.getElementById(`section-${number}`);
+      const dot = document.getElementById(`dot-${number}`);
+      if (!chapter) return;
+
+      chapter.classList.remove("locked");
+      if (dot) dot.classList.add("unlocked");
+
+      if (number > unlockedProgress) {
+        unlockedProgress = number;
+        updateProgress();
+      }
+
+      if (number === 5) startCounter();
+    }
+
+    function showResult(element, html) {
+      element.classList.remove("visible");
+      window.setTimeout(() => {
+        element.innerHTML = html;
+        element.classList.add("visible");
+      }, 120);
+    }
+
+    document.querySelectorAll("[data-study]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const key = button.dataset.study;
+        const result = document.getElementById("studyResult");
+        showResult(result, `
+          <div class="result-box">
+            ${studyReplies[key]}
+            <span class="result-note">後續章節已開啟。你可以照自己的速度往下閱讀。</span>
+          </div>
+        `);
+        unlockChapter(3);
+        unlockChapter(4);
+      });
+    });
+
+    document.querySelectorAll("[data-loss]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const key = button.dataset.loss;
+        const result = document.getElementById("lossResult");
+        showResult(result, `
+          <div class="result-box">
+            ${lossReplies[key]}
+            <span class="result-note">後續章節已開啟。十二年的時間在下面等你。</span>
+          </div>
+        `);
+        unlockChapter(5);
+        unlockChapter(6);
+      });
+    });
+
+    function startCounter() {
+      const counter = document.getElementById("counter");
+      if (!counter) return;
+
+      if (counterTimer) {
+        window.clearInterval(counterTimer);
+        counterTimer = null;
+      }
+
+      let value = 0;
+      counter.textContent = "0";
+      counterTimer = window.setInterval(() => {
+        value += 1;
+        counter.textContent = String(value);
+        if (value >= 12) {
+          window.clearInterval(counterTimer);
+          counterTimer = null;
+        }
+      }, 170);
+    }
+
+    function calculateAge() {
+      const input = document.getElementById("ageInput");
+      const result = document.getElementById("ageResult");
+      const age = Number.parseInt(input.value, 10);
+
+      if (!Number.isFinite(age) || age <= 0 || age > 100) {
+        showResult(result, `<div class="result-box">請輸入一個合理的年齡。</div>`);
+        return;
+      }
+
+      const future = age + 12;
+      showResult(result, `
+        <div class="result-box">
+          你今年 ${age} 歲。十二年後，你會是 ${future} 歲。
+          <br />
+          這十二年間，朋友可能結婚、工作十年、甚至有了孩子。
+          <br />
+          而你，今天才重新開始人生。
+          <span class="result-note">最後一章已開啟。你可以慢慢往下讀完。</span>
+        </div>
+      `);
+      unlockChapter(7);
+    }
+
+    document.getElementById("ageButton").addEventListener("click", calculateAge);
+    document.getElementById("ageInput").addEventListener("keydown", (event) => {
+      if (event.key === "Enter") calculateAge();
+    });
+
+    document.getElementById("resetButton").addEventListener("click", () => {
+      if (counterTimer) {
+        window.clearInterval(counterTimer);
+        counterTimer = null;
+      }
+
+      for (let index = 3; index <= totalChapters; index += 1) {
+        document.getElementById(`section-${index}`)?.classList.add("locked");
+        document.getElementById(`dot-${index}`)?.classList.remove("unlocked", "active");
+      }
+
+      unlockedProgress = 2;
+      updateProgress();
+      document.getElementById("studyResult").innerHTML = "";
+      document.getElementById("studyResult").classList.remove("visible");
+      document.getElementById("lossResult").innerHTML = "";
+      document.getElementById("lossResult").classList.remove("visible");
+      document.getElementById("ageResult").innerHTML = "";
+      document.getElementById("ageResult").classList.remove("visible");
+      document.getElementById("ageInput").value = "";
+      document.getElementById("counter").textContent = "0";
+
+      setActiveDot(1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    function setActiveDot(index) {
+      dots.forEach((dot) => dot.classList.remove("active"));
+      document.getElementById(`dot-${index}`)?.classList.add("active");
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || entry.target.classList.contains("locked")) return;
+        const index = Number(entry.target.id.replace("section-", ""));
+        setActiveDot(index);
+      });
+    }, { threshold: 0.22, rootMargin: "-80px 0px -25% 0px" });
+
+    sections.forEach((section) => observer.observe(section));
+  </script>
+</body>
+</html>

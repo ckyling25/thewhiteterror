@@ -1012,8 +1012,24 @@
             transform: translateY(-1px);
         }
 
+
+        .approach-inline-shell {
+            position: relative;
+            padding: 0;
+            background: #F4F1EC;
+        }
+
+        .approach-inline-frame {
+            width: 100%;
+            height: 100vh;
+            min-height: 100vh;
+            border: 0;
+            display: block;
+            background: #F4F1EC;
+        }
+
         .approach-return-nav::before {
-            content: "←";
+            content: "\2190";
             font-size: 1.05em;
             line-height: 1;
         }
@@ -1769,72 +1785,69 @@
             <!-- 四大靠近方式導覽區塊 -->
             <section id="approach-selector" class="py-12 border-t border-gray-200/60 mt-16">
                 <div class="text-center space-y-4 mb-16">
-                    <span class="text-xs text-[#9B2C2C] font-semibold tracking-[0.3em] uppercase block">多維路徑探索</span>
                     <h2 class="serif-title text-3xl font-black text-[#2D3748] tracking-wider">
-                        每個人靠近白恐的方式都不一樣
+                        每一個人靠近白恐的方式都不一樣，你可以……
                     </h2>
                     <p class="text-sm md:text-base text-gray-500 max-w-2xl mx-auto leading-relaxed">
-                        當教科書上的單調描述無法引起共鳴時，當代的青年們正在用全新的載體，<br>
-                        勾勒出屬於這代人與歷史對話的輪廓。點擊下方管道，探索你的共鳴點：
+                        點擊下方任一入口，深入了解白色恐怖吧！
                     </p>
                 </div>
 
                 <!-- 四大靠近方式卡片 (桌機並列排版，莫蘭迪冷灰藍底色) -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                     <!-- 卡片 1 -->
-                    <button onclick="window.showInlineApproach('approach-1')" id="card-1" class="approach-card group flex flex-col items-start text-left p-6 bg-[#EBF1F5] border-2 border-slate-300 rounded-xl transition-all duration-300 hover:border-[#9B2C2C] hover:bg-white hover:shadow-lg focus:outline-none">
+                    <button onclick="window.showInlineApproach('approach-2')" id="card-1" class="approach-card group flex flex-col items-start text-left p-6 bg-[#EBF1F5] border-2 border-slate-300 rounded-xl transition-all duration-300 hover:border-[#9B2C2C] hover:bg-white hover:shadow-lg focus:outline-none">
+                        <div class="w-10 h-10 rounded-lg bg-[#9B2C2C]/5 flex items-center justify-center mb-4 group-hover:bg-[#9B2C2C]/10 transition-colors">
+                            <svg class="w-5 h-5 text-[#9B2C2C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A8.966 8.966 0 0112 15c2.21 0 4.236.799 5.879 2.126M15 11a3 3 0 10-6 0 3 3 0 006 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 100-18 9 9 0 000 18z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="serif-title font-bold text-lg text-[#2D3748] mb-2 group-hover:text-[#9B2C2C] transition-colors">人物故事</h3>
+                        <p class="text-xs text-gray-500 font-semibold mb-2 tracking-wider">受難者生命故事</p>
+                        <p class="text-xs text-gray-600 leading-relaxed font-light">
+                            從陳欽生等個人經歷出發，看見白色恐怖如何落在一個人的生命裡。
+                        </p>
+                    </button>
+
+                    <!-- 卡片 2 -->
+                    <button onclick="window.showInlineApproach('approach-3')" id="card-2" class="approach-card group flex flex-col items-start text-left p-6 bg-[#EBF1F5] border-2 border-slate-300 rounded-xl transition-all duration-300 hover:border-[#9B2C2C] hover:bg-white hover:shadow-lg focus:outline-none">
+                        <div class="w-10 h-10 rounded-lg bg-[#9B2C2C]/5 flex items-center justify-center mb-4 group-hover:bg-[#9B2C2C]/10 transition-colors">
+                            <svg class="w-5 h-5 text-[#9B2C2C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="serif-title font-bold text-lg text-[#2D3748] mb-2 group-hover:text-[#9B2C2C] transition-colors">地方空間</h3>
+                        <p class="text-xs text-gray-500 font-semibold mb-2 tracking-wider">不義遺址與走讀</p>
+                        <p class="text-xs text-gray-600 leading-relaxed font-light">
+                            走進曾經發生壓迫與監禁的場域，從空間與現場感理解歷史留下的痕跡。
+                        </p>
+                    </button>
+
+                    <!-- 卡片 3 -->
+                    <button onclick="window.showInlineApproach('approach-1')" id="card-3" class="approach-card group flex flex-col items-start text-left p-6 bg-[#EBF1F5] border-2 border-slate-300 rounded-xl transition-all duration-300 hover:border-[#9B2C2C] hover:bg-white hover:shadow-lg focus:outline-none">
                         <div class="w-10 h-10 rounded-lg bg-[#9B2C2C]/5 flex items-center justify-center mb-4 group-hover:bg-[#9B2C2C]/10 transition-colors">
                             <svg class="w-5 h-5 text-[#9B2C2C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path>
                             </svg>
                         </div>
-                        <h3 class="serif-title font-bold text-lg text-[#2D3748] mb-2 group-hover:text-[#9B2C2C] transition-colors">文化入口</h3>
-                        <p class="text-xs text-gray-500 font-semibold mb-2 tracking-wider">大眾媒介與藝術</p>
+                        <h3 class="serif-title font-bold text-lg text-[#2D3748] mb-2 group-hover:text-[#9B2C2C] transition-colors">文化作品</h3>
+                        <p class="text-xs text-gray-500 font-semibold mb-2 tracking-wider">音樂影像與藝術</p>
                         <p class="text-xs text-gray-600 leading-relaxed font-light">
-                            透過音樂與影視作品，將冷硬的受難紀錄轉譯為青年較容易進入的故事與情感經驗。
-                        </p>
-                    </button>
-
-                    <!-- 卡片 2 -->
-                    <button onclick="window.switchView('approach-2')" id="card-2" class="approach-card group flex flex-col items-start text-left p-6 bg-[#EBF1F5] border-2 border-slate-300 rounded-xl transition-all duration-300 hover:border-[#9B2C2C] hover:bg-white hover:shadow-lg focus:outline-none">
-                        <div class="w-10 h-10 rounded-lg bg-[#9B2C2C]/5 flex items-center justify-center mb-4 group-hover:bg-[#9B2C2C]/10 transition-colors">
-                            <svg class="w-5 h-5 text-[#9B2C2C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
-                            </svg>
-                        </div>
-                        <h3 class="serif-title font-bold text-lg text-[#2D3748] mb-2 group-hover:text-[#9B2C2C] transition-colors">身歷其境</h3>
-                        <p class="text-xs text-gray-500 font-semibold mb-2 tracking-wider">遊戲與實境解謎</p>
-                        <p class="text-xs text-gray-600 leading-relaxed font-light">
-                            扮演時代洪流下的常人，體驗在保密防諜、讀書會中步步驚心的心理兩難抉擇。
-                        </p>
-                    </button>
-
-                    <!-- 卡片 3 -->
-                    <button onclick="window.switchView('approach-3')" id="card-3" class="approach-card group flex flex-col items-start text-left p-6 bg-[#EBF1F5] border-2 border-slate-300 rounded-xl transition-all duration-300 hover:border-[#9B2C2C] hover:bg-white hover:shadow-lg focus:outline-none">
-                        <div class="w-10 h-10 rounded-lg bg-[#9B2C2C]/5 flex items-center justify-center mb-4 group-hover:bg-[#9B2C2C]/10 transition-colors">
-                            <svg class="w-5 h-5 text-[#9B2C2C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="serif-title font-bold text-lg text-[#2D3748] mb-2 group-hover:text-[#9B2C2C] transition-colors">現場震撼</h3>
-                        <p class="text-xs text-gray-500 font-semibold mb-2 tracking-wider">不義遺址與走讀</p>
-                        <p class="text-xs text-gray-600 leading-relaxed font-light">
-                            實際走過當年的看守所、審判庭，用身體感官親臨禁錮與窒息的物理空間氛圍。
+                            透過歌曲、電影與影視作品，從熟悉的旋律與故事開始接近白恐記憶。
                         </p>
                     </button>
 
                     <!-- 卡片 4 -->
-                    <button onclick="window.switchView('approach-4')" id="card-4" class="approach-card group flex flex-col items-start text-left p-6 bg-[#EBF1F5] border-2 border-slate-300 rounded-xl transition-all duration-300 hover:border-[#9B2C2C] hover:bg-white hover:shadow-lg focus:outline-none">
+                    <button onclick="window.showInlineApproach('approach-4')" id="card-4" class="approach-card group flex flex-col items-start text-left p-6 bg-[#EBF1F5] border-2 border-slate-300 rounded-xl transition-all duration-300 hover:border-[#9B2C2C] hover:bg-white hover:shadow-lg focus:outline-none">
                         <div class="w-10 h-10 rounded-lg bg-[#9B2C2C]/5 flex items-center justify-center mb-4 group-hover:bg-[#9B2C2C]/10 transition-colors">
                             <svg class="w-5 h-5 text-[#9B2C2C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.168.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                             </svg>
                         </div>
-                        <h3 class="serif-title font-bold text-lg text-[#2D3748] mb-2 group-hover:text-[#9B2C2C] transition-colors">理性重構</h3>
-                        <p class="text-xs text-gray-500 font-semibold mb-2 tracking-wider">口述歷史與研究</p>
+                        <h3 class="serif-title font-bold text-lg text-[#2D3748] mb-2 group-hover:text-[#9B2C2C] transition-colors">生活角度</h3>
+                        <p class="text-xs text-gray-500 font-semibold mb-2 tracking-wider">日常經驗與檔案</p>
                         <p class="text-xs text-gray-600 leading-relaxed font-light">
-                            透過翻閱解密判決書、歷史檔案與訪談文字，解構龐大威權制度底下的運作軌跡。
+                            從口述、檔案與日常細節切入，重新理解威權如何改變人的生活。
                         </p>
                     </button>
                 </div>
@@ -3597,200 +3610,11 @@
      頁面 7：身歷其境詳細頁（沉浸式改版）
      用法：整個 <section> 取代原本的 page-approach-2
      ========================================== -->
-<section id="page-approach-2" class="hidden min-h-screen bg-[#F4F1EC] text-[#1A202C]">
-  <style>
-    /* ── 身歷其境：捲動開場 ── */
-    #approach-2-scroll-intro {
-      position: relative;
-      height: 230vh;
-      background: #1a1410;
-    }
-    #approach-2-scroll-intro .a2-stage {
-      position: sticky;
-      top: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: clamp(2rem, 6vw, 5rem);
-      overflow: hidden;
-    }
-    .a2-scroll-copy {
-      grid-area: 1 / 1;
-      max-width: 64rem;
-      color: #f4efe6;
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity .65s ease, transform .65s ease;
-      pointer-events: none;
-      font-family: 'Noto Serif TC', serif;
-      font-size: clamp(1.2rem, 2.15vw, 1.65rem);
-      font-weight: 700;
-      line-height: 1.9;
-    }
-    .a2-scroll-copy.is-active { opacity: 1; transform: translateY(0); }
-    .a2-copy-panel {
-      display: inline-block;
-      width: fit-content;
-      max-width: min(100%, 68rem);
-      margin-inline: auto;
-      padding: clamp(1.5rem, 4vw, 2.6rem) clamp(1.25rem, 4vw, 3rem);
-      background: rgba(255,255,255,.10);
-      border: 1px solid rgba(255,255,255,.14);
-      backdrop-filter: blur(6px);
-      box-shadow: 0 16px 38px rgba(0,0,0,.28);
-      text-align: left;
-    }
-    /* ── 卡片區 ── */
-    #approach-2-cards {
-      background: #F4F1EC;
-      padding: clamp(4rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4rem);
-    }
-    .a2-card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      max-width: 1080px;
-      margin: 0 auto;
-    }
-    .a2-card {
-      background: #fff;
-      border: 1px solid rgba(67,55,42,.18);
-      border-radius: 1.25rem;
-      padding: clamp(1.5rem, 3vw, 2rem);
-      box-shadow: 0 8px 24px rgba(57,45,31,.08);
-      transition: box-shadow .25s ease, transform .25s ease;
-    }
-    .a2-card:hover {
-      box-shadow: 0 16px 40px rgba(57,45,31,.14);
-      transform: translateY(-3px);
-    }
-    .a2-card-icon {
-      font-size: 2rem;
-      margin-bottom: .75rem;
-    }
-    .a2-card h3 {
-      font-family: 'Noto Serif TC', serif;
-      font-size: clamp(1.1rem, 1.6vw, 1.35rem);
-      font-weight: 900;
-      color: #9B2C2C;
-      margin-bottom: .6rem;
-    }
-    .a2-card p {
-      font-size: clamp(.9rem, 1.1vw, 1rem);
-      color: #4a4a4a;
-      line-height: 1.85;
-    }
-    .a2-card-tag {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: .3rem .75rem;
-      background: rgba(155,44,44,.08);
-      color: #9B2C2C;
-      border-radius: 999px;
-      font-size: .75rem;
-      font-weight: 700;
-      letter-spacing: .06em;
-    }
-    /* ── 尾部引言 ── */
-    .a2-outro {
-      background: #1a1410;
-      padding: clamp(4rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4rem);
-      text-align: center;
-    }
-    .a2-outro p {
-      max-width: 52rem;
-      margin: 0 auto;
-      font-family: 'Noto Serif TC', serif;
-      font-size: clamp(1.2rem, 2vw, 1.6rem);
-      font-weight: 700;
-      color: rgba(244,239,230,.88);
-      line-height: 2;
-    }
-  </style>
-
-  <!-- 返回按鈕（固定左上角） -->
+<section id="page-approach-2" class="hidden min-h-screen bg-[#F4F1EC] text-[#1A202C] approach-inline-shell">
   <button onclick="window.returnToApproachSelector()" class="approach-return-nav" type="button">返回入口頁面</button>
-
-  <!-- 開場捲動文字 -->
-  <div id="approach-2-scroll-intro">
-    <div class="a2-stage">
-      <p class="a2-scroll-copy a2-copy-panel is-active">
-        「當我握著紙牌決定是否告密時，手心的汗水是真的。<br>
-        在那個年代，一個錯誤決定就能毀掉一輩子。」
-      </p>
-      <p class="a2-scroll-copy a2-copy-panel">
-        遊戲與實境解謎，是讓人「扮演」而非「旁觀」歷史的媒介。<br>
-        當你化身戒嚴時期的學生或教師，你才真正理解——<br>
-        那種隨時可能被舉報的窒息感，從不只是課本上的名詞。
-      </p>
-      <p class="a2-scroll-copy a2-copy-panel">
-        這些作品讓白色恐怖的「選擇壓力」變得具體可感知，<br>
-        讓年輕世代在遊戲規則裡，親歷威權日常的心理重量。
-      </p>
-    </div>
-  </div>
-
-  <!-- 卡片內容區 -->
-  <div id="approach-2-cards">
-    <div style="max-width:1080px; margin:0 auto 2.5rem;">
-      <span style="color:#9B2C2C; font-size:.75rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase;">身歷其境：遊戲與實境解謎</span>
-      <h2 style="font-family:'Noto Serif TC',serif; font-size:clamp(1.6rem,2.8vw,2.4rem); font-weight:900; color:#2D3748; margin-top:.5rem; line-height:1.3;">在模擬抉擇中感知歷史窒息感</h2>
-      <div style="width:3rem; height:4px; background:#9B2C2C; margin-top:1rem;"></div>
-    </div>
-
-    <div class="a2-card-grid">
-      <div class="a2-card">
-        <div class="a2-card-icon">🎲</div>
-        <h3>互動桌遊《補課》</h3>
-        <p>一款讓玩家扮演戒嚴時期中學師生的策略互動遊戲。為保護私下成立的讀書會，玩家必須一邊讀書一邊與保密防諜的密報系統暗中周旋。在有限的時間中，體驗在猜忌、舉報與同儕情誼之間的兩難抉擇，深受校園青年的喜愛。</p>
-        <span class="a2-card-tag">桌遊・讀書會・告密抉擇</span>
-      </div>
-
-      <div class="a2-card">
-        <div class="a2-card-icon">🧩</div>
-        <h3>《異鄉人：綠島人權解謎》</h3>
-        <p>專為綠島不義遺址設計的現場實境解謎工具。青年讀者親自拿起道具，依據實地景點與線索提示，解鎖一位被強迫遣送綠島的青年受難者故事，藉由動手解謎與現地步行，加深對歷史空間物理重量的感知。</p>
-        <span class="a2-card-tag">實境解謎・綠島・受難者故事</span>
-      </div>
-
-      <div class="a2-card">
-        <div class="a2-card-icon">💻</div>
-        <h3>3D 冒險遊戲《夕生 Halflight》</h3>
-        <p>融入台灣道地民俗信仰與威權時期壓抑氛圍的 3D 驚悚寫實解謎遊戲。在虛幻與現實交織的村莊中，玩家需要不斷突破層層的心靈禁錮與防備，拼湊出威權時代對大眾日常生活所造成的深刻陰影。</p>
-        <span class="a2-card-tag">電玩・民俗・心理恐怖</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- 尾部引言 -->
-  <div class="a2-outro">
-    <p>當你在遊戲裡做出選擇的那一刻，<br>你才真正懂得，那個時代的人有多不自由。</p>
-  </div>
-
-  <script>
-    (function() {
-      function updateApproach2Scroll() {
-        const intro = document.getElementById('approach-2-scroll-intro');
-        if (!intro) return;
-        const copies = intro.querySelectorAll('.a2-scroll-copy');
-        if (!copies.length) return;
-        const rect = intro.getBoundingClientRect();
-        const travel = Math.max(1, intro.offsetHeight - window.innerHeight);
-        const progress = Math.max(0, Math.min(1, -rect.top / travel));
-        const activeIndex = Math.min(copies.length - 1, Math.floor(progress * copies.length));
-        copies.forEach((copy, i) => copy.classList.toggle('is-active', i === activeIndex));
-      }
-      window.addEventListener('scroll', updateApproach2Scroll, { passive: true });
-      window.addEventListener('resize', updateApproach2Scroll);
-      updateApproach2Scroll();
-    })();
-  </script>
+  <iframe class="approach-inline-frame" src="chen-story.html" title="人物故事：我是陳欽生"></iframe>
 </section>
 
-<!-- ==========================================
-     頁面 8：現場震撼詳細頁（沉浸式改版）
-     用法：整個 <section> 取代原本的 page-approach-3
-     ========================================== -->
 <section id="page-approach-3" class="hidden min-h-screen bg-[#F4F1EC] text-[#1A202C]">
   <style>
     /* ── 現場震撼：捲動開場 ── */
@@ -4225,13 +4049,22 @@
             function mountInlineApproachSections() {
                 const educationPage = document.getElementById('page-5-education');
                 const unlockedContent = document.getElementById('unlocked-content');
-                const culturePage = document.getElementById('page-approach-1');
+                if (!educationPage || !unlockedContent) return;
 
-                if (educationPage && unlockedContent && culturePage && culturePage.parentElement !== educationPage) {
-                    educationPage.insertBefore(culturePage, unlockedContent);
-                    culturePage.classList.add('culture-inline-detail');
-                    culturePage.classList.add('hidden');
-                }
+                ['page-approach-1', 'page-approach-2', 'page-approach-3', 'page-approach-4'].forEach(id => {
+                    const page = document.getElementById(id);
+                    if (!page) return;
+
+                    if (page.parentElement !== educationPage) {
+                        educationPage.insertBefore(page, unlockedContent);
+                    }
+
+                    page.classList.add('approach-inline-detail');
+                    if (id === 'page-approach-1') {
+                        page.classList.add('culture-inline-detail');
+                    }
+                    page.classList.add('hidden');
+                });
             }
 
             mountInlineApproachSections();
@@ -4277,10 +4110,10 @@
 
             window.returnToApproachSelector = function() {
                 const selector = document.getElementById('approach-selector');
-                const culturePage = document.getElementById('page-approach-1');
-                const isInlineCulture = culturePage && culturePage.classList.contains('culture-inline-detail');
+                const educationPage = document.getElementById('page-5-education');
+                const isInlineApproach = selector && educationPage && !educationPage.classList.contains('hidden');
 
-                if (isInlineCulture && selector && !document.getElementById('page-5-education').classList.contains('hidden')) {
+                if (isInlineApproach) {
                     Object.keys(pages).forEach(key => {
                         if (key.startsWith('approach-') && pages[key]) {
                             pages[key].classList.add('hidden');
@@ -4298,9 +4131,10 @@
                     setTimeout(() => {
                         selector.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }, 60);
-                } else {
-                    window.switchView('5-education', true);
+                    return;
                 }
+
+                window.switchView('5-education', true);
             };
 
             // --- 新增：首頁滑鼠與手機滾動偵測 (已加入防連點保護) ---
