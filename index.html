@@ -137,6 +137,10 @@
             transition: width .45s ease;
         }
 
+        #page-2-story.is-story-final .story-progress-bar {
+            display: none;
+        }
+
         .story-final-panel {
             position: absolute;
             inset: 0;
@@ -167,6 +171,23 @@
             transform: translateY(var(--story-final-y, 115vh));
             opacity: var(--story-final-opacity, 1);
             transition: transform .22s ease-out, opacity .22s ease-out;
+        }
+
+        .story-final-scroll-hint {
+            position: absolute;
+            left: 50%;
+            bottom: clamp(48px, 8vh, 80px);
+            z-index: 45;
+            display: none;
+            transform: translateX(-50%);
+            pointer-events: none;
+            color: rgba(255, 255, 255, .78);
+            text-align: center;
+            text-shadow: 0 2px 14px rgba(0, 0, 0, .5);
+        }
+
+        #page-2-story.is-story-final .story-final-scroll-hint {
+            display: flex;
         }
 
         .site-footer-credit {
@@ -300,6 +321,304 @@
             text-align: center;
             font-family: 'Noto Serif TC', serif;
             font-weight: 800;
+        }
+
+        .democracy-timeline-stage {
+            --intro-copy-shift: 0px;
+            --intro-track-shift: 0px;
+            --intro-rail-height: clamp(540px, 68vh, 720px);
+            min-height: 272vh;
+            position: relative;
+            color: #40362c;
+            background:
+                radial-gradient(circle at 14% 10%, rgba(120, 86, 58, .16), transparent 28vw),
+                radial-gradient(circle at 86% 84%, rgba(155, 112, 74, .14), transparent 30vw),
+                linear-gradient(180deg, rgba(255, 252, 245, .38), rgba(228, 215, 195, .92)),
+                linear-gradient(135deg, #e4d7c3 0%, #d7c4a7 100%);
+            overflow: clip;
+        }
+
+        .democracy-timeline-stage::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: .34;
+            background-image:
+                linear-gradient(rgba(86, 67, 50, .024) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(86, 67, 50, .018) 1px, transparent 1px),
+                radial-gradient(circle at 30% 20%, rgba(255, 255, 255, .28), transparent 28%),
+                radial-gradient(circle at 70% 80%, rgba(71, 52, 36, .05), transparent 26%);
+            background-size: 28px 28px, 28px 28px, auto, auto;
+            mix-blend-mode: multiply;
+        }
+
+        .democracy-timeline-stage::after {
+            content: "1949  至今";
+            position: absolute;
+            right: 1vw;
+            bottom: 8vh;
+            font-size: clamp(4.4rem, 14vw, 12rem);
+            line-height: 1;
+            letter-spacing: -.1em;
+            font-weight: 900;
+            color: rgba(78, 58, 40, .09);
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .democracy-timeline-pin {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+            gap: clamp(16px, 1.8vw, 26px);
+            align-items: stretch;
+            width: min(1480px, calc(100% - 48px));
+            height: 100vh;
+            margin: 0 auto;
+            padding: clamp(34px, 4vw, 56px) clamp(18px, 3vw, 36px) clamp(30px, 3vw, 46px);
+        }
+
+        .democracy-timeline-pin.is-fixed {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            z-index: 80;
+            width: min(1480px, calc(100vw - 48px));
+            transform: translateX(-50%);
+        }
+
+        .democracy-timeline-pin.is-ended {
+            position: absolute;
+            top: auto;
+            bottom: 0;
+            left: 50%;
+            width: min(1480px, calc(100% - 48px));
+            transform: translateX(-50%);
+        }
+
+        .democracy-timeline-stage .democracy-intro {
+            min-height: 0;
+            height: 100%;
+            display: flex;
+            align-items: flex-start;
+            padding: 0;
+            background: transparent;
+            overflow: hidden;
+        }
+
+        .democracy-timeline-stage .democracy-copy {
+            position: relative;
+            width: 100%;
+            max-width: none;
+            height: var(--intro-rail-height);
+            overflow: hidden;
+        }
+
+        .democracy-timeline-stage .democracy-copy-inner {
+            transform: translateY(var(--intro-copy-shift));
+            transition: transform 180ms linear;
+        }
+
+        .democracy-timeline-stage .democracy-copy p {
+            margin: 0;
+            color: rgba(64, 54, 44, .96);
+            font-size: clamp(1.2rem, 1.46vw, 1.46rem);
+            line-height: 2.02;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        .democracy-timeline-stage .democracy-copy p + p {
+            margin-top: 30px;
+        }
+
+        .democracy-timeline-stage .democracy-copy .quote-line {
+            display: block;
+            width: fit-content;
+            max-width: 100%;
+            margin-inline: auto;
+            padding: .22em .42em;
+            color: #2f271f;
+            font-family: "BiauKai", "DFKai-SB", "Kaiti TC", "STKaiti", "KaiTi", "Noto Serif TC", serif;
+            font-size: clamp(1.45rem, 2.35vw, 2.5rem);
+            line-height: 1.48;
+            font-weight: 800;
+            text-align: center;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, .34);
+        }
+
+        .democracy-timeline-stage .white-terror-timeline {
+            min-height: 0;
+            height: 100%;
+            padding: 0;
+            background: transparent;
+            overflow: visible;
+        }
+
+        .democracy-timeline-stage .timeline-module {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            border-radius: 0;
+            overflow: visible;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .democracy-timeline-stage .timeline-module::before {
+            display: none;
+        }
+
+        .democracy-timeline-stage .collapsed-panel {
+            min-height: 0;
+            height: 100%;
+            display: block;
+            padding: 0;
+        }
+
+        .democracy-timeline-stage .collapsed-panel::after {
+            display: none;
+        }
+
+        .intro-timeline-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            height: 100%;
+            padding: clamp(22px, 3vw, 34px);
+            border: 1px solid rgba(244, 239, 230, .15);
+            border-radius: 30px;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .026)),
+                rgba(18, 17, 16, .84);
+            box-shadow: 0 30px 90px rgba(0, 0, 0, .42);
+            overflow: hidden;
+        }
+
+        .intro-timeline-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 14% 16%, rgba(184, 74, 66, .18), transparent 28%),
+                radial-gradient(circle at 88% 78%, rgba(244, 239, 230, .08), transparent 32%);
+        }
+
+        .intro-timeline-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .democracy-timeline-stage .module-title {
+            font-size: clamp(1.6rem, 2.5vw, 2.55rem);
+        }
+
+        .democracy-timeline-stage .module-deck {
+            max-width: 780px;
+            font-size: clamp(.96rem, 1.2vw, 1.08rem);
+        }
+
+        .democracy-timeline-stage .intro-timeline-card > .compact-timeline {
+            position: relative;
+            flex: 1 1 auto;
+            width: 100%;
+            min-height: clamp(330px, 39vh, 404px);
+            margin-top: clamp(22px, 4vh, 36px);
+            padding: 0;
+            border: 1px solid rgba(244, 239, 230, .14);
+            border-radius: 22px;
+            background:
+                radial-gradient(circle at 18% 40%, rgba(184, 74, 66, .18), transparent 32%),
+                linear-gradient(120deg, rgba(244, 239, 230, .07), rgba(244, 239, 230, .015));
+            overflow: hidden;
+            scrollbar-width: none;
+        }
+
+        .democracy-timeline-stage .intro-timeline-card > .compact-timeline::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(244, 239, 230, .52), transparent);
+            transform: translateY(-50%);
+        }
+
+        .democracy-timeline-stage .compact-timeline::-webkit-scrollbar {
+            display: none;
+        }
+
+        .democracy-timeline-stage .compact-track {
+            min-width: 2600px;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(8, minmax(300px, 1fr));
+            align-items: center;
+            padding: 0 7%;
+            transform: translateX(var(--intro-track-shift));
+            transition: transform 180ms linear;
+        }
+
+        .democracy-timeline-stage .compact-track::before {
+            left: 7%;
+            right: 7%;
+            top: 50%;
+            background: linear-gradient(90deg, transparent, rgba(244, 239, 230, .56), transparent);
+        }
+
+        .democracy-timeline-stage .compact-item {
+            min-height: 230px;
+            display: grid;
+            grid-template-rows: 1fr auto auto 1fr;
+            align-items: center;
+            opacity: .72;
+            transition: opacity .22s ease, transform .22s ease;
+        }
+
+        .democracy-timeline-stage .compact-item.is-active {
+            opacity: 1;
+            transform: translateY(-4px);
+        }
+
+        .democracy-timeline-stage .compact-date {
+            min-height: 0;
+            align-items: end;
+            font-size: clamp(1rem, 1.4vw, 1.2rem);
+        }
+
+        .democracy-timeline-stage .compact-dot {
+            width: 26px;
+            height: 26px;
+            margin: 24px auto 20px;
+        }
+
+        .democracy-timeline-stage .compact-item.priority-1 .compact-dot {
+            width: 44px;
+            height: 44px;
+            margin-top: 24px;
+        }
+
+        .democracy-timeline-stage .compact-label {
+            font-size: clamp(.95rem, 1.2vw, 1.08rem);
+        }
+
+        .democracy-timeline-stage .expand-row {
+            justify-content: flex-end;
+            padding-top: clamp(18px, 3vh, 28px);
+        }
+
+        .democracy-timeline-stage .expanded-panel {
+            height: 100%;
+            min-height: 100%;
+            border-radius: 30px;
+            overflow: hidden;
         }
 
         .white-terror-timeline {
@@ -797,6 +1116,51 @@
         }
 
         @media (max-width: 860px) {
+            .democracy-timeline-stage {
+                min-height: auto;
+                overflow: visible;
+            }
+
+            .democracy-timeline-stage::after {
+                display: none;
+            }
+
+            .democracy-timeline-pin {
+                position: relative;
+                display: grid;
+                grid-template-columns: 1fr;
+                height: auto;
+                width: min(100%, calc(100% - 24px));
+                padding: 3rem 0;
+            }
+
+            .democracy-timeline-stage .democracy-intro {
+                height: auto;
+                overflow: visible;
+            }
+
+            .democracy-timeline-stage .democracy-copy {
+                height: auto;
+                overflow: visible;
+            }
+
+            .democracy-timeline-stage .democracy-copy-inner {
+                transform: none !important;
+            }
+
+            .democracy-timeline-stage .white-terror-timeline,
+            .democracy-timeline-stage .timeline-module,
+            .democracy-timeline-stage .collapsed-panel,
+            .intro-timeline-card {
+                height: auto;
+            }
+
+            .democracy-timeline-stage .compact-track {
+                min-width: 940px;
+                transform: none !important;
+                grid-template-columns: repeat(8, minmax(100px, 1fr));
+            }
+
             .white-terror-timeline {
                 padding-inline: 1rem;
             }
@@ -1500,11 +1864,12 @@
         }
 
         .quiz-list {
-            width: min(100%, 980px);
+            --quiz-divider-gap: clamp(2.1rem, 4vh, 2.8rem);
+            width: min(100%, 1180px);
             margin-inline: auto;
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 0;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: clamp(2rem, 4vw, 3.5rem);
         }
 
         .quiz-item + .quiz-item {
@@ -1514,30 +1879,26 @@
         }
 
         .quiz-item:nth-child(n + 3) {
-            margin-top: 0;
+            margin-top: clamp(24vh, 30vh, 22rem);
         }
 
         .quiz-card {
             position: relative;
-            height: min(640px, calc(100dvh - 9rem));
-            min-height: 500px;
-            padding: clamp(2.2rem, 4.2vw, 4rem) clamp(2rem, 5vw, 4.5rem);
+            min-height: clamp(390px, 48vh, 500px);
+            padding: clamp(3.2rem, 5.4vw, 4.8rem) clamp(2.6rem, 5.8vw, 4.8rem);
             background: url('quiz-paper.webp') center / 100% 100% no-repeat;
             filter: drop-shadow(0 18px 22px rgba(31, 24, 17, 0.2));
-            display: grid;
-            grid-template-rows: auto auto minmax(0, 1fr) auto auto;
-            align-content: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             opacity: 0;
             transform: translateY(28px);
             animation: quizCardIn 0.65s ease forwards;
-            overflow: hidden;
         }
 
         .quiz-card h3 {
             overflow-wrap: anywhere;
-            font-size: clamp(1rem, 1.45vw, 1.24rem) !important;
-            line-height: 1.55 !important;
-            margin-top: 0 !important;
+            font-size: clamp(1.05rem, 1.85vw, 1.45rem) !important;
         }
 
         @keyframes quizCardIn {
@@ -1554,22 +1915,20 @@
         .quiz-options {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: clamp(.55rem, 1.1vw, .85rem);
-            margin-top: clamp(.8rem, 1.8vh, 1.1rem);
+            gap: 0.9rem;
+            margin-top: 1.35rem;
         }
 
         .quiz-option {
             position: relative;
             overflow: visible;
             isolation: isolate;
-            min-height: clamp(46px, 7vh, 58px);
-            padding: .55rem .7rem;
+            min-height: 64px;
             border: 1px solid rgba(67, 55, 42, 0.38);
             border-radius: 0.65rem;
             background: linear-gradient(rgba(255, 253, 248, 0.94), rgba(255, 253, 248, 0.94)), #fff;
             color: #29251f;
             font-weight: 700;
-            font-size: clamp(.9rem, 1.1vw, 1rem);
             box-shadow: 0 3px 10px rgba(57, 45, 31, 0.08);
             transition: 0.2s ease;
         }
@@ -1648,7 +2007,7 @@
         }
 
         .quiz-feedback {
-            margin-top: clamp(.7rem, 1.7vh, 1rem);
+            margin-top: 1rem;
             border: 1px solid rgba(67, 55, 42, 0.3);
             border-radius: 1rem;
             background: rgba(255, 255, 255, 0.88);
@@ -1671,7 +2030,7 @@
         }
 
         .quiz-panel {
-            padding: clamp(.55rem, 1.3vh, .85rem) clamp(.85rem, 1.8vw, 1.2rem);
+            padding: 1rem 1.35rem;
         }
 
         .quiz-panel + .quiz-panel {
@@ -1679,29 +2038,29 @@
         }
 
         .quiz-feedback-answer {
-            font-size: clamp(1rem, 1.85vw, 1.32rem);
+            font-size: clamp(1.32rem, 2.45vw, 1.68rem);
             line-height: 1.35;
         }
 
         .quiz-feedback .quiz-panel:nth-child(2) .quiz-feedback-answer {
-            font-size: clamp(.9rem, 1.45vw, 1.08rem);
+            font-size: clamp(1.08rem, 2vw, 1.25rem);
         }
 
         .quiz-feedback-copy {
             color: #57534e;
-            font-size: clamp(.9rem, 1.28vw, 1.02rem);
-            line-height: 1.55;
+            font-size: clamp(1.14rem, 2.05vw, 1.28rem);
+            line-height: 1.8;
         }
 
         .quiz-scale {
             position: relative;
-            height: 34px;
+            height: 42px;
             display: flex;
             overflow: visible;
             width: 82%;
             border: 1px solid rgba(67, 55, 42, 0.38);
             border-radius: 0.4rem;
-            margin: 2.35rem auto 0;
+            margin: 3.25rem auto 0;
         }
 
         .quiz-feedback .quiz-scale {
@@ -1715,7 +2074,7 @@
             min-width: 0;
             overflow: hidden;
             color: #29251f;
-            font-size: 0.72rem;
+            font-size: 0.78rem;
             font-weight: 700;
             white-space: nowrap;
             background: rgba(115, 101, 84, 0.14);
@@ -1736,7 +2095,7 @@
             border-radius: 0.35rem;
             background: #8d2d2d;
             color: white;
-            font-size: 0.72rem;
+            font-size: 0.76rem;
             white-space: nowrap;
         }
 
@@ -1750,33 +2109,13 @@
             transform: translateX(-50%);
         }
 
-        .quiz-next-button {
-            justify-self: center;
-            margin-top: clamp(.65rem, 1.4vh, .95rem);
-            padding: .58rem 1.15rem;
-            border: 1px solid rgba(67, 55, 42, 0.38);
-            border-radius: 999px;
-            background: #29251f;
-            color: #fffaf0;
-            font-weight: 800;
-            letter-spacing: .08em;
-            box-shadow: 0 8px 18px rgba(57, 45, 31, 0.16);
-            transition: transform .18s ease, background .18s ease;
-        }
-
-        .quiz-next-button:hover,
-        .quiz-next-button:focus-visible {
-            background: #8d2d2d;
-            transform: translateY(-1px);
-            outline: none;
-        }
-
         @media (max-width: 900px) {
             #page-4-quiz-container {
                 padding-inline: 1rem;
             }
 
             .quiz-list {
+                --quiz-divider-gap: clamp(1.5rem, 3.8vh, 2.1rem);
                 width: min(100%, 720px);
                 grid-template-columns: 1fr;
             }
@@ -1786,19 +2125,18 @@
             }
 
             .quiz-card {
-                height: min(620px, calc(100dvh - 7rem));
-                min-height: 480px;
-                padding: 3rem 2.4rem 3.2rem;
+                min-height: 390px;
+                padding: 4.5rem 3rem 4.2rem;
             }
 
             .quiz-options {
                 grid-template-columns: 1fr;
-                gap: 0.55rem;
-                margin-top: 0.85rem;
+                gap: 0.75rem;
+                margin-top: 1.5rem;
             }
 
             .quiz-option {
-                min-height: 46px;
+                min-height: 58px;
             }
 
             .quiz-scale {
@@ -1808,21 +2146,20 @@
 
         @media (max-width: 640px) {
             #page-4-quiz-container {
-                padding-top: 1.5rem;
-                padding-bottom: 1.5rem;
+                padding-top: 3rem;
+                padding-bottom: 4rem;
             }
 
             .quiz-card {
-                height: min(610px, calc(100dvh - 4.5rem));
-                min-height: 460px;
-                padding: 2.5rem 1.45rem 2.6rem;
+                min-height: auto;
+                padding: 4.8rem 2rem 3.9rem;
                 background-size: 100% 100%;
                 filter: drop-shadow(0 12px 16px rgba(31, 24, 17, 0.18));
             }
 
             .quiz-card h3 {
-                font-size: .98rem;
-                line-height: 1.48;
+                font-size: 1.12rem;
+                line-height: 1.75;
             }
 
             .quiz-options {
@@ -1831,8 +2168,8 @@
             }
 
             .quiz-option {
-                min-height: 42px;
-                font-size: 0.9rem;
+                min-height: 50px;
+                font-size: 0.95rem;
             }
 
             .quiz-fingerprint {
@@ -1845,22 +2182,22 @@
             }
 
             .quiz-panel {
-                padding: .62rem .75rem;
+                padding: 1rem;
             }
 
             .quiz-feedback-answer {
-                font-size: clamp(1rem, 5.5vw, 1.22rem);
+                font-size: clamp(1.25rem, 7vw, 1.55rem);
             }
 
             .quiz-feedback-copy {
-                font-size: .88rem;
-                line-height: 1.48;
+                font-size: 1rem;
+                line-height: 1.7;
             }
 
             .quiz-scale {
                 width: 100%;
-                height: 32px;
-                margin-top: 2.25rem;
+                height: 38px;
+                margin-top: 3.1rem;
             }
 
             .quiz-scale-segment {
@@ -1876,7 +2213,7 @@
 
         @media (max-width: 420px) {
             .quiz-card {
-                padding: 1.6rem 1rem 1.8rem;
+                padding: 4rem 1.35rem 3.4rem;
                 background: rgba(255, 253, 248, 0.92);
                 border: 1px solid rgba(67, 55, 42, 0.2);
                 border-radius: 1.25rem;
@@ -2624,6 +2961,12 @@
         <div id="story-final-panel" class="story-final-panel">
             <p id="story-final-copy" class="story-final-copy"></p>
         </div>
+        <div class="story-final-scroll-hint flex-col items-center justify-center">
+            <span class="mb-2 text-sm md:text-base font-medium tracking-widest serif-title">向下滾動</span>
+            <svg class="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
         <div class="story-progress-bar" aria-hidden="true">
             <span id="story-progress-fill" class="story-progress-fill"></span>
         </div>
@@ -2661,18 +3004,23 @@
 
         <!-- 倒數器後的新敘事內容 -->
         <div id="article-body-start">
+            <section class="democracy-timeline-stage" id="democracyTimelineSection">
+                <div class="democracy-timeline-pin">
             <section class="democracy-intro">
                 <div class="democracy-copy">
+                    <div class="democracy-copy-inner">
                     <p>1992年《中華民國刑法》第100條修訂後（註一），白恐時期也隨之結束，自此臺灣開始踏入民主社會，而在這前後出生的世代則被稱為民主富二代或是民主原住民。</p>
                     <p class="quote-line">「民主於我而言好像是很稀鬆平常的事。」</p>
                     <p>國立政治大學財政學系學生陳彥蓉認為，與他一樣年齡介於18到29歲的青年，普遍很難想像沒有民主會是什麼樣子。法律白話文運動成員珞亦以自身經驗比喻，小時候因為家長不曾讓他受餓，所以不認為吃飯有什麼重要性，甚至產生反感。他認為青年與民主的關係也是如此，青年享有民主的成果，卻不一定理解民主是從威權中爭取而來的。</p>
                     <p class="quote-line">「當大家沒有被建立『什麼是威權』的認知，就不知道什麼是民主。」</p>
+                    </div>
                 </div>
             </section>
 
             <section class="white-terror-timeline" aria-label="白色恐怖大事記時間軸">
                 <div class="timeline-module" id="timelineModule">
                     <div class="collapsed-panel" id="collapsedPanel">
+                        <div class="intro-timeline-card">
                         <div>
                             <h2 class="module-title">白色恐怖大事記　Timeline：1949至今</h2>
                             <p class="module-deck">白色恐怖的歷史脈絡，從戒嚴體制、校園與地方政治案件，延伸至民主化後的法律修正與記憶工作。</p>
@@ -2689,6 +3037,7 @@
                         </div>
                     </div>
 
+                        </div>
                     <div class="expanded-panel" id="expandedPanel" aria-hidden="true">
                         <div class="expanded-background" id="expandedBackground"></div>
                         <div class="expanded-topbar">
@@ -2717,6 +3066,8 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </section>
                 </div>
             </section>
 
@@ -2892,7 +3243,7 @@
     </section>
 
     <!-- 頁面 4：逐題展開的互動測驗 -->
-    <section id="page-4-quiz-container" class="section-view hidden h-screen overflow-hidden flex-col items-center justify-center py-4 md:py-6 px-3 md:px-6 z-10">
+    <section id="page-4-quiz-container" class="section-view hidden min-h-screen flex-col items-center py-14 md:py-20 px-3 md:px-6 z-10">
         <header class="max-w-3xl text-center mb-4 md:mb-6 px-4 shrink-0">
             <h2 class="serif-title text-3xl md:text-5xl font-bold text-gray-800 leading-tight whitespace-nowrap">你對白色恐怖了解多少？</h2>
             <p class="text-sm md:text-base text-stone-600 leading-relaxed">作答後立即查看解答，以及和你做出相同選擇的填答者比例。</p>
@@ -7069,13 +7420,18 @@
             let textTypingInProgress = false;
             let currentTypewriterTimeout = null; 
             let typeWriterResolve = null; 
+            let currentTypewriterText = "";
+            let storyClickLocked = false;
             let storyWheelLocked = false;
             let storyFinalScrollProgress = 0;
+            const storyIntroLength = storyLineups.findIndex(scene => scene.final);
+            const storyProgressLength = storyIntroLength > 0 ? storyIntroLength : storyLineups.length;
             
             // 打字機特效實現 (加入可中斷/快轉機制)
             function runTypewriter(text, htmlTarget, speed = 28) {
                 return new Promise(resolve => {
                     textTypingInProgress = true;
+                    currentTypewriterText = text;
                     typeWriterResolve = resolve; 
                     htmlTarget.innerHTML = '';
                     let charIndex = 0;
@@ -7096,9 +7452,24 @@
             }
 
             // 完成/快轉打字機的方法
+            function completeCurrentTypewriter() {
+                if (!textTypingInProgress) return false;
+                textTypingInProgress = false;
+                clearTimeout(currentTypewriterTimeout);
+                if (storyText) storyText.innerHTML = currentTypewriterText || storyLineups[currentScriptIdx]?.content || '';
+                if (typeWriterResolve) {
+                    const resolve = typeWriterResolve;
+                    typeWriterResolve = null;
+                    resolve();
+                }
+                if (storyProgressHint) storyProgressHint.textContent = '點擊或向下滾動，前往下一幕';
+                return true;
+            }
+
             function finishTyping(resolveFunc) {
                 textTypingInProgress = false;
                 clearTimeout(currentTypewriterTimeout);
+                typeWriterResolve = null;
                 if (resolveFunc) resolveFunc();
             }
 
@@ -7122,7 +7493,12 @@
             function updateStoryProgress() {
                 const fill = document.getElementById('story-progress-fill');
                 if (!fill) return;
-                fill.style.width = `${((currentScriptIdx + 1) / storyLineups.length) * 100}%`;
+                const scene = storyLineups[currentScriptIdx];
+                if (scene?.final) {
+                    fill.style.width = '100%';
+                    return;
+                }
+                fill.style.width = `${(Math.min(currentScriptIdx + 1, storyProgressLength) / storyProgressLength) * 100}%`;
             }
 
             async function renderStoryScene(index) {
@@ -7132,6 +7508,7 @@
                 currentScriptIdx = index;
                 storyFinalScrollProgress = 0;
                 pages[2]?.style.setProperty('--story-bg-blur', '0px');
+                pages[2]?.classList.toggle('is-story-final', Boolean(scene.final));
                 document.querySelectorAll('[data-story-bg]').forEach(img => {
                     img.classList.toggle('is-active', Number(img.dataset.storyBg) === scene.imageIndex);
                 });
@@ -7160,9 +7537,10 @@
             }
 
             async function advanceStoryScene(skipTypingAndAdvance = false) {
+                const scene = storyLineups[currentScriptIdx];
+                if (scene?.final) return;
                 if (textTypingInProgress) {
-                    finishTyping(typeWriterResolve);
-                    storyText.innerHTML = storyLineups[currentScriptIdx].content;
+                    completeCurrentTypewriter();
                     if (!skipTypingAndAdvance) return;
                     currentScriptIdx++;
                     if (currentScriptIdx < storyLineups.length) {
@@ -7183,8 +7561,7 @@
 
             async function rewindStoryScene() {
                 if (textTypingInProgress) {
-                    finishTyping(typeWriterResolve);
-                    storyText.innerHTML = storyLineups[currentScriptIdx].content;
+                    completeCurrentTypewriter();
                     return;
                 }
                 if (currentScriptIdx <= 0) {
@@ -7214,7 +7591,16 @@
             }
 
             // 點擊全螢幕任意處皆可快轉/前進
-            pages[2].addEventListener('click', advanceStoryScene);
+            function handleStoryClick() {
+                if (pages[2].classList.contains('hidden')) return;
+                if (storyClickLocked) return;
+                if (storyLineups[currentScriptIdx]?.final) return;
+                storyClickLocked = true;
+                advanceStoryScene(false);
+                setTimeout(() => { storyClickLocked = false; }, 120);
+            }
+
+            pages[2].addEventListener('click', handleStoryClick);
 
             pages[2].addEventListener('wheel', event => {
                 if (pages[2].classList.contains('hidden')) return;
@@ -7235,7 +7621,7 @@
 
             pages[2].addEventListener('touchend', event => {
                 if (pages[2].classList.contains('hidden')) return;
-                advanceStoryScene();
+                handleStoryClick();
             });
 
             window.addEventListener('wheel', event => {
@@ -7320,6 +7706,11 @@
                 const prevButton = document.getElementById("prevButton");
                 const nextButton = document.getElementById("nextButton");
                 const rotateStatus = document.getElementById("rotateStatus");
+                const introSection = document.getElementById("democracyTimelineSection");
+                const introPin = introSection?.querySelector(".democracy-timeline-pin");
+                const introCopyRail = introSection?.querySelector(".democracy-copy");
+                const introCopyInner = introSection?.querySelector(".democracy-copy-inner");
+                const introCompactWindow = introSection?.querySelector(".compact-timeline");
 
                 if (!moduleEl || !compactTrack || !prismCarousel || moduleEl.dataset.ready === "true") return;
                 moduleEl.dataset.ready = "true";
@@ -7479,6 +7870,38 @@
                     });
                 }
 
+                function clamp01(value) {
+                    return Math.max(0, Math.min(1, value));
+                }
+
+                function updateIntroScrollProgress() {
+                    if (!introSection || !introCopyRail || !introCopyInner || !introCompactWindow) return;
+                    if (moduleEl.classList.contains("is-expanded") || window.matchMedia("(max-width: 860px)").matches) {
+                        introPin?.classList.remove("is-fixed", "is-ended");
+                        introSection.style.setProperty("--intro-copy-shift", "0px");
+                        introSection.style.setProperty("--intro-track-shift", "0px");
+                        return;
+                    }
+
+                    const rect = introSection.getBoundingClientRect();
+                    const isFixed = rect.top <= 0 && rect.bottom > window.innerHeight;
+                    const isEnded = rect.bottom <= window.innerHeight;
+                    introPin?.classList.toggle("is-fixed", isFixed);
+                    introPin?.classList.toggle("is-ended", isEnded);
+                    const scrollRange = Math.max(introSection.offsetHeight - window.innerHeight, 1);
+                    const progress = clamp01(-rect.top / scrollRange);
+                    const copyProgress = clamp01(progress / .72);
+                    const trackProgress = clamp01((progress - .12) / .82);
+                    const copyTravel = Math.max(introCopyInner.scrollHeight - introCopyRail.clientHeight, 0);
+                    const trackTravel = Math.max(compactTrack.scrollWidth - introCompactWindow.clientWidth, 0);
+
+                    introSection.style.setProperty("--intro-copy-shift", `${Math.round(copyTravel * -copyProgress)}px`);
+                    introSection.style.setProperty("--intro-track-shift", `${Math.round(trackTravel * -trackProgress)}px`);
+
+                    const scrollIndex = Math.round(trackProgress * (timelineEvents.length - 1));
+                    if (scrollIndex !== activeIndex) updateActiveEvent(scrollIndex);
+                }
+
                 function createPrismTimeline() {
                     prismCarousel.innerHTML = "";
                     miniNav.innerHTML = "";
@@ -7577,7 +8000,12 @@
                     });
                     miniNav.querySelectorAll(".nav-button").forEach((button, i) => {
                         button.classList.toggle("is-active", i === activeIndex);
-                        if (i === activeIndex) button.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+                        if (i === activeIndex && moduleEl.classList.contains("is-expanded")) {
+                            button.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+                        }
+                    });
+                    compactTrack.querySelectorAll(".compact-item").forEach((item, i) => {
+                        item.classList.toggle("is-active", i === activeIndex);
                     });
                     prevButton.disabled = activeIndex === 0;
                     nextButton.disabled = activeIndex === timelineEvents.length - 1;
@@ -7637,13 +8065,16 @@
                     if (event.key === "ArrowLeft") goToEvent(activeIndex - 1);
                 });
 
+                window.addEventListener("scroll", updateIntroScrollProgress, { passive: true });
                 window.addEventListener("resize", () => {
                     updateRadius();
                     goToEvent(activeIndex, true);
+                    updateIntroScrollProgress();
                 });
 
                 createCompactTimeline();
                 createPrismTimeline();
+                updateIntroScrollProgress();
             }
 
             initWhiteTerrorTimeline();
@@ -8069,44 +8500,30 @@
             const quizList = document.getElementById('quiz-list');
             const quizCompleteActions = document.getElementById('quiz-complete-actions');
             let quizHasStarted = false;
-            let currentQuizIndex = 0;
 
             function renderQuizQuestion(index) {
-                if (!quizList) return;
+                if (document.getElementById(`quiz-card-${index}`)) return;
                 const question = quizData[index];
                 const item = document.createElement('article');
                 item.id = `quiz-card-${index}`;
                 item.className = 'quiz-item';
                 item.innerHTML = `
                     <div class="quiz-card">
-                        <p class="quiz-kicker">檔案 ${index + 1} / ${quizData.length}</p>
                         <h3 class="serif-title text-xl md:text-3xl font-black text-stone-800 leading-relaxed mt-3">${question.title}</h3>
                         <div class="quiz-options" role="group" aria-label="第 ${index + 1} 題選項">
                             ${question.options.map(option => `
                                 <button class="quiz-option" type="button" data-answer="${option.text}">${option.text}</button>
                             `).join('')}
                         </div>
-                        <div class="quiz-feedback-slot"></div>
-                        <button class="quiz-next-button hidden" type="button">${index + 1 < quizData.length ? '下一題' : '繼續閱讀'}</button>
                     </div>
+                    <div class="quiz-feedback-slot"></div>
                 `;
 
-                quizList.innerHTML = '';
                 quizList.appendChild(item);
                 item.querySelectorAll('.quiz-option').forEach(button => {
                     button.addEventListener('click', event => {
                         answerQuizQuestion(index, button.dataset.answer, item, button, event);
                     });
-                });
-
-                const nextButton = item.querySelector('.quiz-next-button');
-                nextButton?.addEventListener('click', () => {
-                    if (index + 1 < quizData.length) {
-                        currentQuizIndex = index + 1;
-                        renderQuizQuestion(currentQuizIndex);
-                    } else {
-                        window.switchView(5);
-                    }
                 });
             }
 
@@ -8138,7 +8555,12 @@
             }
 
             function scrollQuizToFeedback(feedback) {
-                return;
+                if (!feedback) return;
+                const feedbackTop = feedback.getBoundingClientRect().top + window.scrollY;
+                const offset = window.innerWidth <= 640
+                    ? 28
+                    : Math.min(72, Math.max(48, window.innerHeight * 0.07));
+                window.scrollTo({ top: Math.max(0, feedbackTop - offset), behavior: 'smooth' });
             }
 
             function answerQuizQuestion(index, answer, item, selectedButton, event) {
@@ -8188,29 +8610,25 @@
                         const feedback = item.querySelector('.quiz-feedback');
                         if (feedback) {
                             feedback.classList.remove('is-waiting');
+                            scrollQuizToFeedback(feedback);
                         }
-                        item.querySelector('.quiz-next-button')?.classList.remove('hidden');
                     }, QUIZ_STAMP_REVEAL_DELAY);
                 } else {
                     setTimeout(() => {
-                        quizCompleteActions?.classList.add('hidden');
+                        quizCompleteActions.classList.add('hidden');
                         const feedback = item.querySelector('.quiz-feedback');
                         if (feedback) {
                             feedback.classList.remove('is-waiting');
+                            scrollQuizToFeedback(feedback);
                         }
-                        item.querySelector('.quiz-next-button')?.classList.remove('hidden');
                     }, QUIZ_STAMP_REVEAL_DELAY);
                 }
             }
 
             function startQuizIfNeeded() {
-                if (quizHasStarted) {
-                    renderQuizQuestion(currentQuizIndex);
-                    return;
-                }
+                if (quizHasStarted) return;
                 quizHasStarted = true;
-                currentQuizIndex = 0;
-                renderQuizQuestion(currentQuizIndex);
+                quizData.forEach((_, index) => renderQuizQuestion(index));
             }
 
             // --- 頁面 4 轉 頁面 5 ---
