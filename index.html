@@ -1057,65 +1057,222 @@
             opacity: 0.85;
         }
 
-        #detail {
+        #chat-container {
             position: fixed;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
             width: 90%;
-            max-width: 480px;
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
             display: none;
+            flex-direction: column;
             z-index: 1000;
             box-sizing: border-box;
         }
 
-        #detail h2 {
-            margin-top: 0;
-            color: #5D4037;
-            border-bottom: 2px solid #D7CCC8;
-            padding-bottom: 10px;
-            font-size: 24px;
-        }
-
-        #detail ul {
-            line-height: 1.8;
-            padding-left: 20px;
-            color: #444;
-            font-size: 16px;
-        }
-
-        #detail li {
-            margin-bottom: 8px;
-        }
-
-        #detail button {
-            margin-top: 15px;
-            padding: 10px 30px;
-            border: none;
-            background: #5D4037;
+        #chat-container h2 {
+            text-align: center;
             color: white;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-            transition: background 0.3s;
+            font-size: 26px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
         }
 
-        #detail button:hover {
-            background: #4E342E;
+        #chat-replies {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+
+        .reply-container {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            margin-bottom: 35px;
+        }
+
+        .reply-container.odd {
+            justify-content: flex-start;
+        }
+
+        .reply-container.even {
+            justify-content: flex-end;
+        }
+
+        .avatar-frame {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid #222;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 3px 3px 0px rgba(0,0,0,0.8);
+            position: relative;
+            z-index: 5;
+        }
+
+        .reply-container.odd .avatar-frame {
+            margin-right: 15px;
+            background: #f0f0f0;
+        }
+
+        .reply-container.even .avatar-frame {
+            margin-left: 15px;
+            background: #e0e0e0;
+        }
+
+        .avatar-svg {
+            width: 32px;
+            height: 32px;
+            fill: #222;
+        }
+
+        .bubble-wrapper {
+            position: relative;
+            max-width: 75%;
+            z-index: 10;
+        }
+
+        .bubble-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 6px;
+            bottom: -6px;
+            left: 6px;
+            right: -6px;
+            background: repeating-linear-gradient(
+                -45deg,
+                #222,
+                #222 2px,
+                #fff 2px,
+                #fff 6px
+            );
+            border: 3px solid #222;
+            border-radius: 20px;
+            z-index: -1;
+        }
+
+        .chat-bubble {
+            position: relative;
+            background: #ffffff;
+            border: 3px solid #222;
+            border-radius: 20px;
+            padding: 16px 24px;
+            font-size: 18px;
+            color: #222;
+            font-weight: bold;
+            line-height: 1.6;
+            letter-spacing: 0.5px;
+            z-index: 2;
+        }
+
+        .reply-container.odd .bubble-wrapper {
+            margin-left: 5px;
+        }
+
+        .reply-container.odd .chat-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 20px;
+            border-width: 20px 15px 0 0;
+            border-style: solid;
+            border-color: #222 transparent transparent transparent;
+        }
+
+        .reply-container.odd .chat-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 23px;
+            border-width: 16px 10px 0 0;
+            border-style: solid;
+            border-color: #fff transparent transparent transparent;
+        }
+
+        .reply-container.odd .bubble-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: -26px;
+            left: 26px;
+            border-width: 20px 15px 0 0;
+            border-style: solid;
+            border-color: #222 transparent transparent transparent;
+            z-index: -2;
+        }
+
+        .reply-container.even .bubble-wrapper {
+            margin-right: 5px;
+        }
+
+        .reply-container.even .chat-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            right: 20px;
+            border-width: 20px 0 0 15px;
+            border-style: solid;
+            border-color: #222 transparent transparent transparent;
+        }
+
+        .reply-container.even .chat-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            right: 23px;
+            border-width: 16px 0 0 10px;
+            border-style: solid;
+            border-color: #fff transparent transparent transparent;
+        }
+
+        .reply-container.even .bubble-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: -26px;
+            right: 14px;
+            border-width: 20px 0 0 15px;
+            border-style: solid;
+            border-color: #222 transparent transparent transparent;
+            z-index: -2;
+        }
+
+        #chat-container button {
+            margin-top: 15px;
+            padding: 12px 30px;
+            background: #fff;
+            color: #222;
+            border: 3px solid #222;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.2s;
+            width: 160px;
+            align-self: center;
+            box-shadow: 4px 4px 0px #222;
+        }
+
+        #chat-container button:hover {
+            background: #f0f0f0;
+        }
+
+        #chat-container button:active {
+            transform: translate(3px, 3px);
+            box-shadow: 1px 1px 0px #222;
         }
 
         #cloud-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.6);
             display: none;
             z-index: 900;
-            backdrop-filter: blur(2px);
+            backdrop-filter: blur(3px);
         }
 
         .quiz-bridge-copy {
@@ -2319,9 +2476,9 @@
                 </div>
             </section>
             <div id="cloud-overlay" onclick="closeBox()"></div>
-            <div id="detail">
-                <h2 id="title"></h2>
-                <ul id="reply"></ul>
+            <div id="chat-container">
+                <h2 id="chat-title"></h2>
+                <div id="chat-replies"></div>
                 <button onclick="closeBox()">關閉</button>
             </div>
         </div>
@@ -5836,15 +5993,21 @@
             initYouthAttitudeChart();
 
             const cloudData = [
-                { word: "沒興趣", count: 18, color: "#4E342E", size: 175, left: 210, top: 90, reply: ["不是特別有興趣", "沒有興趣", "對這個沒有興趣"] },
-                { word: "過去的事", count: 16, color: "#5D4037", size: 165, left: 365, top: 45, reply: ["覺得那是過去的事", "沒興趣，過去的事就讓它過去", "要往前看"] },
+                { word: "沒興趣", count: 18, color: "#4E342E", size: 175, left: 210, top: 90, reply: ["不是特別有興趣", "對這個議題沒有興趣"] },
+                { word: "過去的事", count: 16, color: "#5D4037", size: 165, left: 365, top: 45, reply: ["覺得那是過去的事", "過去的事就讓它過去", "要往前看"] },
                 { word: "無關自己", count: 13, color: "#795548", size: 150, left: 510, top: 100, reply: ["和自己無關", "覺得沒有我的事", "沒有身歷其境所以不覺得需要深入了解"] },
-                { word: "不想知道", count: 9, color: "#A1887F", size: 135, left: 175, top: 245, reply: ["不想知道", "不想了解", "我不太想知道"] },
-                { word: "政治因素", count: 15, color: "#6D4C41", size: 160, left: 330, top: 200, reply: ["很多資訊會參雜政治議題，怕自己接收到偏頗資訊", "政治操作", "怕自己因沒有不同意見而變得偏頗"] },
-                { word: "歷史無感", count: 11, color: "#8D6E63", size: 140, left: 480, top: 235, reply: ["對政治和歷史不感興趣", "沒有特別想了解", "歷史議題吸引力不高"] },
-                { word: "資訊失真", count: 7, color: "#BCAAA4", size: 125, left: 85, top: 170, reply: ["失真", "解密資訊往往經過篩檢", "難判斷資訊真假"] },
+                { word: "不想知道", count: 9, color: "#A1887F", size: 135, left: 175, top: 245, reply: ["不想知道", "覺得不需要了解更多"] },
+                { word: "政治因素", count: 15, color: "#6D4C41", size: 160, left: 330, top: 200, reply: ["很多資訊會參雜政治議題，怕自己接收到偏頗資訊", "政治操作", "怕自己因沒有接收不同意見而變得偏頗"] },
+                { word: "歷史無感", count: 11, color: "#8D6E63", size: 140, left: 480, top: 235, reply: ["對政治和歷史不感興趣", "沒有特別想了解過去的歷史", "歷史議題吸引力不高"] },
+                { word: "資訊失真", count: 7, color: "#BCAAA4", size: 125, left: 85, top: 170, reply: ["訊息失真", "解密資訊往往經過篩檢", "難判斷資訊真假"] },
                 { word: "太沉重", count: 5, color: "#D7CCC8", size: 120, left: 605, top: 190, reply: ["有點恐怖", "害怕悲劇", "內容太沉重"] }
             ];
+
+            const personIconSvg = `
+                <svg class="avatar-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
+            `;
 
             function initWordCloud() {
                 const cloud = document.getElementById("cloud");
@@ -5892,13 +6055,13 @@
 
             function showCloudDetail(node, d) {
                 const overlay = document.getElementById("cloud-overlay");
-                const detail = document.getElementById("detail");
-                const title = document.getElementById("title");
-                const reply = document.getElementById("reply");
-                if (!overlay || !detail || !title || !reply) return;
+                const chatContainer = document.getElementById("chat-container");
+                const chatTitle = document.getElementById("chat-title");
+                const chatReplies = document.getElementById("chat-replies");
+                if (!overlay || !chatContainer || !chatTitle || !chatReplies) return;
 
                 overlay.style.display = "block";
-                detail.style.display = "block";
+                chatContainer.style.display = "flex";
 
                 document.querySelectorAll(".circle").forEach(c => {
                     if (c !== node) {
@@ -5912,15 +6075,43 @@
                 node.style.top = `${260 - (size / 2)}px`;
                 node.style.transform = "scale(1.15)";
                 node.style.zIndex = "950";
-                title.innerHTML = `${d.word}（共 ${d.count} 人提及）`;
-                reply.innerHTML = d.reply.map(r => `<li>${r}</li>`).join('');
+                chatTitle.innerHTML = `${d.word}（共 ${d.count} 人提及）`;
+                chatReplies.innerHTML = "";
+
+                d.reply.forEach((r, idx) => {
+                    const replyContainer = document.createElement("div");
+                    replyContainer.className = `reply-container ${idx % 2 === 0 ? "odd" : "even"}`;
+
+                    const avatarFrame = document.createElement("div");
+                    avatarFrame.className = "avatar-frame";
+                    avatarFrame.innerHTML = personIconSvg;
+
+                    const bubbleWrapper = document.createElement("div");
+                    bubbleWrapper.className = "bubble-wrapper";
+
+                    const bubble = document.createElement("div");
+                    bubble.className = "chat-bubble";
+                    bubble.innerText = r;
+
+                    bubbleWrapper.appendChild(bubble);
+
+                    if (idx % 2 === 0) {
+                        replyContainer.appendChild(avatarFrame);
+                        replyContainer.appendChild(bubbleWrapper);
+                    } else {
+                        replyContainer.appendChild(bubbleWrapper);
+                        replyContainer.appendChild(avatarFrame);
+                    }
+
+                    chatReplies.appendChild(replyContainer);
+                });
             }
 
             window.closeBox = function() {
                 const overlay = document.getElementById("cloud-overlay");
-                const detail = document.getElementById("detail");
+                const chatContainer = document.getElementById("chat-container");
                 if (overlay) overlay.style.display = "none";
-                if (detail) detail.style.display = "none";
+                if (chatContainer) chatContainer.style.display = "none";
 
                 document.querySelectorAll(".circle").forEach(c => {
                     c.style.opacity = 1;
