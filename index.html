@@ -6,6 +6,7 @@
     <title>記憶的重量：青年為何要認識白色恐怖</title>
     <!-- 引入 Tailwind CSS 進行現代化響應式排版 -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- 引入 Google Fonts 中文字體 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     
@@ -94,7 +95,8 @@
             object-fit: cover;
             opacity: 0;
             transform: none;
-            transition: opacity .65s ease;
+            filter: blur(var(--story-bg-blur, 0px));
+            transition: opacity .65s ease, filter .22s ease-out;
         }
 
         .story-bg-frame img.is-active {
@@ -147,16 +149,123 @@
 
         .story-final-copy {
             width: fit-content;
-            max-width: min(92vw, 62rem);
-            padding: clamp(1.25rem, 3vw, 2.4rem) clamp(1.25rem, 4vw, 3rem);
-            background: rgba(255,255,255,.82);
+            max-width: min(88vw, 48rem);
+            padding: clamp(1rem, 2.2vw, 1.7rem) clamp(1.1rem, 3vw, 2.2rem);
+            background: #fff;
             color: #1A202C;
             box-shadow: 0 20px 55px rgba(0,0,0,.28);
             font-family: 'Noto Serif TC', serif;
-            font-size: clamp(1.2rem, 2.25vw, 1.9rem);
+            font-size: clamp(1rem, 1.55vw, 1.28rem);
             font-weight: 800;
-            line-height: 1.9;
+            line-height: 1.95;
             text-align: left;
+            white-space: pre-line;
+            transform: translateY(var(--story-final-y, 115vh));
+            opacity: var(--story-final-opacity, 1);
+            transition: transform .22s ease-out, opacity .22s ease-out;
+        }
+
+        .site-footer-credit {
+            background: #f4efe6;
+            width: 100vw;
+            margin-left: calc(50% - 50vw);
+        }
+
+        .speaker-quote-row {
+            display: grid;
+            align-items: center;
+            gap: clamp(1.4rem, 3vw, 2.5rem);
+            width: min(100vw - 12vw, 1040px);
+            margin-left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .speaker-quote-row.is-left {
+            grid-template-columns: minmax(120px, 190px) minmax(0, 1fr);
+        }
+
+        .speaker-quote-row.is-right {
+            grid-template-columns: minmax(0, 1fr) minmax(120px, 190px);
+            transform: translateX(calc(-50% - clamp(2.5rem, 5vw, 4.8rem)));
+        }
+
+        .speaker-portrait {
+            align-self: end;
+            width: clamp(112px, 14vw, 168px);
+            max-height: 240px;
+            object-fit: contain;
+            filter: drop-shadow(0 16px 22px rgba(0, 0, 0, .16));
+        }
+
+        .speaker-quote-row.is-left .speaker-portrait {
+            justify-self: end;
+        }
+
+        .speaker-quote-row.is-right .speaker-portrait {
+            justify-self: start;
+        }
+
+        .speaker-quote-row.is-right .speech-bubble {
+            justify-self: end;
+        }
+
+        .speech-bubble {
+            position: relative;
+            z-index: 2;
+            max-width: 680px;
+            padding: clamp(1.15rem, 2vw, 1.65rem) clamp(1.25rem, 2.4vw, 2rem);
+            border: 1px solid rgba(75, 65, 52, .18);
+            border-radius: 18px;
+            background: #fffaf0;
+            box-shadow: 0 18px 42px rgba(42, 35, 26, .11);
+        }
+
+        .speech-bubble::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 24px;
+            height: 24px;
+            background: #fffaf0;
+            border: inherit;
+            transform: translateY(-50%) rotate(45deg);
+            z-index: -1;
+        }
+
+        .speaker-quote-row.is-left .speech-bubble::before {
+            left: -12px;
+            border-right: 0;
+            border-top: 0;
+        }
+
+        .speaker-quote-row.is-right .speech-bubble::before {
+            right: -12px;
+            border-left: 0;
+            border-bottom: 0;
+        }
+
+        @media (max-width: 760px) {
+            .speaker-quote-row,
+            .speaker-quote-row.is-left,
+            .speaker-quote-row.is-right {
+                width: 100%;
+                margin-left: 0;
+                transform: none;
+                grid-template-columns: 1fr;
+                justify-items: center;
+            }
+
+            .speaker-quote-row.is-right .speech-bubble {
+                order: 2;
+            }
+
+            .speaker-quote-row.is-right .speaker-portrait {
+                order: 1;
+            }
+
+            .speech-bubble::before {
+                display: none;
+            }
         }
 
         .democracy-intro {
@@ -167,12 +276,26 @@
             background: #FAFAFA;
         }
 
-        .democracy-intro p {
+        .democracy-copy {
             max-width: 62rem;
+        }
+
+        .democracy-copy p {
             color: #2D3748;
             font-size: clamp(1.05rem, 1.65vw, 1.45rem);
             line-height: 2.15;
+            text-align: left;
+            margin: 0 0 2.2rem;
+        }
+
+        .democracy-copy p:last-child {
+            margin-bottom: 0;
+        }
+
+        .democracy-copy .quote-line {
             text-align: center;
+            font-family: 'Noto Serif TC', serif;
+            font-weight: 800;
         }
 
         .white-terror-timeline {
@@ -728,9 +851,9 @@
         }
 
         .parallax-row {
-            min-height: 100vh;
+            min-height: 170vh;
             display: grid;
-            grid-template-columns: 50% 50%;
+            grid-template-columns: 60% 40%;
         }
 
         .parallax-visual {
@@ -739,15 +862,18 @@
             height: 100vh;
             display: grid;
             place-items: center;
-            background: #d9d2c8;
+            padding: clamp(3rem, 7vh, 5rem) 0;
+            background: #FAFAFA;
             overflow: hidden;
         }
 
-        .parallax-visual-placeholder {
+        .parallax-visual-placeholder,
+        .parallax-cloud-panel {
             position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
+            left: 15%;
+            right: 10%;
+            top: clamp(3rem, 8vh, 5rem);
+            bottom: clamp(3rem, 8vh, 5rem);
             display: grid;
             place-items: center;
             color: #6b5b50;
@@ -756,20 +882,35 @@
             background:
                 linear-gradient(135deg, rgba(255,255,255,.4), rgba(255,255,255,0)),
                 #d9d2c8;
+            border-radius: 18px;
+            box-shadow: 0 22px 50px rgba(57, 45, 31, .12);
             transition: opacity .45s ease, transform .45s ease;
         }
 
         .parallax-chart-panel {
             position: absolute;
-            inset: 0;
+            left: 15%;
+            right: 10%;
+            top: clamp(3rem, 8vh, 5rem);
+            bottom: clamp(3rem, 8vh, 5rem);
             display: grid;
             place-items: center;
             padding: clamp(1.25rem, 3vw, 2.5rem);
             background: #f5f2ec;
+            border-radius: 18px;
+            box-shadow: 0 22px 50px rgba(57, 45, 31, .12);
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+            transition: opacity .45s ease, transform .45s ease;
+        }
+
+        .parallax-cloud-panel {
             opacity: 0;
             transform: translateY(18px);
             pointer-events: none;
-            transition: opacity .45s ease, transform .45s ease;
+            overflow: hidden;
+            background: #f5f7fa;
         }
 
         .parallax-chart-panel .flourish-embed {
@@ -777,19 +918,58 @@
             min-height: min(78vh, 720px);
         }
 
-        .parallax-report.show-chart .parallax-visual-placeholder {
-            opacity: 0;
-            transform: translateY(-18px);
+        .youth-chart-wrapper {
+            width: min(100%, 760px);
+            margin: auto;
+            padding: clamp(1rem, 3vw, 40px) 20px;
+            font-family: "Noto Sans TC", sans-serif;
+            background: #fafafa;
         }
 
-        .parallax-report.show-chart .parallax-chart-panel {
+        .youth-chart-wrapper h1 {
+            text-align: center;
+            font-size: clamp(1.65rem, 3.1vw, 42px);
+            margin: 0 0 10px;
+            font-weight: 900;
+            color: #222;
+            line-height: 1.25;
+        }
+
+        .youth-chart-wrapper .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: clamp(1rem, 1.45vw, 20px);
+            margin-bottom: clamp(1.5rem, 4vh, 40px);
+            line-height: 1.6;
+        }
+
+        .youth-chart-wrapper .chartBox {
+            width: min(100%, 650px);
+            margin: auto;
+            position: relative;
+        }
+
+        .youth-chart-wrapper .source {
+            margin-top: clamp(1.4rem, 4vh, 40px);
+            color: #666;
+            font-size: clamp(.95rem, 1.25vw, 18px);
+            line-height: 1.6;
+        }
+
+        .parallax-report.show-cloud .parallax-chart-panel {
+            opacity: 0;
+            transform: translateY(-18px);
+            pointer-events: none;
+        }
+
+        .parallax-report.show-cloud .parallax-cloud-panel {
             opacity: 1;
             transform: translateY(0);
             pointer-events: auto;
         }
 
         .parallax-text {
-            padding: clamp(4rem, 8vw, 7rem) clamp(1.25rem, 5vw, 4rem);
+            padding: clamp(12rem, 24vh, 18rem) 15% clamp(8rem, 14vh, 12rem) 0;
         }
 
         .parallax-text p {
@@ -806,20 +986,20 @@
         }
 
         .word-cloud-section {
-            min-height: 100vh;
+            min-height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: clamp(3rem, 6vw, 5rem) 1rem;
+            padding: 1rem;
             background: #f5f7fa;
             overflow: hidden;
         }
 
         .word-cloud-section h2 {
             text-align: center;
-            margin: 0 0 1rem;
-            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            margin: 20px 0 10px 0;
+            font-size: 32px;
             color: #333;
             font-weight: 900;
         }
@@ -908,6 +1088,10 @@
             font-size: 16px;
         }
 
+        #detail li {
+            margin-bottom: 8px;
+        }
+
         #detail button {
             margin-top: 15px;
             padding: 10px 30px;
@@ -918,6 +1102,11 @@
             cursor: pointer;
             font-size: 16px;
             width: 100%;
+            transition: background 0.3s;
+        }
+
+        #detail button:hover {
+            background: #4E342E;
         }
 
         #cloud-overlay {
@@ -954,7 +1143,20 @@
 
             .parallax-visual {
                 position: relative;
-                height: 52vh;
+                height: 62vh;
+            }
+
+            .parallax-visual-placeholder,
+            .parallax-chart-panel,
+            .parallax-cloud-panel {
+                left: 1rem;
+                right: 1rem;
+                top: 1rem;
+                bottom: 1rem;
+            }
+
+            .parallax-text {
+                padding: 3rem 1.25rem 5rem;
             }
 
             #cloud-wrapper {
@@ -1037,20 +1239,27 @@
 
         .quiz-list {
             --quiz-divider-gap: clamp(2.1rem, 4vh, 2.8rem);
-            width: min(100%, 960px);
+            width: min(100%, 1180px);
             margin-inline: auto;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: clamp(2rem, 4vw, 3.5rem);
         }
 
         .quiz-item + .quiz-item {
-            margin-top: var(--quiz-divider-gap);
-            padding-top: var(--quiz-divider-gap);
-            border-top: 1px solid rgba(67, 55, 42, 0.32);
+            margin-top: 0;
+            padding-top: 0;
+            border-top: 0;
+        }
+
+        .quiz-item:nth-child(n + 3) {
+            margin-top: clamp(24vh, 30vh, 22rem);
         }
 
         .quiz-card {
             position: relative;
-            min-height: clamp(360px, 42vh, 455px);
-            padding: clamp(3.2rem, 5.6vw, 4.8rem) clamp(3.6rem, 9vw, 7rem);
+            min-height: clamp(390px, 48vh, 500px);
+            padding: clamp(3.2rem, 5.4vw, 4.8rem) clamp(2.6rem, 5.8vw, 4.8rem);
             background: url('quiz-paper.webp') center / 100% 100% no-repeat;
             filter: drop-shadow(0 18px 22px rgba(31, 24, 17, 0.2));
             display: flex;
@@ -1063,6 +1272,7 @@
 
         .quiz-card h3 {
             overflow-wrap: anywhere;
+            font-size: clamp(1.05rem, 1.85vw, 1.45rem) !important;
         }
 
         @keyframes quizCardIn {
@@ -1202,13 +1412,17 @@
         }
 
         .quiz-feedback-answer {
-            font-size: clamp(1.5rem, 3vw, 1.875rem);
+            font-size: clamp(1.32rem, 2.45vw, 1.68rem);
             line-height: 1.35;
+        }
+
+        .quiz-feedback .quiz-panel:nth-child(2) .quiz-feedback-answer {
+            font-size: clamp(1.08rem, 2vw, 1.25rem);
         }
 
         .quiz-feedback-copy {
             color: #57534e;
-            font-size: clamp(1.125rem, 2.2vw, 1.25rem);
+            font-size: clamp(1.14rem, 2.05vw, 1.28rem);
             line-height: 1.8;
         }
 
@@ -1234,7 +1448,7 @@
             min-width: 0;
             overflow: hidden;
             color: #29251f;
-            font-size: 0.92rem;
+            font-size: 0.78rem;
             font-weight: 700;
             white-space: nowrap;
             background: rgba(115, 101, 84, 0.14);
@@ -1255,7 +1469,7 @@
             border-radius: 0.35rem;
             background: #8d2d2d;
             color: white;
-            font-size: 0.9rem;
+            font-size: 0.76rem;
             white-space: nowrap;
         }
 
@@ -1277,6 +1491,11 @@
             .quiz-list {
                 --quiz-divider-gap: clamp(1.5rem, 3.8vh, 2.1rem);
                 width: min(100%, 720px);
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-item:nth-child(n + 3) {
+                margin-top: 0;
             }
 
             .quiz-card {
@@ -1411,6 +1630,8 @@
         
             .letters-section {
               min-height: 100vh;
+              width: 100vw;
+              margin-left: calc(50% - 50vw);
               padding: 72px 24px;
               display: grid;
               place-items: center;
@@ -1418,33 +1639,43 @@
             }
         
             .letters-wrap {
-              width: min(1120px, 100%);
+              width: min(1280px, 100%);
               margin: auto;
               text-align: center;
+              display: grid;
+              justify-items: center;
             }
         
             .letters-title {
               margin: 0 0 36px;
-              font-size: clamp(2rem, 4vw, 4rem);
-              line-height: 1.35;
+              font-size: clamp(1.1rem, 2.05vw, 1.9rem);
+              line-height: 1.25;
               font-weight: 900;
               color: #2f2f2f;
+              white-space: nowrap;
+              letter-spacing: 0;
+              text-align: center;
+              width: 100%;
             }
         
             .letters-exhibit {
+              width: min(1160px, 96vw);
               margin: 40px auto 58px;
-              min-height: clamp(330px, 44vw, 510px);
-              padding: clamp(72px, 10vw, 132px) clamp(45px, 8vw, 100px);
+              min-height: clamp(390px, 48vw, 600px);
+              padding: clamp(92px, 11vw, 150px) clamp(76px, 9vw, 132px);
               background: url("老舊木製告示板_去背.png") center / 100% 100% no-repeat;
               filter: drop-shadow(0 22px 26px rgba(0, 0, 0, .2));
+              display: grid;
+              place-items: center;
             }
         
             .letters-grid {
               display: grid;
-              grid-template-columns: repeat(3, minmax(160px, 220px));
-              gap: clamp(2rem, 6vw, 5rem);
+              grid-template-columns: repeat(3, minmax(190px, 260px));
+              gap: clamp(2.5rem, 5.2vw, 5.5rem);
               justify-content: center;
               align-items: center;
+              width: 100%;
             }
         
             .envelope-card {
@@ -1460,7 +1691,7 @@
         
             .envelope-card img {
               display: block;
-              width: clamp(180px, 18vw, 230px);
+              width: clamp(215px, 20vw, 285px);
               max-width: 100%;
               height: auto;
               object-fit: contain;
@@ -1728,6 +1959,24 @@
             }
         
             @media (max-width: 1000px) {
+              .letters-title {
+                font-size: clamp(1rem, 2.7vw, 1.45rem);
+              }
+
+              .letters-exhibit {
+                width: min(900px, 96vw);
+                min-height: clamp(360px, 56vw, 520px);
+              }
+
+              .letters-grid {
+                grid-template-columns: repeat(3, minmax(150px, 210px));
+                gap: clamp(1.4rem, 3.6vw, 3rem);
+              }
+
+              .envelope-card img {
+                width: clamp(170px, 22vw, 225px);
+              }
+
               .detail-view {
                 grid-template-columns: minmax(150px, 210px) minmax(320px, 1fr);
                 grid-template-rows: 180px auto auto;
@@ -1750,6 +1999,12 @@
                 padding: 48px 16px;
               }
         
+              .letters-title {
+                white-space: normal;
+                font-size: clamp(1.25rem, 6vw, 1.8rem);
+                line-height: 1.45;
+              }
+
               .letters-exhibit {
                 min-height: 720px;
                 padding: 105px 38px;
@@ -1896,7 +2151,7 @@
         
         <!-- 劇情對話框架（下半部 1/4 處） -->
         <div class="absolute bottom-[8%] w-full flex justify-center z-30 px-4 md:px-8">
-            <div id="story-dialog-box" class="bg-black/85 border border-gray-700/60 rounded-xl p-6 md:p-8 max-w-4xl w-full hover:bg-black/95 transition-all duration-300 backdrop-blur-md shadow-[0_15px_30px_rgba(0,0,0,0.5)]">
+            <div id="story-dialog-box" class="bg-black/50 border border-gray-700/60 rounded-xl p-6 md:p-8 max-w-4xl w-full hover:bg-black/55 transition-all duration-300 backdrop-blur-md shadow-[0_15px_30px_rgba(0,0,0,0.5)]">
                 <!-- 角色或引言提示 -->
                 <div class="flex items-center justify-between mb-3 border-b border-gray-800 pb-2">
                     <span id="story-speaker" class="text-xs tracking-widest text-[#9B2C2C] font-semibold uppercase">時代的縮影</span>
@@ -1929,17 +2184,19 @@
         <!-- 時間計算器巨幕 (首屏) -->
         <div class="min-h-screen flex flex-col items-center justify-center relative border-b border-gray-200/60 px-4 bg-gradient-to-b from-gray-50 to-[#FAFAFA]">
             <div class="text-center max-w-3xl">
-                <p class="text-xs md:text-sm text-gray-500 font-semibold tracking-[0.4em] mb-4 uppercase">TIME ELAPSED SINCE AUTHORITARIAN RULE</p>
-                <h2 class="serif-title text-3xl md:text-6xl font-bold text-[#1A202C] mb-12 leading-tight">
+                <h2 class="serif-title text-2xl md:text-5xl font-bold text-[#1A202C] mb-10 leading-tight">
                     距離白色恐怖結束，<br class="md:hidden">至今已...
                 </h2>
                 <!-- 天數計數器 -->
-                <div class="flex items-baseline justify-center space-x-3 my-12 bg-white/40 py-8 px-12 rounded-3xl border border-gray-100 shadow-sm max-w-lg mx-auto">
-                    <span id="days-counter" class="serif-title text-5xl md:text-8xl font-black text-[#9B2C2C] tracking-tight">0</span>
-                    <span class="text-xl md:text-3xl font-bold text-gray-700">天</span>
+                <div class="my-10 bg-white/40 py-7 px-10 rounded-3xl border border-gray-100 shadow-sm max-w-lg mx-auto">
+                    <div class="flex items-baseline justify-center space-x-3">
+                        <span id="days-counter" class="serif-title text-4xl md:text-7xl font-black text-[#9B2C2C] tracking-tight">0</span>
+                        <span class="text-lg md:text-2xl font-bold text-gray-700">天</span>
+                    </div>
+                    <p class="mt-4 text-sm md:text-base text-gray-600 font-semibold">白色恐怖總共約 15,897 天</p>
                 </div>
-                <p class="text-xs md:text-sm text-gray-400 max-w-md mx-auto leading-relaxed">
-                    自 <strong class="text-gray-700">1992 年 11 月 7 日</strong> 金馬地區正式解除戒嚴（視為白恐結束之終點），歷史的巨輪已向前滾動了如此漫長的歲月。
+                <p class="text-sm md:text-base text-gray-500 max-w-lg mx-auto leading-relaxed">
+                    台灣民主化的時長，尚未超過白色恐怖的時長。
                 </p>
             </div>
             <!-- 往下滾動引導 -->
@@ -1954,9 +2211,12 @@
         <!-- 倒數器後的新敘事內容 -->
         <div id="article-body-start">
             <section class="democracy-intro">
-                <p>
-                    1992年《中華民國刑法》第100條正式廢除，白恐時期也隨之結束，自此臺灣開始踏入民主社會，而在這前後出生的世代則被稱為民主富二代或是民主原住民。國立政治大學財政學系學生陳彥蓉談及這個稱呼，坦言道：「民主於我而言好像是很稀鬆平常的事。」他認為與他一樣年齡介於18到29歲的青年，普遍很難想像沒有民主會是什麼樣子。法律白話文運動成員珞亦以自身經驗比喻，小時候因為家長不曾讓他受餓，所以不認為吃飯有什麼重要性，甚至產生反感，他認為青年與民主的關係也是如此，青年享有民主的成果，卻不一定理解民主是從威權中爭取而來的，「當大家沒有被建立『什麼是威權』的認知，就不知道什麼是民主。」
-                </p>
+                <div class="democracy-copy">
+                    <p>1992年《中華民國刑法》第100條修訂後（註一），白恐時期也隨之結束，自此臺灣開始踏入民主社會，而在這前後出生的世代則被稱為民主富二代或是民主原住民。</p>
+                    <p class="quote-line">「民主於我而言好像是很稀鬆平常的事。」</p>
+                    <p>國立政治大學財政學系學生陳彥蓉認為，與他一樣年齡介於18到29歲的青年，普遍很難想像沒有民主會是什麼樣子。法律白話文運動成員珞亦以自身經驗比喻，小時候因為家長不曾讓他受餓，所以不認為吃飯有什麼重要性，甚至產生反感。他認為青年與民主的關係也是如此，青年享有民主的成果，卻不一定理解民主是從威權中爭取而來的。</p>
+                    <p class="quote-line">「當大家沒有被建立『什麼是威權』的認知，就不知道什麼是民主。」</p>
+                </div>
             </section>
 
             <section class="white-terror-timeline" aria-label="白色恐怖大事記時間軸">
@@ -2012,54 +2272,58 @@
             <section class="parallax-report">
                 <div class="parallax-row">
                     <div class="parallax-visual">
-                        <div class="parallax-visual-placeholder">圖片待補</div>
                         <div class="parallax-chart-panel" aria-label="青年問卷調查圖表">
-                            <div class="flourish-embed flourish-chart" data-src="visualisation/29524543"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/29524543/thumbnail" width="100%" alt="chart visualization" /></noscript></div>
+                            <div class="youth-chart-wrapper">
+                                <h1>超過半數青年不關心白色恐怖議題</h1>
+                                <div class="subtitle">
+                                    排除中立回答後，比較青年對白色恐怖議題的核心態度。
+                                </div>
+                                <div class="chartBox">
+                                    <canvas id="youth-attitude-chart"></canvas>
+                                </div>
+                                <div class="source">
+                                    資料來源：〈青年對白恐時期之認知問卷調查〉
+                                </div>
+                            </div>
+                        </div>
+                        <div class="parallax-cloud-panel" aria-label="青年不關心白色恐怖的原因文字雲">
+                            <section id="word-cloud-section" class="word-cloud-section">
+                                <h2>青年不關心白色恐怖的原因</h2>
+                                <div id="cloud-wrapper">
+                                    <div id="cloud">
+                                        <div class="circle" data-word="資訊失真" data-count="7" data-size="125" data-left="85" data-top="170" data-replies="失真|解密資訊往往經過篩檢|難判斷資訊真假" style="width:125px;height:125px;background:#BCAAA4;left:85px;top:170px;"><span class="word">資訊失真</span><span class="count">共有 7 人提到</span></div>
+                                        <div class="circle" data-word="沒興趣" data-count="18" data-size="175" data-left="210" data-top="90" data-replies="不是特別有興趣|沒有興趣|對這個沒有興趣" style="width:175px;height:175px;background:#4E342E;left:210px;top:90px;"><span class="word">沒興趣</span><span class="count">共有 18 人提到</span></div>
+                                        <div class="circle" data-word="過去的事" data-count="16" data-size="165" data-left="365" data-top="45" data-replies="覺得那是過去的事|沒興趣，過去的事就讓它過去|要往前看" style="width:165px;height:165px;background:#5D4037;left:365px;top:45px;"><span class="word">過去的事</span><span class="count">共有 16 人提到</span></div>
+                                        <div class="circle" data-word="無關自己" data-count="13" data-size="150" data-left="510" data-top="100" data-replies="和自己無關|覺得沒有我的事|沒有身歷其境所以不覺得需要深入了解" style="width:150px;height:150px;background:#795548;left:510px;top:100px;"><span class="word">無關自己</span><span class="count">共有 13 人提到</span></div>
+                                        <div class="circle" data-word="不想知道" data-count="9" data-size="135" data-left="175" data-top="245" data-replies="不想知道|不想了解|我不太想知道" style="width:135px;height:135px;background:#A1887F;left:175px;top:245px;"><span class="word">不想知道</span><span class="count">共有 9 人提到</span></div>
+                                        <div class="circle" data-word="政治因素" data-count="15" data-size="160" data-left="330" data-top="200" data-replies="很多資訊會參雜政治議題，怕自己接收到偏頗資訊|政治操作|怕自己因沒有不同意見而變得偏頗" style="width:160px;height:160px;background:#6D4C41;left:330px;top:200px;"><span class="word">政治因素</span><span class="count">共有 15 人提到</span></div>
+                                        <div class="circle" data-word="歷史無感" data-count="11" data-size="140" data-left="480" data-top="235" data-replies="對政治和歷史不感興趣|沒有特別想了解|歷史議題吸引力不高" style="width:140px;height:140px;background:#8D6E63;left:480px;top:235px;"><span class="word">歷史無感</span><span class="count">共有 11 人提到</span></div>
+                                        <div class="circle" data-word="太沉重" data-count="5" data-size="120" data-left="605" data-top="190" data-replies="有點恐怖|害怕悲劇|內容太沉重" style="width:120px;height:120px;background:#D7CCC8;left:605px;top:190px;"><span class="word">太沉重</span><span class="count">共有 5 人提到</span></div>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
                     </div>
                     <div class="parallax-text">
-                        <p>「民主體制的價值常常是被低估的；反之，威權的價值常常被莫名其妙的高估。」國立臺灣大學政治學系教授黃長玲表示，時常有人稱讚威權國家的建設如高樓大廈、交通設施等建造得快速又華麗，看起來比臺灣進步許多，然而這樣的論述卻忽略威權體制對尊嚴自由及生命財產的威脅與侵害。</p>
+                        <p>白恐之所以仍與青年相關，不只因為它是臺灣史重要的一部份，更因為威權留下的影響仍可能延續到當代社會，「從小到大父母都告訴我，絕對不要碰政治、不要關心公共事務，關心自己就好。」國立政治大學法律學系副教授林佳和回憶起父母對政治的畏懼，便是威權滲入日常生活後留下的陰影。</p>
 
-                        <p>「納粹德國的統治者不在乎人民的自由，但是他在乎人民接不接受他，所以就餵給人民名為社會福利的毒藥。」國立政治大學法律學系副教授林佳和則以納粹為例，威權統治者往往會用社會福利或經濟利益來餵食人民，當人民只在乎利益與好處，無視正當程序的重要性，就很容易落入威權體制的陷阱。</p>
+                        <p>國立臺灣大學政治學系教授黃長玲以錢幣為例，現今威權統治者的肖像仍出現在新臺幣兩百元紙鈔和十元硬幣，民眾卻不一定會意識到威權的遺留。林佳和認為青年理解這段歷史的意義，不在於記憶苦難故事，而是為了能辨認出至今仍可能存在的威權痕跡。</p>
 
-                        <p>白恐之所以仍與青年相關，不只因為它是臺灣史重要的一部份，更因為威權留下的影響仍可能延續到當代社會，「從小到大父母都告訴我，絕對不要碰政治、不要關心公共事務，關心自己就好。」林佳和回憶起父母對政治的畏懼，是威權滲入日常生活後留下的陰影。</p>
-
-                        <p>黃長玲以錢幣為例，現今威權統治者的肖像仍出現在新臺幣兩百元紙鈔和十元硬幣，民眾卻不一定會意識到威權的遺留。林佳和認為青年理解這段歷史的意義，不在於記憶苦難故事，而是為了能辨認出至今仍可能存在的威權痕跡。</p>
-
-                        <p class="chart-trigger">根據本報記者所做〈青年對白恐時期之認知問卷調查〉（以下簡稱〈青年問卷調查〉），有超過半數的青年並不關心白恐議題，雖然教科書中有相關內容，但彷彿這些故事只是停留在考試卷上的題目，無法深入青年的心裡。</p>
+                        <p class="chart-trigger">根據本報記者所做〈青年對白恐時期之認知問卷調查〉（以下簡稱〈青年問卷調查〉），不關心白恐議題的青年為多數，雖然教科書中有相關內容，但彷彿這些故事只是停留在考試卷上的題目，無法深入青年的心裡。</p>
 
                         <p>黃長玲提醒，比起只告訴青年他們應該關心，不如先理解他們為什麼會覺得與自己無關，除了未曾經歷過威權時代、低估民主體制的價值，以及政治冷漠等，教育體制下的扁平化與缺乏在地連結也是需要關注的原因。林佳和認為相較X世代（註一）前出生的人，現代青年其實有更好的民主觀念，要如何讓青年感受到沉重歷史與自身的連結，成為最大挑戰。</p>
 
-                        <p class="text-sm text-gray-500">註一：X世代泛指1960年代中期至1980年代出生的人。</p>
+                        <p class="text-sm text-gray-500">註一：1992年5月16日修正公布《中華民國刑法》第100條，限縮「內亂罪」構成要件，使言論與思想不再輕易被作為懲罰對象。</p>
+                        <p class="text-sm text-gray-500">註二：X世代泛指1960年代中期至1980年代出生的人。</p>
                     </div>
                 </div>
             </section>
-
-            <section id="word-cloud-section" class="word-cloud-section">
-                <h2>青年不關心白色恐怖的原因</h2>
-                <div id="cloud-wrapper">
-                    <div id="cloud">
-                        <div class="circle" data-word="資訊失真" data-count="7" data-size="125" data-left="85" data-top="170" data-replies="失真|解密資訊往往經過篩檢|難判斷資訊真假" style="width:125px;height:125px;background:#BCAAA4;left:85px;top:170px;"><span class="word">資訊失真</span><span class="count">共有 7 人提到</span></div>
-                        <div class="circle" data-word="沒興趣" data-count="18" data-size="175" data-left="210" data-top="90" data-replies="不是特別有興趣|沒有興趣|對這個沒有興趣" style="width:175px;height:175px;background:#4E342E;left:210px;top:90px;"><span class="word">沒興趣</span><span class="count">共有 18 人提到</span></div>
-                        <div class="circle" data-word="過去的事" data-count="16" data-size="165" data-left="365" data-top="45" data-replies="覺得那是過去的事|沒興趣，過去的事就讓它過去|要往前看" style="width:165px;height:165px;background:#5D4037;left:365px;top:45px;"><span class="word">過去的事</span><span class="count">共有 16 人提到</span></div>
-                        <div class="circle" data-word="無關自己" data-count="13" data-size="150" data-left="510" data-top="100" data-replies="和自己無關|覺得沒有我的事|沒有身歷其境所以不覺得需要深入了解" style="width:150px;height:150px;background:#795548;left:510px;top:100px;"><span class="word">無關自己</span><span class="count">共有 13 人提到</span></div>
-                        <div class="circle" data-word="不想知道" data-count="9" data-size="135" data-left="175" data-top="245" data-replies="不想知道|不想了解|我不太想知道" style="width:135px;height:135px;background:#A1887F;left:175px;top:245px;"><span class="word">不想知道</span><span class="count">共有 9 人提到</span></div>
-                        <div class="circle" data-word="政治因素" data-count="15" data-size="160" data-left="330" data-top="200" data-replies="很多資訊會參雜政治議題，怕自己接收到偏頗資訊|政治操作|怕自己因沒有不同意見而變得偏頗" style="width:160px;height:160px;background:#6D4C41;left:330px;top:200px;"><span class="word">政治因素</span><span class="count">共有 15 人提到</span></div>
-                        <div class="circle" data-word="歷史無感" data-count="11" data-size="140" data-left="480" data-top="235" data-replies="對政治和歷史不感興趣|沒有特別想了解|歷史議題吸引力不高" style="width:140px;height:140px;background:#8D6E63;left:480px;top:235px;"><span class="word">歷史無感</span><span class="count">共有 11 人提到</span></div>
-                        <div class="circle" data-word="太沉重" data-count="5" data-size="120" data-left="605" data-top="190" data-replies="有點恐怖|害怕悲劇|內容太沉重" style="width:120px;height:120px;background:#D7CCC8;left:605px;top:190px;"><span class="word">太沉重</span><span class="count">共有 5 人提到</span></div>
-                    </div>
-                </div>
-                <div id="cloud-overlay" onclick="closeBox()"></div>
-                <div id="detail">
-                    <h2 id="title"></h2>
-                    <ul id="reply"></ul>
-                    <button onclick="closeBox()">關閉</button>
-                </div>
-            </section>
-
-            <section class="quiz-bridge-copy">
-                <p>也許不是不想關心，而是不知道從何開始……</p>
-            </section>
+            <div id="cloud-overlay" onclick="closeBox()"></div>
+            <div id="detail">
+                <h2 id="title"></h2>
+                <ul id="reply"></ul>
+                <button onclick="closeBox()">關閉</button>
+            </div>
         </div>
 
         <!-- 舊版深度專題內容區：保留備份但不顯示 -->
@@ -2176,7 +2440,6 @@
     <!-- 頁面 4：逐題展開的互動測驗 -->
     <section id="page-4-quiz-container" class="section-view hidden min-h-screen flex-col items-center py-14 md:py-20 px-3 md:px-6 z-10">
         <header class="max-w-3xl text-center mb-10 px-4">
-            <span class="quiz-kicker">INTERACTIVE QUIZ</span>
             <h2 class="serif-title text-3xl md:text-5xl font-black text-[#29251f] mt-3 mb-4">你對白色恐怖了解多少？</h2>
             <p class="text-sm md:text-base text-stone-600 leading-relaxed">作答後立即查看解答，以及和你做出相同選擇的填答者比例。</p>
         </header>
@@ -2184,7 +2447,6 @@
         <div id="quiz-list" class="quiz-list"></div>
 
         <div id="quiz-complete-actions" class="hidden w-full max-w-xl text-center pt-10">
-            <p class="serif-title text-xl font-bold text-stone-800 mb-2">四題都完成了，繼續向下滾動，翻開課本裡的歷史。</p>
         </div>
     </section>
 
@@ -2193,49 +2455,51 @@
         <div class="max-w-3xl mx-auto px-6 md:px-8 pt-24 pb-12">
             
             <div class="mb-16">
-                <span class="text-[#9B2C2C] font-semibold tracking-[0.3em] text-xs uppercase block mb-3">Part II</span>
                 <h2 class="serif-title text-3xl md:text-5xl font-bold text-gray-800 leading-tight">
                     課本裡的幾行字：<br>教育如何讓歷史變扁平？
                 </h2>
-                <div class="w-12 h-1 bg-[#9B2C2C] mt-6"></div>
             </div>
 
             <!-- 教育工作者引言 -->
-            <div class="border-l-4 border-gray-300 pl-6 py-2 mb-12">
-                <p class="serif-title text-lg md:text-xl text-gray-700 leading-relaxed italic mb-3">
-                    「我記得國小社會課本就有提到白色恐怖，但就是用簡單一句帶過。」
-                </p>
-                <p class="text-xs text-gray-500 font-medium">— 探霧者工作隊成員 黃新惠（聚焦南投在地白恐歷史、由國立暨南國際大學歷史學系學生組成）</p>
-            </div>
-
-            <p class="text-base md:text-lg leading-loose mb-8 text-justify text-gray-600">
-                直至高中他對白恐的理解仍停留在「戒嚴、解嚴」等片段印象。〈青年問卷調查〉也呈現類似結果，不願主動接觸白恐或轉型正義相關內容者，多數認為這段歷史與自身過於遙遠，甚至無關。而對許多青年而言，學校教育往往是認識白恐議題的第一個入口。當距離感存在，國民義務教育又是主要資訊來源時，白恐是如何在課堂中被講述與呈現？
-            </p>
-
-            <p class="text-base md:text-lg leading-loose mb-8 text-justify text-gray-600">
-                國立臺南女子高級中學公民科教師兼國教署人權教育資源中心執行秘書楊素芳說明，白恐與轉型正義在高中課綱並非只出現在單一科目。普通型高中會以歷史、公民和國文等科目進行教學，技職學校則幾乎沒有任何直接相關的課程。對此，林佳和認為教育絕對是推動社會理解白恐議題的重要途徑，但要透過教育真正建立對歷史的認識與反思，現實上仍受到制度與教學環境因素影響。
-            </p>
-
-            <!-- 深度解析卡片 -->
-            <div class="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-gray-200/60 my-12 relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-2.5 h-full bg-[#9B2C2C]"></div>
-                <p class="text-base md:text-lg text-gray-700 leading-loose text-justify relative z-10 mb-6 font-medium">
-                    楊素芳也指出，白恐相關議題的教學往往比一般課程需要投入更多準備時間。除了必須處理歷史背景、人權概念與不同觀點外，教師也需面對課程時數有限、議題具爭議性等現實條件。
-                </p>
-                <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
-                    <p class="serif-title text-lg text-gray-900 font-bold mb-2">「（白恐課程）大部分都不是很重要的考試範圍，它甚至又有一點沉重。」</p>
-                    <p class="text-sm text-gray-500">
-                        他表示，當學生缺乏足夠學習動機，而社會對相關議題的討論 and 溝通又不足時，教師在教學現場 must 更加謹慎。
+            <div class="speaker-quote-row is-left py-2 mb-12">
+                <img class="speaker-portrait" src="images/speaker-female-glasses.png" alt="黃新惠人物插圖">
+                <div class="speech-bubble">
+                    <p class="serif-title text-lg md:text-xl text-gray-700 leading-relaxed italic mb-3">
+                        「我記得國小社會課本就有提到白色恐怖，但就是用簡單一句帶過。」
                     </p>
+                    <p class="text-xs text-gray-500 font-medium">— 探霧者工作隊成員 黃新惠（聚焦南投在地白恐歷史、由國立暨南國際大學歷史學系學生組成）</p>
                 </div>
             </div>
 
             <p class="text-base md:text-lg leading-loose mb-8 text-justify text-gray-600">
-                這樣的教學限制，常導致白恐被簡略為某個年份或事件名稱，缺乏背後的人物經歷與脈絡，使青年對歷史產生距離感。例如在課本中會出現的「雷震事件」，學生通常只記得發生的年份 or 《自由中國》等關鍵字，卻很少有機會了解其中的人物經歷。
+                國立暨南國際大學歷史學系學生組成的探霧者工作隊成員黃新惠分享，直至高中他對白恐的理解仍停留在「戒嚴、解嚴」等片段印象。〈青年問卷調查〉也呈現類似結果，不願主動接觸白恐或轉型正義相關內容者，多數認為這段歷史與自身過於遙遠，甚至無關。
             </p>
-            
+
+            <div class="speaker-quote-row is-right py-2 my-12">
+                <div class="speech-bubble">
+                    <p class="serif-title text-lg md:text-xl text-gray-700 leading-relaxed italic">
+                        「高中時看到課本就想說怎麼只有一頁！」
+                    </p>
+                </div>
+                <img class="speaker-portrait" src="images/speaker-male-black.png" alt="蘇悅人物插圖">
+            </div>
+
+            <p class="text-base md:text-lg leading-loose mb-8 text-justify text-gray-600">
+                〈人權之路-青年體驗營〉參與者蘇悅觀察到，在教學上白恐常被簡略為某個年份或事件名稱，缺乏背後的人物經歷與脈絡，使青年對歷史產生距離感。例如在課本中會出現的「雷震事件」，學生通常只記得發生的年份或《自由中國》等關鍵字，卻很少有機會了解其中的人物經歷。然而對許多青年而言，學校教育往往是認識白恐議題的第一個入口。當距離感存在，國民義務教育又是主要資訊來源時，白恐是如何在課堂中被講述與呈現？
+            </p>
+
+            <p class="text-base md:text-lg leading-loose mb-8 text-justify text-gray-600">
+                國立臺南女子高級中學公民科教師兼國教署人權教育資源中心執行秘書楊素芳指出，白恐相關議題的教學往往比一般課程需要投入更多準備時間。除了必須處理歷史背景、人權概念與不同觀點外，教師也需面對課程時數有限、議題具爭議性等現實條件，「（白恐課程）大部分都不是很重要的考試範圍，它甚至又有一點沉重。」他表示，當學生缺乏足夠學習動機，而社會對相關議題的討論和溝通又不足時，教師在教學現場必須更加謹慎。
+            </p>
+
+            <div class="py-2 my-12">
+                <p class="serif-title text-lg md:text-xl text-gray-700 leading-relaxed italic">
+                    「整個大環境其實沒有給予教學面很好的支持或友善的空間。」
+                </p>
+            </div>
+
             <p class="text-base md:text-lg leading-loose mb-12 text-justify text-gray-600">
-                「高中時看到課本就想說怎麼只有一頁！」人權之路-青年體驗營參與者蘇悅說他觀察白恐雖然常被提及，但多數人對它的理解與說明僅停留在表面。楊素芳進一步説：「整個大環境其實沒有給予教學面很好的支持或友善的空間。」現今社會對白恐議題仍存在不同意見，他認為教育者必須先願意正視威權時期所造成的傷害與爭議，不可將其草草帶過，才能妥善傳達歷史記憶。
+                楊素芳認為現今社會對白恐議題仍存在不同意見，他認為教育者必須先願意正視威權時期所造成的傷害與爭議，不可將其草草帶過，才能妥善傳達歷史記憶。
             </p>
             
             <!-- 平滑滾動定位錨點 -->
@@ -2325,16 +2589,14 @@
         <!-- ==========================================
              面向五：突破同溫層與記憶傳承 (解鎖後動態插入此區)
              ========================================== -->
-        <div id="unlocked-content" class="hidden">
+        <div id="unlocked-content">
             <section id="page-10-perspective-five" class="bg-[#FAFAFA] py-24 px-6 border-t border-gray-200">
                 <div class="max-w-3xl mx-auto">
 
                     <div class="text-center mb-16">
-                        <span class="text-[#9B2C2C] font-semibold tracking-[0.3em] text-xs uppercase block mb-3">Part V</span>
                         <h2 class="serif-title text-3xl md:text-5xl font-bold text-gray-800 leading-tight">
                             如何走出同溫層，讓更多人認識白色恐怖？
                         </h2>
-                        <div class="w-12 h-1 bg-[#9B2C2C] mt-6 mx-auto"></div>
                     </div>
 
                                         <div class="space-y-8 text-base md:text-lg text-gray-600 leading-loose text-justify">
@@ -2349,7 +2611,7 @@
                         <p>每年暑假的「人權之路-青年體驗營」由學子青年主導活動規劃與課程設計，陳文成博士紀念基金會從旁協助，帶領學員遠赴曾為政治犯監獄的白色恐怖綠島紀念園區。張龍橋解釋，為了避免活動淪為沉重的歷史教育，同時也要吸引青年參與，最好的方式就是從青年的角度出發，「年輕人喜歡什麼，年輕人自己知道。」例如其中一個活動是在監獄牢房中撰寫家書，讓學員身處在沒有冷氣且體感高達40度的環境，透過生理上的不適來同理受難者 。此外，也有在園區現場與遊客講解的社會溝通課程，蘇悅則對此印象深刻，「遊客多數不是不在乎就是認知程度為零，我覺得如果沒有去跟大家溝通的話，大家只會疑惑為何不要蓋成觀光區。」他也認為監獄不只是冷冰冰的歷史建築，而是一個家庭或是一個人的生命故事，受難者的創傷應該要被傾聽，讓記憶可以傳承下去。</p>
                     </div>
 
-<div class="my-16 text-center">
+<div class="my-16 text-center w-screen relative left-1/2 -translate-x-1/2">
                         <section id="letters" class="letters-section">
                               <div class="letters-wrap">
                                 <h1 class="letters-title">
@@ -2585,64 +2847,14 @@
                 </div>
             </section>
 
-            <section id="page-11-comments" class="bg-white py-24 border-t border-gray-200">
-                <div class="max-w-3xl mx-auto px-6 md:px-8">
-                    <div class="text-center mb-12">
-                        <h2 class="serif-title text-3xl font-bold text-gray-800 mb-4">白色恐怖的記憶不會自然被留下</h2>
-                        <p class="text-gray-500">對你而言，白色恐怖是什麼？</p>
-                    </div>
-
-                    <!-- 互動留言輸入框 -->
-                    <div class="bg-[#FAFAFA] border border-gray-200 rounded-2xl p-6 mb-12 shadow-sm">
-                        <textarea id="comment-textarea" class="w-full h-40 bg-white border border-gray-200 rounded-xl p-4 focus:outline-none focus:border-[#9B2C2C] text-gray-700 transition-colors" placeholder="寫下你的想法，與當代青年一同留下記憶的足跡..."></textarea>
-                        <div class="text-right mt-4">
-                            <button id="btn-submit-comment" class="px-8 py-3 bg-[#9B2C2C] hover:bg-red-900 text-white font-medium rounded-lg shadow-sm hover:shadow transition-all">送出留言</button>
-                        </div>
-                    </div>
-
-                    <h3 class="font-bold text-xl text-gray-800 mb-8 border-b border-gray-100 pb-4 flex items-center">
-                        <span class="w-2.5 h-6 bg-[#9B2C2C] inline-block mr-3 rounded-sm"></span>
-                        即時留言牆
-                    </h3>
-
-                    <div id="comments-wall-grid" class="grid md:grid-cols-2 gap-6">
-                        <div class="bg-[#FAFAFA] p-6 rounded-2xl border border-gray-100 shadow-sm">
-                            <p class="text-gray-600 text-sm md:text-base leading-relaxed text-justify">「以前只覺得是歷史課本上的名詞，今天做完問卷和看完走讀介紹，才發現原來 these 遺址就在我每天上學通勤的路上...」</p>
-                            <div class="mt-4 flex justify-between text-xs text-gray-400">
-                                <span>政大學生 A</span>
-                                <span>剛剛</span>
-                            </div>
-                        </div>
-                        <div class="bg-[#FAFAFA] p-6 rounded-2xl border border-gray-100 shadow-sm">
-                            <p class="text-gray-600 text-sm md:text-base leading-relaxed text-justify">「模擬家書的部分真的很讓人動容。如果不是他們當年的堅持，也許今天我們在網路上連自由留言的機會都沒有。」</p>
-                            <div class="mt-4 flex justify-between text-xs text-gray-400">
-                                <span>台大 B 網友</span>
-                                <span>10分鐘前</span>
-                            </div>
-                        </div>
-                        <div class="bg-[#FAFAFA] p-6 rounded-2xl border border-gray-100 shadow-sm">
-                            <p class="text-gray-600 text-sm md:text-base leading-relaxed text-justify">「如何走出同溫層確實是最難的課題。希望以後能有多一點像桌遊補課這樣的互動方式，讓沒興趣的朋友也願意踏出第一步。」</p>
-                            <div class="mt-4 flex justify-between text-xs text-gray-400">
-                                <span>高中歷史老師</span>
-                                <span>1小時前</span>
-                            </div>
-                        </div>
-                        <div class="bg-[#FAFAFA] p-6 rounded-2xl border border-gray-100 shadow-sm">
-                            <p class="text-gray-600 text-sm md:text-base leading-relaxed text-justify">「歷史的傷口需要清創，而不是假裝它存在。這代人的歷史認同需要我們自己去拼湊完整。」</p>
-                            <div class="mt-4 flex justify-between text-xs text-gray-400">
-                                <span>自由工作者</span>
-                                <span>3小時前</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
         </div>
 
         <!-- 專題落款尾部 (永久置於 page-5 底部) -->
-        <div class="max-w-3xl mx-auto px-6 md:px-8 py-16 text-center border-t border-gray-200/60 mt-16">
-            <p class="text-xs tracking-[0.3em] text-gray-400 font-medium">報導團隊｜融媒體新聞學專題小組 敬製</p>
-            <p class="text-[10px] text-gray-300 tracking-widest mt-2 font-mono">© 2026 THE WEIGHT OF MEMORY. ALL RIGHTS RESERVED.</p>
+        <div class="site-footer-credit px-6 md:px-8 py-16 text-center border-t border-gray-200/60 mt-16">
+            <p class="text-xs md:text-sm tracking-[0.18em] text-gray-500 font-medium leading-loose">
+                《大學報》NCCU UONLINE NEWS<br>
+                製作團隊｜鄭丞傑、陳筱雯、方凱琪、林婷妤
+            </p>
         </div>
 
     </section>
@@ -2939,7 +3151,23 @@
             .culture-scroll-intro {
                 position: relative;
                 height: 245vh;
-                background: #F4F1EC !important;
+                background: #111;
+                overflow: hidden;
+                --culture-intro-blur: 14px;
+            }
+            .culture-scroll-intro::before {
+                content: "";
+                position: sticky;
+                top: 0;
+                display: block;
+                height: 100vh;
+                margin-bottom: -100vh;
+                background:
+                    linear-gradient(rgba(244, 241, 236, .36), rgba(244, 241, 236, .18)),
+                    url('images/music-section-background.png') center / cover no-repeat;
+                filter: blur(var(--culture-intro-blur));
+                transform: scale(1.04);
+                transition: filter .2s ease-out;
             }
             .culture-scroll-intro-stage {
                 position: sticky;
@@ -2956,7 +3184,7 @@
                 text-align: left;
                 color: #29251f;
                 opacity: 0;
-                transform: translateY(24px);
+                transform: translateY(var(--culture-copy-y, 42vh));
                 transition: opacity .65s ease, transform .65s ease;
                 pointer-events: none;
                 word-break: normal;
@@ -2965,7 +3193,7 @@
             }
             .culture-scroll-copy.is-active {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(var(--culture-copy-y, 0));
             }
             .culture-text-block {
                 display: grid;
@@ -3657,12 +3885,6 @@
                 </p>
 
                 <p class="culture-scroll-copy culture-copy-panel culture-copy-wide culture-report-copy">
-                    例如獨立樂團裝咖人的專輯《夜官巡場》，以及美秀集團的歌曲<br>
-                    〈昨暝阿爸無轉來〉等，分別以受難者故事與政治犯家庭的普遍<br>
-                    經歷為藍本，將歷史元素融入歌詞中。
-                </p>
-
-                <p class="culture-scroll-copy culture-copy-panel culture-copy-wide culture-report-copy">
                     陳彥蓉認為，音樂是現今年輕人的共同語言，更是讓他們了解這段<br>
                     歷史的一大途徑，「就是你很難找到有人是沒有喜歡的樂團或音樂。」
                 </p>
@@ -3958,8 +4180,13 @@
                 const travel = Math.max(1, intro.offsetHeight - window.innerHeight);
                 const progress = Math.max(0, Math.min(1, -rect.top / travel));
                 const activeIndex = Math.min(copies.length - 1, Math.floor(progress * copies.length));
+                intro.style.setProperty('--culture-intro-blur', `${Math.max(0, 14 - progress * 18)}px`);
 
                 copies.forEach((copy, index) => {
+                    const start = index / copies.length;
+                    const end = (index + 1) / copies.length;
+                    const localProgress = Math.max(0, Math.min(1, (progress - start) / Math.max(0.001, end - start)));
+                    copy.style.setProperty('--culture-copy-y', `${42 - localProgress * 92}vh`);
                     copy.classList.toggle('is-active', index === activeIndex);
                 });
             }
@@ -4616,10 +4843,8 @@
                 }
                 if (educationPage) {
                     educationPage.classList.remove('section-view');
-                    if (educationPage.classList.contains('is-unlocked-after-quiz')) {
-                        educationPage.classList.remove('hidden');
-                        educationPage.classList.add('flex');
-                    }
+                    educationPage.classList.remove('hidden');
+                    educationPage.classList.add('flex');
                 }
             }
 
@@ -4699,7 +4924,7 @@
 
                 const unlockedDiv = document.getElementById('unlocked-content');
                 if (unlockedDiv) {
-                    unlockedDiv.classList.remove('hidden');
+                    unlockedDiv.classList.toggle('hidden', pageKey === 'approach-2');
                 }
 
                 if (pageKey === 'approach-1') {
@@ -4733,6 +4958,10 @@
                     });
 
                     selector.classList.remove('hidden');
+                    const unlockedDiv = document.getElementById('unlocked-content');
+                    if (unlockedDiv) {
+                        unlockedDiv.classList.remove('hidden');
+                    }
                     window.cultureAutoAdvanceReady = false;
                     if (typeof stopCultureMusic === 'function') {
                         stopCultureMusic();
@@ -4826,7 +5055,6 @@
                 } else if (pageKey === '4' || pageKey === '1') {
                     targetPage.classList.add('flex');
                 } else if (pageKey === '5-education') {
-                    targetPage.classList.add('is-unlocked-after-quiz');
                     targetPage.classList.add('flex');
                     mountInlineApproachSections();
 
@@ -4920,13 +5148,8 @@
                     speaker: "家族記憶與白色恐怖",
                     imageIndex: 5,
                     final: true,
-                    content: "「阿祖被人抓走，阿公差點被人槍斃！」臺大學生會轉型正義小組負責人陳永謙的阿公，有時會半開玩笑的提起這段往事。小時候的他總認為阿公只是在說笑，直到長大後接觸到白色恐怖（以下簡稱白恐）相關歷史，才驚覺到自己的家人也是那段歷史中的受難者。"
-                },
-                {
-                    speaker: "家族記憶與白色恐怖",
-                    imageIndex: 5,
-                    final: true,
-                    content: "長輩刻意淡化的細節，以及深埋心中、不願多談的恐懼，陳永謙為了解家族過去在白恐時期曾受的迫害，從國家檔案中調閱當年的自白書與審判紀錄。在翻閱的過程中他才逐漸明白，那句輕描淡寫的「被人抓走」背後，承載的是一整個世代難以言說的創傷。"
+                    scrollPanel: true,
+                    content: "「阿祖被人抓走，阿公我差點被人槍斃！」臺大學生會轉型正義小組的負責人陳永謙說到，他小時候總認為阿公只是在說笑，直到長大後接觸到白色恐怖，才驚覺到自己的家人也是那段歷史中的受難者。\n\n這段過往是長輩深埋於心中、不願多談的恐懼，那句輕描淡寫的「被人抓走」背後，承載的是一整個世代難以言說的創傷。"
                 }
             ];
 
@@ -4935,9 +5158,10 @@
             let currentTypewriterTimeout = null; 
             let typeWriterResolve = null; 
             let storyWheelLocked = false;
+            let storyFinalScrollProgress = 0;
             
             // 打字機特效實現 (加入可中斷/快轉機制)
-            function runTypewriter(text, htmlTarget, speed = 40) {
+            function runTypewriter(text, htmlTarget, speed = 28) {
                 return new Promise(resolve => {
                     textTypingInProgress = true;
                     typeWriterResolve = resolve; 
@@ -4971,6 +5195,18 @@
                 renderStoryScene(0);
             }
 
+            async function showStoryFinalFromTimer() {
+                window.switchView(2);
+                await renderStoryScene(storyLineups.length - 1);
+                storyFinalScrollProgress = 0.02;
+                const finalCopy = document.getElementById('story-final-copy');
+                if (finalCopy) {
+                    finalCopy.style.setProperty('--story-final-y', '115vh');
+                    finalCopy.style.setProperty('--story-final-opacity', '1');
+                }
+                pages[2]?.style.setProperty('--story-bg-blur', '0px');
+            }
+
             function updateStoryProgress() {
                 const fill = document.getElementById('story-progress-fill');
                 if (!fill) return;
@@ -4982,6 +5218,8 @@
                 if (!scene) return;
 
                 currentScriptIdx = index;
+                storyFinalScrollProgress = 0;
+                pages[2]?.style.setProperty('--story-bg-blur', '0px');
                 document.querySelectorAll('[data-story-bg]').forEach(img => {
                     img.classList.toggle('is-active', Number(img.dataset.storyBg) === scene.imageIndex);
                 });
@@ -4995,9 +5233,10 @@
                     if (storyDialogBox) storyDialogBox.classList.add('hidden');
                     if (finalPanel && finalCopy) {
                         finalCopy.textContent = scene.content;
+                        finalCopy.style.setProperty('--story-final-y', '115vh');
+                        finalCopy.style.setProperty('--story-final-opacity', '1');
                         finalPanel.classList.add('is-active');
                     }
-                    if (storyProgressHint) storyProgressHint.textContent = index === storyLineups.length - 1 ? '再次向下滾動進入時間倒數器' : '向下滾動繼續';
                     return;
                 }
 
@@ -5008,10 +5247,17 @@
                 if (storyProgressHint) storyProgressHint.textContent = '再次向下滾動前往下一幕';
             }
 
-            async function advanceStoryScene() {
+            async function advanceStoryScene(skipTypingAndAdvance = false) {
                 if (textTypingInProgress) {
                     finishTyping(typeWriterResolve);
                     storyText.innerHTML = storyLineups[currentScriptIdx].content;
+                    if (!skipTypingAndAdvance) return;
+                    currentScriptIdx++;
+                    if (currentScriptIdx < storyLineups.length) {
+                        await renderStoryScene(currentScriptIdx);
+                    } else {
+                        triggerFlashTransition();
+                    }
                 } else {
                     currentScriptIdx++;
                     if (currentScriptIdx < storyLineups.length) {
@@ -5023,22 +5269,70 @@
                 }
             }
 
+            async function rewindStoryScene() {
+                if (textTypingInProgress) {
+                    finishTyping(typeWriterResolve);
+                    storyText.innerHTML = storyLineups[currentScriptIdx].content;
+                    return;
+                }
+                if (currentScriptIdx <= 0) {
+                    window.switchView(1);
+                    return;
+                }
+                await renderStoryScene(currentScriptIdx - 1);
+            }
+
+            function moveStoryFinalPanel(deltaY) {
+                const scene = storyLineups[currentScriptIdx];
+                const finalCopy = document.getElementById('story-final-copy');
+                if (!scene?.scrollPanel || !finalCopy) return false;
+                if (deltaY < 0 && storyFinalScrollProgress <= 0) return false;
+
+                storyFinalScrollProgress = Math.max(0, Math.min(1.12, storyFinalScrollProgress + (deltaY / 520)));
+                const y = 115 - (storyFinalScrollProgress * 195);
+                const opacity = storyFinalScrollProgress > 0.82 ? Math.max(0, 1 - ((storyFinalScrollProgress - 0.82) / 0.28)) : 1;
+                finalCopy.style.setProperty('--story-final-y', `${y}vh`);
+                finalCopy.style.setProperty('--story-final-opacity', String(opacity));
+                pages[2]?.style.setProperty('--story-bg-blur', `${Math.min(9, storyFinalScrollProgress * 11).toFixed(2)}px`);
+
+                if (storyFinalScrollProgress >= 1.08) {
+                    triggerFlashTransition();
+                }
+                return true;
+            }
+
             // 點擊全螢幕任意處皆可快轉/前進
             pages[2].addEventListener('click', advanceStoryScene);
 
             pages[2].addEventListener('wheel', event => {
-                if (pages[2].classList.contains('hidden') || event.deltaY <= 0) return;
+                if (pages[2].classList.contains('hidden')) return;
                 event.preventDefault();
                 if (storyWheelLocked) return;
                 storyWheelLocked = true;
-                advanceStoryScene();
-                setTimeout(() => { storyWheelLocked = false; }, 760);
+                if (moveStoryFinalPanel(event.deltaY)) {
+                    setTimeout(() => { storyWheelLocked = false; }, 120);
+                    return;
+                }
+                if (event.deltaY > 0) {
+                    advanceStoryScene(true);
+                } else {
+                    rewindStoryScene();
+                }
+                setTimeout(() => { storyWheelLocked = false; }, 140);
             }, { passive: false });
 
             pages[2].addEventListener('touchend', event => {
                 if (pages[2].classList.contains('hidden')) return;
                 advanceStoryScene();
             });
+
+            window.addEventListener('wheel', event => {
+                const articlePage = pages[3];
+                if (!articlePage || articlePage.classList.contains('hidden')) return;
+                if (event.deltaY >= 0 || window.scrollY > 12) return;
+                event.preventDefault();
+                showStoryFinalFromTimer();
+            }, { passive: false });
 
             // 閃白過渡邏輯
             function triggerFlashTransition() {
@@ -5442,6 +5736,77 @@
 
             initWhiteTerrorTimeline();
 
+            function initYouthAttitudeChart() {
+                const canvas = document.getElementById("youth-attitude-chart");
+                if (!canvas || canvas.dataset.rendered === "true" || typeof Chart === "undefined") return;
+                canvas.dataset.rendered = "true";
+
+                const centerText = {
+                    id: "centerText",
+                    afterDraw(chart) {
+                        const { ctx } = chart;
+                        const meta = chart.getDatasetMeta(0);
+                        ctx.save();
+
+                        meta.data.forEach((arc, index) => {
+                            const p = arc.tooltipPosition();
+                            ctx.font = "bold 26px Noto Sans TC";
+                            ctx.textAlign = "center";
+                            ctx.fillStyle = index === 0 ? "white" : "#222";
+                            ctx.fillText(chart.data.labels[index], p.x, p.y - 8);
+
+                            ctx.font = "bold 32px Noto Sans TC";
+                            ctx.fillText(chart.data.datasets[0].data[index] + "%", p.x, p.y + 30);
+                        });
+
+                        ctx.restore();
+                    }
+                };
+
+                new Chart(canvas, {
+                    type: "doughnut",
+                    plugins: [centerText],
+                    data: {
+                        labels: ["不關心", "關心"],
+                        datasets: [{
+                            data: [58.6, 41.4],
+                            backgroundColor: [
+                                function(context) {
+                                    const chart = context.chart;
+                                    const { ctx, chartArea } = chart;
+                                    if (!chartArea) return "#C43D3D";
+
+                                    const gradient = ctx.createLinearGradient(0, 0, chartArea.right, chartArea.bottom);
+                                    gradient.addColorStop(0, "#ff6b6b");
+                                    gradient.addColorStop(.5, "#d73b3b");
+                                    gradient.addColorStop(1, "#a40000");
+                                    return gradient;
+                                },
+                                "#B4B7BB"
+                            ],
+                            borderColor: "#fff",
+                            borderWidth: 5,
+                            hoverOffset: 28,
+                            offset: [20, 0]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.label + "：" + context.raw + "%";
+                                    }
+                                }
+                            }
+                        },
+                        cutout: "45%"
+                    }
+                });
+            }
+
             function initParallaxChartSwap() {
                 const report = document.querySelector('.parallax-report');
                 const trigger = document.querySelector('.chart-trigger');
@@ -5450,13 +5815,13 @@
                 const setChartState = () => {
                     const rect = trigger.getBoundingClientRect();
                     const middle = window.innerHeight * 0.58;
-                    report.classList.toggle('show-chart', rect.top < middle);
+                    report.classList.toggle('show-cloud', rect.top < middle);
                 };
 
                 if ('IntersectionObserver' in window) {
                     const observer = new IntersectionObserver((entries) => {
                         entries.forEach(entry => {
-                            if (entry.isIntersecting) report.classList.add('show-chart');
+                            if (entry.isIntersecting) report.classList.add('show-cloud');
                         });
                     }, { threshold: 0.25 });
                     observer.observe(trigger);
@@ -5468,6 +5833,7 @@
             }
 
             initParallaxChartSwap();
+            initYouthAttitudeChart();
 
             const cloudData = [
                 { word: "沒興趣", count: 18, color: "#4E342E", size: 175, left: 210, top: 90, reply: ["不是特別有興趣", "沒有興趣", "對這個沒有興趣"] },
@@ -5572,7 +5938,7 @@
                 if (!wrapper || !cloud) return;
                 const wrapperWidth = wrapper.clientWidth || window.innerWidth || 800;
                 const wrapperHeight = wrapper.clientHeight || 560;
-                const scale = Math.max(0.62, Math.min(wrapperWidth / 800, wrapperHeight / 520, 1));
+                const scale = Math.min(wrapperWidth / 800, wrapperHeight / 520, 1);
                 cloud.style.transform = `scale(${scale})`;
             }
 
@@ -5641,7 +6007,6 @@
                 item.className = 'quiz-item';
                 item.innerHTML = `
                     <div class="quiz-card">
-                        <p class="quiz-kicker">題目 ${index + 1} / ${quizData.length}</p>
                         <h3 class="serif-title text-xl md:text-3xl font-black text-stone-800 leading-relaxed mt-3">${question.title}</h3>
                         <div class="quiz-options" role="group" aria-label="第 ${index + 1} 題選項">
                             ${question.options.map(option => `
@@ -5740,7 +6105,6 @@
 
                 if (index + 1 < quizData.length) {
                     setTimeout(() => {
-                        renderQuizQuestion(index + 1);
                         const feedback = item.querySelector('.quiz-feedback');
                         if (feedback) {
                             feedback.classList.remove('is-waiting');
@@ -5749,13 +6113,7 @@
                     }, QUIZ_STAMP_REVEAL_DELAY);
                 } else {
                     setTimeout(() => {
-                        quizCompleteActions.classList.remove('hidden');
-                        const educationPage = document.getElementById('page-5-education');
-                        if (educationPage) {
-                            educationPage.classList.add('is-unlocked-after-quiz');
-                            educationPage.classList.remove('hidden');
-                            educationPage.classList.add('flex');
-                        }
+                        quizCompleteActions.classList.add('hidden');
                         const feedback = item.querySelector('.quiz-feedback');
                         if (feedback) {
                             feedback.classList.remove('is-waiting');
@@ -5768,7 +6126,7 @@
             function startQuizIfNeeded() {
                 if (quizHasStarted) return;
                 quizHasStarted = true;
-                renderQuizQuestion(0);
+                quizData.forEach((_, index) => renderQuizQuestion(index));
             }
 
             // --- 頁面 4 轉 頁面 5 ---
@@ -5785,44 +6143,6 @@
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             };
-
-            // --- 留言牆互動送出邏輯 ---
-            const btnSubmitComment = document.getElementById('btn-submit-comment');
-            const commentTextarea = document.getElementById('comment-textarea');
-            const commentsWallGrid = document.getElementById('comments-wall-grid');
-
-            if (btnSubmitComment && commentTextarea && commentsWallGrid) {
-                btnSubmitComment.addEventListener('click', () => {
-                    const text = commentTextarea.value.trim();
-                    if (!text) {
-                        commentTextarea.placeholder = "請輸入想法內容後再送出留言...";
-                        commentTextarea.classList.add('border-red-400');
-                        setTimeout(() => {
-                            commentTextarea.classList.remove('border-red-400');
-                            commentTextarea.placeholder = "寫下你的想法，與當代青年一同留下記憶的足跡...";
-                        }, 2000);
-                        return;
-                    }
-
-                    // 創立新的評論卡片元素
-                    const newComment = document.createElement('div');
-                    newComment.className = "bg-white p-6 rounded-2xl border-2 border-[#9B2C2C]/30 shadow-md fade-in-active";
-                    newComment.innerHTML = `
-                        <p class="text-gray-600 text-sm md:text-base leading-relaxed text-justify">${text}</p>
-                        <div class="mt-4 flex justify-between text-xs text-gray-400">
-                            <span class="text-[#9B2C2C] font-semibold">讀者留言</span>
-                            <span>剛剛</span>
-                        </div>
-                    `;
-                    
-                    // 插入至最前面
-                    commentsWallGrid.insertBefore(newComment, commentsWallGrid.firstChild);
-                    commentTextarea.value = "";
-                    
-                    // 平滑滾動置中剛送出的留言
-                    newComment.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                });
-            }
 
             initWordCloud();
             adjustCloudScale();
