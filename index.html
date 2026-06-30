@@ -11,6 +11,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <style>
+        html {
+            overflow-x: hidden;
+        }
+
         body {
             font-family: 'Noto Sans TC', sans-serif;
             background-color: #FAFAFA; /* 溫潤的米白底色，減少純白的刺眼感，呼應紙張質感 */
@@ -847,18 +851,44 @@
         }
 
         .parallax-report {
+            position: relative;
+            min-height: 330vh;
             background: #FAFAFA;
         }
 
         .parallax-row {
-            min-height: 170vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            min-height: 100vh;
             display: grid;
-            grid-template-columns: 60% 40%;
+            grid-template-columns: 52% 48%;
+            overflow: hidden;
+            background: #FAFAFA;
+        }
+
+        .parallax-row.is-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 45;
+        }
+
+        .parallax-row.is-ended {
+            position: absolute;
+            top: auto;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
         }
 
         .parallax-visual {
-            position: sticky;
-            top: 0;
+            position: relative;
             height: 100vh;
             display: grid;
             place-items: center;
@@ -870,10 +900,10 @@
         .parallax-visual-placeholder,
         .parallax-cloud-panel {
             position: absolute;
-            left: 15%;
-            right: 10%;
-            top: clamp(3rem, 8vh, 5rem);
-            bottom: clamp(3rem, 8vh, 5rem);
+            left: 8%;
+            right: 6%;
+            top: clamp(2rem, 5vh, 3.25rem);
+            bottom: clamp(2rem, 5vh, 3.25rem);
             display: grid;
             place-items: center;
             color: #6b5b50;
@@ -889,16 +919,16 @@
 
         .parallax-chart-panel {
             position: absolute;
-            left: 15%;
-            right: 10%;
-            top: clamp(3rem, 8vh, 5rem);
-            bottom: clamp(3rem, 8vh, 5rem);
+            left: 8%;
+            right: 6%;
+            top: clamp(2rem, 5vh, 3.25rem);
+            bottom: clamp(2rem, 5vh, 3.25rem);
             display: grid;
             place-items: center;
-            padding: clamp(1.25rem, 3vw, 2.5rem);
-            background: #f5f2ec;
-            border-radius: 18px;
-            box-shadow: 0 22px 50px rgba(57, 45, 31, .12);
+            padding: 0;
+            background: transparent;
+            border-radius: 0;
+            box-shadow: none;
             opacity: 1;
             transform: translateY(0);
             pointer-events: auto;
@@ -910,7 +940,9 @@
             transform: translateY(18px);
             pointer-events: none;
             overflow: hidden;
-            background: #f5f7fa;
+            background: transparent;
+            border-radius: 0;
+            box-shadow: none;
         }
 
         .parallax-chart-panel .flourish-embed {
@@ -919,40 +951,54 @@
         }
 
         .youth-chart-wrapper {
-            width: min(100%, 760px);
+            --survey-title-size: clamp(1.15rem, 1.62vw, 23px);
+            width: min(100%, 520px);
             margin: auto;
-            padding: clamp(1rem, 3vw, 40px) 20px;
+            padding: clamp(1rem, 2vw, 26px) clamp(1rem, 2vw, 24px);
             font-family: "Noto Sans TC", sans-serif;
             background: #fafafa;
+            border-radius: 18px;
+            box-shadow: 0 22px 50px rgba(57, 45, 31, .12);
         }
 
         .youth-chart-wrapper h1 {
             text-align: center;
-            font-size: clamp(1.65rem, 3.1vw, 42px);
-            margin: 0 0 10px;
+            font-size: var(--survey-title-size);
+            margin: 0 0 8px;
             font-weight: 900;
             color: #222;
             line-height: 1.25;
+            white-space: nowrap;
         }
 
         .youth-chart-wrapper .subtitle {
             text-align: center;
             color: #666;
-            font-size: clamp(1rem, 1.45vw, 20px);
-            margin-bottom: clamp(1.5rem, 4vh, 40px);
+            font-size: clamp(.92rem, 1.2vw, 17px);
+            margin-bottom: clamp(.9rem, 2.2vh, 24px);
             line-height: 1.6;
         }
 
         .youth-chart-wrapper .chartBox {
-            width: min(100%, 650px);
+            width: min(100%, 390px);
             margin: auto;
             position: relative;
         }
 
+        .youth-chart-wrapper .chart-note {
+            min-height: 2.8em;
+            margin: clamp(.55rem, 1.4vh, .85rem) auto 0;
+            color: #555;
+            font-size: clamp(.85rem, 1vw, .98rem);
+            font-weight: 700;
+            line-height: 1.7;
+            text-align: center;
+        }
+
         .youth-chart-wrapper .source {
-            margin-top: clamp(1.4rem, 4vh, 40px);
+            margin-top: clamp(.6rem, 1.5vh, 1rem);
             color: #666;
-            font-size: clamp(.95rem, 1.25vw, 18px);
+            font-size: clamp(.85rem, 1vw, 15px);
             line-height: 1.6;
         }
 
@@ -968,16 +1014,52 @@
             pointer-events: auto;
         }
 
+        .parallax-cloud-panel .circle,
+        .parallax-cloud-panel #cloud,
+        .parallax-cloud-panel #cloud-wrapper {
+            pointer-events: none;
+        }
+
+        .parallax-report.show-cloud .parallax-cloud-panel .circle,
+        .parallax-report.show-cloud .parallax-cloud-panel #cloud,
+        .parallax-report.show-cloud .parallax-cloud-panel #cloud-wrapper {
+            pointer-events: auto;
+        }
+
         .parallax-text {
-            padding: clamp(12rem, 24vh, 18rem) 15% clamp(8rem, 14vh, 12rem) 0;
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            padding: 0;
         }
 
         .parallax-text p {
-            margin-bottom: 2rem;
+            position: absolute;
+            left: 6%;
+            right: 22%;
+            top: var(--text-top, 50%);
+            margin: 0;
             color: #2D3748;
-            font-size: clamp(1rem, 1.25vw, 1.18rem);
-            line-height: 2.05;
+            font-size: clamp(.95rem, 1.08vw, 1.05rem);
+            line-height: 1.95;
             text-align: justify;
+            opacity: 0;
+            transform: translateY(calc(var(--text-shift, -50%) + var(--group-y, 0vh)));
+            transition: opacity .24s ease;
+            pointer-events: none;
+            max-height: var(--text-max-height, none);
+            overflow: hidden;
+        }
+
+        .parallax-text p.is-active {
+            opacity: 1;
+            transform: translateY(calc(var(--text-shift, -50%) + var(--group-y, 0vh)));
+        }
+
+        .parallax-text p.text-sm {
+            font-size: clamp(.78rem, .9vw, .9rem);
+            line-height: 1.55;
+            color: #667085;
         }
 
         .flourish-block {
@@ -986,32 +1068,39 @@
         }
 
         .word-cloud-section {
-            min-height: 100%;
+            --survey-title-size: clamp(1.15rem, 1.62vw, 23px);
+            width: min(100%, 640px);
+            height: min(100%, 600px);
+            margin: auto;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            background: #f5f7fa;
+            justify-content: flex-start;
+            padding: clamp(1rem, 2vw, 26px) clamp(1rem, 2vw, 24px);
+            background: #fafafa;
+            border-radius: 18px;
+            box-shadow: 0 22px 50px rgba(57, 45, 31, .12);
             overflow: hidden;
         }
 
         .word-cloud-section h2 {
             text-align: center;
-            margin: 20px 0 10px 0;
-            font-size: 32px;
+            margin: 0 0 clamp(.75rem, 1.8vh, 1.1rem);
+            font-size: var(--survey-title-size);
             color: #333;
             font-weight: 900;
+            line-height: 1.25;
+            white-space: nowrap;
         }
 
         #cloud-wrapper {
             flex: 1;
             width: 100%;
-            min-height: 560px;
+            min-height: min(48vh, 420px);
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            overflow: visible;
         }
 
         #cloud {
@@ -1296,11 +1385,13 @@
         @media (max-width: 900px) {
             .parallax-row {
                 grid-template-columns: 1fr;
+                grid-template-rows: 58vh 42vh;
             }
 
             .parallax-visual {
                 position: relative;
-                height: 62vh;
+                height: 58vh;
+                padding: 1rem 0;
             }
 
             .parallax-visual-placeholder,
@@ -1313,17 +1404,37 @@
             }
 
             .parallax-text {
-                padding: 3rem 1.25rem 5rem;
+                height: 42vh;
+                padding: 0;
+            }
+
+            .parallax-text p {
+                left: 1.25rem;
+                right: 1.25rem;
+                font-size: .95rem;
+                line-height: 1.85;
             }
 
             #cloud-wrapper {
-                min-height: 470px;
+                min-height: 0;
             }
         }
 
-        /* 避免頁面淡入動畫的 transform 讓文化入口固定導覽隨內容捲動 */
-        #page-approach-1 {
+        /* 避免頁面淡入動畫的 transform 讓入口固定導覽隨內容捲動 */
+        #page-approach-1,
+        #page-approach-2,
+        #page-approach-3,
+        #page-approach-4 {
             transform: none !important;
+            animation: none !important;
+        }
+
+        #page-approach-1.fade-in-active,
+        #page-approach-2.fade-in-active,
+        #page-approach-3.fade-in-active,
+        #page-approach-4.fade-in-active {
+            transform: none !important;
+            animation: none !important;
         }
 
         .culture-floating-nav {
@@ -1376,16 +1487,7 @@
             position: relative;
             padding: 0;
             background: #F4F1EC;
-        }
-
-        .approach-inline-frame {
-            width: 100%;
-            height: 1200px;
-            min-height: 100vh;
-            border: 0;
-            display: block;
-            overflow: hidden;
-            background: #F4F1EC;
+            overflow-x: hidden;
         }
 
         .approach-return-nav::before {
@@ -2438,6 +2540,9 @@
                                 <div class="chartBox">
                                     <canvas id="youth-attitude-chart"></canvas>
                                 </div>
+                                <div id="youth-chart-note" class="chart-note" aria-live="polite">
+                                    點擊圖表區塊，可查看各類別比例說明。
+                                </div>
                                 <div class="source">
                                     資料來源：〈青年對白恐時期之認知問卷調查〉
                                 </div>
@@ -3307,29 +3412,23 @@
             }
             .culture-scroll-intro {
                 position: relative;
-                height: 245vh;
+                height: 100vh;
+                margin-bottom: 0;
                 background: #111;
                 overflow: hidden;
                 --culture-intro-blur: 14px;
+                z-index: 4;
+                pointer-events: none;
             }
             .culture-scroll-intro::before {
-                content: "";
-                position: sticky;
-                top: 0;
-                display: block;
-                height: 100vh;
-                margin-bottom: -100vh;
-                background:
-                    linear-gradient(rgba(244, 241, 236, .36), rgba(244, 241, 236, .18)),
-                    url('images/music-section-background.png') center / cover no-repeat;
-                filter: blur(var(--culture-intro-blur));
-                transform: scale(1.04);
-                transition: filter .2s ease-out;
+                content: none;
             }
             .culture-scroll-intro-stage {
-                position: sticky;
+                position: absolute;
+                inset: 0;
                 top: 0;
-                min-height: 100vh;
+                min-height: 0;
+                height: 100vh;
                 display: grid;
                 place-items: center;
                 padding: clamp(2rem, 6vw, 5rem);
@@ -3341,8 +3440,7 @@
                 text-align: left;
                 color: #29251f;
                 opacity: 0;
-                transform: translateY(var(--culture-copy-y, 42vh));
-                transition: opacity .65s ease, transform .65s ease;
+                transform: translateY(var(--culture-copy-y, 110vh));
                 pointer-events: none;
                 word-break: normal;
                 overflow-wrap: normal;
@@ -3424,6 +3522,7 @@
                 min-height: 100vh;
                 display: flex;
                 align-items: center;
+                margin-top: 0;
                 padding: 2rem 1.75rem;
                 background-color: #F4F1EC;
                 background-image:
@@ -3432,6 +3531,12 @@
                 background-size: cover;
                 background-position: center;
                 background-repeat: no-repeat;
+                filter: blur(var(--culture-music-blur, 14px));
+                transition: filter .08s linear;
+            }
+            #culture-music-panel.culture-panel-locked,
+            #culture-film-panel.culture-panel-locked {
+                pointer-events: none;
             }
             .culture-music-heading {
                 margin-bottom: .55rem;
@@ -3491,7 +3596,7 @@
             }
             .film-scroll-story {
                 position: relative;
-                height: 430vh;
+                height: 100vh;
             }
             #culture-film-panel {
                 background-color: #18222b;
@@ -3503,11 +3608,89 @@
                 background-repeat: no-repeat;
                 background-attachment: fixed;
             }
-            .film-sticky-stage {
-                position: sticky;
-                top: 0;
+            #culture-film-panel .film-scroll-story {
+                filter: blur(var(--culture-film-blur, 14px));
+                transition: filter .08s linear;
+            }
+            .culture-transition-scroll {
+                position: relative;
                 height: 100vh;
-                min-height: 720px;
+                overflow: hidden;
+                background: #111820;
+                --transition-film-opacity: 0;
+                z-index: 5;
+                pointer-events: none;
+            }
+            .culture-transition-scroll::before,
+            .culture-transition-scroll::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                top: 0;
+                display: block;
+                height: 100vh;
+                margin-bottom: 0;
+                background-position: center;
+                background-size: cover;
+                transform: scale(1.03);
+                filter: blur(10px);
+            }
+            .culture-transition-scroll::before {
+                background-image:
+                    linear-gradient(rgba(244, 241, 236, .66), rgba(244, 241, 236, .54)),
+                    url('images/music-section-background.png');
+            }
+            .culture-transition-scroll::after {
+                background-image:
+                    linear-gradient(rgba(8, 13, 19, .58), rgba(8, 13, 19, .76)),
+                    url('images/film-section-background.png');
+                opacity: var(--transition-film-opacity);
+            }
+            .culture-transition-stage,
+            .culture-film-preface-stage,
+            .culture-film-outro-stage {
+                position: absolute;
+                inset: 0;
+                top: 0;
+                min-height: 0;
+                height: 100vh;
+                display: grid;
+                place-items: center;
+                padding: clamp(2rem, 6vw, 5rem);
+                overflow: hidden;
+                pointer-events: none;
+                z-index: 2;
+            }
+            .culture-film-preface-scroll,
+            .culture-film-outro-scroll {
+                display: block;
+                position: relative;
+                min-height: 165vh;
+                padding: 0;
+                opacity: 1;
+                transform: none;
+                background: transparent !important;
+                pointer-events: none;
+                overflow: hidden;
+            }
+            .culture-film-preface-scroll .culture-report-copy,
+            .culture-film-outro-scroll .culture-report-copy {
+                display: inline-block;
+                color: #fffaf2;
+                opacity: 0;
+                transform: translateY(var(--culture-copy-y, 110vh));
+            }
+            .culture-film-preface-scroll .culture-report-copy.is-active,
+            .culture-film-outro-scroll .culture-report-copy.is-active {
+                opacity: 1;
+            }
+            .film-sticky-stage {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 100vh;
+                min-height: 0;
                 overflow: hidden;
                 display: grid;
                 grid-template-rows: 26px minmax(300px, 31vh) auto;
@@ -3743,10 +3926,10 @@
                     border-radius: 1.6rem;
                 }
                 .film-scroll-story {
-                    height: 460vh;
+                    height: 100vh;
                 }
                 .film-sticky-stage {
-                    min-height: 720px;
+                    min-height: 0;
                     grid-template-rows: 26px minmax(280px, 31vh) auto;
                     row-gap: 1.15rem;
                     padding-top: 1.35rem;
@@ -3789,7 +3972,7 @@
                     padding: 5.5rem 1rem 6.5rem;
                 }
                 .culture-scroll-intro {
-                    height: 235vh;
+                    height: 100vh;
                 }
                 .culture-scroll-intro-stage {
                     padding: 5.5rem 1.2rem 6.5rem;
@@ -3864,10 +4047,10 @@
                     padding: 4rem 1rem 1.5rem;
                 }
                 .film-scroll-story {
-                    height: 520vh;
+                    height: 100vh;
                 }
                 .film-sticky-stage {
-                    min-height: 620px;
+                    min-height: 0;
                     padding: .75rem;
                     grid-template-rows: minmax(24px, 4vh) minmax(180px, 27vh) minmax(350px, 54vh);
                     row-gap: .75rem;
@@ -3896,7 +4079,7 @@
                     min-height: 350px;
                     padding: .7rem;
                     row-gap: .7rem;
-                    overflow: auto;
+                    overflow: visible;
                     transform: none;
                     box-shadow:
                         0 16px 36px rgba(4,10,15,.3),
@@ -3936,7 +4119,7 @@
                     line-height: 1.75;
                 }
                 .culture-scroll-intro {
-                    height: 225vh;
+                    height: 100vh;
                 }
                 .culture-scroll-copy {
                     font-size: clamp(1.18rem, 6.3vw, 1.65rem);
@@ -3978,10 +4161,10 @@
                     padding-block: .7rem;
                 }
                 .film-scroll-story {
-                    height: 560vh;
+                    height: 100vh;
                 }
                 .film-sticky-stage {
-                    min-height: 640px;
+                    min-height: 0;
                     grid-template-rows: minmax(22px, 4vh) minmax(150px, 24vh) minmax(405px, 58vh);
                 }
                 .film-carousel {
@@ -4023,216 +4206,545 @@
             .culture-wave span:nth-child(3) { animation-delay: .24s; }
             .culture-wave span:nth-child(4) { animation-delay: .36s; }
             .culture-wave span:nth-child(5) { animation-delay: .48s; }
+            .culture-scrolly-shell {
+                position: relative;
+                height: 900vh;
+                min-height: 900vh;
+                background: #0F141A;
+                overflow: visible;
+            }
+            .culture-sticky-viewport {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                overflow: hidden;
+                background: #0F141A;
+                isolation: isolate;
+            }
+            .culture-sticky-viewport.is-fixed {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                overflow: hidden;
+                z-index: 80;
+            }
+            .culture-sticky-viewport.is-ended {
+                position: absolute;
+                top: auto;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                overflow: hidden;
+            }
+            .culture-page-layer {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                opacity: 0;
+                filter: blur(0px);
+                pointer-events: none;
+                will-change: opacity, filter;
+            }
+            .culture-music-layer {
+                z-index: 1;
+                opacity: 1;
+                filter: blur(14px);
+            }
+            .culture-film-layer {
+                z-index: 2;
+                opacity: 0;
+                filter: blur(14px);
+            }
+            .culture-page-layer.is-interactive {
+                pointer-events: auto;
+            }
+            .culture-page-layer > .culture-panel {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                min-height: 100%;
+                margin: 0 !important;
+                padding: 2rem 1.75rem !important;
+                overflow: hidden !important;
+                filter: none !important;
+            }
+            .culture-page-layer #culture-music-panel {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 0 !important;
+                scroll-margin-top: 0 !important;
+            }
+            .culture-page-layer #culture-film-panel {
+                padding: 0 !important;
+                border: 0 !important;
+                scroll-margin-top: 0 !important;
+            }
+            .culture-page-layer #culture-music-panel > .max-w-7xl {
+                width: min(100%, 1280px);
+                max-height: calc(100vh - 4rem);
+                overflow: visible;
+            }
+            .culture-page-layer #culture-film-panel .film-scroll-story {
+                height: 100% !important;
+                filter: none !important;
+            }
+            .culture-page-layer #culture-film-panel .film-sticky-stage {
+                position: absolute;
+                inset: 0;
+                height: 100%;
+                min-height: 100%;
+            }
+            .culture-scrolly-overlay {
+                position: absolute;
+                inset: 0;
+                z-index: 40;
+                overflow: hidden;
+                pointer-events: none;
+            }
+            .culture-scrolly-copy {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                max-width: min(76rem, calc(100% - 2rem));
+                opacity: 0;
+                display: block;
+                visibility: visible;
+                z-index: 41;
+                transform: translate(-50%, 120vh);
+                will-change: transform, opacity;
+                pointer-events: none;
+            }
+            .culture-scrolly-copy.is-active {
+                opacity: 1 !important;
+                visibility: visible !important;
+            }
+            #page-approach-1.culture-inline-detail {
+                overflow: visible !important;
+                background: #0F141A;
+            }
+            #page-approach-1 .culture-scrolly-shell {
+                height: 900vh !important;
+                min-height: 900vh !important;
+                position: relative !important;
+                overflow: visible !important;
+                background: #0F141A;
+            }
+            #page-approach-1 .culture-sticky-viewport {
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                height: 100vh !important;
+                width: 100% !important;
+                overflow: hidden !important;
+                background: #0F141A;
+            }
+            #page-approach-1 .culture-sticky-viewport.is-fixed {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                z-index: 80 !important;
+            }
+            #page-approach-1 .culture-sticky-viewport.is-ended {
+                position: absolute !important;
+                top: auto !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                height: 100vh !important;
+            }
+            #page-approach-1 .culture-page-layer {
+                position: absolute !important;
+                inset: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                overflow: hidden !important;
+                margin: 0 !important;
+                will-change: opacity, filter;
+            }
+            #page-approach-1 .culture-page-layer > .culture-panel {
+                position: absolute !important;
+                inset: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                min-height: 0 !important;
+                margin: 0 !important;
+                overflow: hidden !important;
+            }
+            #page-approach-1 #culture-music-panel {
+                margin-top: 0 !important;
+                padding: clamp(1.25rem, 3vh, 2rem) clamp(1rem, 2vw, 1.75rem) !important;
+                filter: none !important;
+                transform: none !important;
+            }
+            #page-approach-1 #culture-music-panel > .max-w-7xl {
+                width: min(100%, 1280px) !important;
+                max-height: calc(100vh - clamp(2.5rem, 6vh, 4rem)) !important;
+                overflow: visible !important;
+            }
+            #page-approach-1 #culture-film-panel {
+                margin-top: 0 !important;
+                padding: 0 !important;
+                filter: none !important;
+                transform: none !important;
+            }
+            #page-approach-1 #culture-film-panel .film-scroll-story,
+            #page-approach-1 #culture-film-panel .film-sticky-stage {
+                position: absolute !important;
+                inset: 0 !important;
+                width: 100% !important;
+                height: 100vh !important;
+                min-height: 0 !important;
+                overflow: hidden !important;
+                margin: 0 !important;
+            }
+            #page-approach-1 #culture-scrolly-shell #culture-music-panel {
+                min-height: 0 !important;
+                height: 100vh !important;
+                margin-top: 0 !important;
+                padding-top: clamp(1.25rem, 3vh, 2rem) !important;
+                padding-bottom: clamp(1.25rem, 3vh, 2rem) !important;
+            }
+            #page-approach-1 #culture-scrolly-shell #culture-film-panel .film-scroll-story {
+                position: absolute !important;
+                inset: 0 !important;
+                height: 100vh !important;
+                min-height: 0 !important;
+                overflow: hidden !important;
+                filter: none !important;
+            }
+            #page-approach-1 #culture-scrolly-shell #culture-film-panel .film-sticky-stage {
+                position: absolute !important;
+                inset: 0 !important;
+                height: 100vh !important;
+                min-height: 0 !important;
+                overflow: hidden !important;
+            }
+            #page-approach-1 #culture-film-panel .film-sticky-stage {
+                display: grid !important;
+                grid-template-rows: 24px minmax(185px, 27vh) minmax(0, 38vh) !important;
+                align-content: center !important;
+                row-gap: clamp(.55rem, 1.25vh, .85rem) !important;
+                padding: clamp(.75rem, 1.6vh, 1.1rem) clamp(1rem, 3vw, 2.5rem) !important;
+            }
+            #page-approach-1 .culture-scrolly-overlay {
+                position: absolute !important;
+                inset: 0 !important;
+                overflow: hidden !important;
+                pointer-events: none !important;
+                z-index: 120 !important;
+            }
+            #page-approach-1 .culture-scrolly-copy {
+                position: absolute !important;
+                left: 50% !important;
+                top: 50% !important;
+                transform: translate(-50%, 120vh);
+                opacity: 0;
+                display: block !important;
+                visibility: visible !important;
+                z-index: 121 !important;
+                margin: 0 !important;
+                pointer-events: none !important;
+            }
+            #page-approach-1 .culture-scrolly-copy.is-active {
+                opacity: 1 !important;
+            }
+            #page-approach-1 #culture-scrolly-shell .culture-floating-nav {
+                display: none !important;
+            }
+            #page-approach-1 #culture-film-panel .film-scroll-hint {
+                align-self: center !important;
+                margin: 0 auto !important;
+                line-height: 1.2 !important;
+            }
+            #page-approach-1 #culture-film-panel .film-carousel {
+                height: 100% !important;
+                min-height: 0 !important;
+                max-height: 27vh !important;
+                z-index: 20 !important;
+            }
+            #page-approach-1 #culture-film-panel .film-wheel-card {
+                width: clamp(108px, 10.5vw, 152px) !important;
+            }
+            #page-approach-1 #culture-film-panel .film-scroll-detail {
+                z-index: 60 !important;
+                width: min(100%, 1040px) !important;
+                height: min(38vh, 340px) !important;
+                min-height: 0 !important;
+                max-height: 38vh !important;
+                overflow: hidden !important;
+                padding: clamp(.45rem, .8vh, .65rem) !important;
+                column-gap: clamp(.45rem, 1vw, .75rem) !important;
+                align-self: start !important;
+                align-items: center !important;
+            }
+            #page-approach-1 #culture-film-panel .film-detail-copy {
+                min-height: 0 !important;
+                overflow: hidden !important;
+                padding: clamp(.35rem, .75vh, .55rem) !important;
+            }
+            #page-approach-1 #culture-film-panel .film-detail-label {
+                margin-bottom: .14rem !important;
+                font-size: clamp(.58rem, .68vw, .68rem) !important;
+                line-height: 1.2 !important;
+            }
+            #page-approach-1 #culture-film-panel #film-meta {
+                margin-bottom: .08rem !important;
+                font-size: clamp(.68rem, .8vw, .8rem) !important;
+                line-height: 1.2 !important;
+            }
+            #page-approach-1 #culture-film-panel #film-title {
+                margin-bottom: .25rem !important;
+                font-size: clamp(1.15rem, 1.55vw, 1.55rem) !important;
+                line-height: 1.12 !important;
+            }
+            #page-approach-1 #culture-film-panel #film-desc,
+            #page-approach-1 #culture-film-panel #film-youth {
+                margin-bottom: .32rem !important;
+                font-size: clamp(.68rem, .82vw, .82rem) !important;
+                line-height: 1.36 !important;
+            }
+            #page-approach-1 #culture-film-panel #film-youth {
+                padding-left: .55rem !important;
+                border-left-width: 3px !important;
+                margin-bottom: 0 !important;
+            }
+            #page-approach-1 #culture-film-panel #film-tags {
+                gap: .25rem !important;
+                margin-bottom: .35rem !important;
+            }
+            #page-approach-1 #culture-film-panel #film-tags span {
+                padding: .22rem .5rem !important;
+                font-size: clamp(.56rem, .64vw, .66rem) !important;
+                line-height: 1.15 !important;
+            }
+            #page-approach-1 #culture-film-panel .film-trailer-card {
+                width: min(100%, 360px) !important;
+                max-height: calc(38vh - 1.3rem) !important;
+                align-self: center !important;
+                justify-self: center !important;
+            }
+            #page-approach-1 #culture-film-panel .film-trailer-card iframe {
+                display: block !important;
+            }
         </style>
 
         <!-- 文化入口頁內導覽 -->
         <button onclick="window.returnToApproachSelector()" class="approach-return-nav" type="button">返回入口頁面</button>
 
-        <nav class="culture-floating-nav inline-flex items-center p-1 rounded-full bg-black/55 border border-white/15 backdrop-blur-md shadow-lg" aria-label="文化入口內容導覽">
-            <button onclick="showCultureTab('music')" class="px-5 py-2 rounded-full text-sm font-bold text-white hover:bg-white/15 transition-colors">音樂</button>
-            <button onclick="showCultureTab('film')" class="px-5 py-2 rounded-full text-sm font-bold text-white hover:bg-white/15 transition-colors">影視</button>
-        </nav>
+        
 
         <!-- 文化入口開場文字 -->
-        <div id="culture-scroll-intro" class="culture-scroll-intro">
-            <div class="culture-scroll-intro-stage">
-                <p class="culture-scroll-copy culture-copy-panel culture-copy-medium culture-report-copy is-active">
-                    為了降低年輕世代認識白恐歷史的門檻，不少音樂和影視作品嘗試<br>
-                    透過檔案資料的「轉譯」，期待激發青年對相關議題的興趣。
-                </p>
-
-                <p class="culture-scroll-copy culture-copy-panel culture-copy-wide culture-report-copy">
-                    陳彥蓉認為，音樂是現今年輕人的共同語言，更是讓他們了解這段<br>
-                    歷史的一大途徑，「就是你很難找到有人是沒有喜歡的樂團或音樂。」
-                </p>
+        
+        <div id="culture-scrolly-shell" class="culture-scrolly-shell">
+            <div class="culture-sticky-viewport">
+                <div class="culture-floating-nav" aria-label="文化作品頁面切換">
+                    <button type="button" onclick="showCultureTab('music')">音樂</button>
+                    <button type="button" onclick="showCultureTab('film')">影視</button>
+                </div>
+                <div id="culture-music-layer" class="culture-page-layer culture-music-layer">
+                    <div id="culture-music-panel" class="culture-panel text-[#1A202C] border-t border-gray-200 scroll-mt-20">
+                                <div class="max-w-7xl mx-auto">
+                                    <div class="culture-music-heading">
+                                        <h3 class="serif-title text-3xl md:text-5xl font-black">當歷史化作一首歌曲</h3>
+                                    </div>
+                    
+                                    <p class="culture-sound-note text-center font-bold text-[#9B2C2C] tracking-wide">
+                                        🔊 開啟聲音，點擊聆聽相關作品吧！
+                                    </p>
+                    
+                                    <div class="culture-music-layout">
+                                        <p id="culture-player-status" class="sr-only" aria-live="polite"></p>
+                                        <audio id="culture-audio" preload="metadata"></audio>
+                    
+                                        <div class="music-card-grid grid gap-6">
+                                            <article class="music-piece-card border border-gray-200 shadow-sm transition-all" data-work="《夜官巡場》－〈林秀媚〉">
+                                                <div class="music-cover-box"><img src="images/lin-hsiu-mei-song.jpg" alt="《夜官巡場》－〈林秀媚〉歌曲圖片"></div>
+                                                <div class="music-card-content">
+                                                    <h4 class="serif-title text-2xl font-black mb-1">《夜官巡場》－〈林秀媚〉</h4>
+                                                    <p class="text-sm text-gray-500 mb-5">裝咖人</p>
+                                                    <div class="music-player-row">
+                                                        <button onclick="toggleMusicTrack('《夜官巡場》－〈林秀媚〉', this)" class="music-play-button bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors" aria-label="播放《夜官巡場》－〈林秀媚〉">播放</button>
+                                                        <div class="music-waveform" aria-hidden="true"></div>
+                                                        <span class="music-time">0:00 / 0:00</span>
+                                                    </div>
+                                                </div>
+                                                <p class="music-description text-sm md:text-base text-gray-600 leading-loose text-justify">
+                                                    歌曲取材自林秀媚的口述歷史，並以其視角出發，呈現出面對愛人離去的悲痛與思念。林秀媚是二二八受難者、嘉義市參議員盧鈵欽的妻子。盧鈵欽在前往水上機場與政府談判後，便再也沒有平安返家，最終於未經審判的情況下，在嘉義火車站前遭公開槍決。
+                                                </p>
+                                            </article>
+                    
+                                            <article class="music-piece-card border border-gray-200 shadow-sm transition-all" data-work="昨暝阿爸無轉來">
+                                                <div class="music-cover-box"><img src="images/mei-hsiu-zha-ming-a-ba.jpg" alt="〈昨暝阿爸無轉來〉歌曲圖片"></div>
+                                                <div class="music-card-content">
+                                                    <h4 class="serif-title text-2xl font-black mb-1">〈昨暝阿爸無轉來〉</h4>
+                                                    <p class="text-sm text-gray-500 mb-5">美秀集團</p>
+                                                    <div class="music-player-row">
+                                                        <button onclick="toggleMusicTrack('昨暝阿爸無轉來', this)" class="music-play-button bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors" aria-label="播放昨暝阿爸無轉來">播放</button>
+                                                        <div class="music-waveform" aria-hidden="true"></div>
+                                                        <span class="music-time">0:00 / 0:00</span>
+                                                    </div>
+                                                </div>
+                                                <p class="music-description text-sm md:text-base text-gray-600 leading-loose text-justify">
+                                                    作品以孩子的視角展開，透過天真卻無奈的口吻，反覆唱出「昨暝阿爸無轉來」，訴說對父親遲遲未歸的思念，以及不知道父親身在何處的恐懼與不安，呈現出白色恐怖如何從受難者影響至整個家庭。
+                                                </p>
+                                            </article>
+                    
+                                            <article class="music-piece-card border border-gray-200 shadow-sm transition-all" data-work="明朗俱樂部">
+                                                <div class="music-cover-box"><img src="images/ming-lang-club-song.jpg" alt="〈明朗俱樂部〉歌曲圖片"></div>
+                                                <div class="music-card-content">
+                                                    <h4 class="serif-title text-2xl font-black mb-1">〈明朗俱樂部〉</h4>
+                                                    <p class="text-sm text-gray-500 mb-5">雷光夏</p>
+                                                    <div class="music-player-row">
+                                                        <button onclick="toggleMusicTrack('明朗俱樂部', this)" class="music-play-button bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors" aria-label="播放明朗俱樂部">播放</button>
+                                                        <div class="music-waveform" aria-hidden="true"></div>
+                                                        <span class="music-time">0:00 / 0:00</span>
+                                                    </div>
+                                                </div>
+                                                <p class="music-description text-sm md:text-base text-gray-600 leading-loose text-justify">
+                                                    作品用以紀念雷光夏未曾謀面的外祖父李漢湖，歌名源自臺鐵基層員工的互助團體「明朗俱樂部」。當年團體遭政府認定為共產黨外圍組織，李漢湖則被指控參與其中，並以「知匪不報」等罪名判刑，於1950年遭槍決。
+                                                </p>
+                                            </article>
+                    
+                                            <article class="music-piece-card border border-gray-200 shadow-sm transition-all" data-work="出巡">
+                                                <div class="music-cover-box"><img src="images/chhut-sun-song.jpg" alt="〈出巡〉歌曲圖片"></div>
+                                                <div class="music-card-content">
+                                                    <h4 class="serif-title text-2xl font-black mb-1">〈出巡〉</h4>
+                                                    <p class="text-sm text-gray-500 mb-5">拍謝少年</p>
+                                                    <div class="music-player-row">
+                                                        <button onclick="toggleMusicTrack('出巡', this)" class="music-play-button bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors" aria-label="播放出巡">播放</button>
+                                                        <div class="music-waveform" aria-hidden="true"></div>
+                                                        <span class="music-time">0:00 / 0:00</span>
+                                                    </div>
+                                                </div>
+                                                <p class="music-description text-sm md:text-base text-gray-600 leading-loose text-justify">
+                                                    MV邀請政治受難者蔡寬裕親自出演男主角。歌曲結合臺灣廟會「出巡」的意象，透過遶境儀式走訪不義遺址，撫慰受難者的靈魂，喚醒大眾對於這段歷史的重視。
+                                                </p>
+                                            </article>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+                <div id="culture-film-layer" class="culture-page-layer culture-film-layer">
+                    <div id="culture-film-panel" class="culture-panel bg-[#111820] border-t border-white/10 scroll-mt-20">
+                                
+                    
+                                <div id="film-scroll-story" class="film-scroll-story">
+                                    <div class="film-sticky-stage">
+                                        <div class="w-full max-w-6xl mx-auto mb-1">
+                                            <p class="film-scroll-hint">向下滾動，依序觀看作品簡介</p>
+                                        </div>
+                    
+                                        <div id="film-carousel" class="film-carousel" aria-label="影視作品海報輪盤">
+                                            <button onclick="scrollToFilmWork(0)" class="film-wheel-card" data-film-index="0" aria-label="查看《超級大國民》">
+                                                <img src="posters/poster-super-citizen.webp" alt="《超級大國民》海報">
+                                            </button>
+                                            <button onclick="scrollToFilmWork(1)" class="film-wheel-card" data-film-index="1" aria-label="查看《返校》">
+                                                <img src="posters/poster-detention.webp" alt="《返校》海報">
+                                            </button>
+                                            <button onclick="scrollToFilmWork(2)" class="film-wheel-card" data-film-index="2" aria-label="查看《流麻溝十五號》">
+                                                <img src="posters/poster-untold.webp" alt="《流麻溝十五號》海報">
+                                            </button>
+                                            <button onclick="scrollToFilmWork(3)" class="film-wheel-card" data-film-index="3" aria-label="查看《餘燼》">
+                                                <img src="posters/poster-embers.webp" alt="《餘燼》海報">
+                                            </button>
+                                            <button onclick="scrollToFilmWork(4)" class="film-wheel-card" data-film-index="4" aria-label="查看《星空下的黑潮島嶼》">
+                                                <img src="posters/poster-black-tide.webp" alt="《星空下的黑潮島嶼》海報">
+                                            </button>
+                                            <button onclick="scrollToFilmWork(5)" class="film-wheel-card" data-film-index="5" aria-label="查看《大濛》">
+                                                <img src="posters/poster-foggy.webp" alt="《大濛》海報">
+                                            </button>
+                                            <div class="film-progress-track flex items-center justify-center gap-2" aria-hidden="true">
+                                                <span class="film-progress-dot is-active" data-film-dot="0"></span>
+                                                <span class="film-progress-dot" data-film-dot="1"></span>
+                                                <span class="film-progress-dot" data-film-dot="2"></span>
+                                                <span class="film-progress-dot" data-film-dot="3"></span>
+                                                <span class="film-progress-dot" data-film-dot="4"></span>
+                                                <span class="film-progress-dot" data-film-dot="5"></span>
+                                            </div>
+                                        </div>
+                    
+                                        <div class="film-scroll-detail grid md:grid-cols-[1.12fr_0.88fr] bg-white text-[#1A202C] shadow-2xl">
+                                            <div class="film-detail-copy flex flex-col justify-center">
+                                                <p id="film-meta" class="text-[#9B2C2C] font-bold tracking-widest mb-1">1994｜電影</p>
+                                                <h4 id="film-title" class="serif-title font-black mb-3">超級大國民</h4>
+                                                <p class="film-detail-label">作品故事</p>
+                                                <p id="film-desc" class="text-gray-600 text-justify mb-4">
+                                                    政治犯許毅生因刑求而供出好友，導致好友被判死刑。出獄多年後，他背負愧疚尋找好友埋骨之處，也重新面對遭白色恐怖拆散的家庭與人生。
+                                                </p>
+                                                <p class="film-detail-label">故事關鍵字</p>
+                                                <div id="film-tags" class="flex flex-wrap gap-2 mb-4">
+                                                    <span class="px-3 py-1.5 bg-gray-100 rounded-full text-xs">政治讀書會</span>
+                                                    <span class="px-3 py-1.5 bg-gray-100 rounded-full text-xs">刑求與自白</span>
+                                                    <span class="px-3 py-1.5 bg-gray-100 rounded-full text-xs">創傷記憶</span>
+                                                </div>
+                                                <p class="film-detail-label">作品與白色恐怖的關聯</p>
+                                                <p id="film-youth" class="text-gray-600 border-l-4 border-[#9B2C2C] pl-4">
+                                                    作品直視倖存者的罪惡感與跨世代創傷，讓白色恐怖不只是政治事件，也成為一段關於記憶、責任與修復的人生故事。
+                                                </p>
+                                            </div>
+                                            <div class="film-trailer-card aspect-video bg-black overflow-hidden relative self-center w-full" role="button" tabindex="0" onclick="openFilmTrailerModal()" onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openFilmTrailerModal(); }" aria-label="放大觀看目前作品預告片">
+                                                <iframe
+                                                    id="film-trailer"
+                                                    class="absolute inset-0 w-full h-full pointer-events-none"
+                                                    src="https://www.youtube.com/embed/PXDJXU72haw?playsinline=1&rel=0&origin=https%3A%2F%2Fckyling25.github.io"
+                                                    title="《超級大國民》電影預告"
+                                                    loading="lazy"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+                                                    referrerpolicy="origin"
+                                                    allowfullscreen>
+                                                </iframe>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                    
+                                <div id="film-trailer-modal" class="film-trailer-modal" role="dialog" aria-modal="true" aria-label="放大觀看電影預告片" onclick="closeFilmTrailerModal(event)">
+                                    <div class="film-trailer-modal-panel" onclick="event.stopPropagation()">
+                                        <button type="button" class="film-trailer-modal-close" onclick="closeFilmTrailerModal()" aria-label="關閉放大影片">關閉 ×</button>
+                                        <iframe
+                                            id="film-trailer-modal-frame"
+                                            class="absolute inset-0 w-full h-full"
+                                            src=""
+                                            title="放大觀看電影預告片"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+                                            referrerpolicy="origin"
+                                            allowfullscreen>
+                                        </iframe>
+                                    </div>
+                                </div>
+                    
+                                
+                            </div>
+                </div>
+                <div class="culture-scrolly-overlay" aria-live="polite">
+                    <p data-culture-copy="a" class="culture-scroll-copy culture-copy-panel culture-copy-medium culture-report-copy culture-scrolly-copy">
+                                        為了降低年輕世代認識白恐歷史的門檻，不少音樂和影視作品嘗試透過檔案資料的「轉譯」，期待激發青年對相關議題的興趣。
+                                    </p>
+                    <p data-culture-copy="b" class="culture-scroll-copy culture-copy-panel culture-copy-wide culture-report-copy culture-scrolly-copy">
+                                        陳彥蓉認為，音樂是現今年輕人的共同語言，更是讓他們了解這段歷史的一大途徑，「就是你很難找到有人是沒有喜歡的樂團或音樂。」
+                                    </p>
+                    <p data-culture-copy="c" class="culture-text-copy culture-copy-panel culture-copy-wide culture-report-copy culture-scrolly-copy">
+                                        影視作品如《超級大國民》、《返校》、《流麻溝十五號》、《餘燼》、《星空下的黑潮島嶼》及《大濛》等，分別以不同的敘事角度，呈現威權時期人民所面臨的不公與壓迫。
+                                    </p>
+                    <p data-culture-copy="d" class="culture-copy-panel culture-copy-wide culture-report-copy culture-scrolly-copy">
+                                            黃長玲指出，雖然部分作品的論述仍相對粗淺，但其核心功能在於激發大眾對國家暴力的警惕，可作為年輕人接觸議題的第一步。
+                                        </p>
+                </div>
             </div>
         </div>
 
-        <!-- 音樂內容 -->
-        <div id="culture-music-panel" class="culture-panel text-[#1A202C] border-t border-gray-200 scroll-mt-20">
-            <div class="max-w-7xl mx-auto">
-                <div class="culture-music-heading">
-                    <h3 class="serif-title text-3xl md:text-5xl font-black">當歷史化作一首歌曲</h3>
-                </div>
-
-                <p class="culture-sound-note text-center font-bold text-[#9B2C2C] tracking-wide">
-                    🔊 開啟聲音，點擊聆聽相關作品吧！
-                </p>
-
-                <div class="culture-music-layout">
-                    <p id="culture-player-status" class="sr-only" aria-live="polite"></p>
-                    <audio id="culture-audio" preload="metadata"></audio>
-
-                    <div class="music-card-grid grid gap-6">
-                        <article class="music-piece-card border border-gray-200 shadow-sm transition-all" data-work="《夜官巡場》－〈林秀媚〉">
-                            <div class="music-cover-box"><img src="images/lin-hsiu-mei-song.jpg" alt="《夜官巡場》－〈林秀媚〉歌曲圖片"></div>
-                            <div class="music-card-content">
-                                <h4 class="serif-title text-2xl font-black mb-1">《夜官巡場》－〈林秀媚〉</h4>
-                                <p class="text-sm text-gray-500 mb-5">裝咖人</p>
-                                <div class="music-player-row">
-                                    <button onclick="toggleMusicTrack('《夜官巡場》－〈林秀媚〉', this)" class="music-play-button bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors" aria-label="播放《夜官巡場》－〈林秀媚〉">播放</button>
-                                    <div class="music-waveform" aria-hidden="true"></div>
-                                    <span class="music-time">0:00 / 0:00</span>
-                                </div>
-                            </div>
-                            <p class="music-description text-sm md:text-base text-gray-600 leading-loose text-justify">
-                                歌曲取材自林秀媚的口述歷史，並以其視角出發，呈現出面對愛人離去的悲痛與思念。林秀媚是二二八受難者、嘉義市參議員盧鈵欽的妻子。盧鈵欽在前往水上機場與政府談判後，便再也沒有平安返家，最終於未經審判的情況下，在嘉義火車站前遭公開槍決。
-                            </p>
-                        </article>
-
-                        <article class="music-piece-card border border-gray-200 shadow-sm transition-all" data-work="昨暝阿爸無轉來">
-                            <div class="music-cover-box"><img src="images/mei-hsiu-zha-ming-a-ba.jpg" alt="〈昨暝阿爸無轉來〉歌曲圖片"></div>
-                            <div class="music-card-content">
-                                <h4 class="serif-title text-2xl font-black mb-1">〈昨暝阿爸無轉來〉</h4>
-                                <p class="text-sm text-gray-500 mb-5">美秀集團</p>
-                                <div class="music-player-row">
-                                    <button onclick="toggleMusicTrack('昨暝阿爸無轉來', this)" class="music-play-button bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors" aria-label="播放昨暝阿爸無轉來">播放</button>
-                                    <div class="music-waveform" aria-hidden="true"></div>
-                                    <span class="music-time">0:00 / 0:00</span>
-                                </div>
-                            </div>
-                            <p class="music-description text-sm md:text-base text-gray-600 leading-loose text-justify">
-                                作品以孩子的視角展開，透過天真卻無奈的口吻，反覆唱出「昨暝阿爸無轉來」，訴說對父親遲遲未歸的思念，以及不知道父親身在何處的恐懼與不安，呈現出白色恐怖如何從受難者影響至整個家庭。
-                            </p>
-                        </article>
-
-                        <article class="music-piece-card border border-gray-200 shadow-sm transition-all" data-work="明朗俱樂部">
-                            <div class="music-cover-box"><img src="images/ming-lang-club-song.jpg" alt="〈明朗俱樂部〉歌曲圖片"></div>
-                            <div class="music-card-content">
-                                <h4 class="serif-title text-2xl font-black mb-1">〈明朗俱樂部〉</h4>
-                                <p class="text-sm text-gray-500 mb-5">雷光夏</p>
-                                <div class="music-player-row">
-                                    <button onclick="toggleMusicTrack('明朗俱樂部', this)" class="music-play-button bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors" aria-label="播放明朗俱樂部">播放</button>
-                                    <div class="music-waveform" aria-hidden="true"></div>
-                                    <span class="music-time">0:00 / 0:00</span>
-                                </div>
-                            </div>
-                            <p class="music-description text-sm md:text-base text-gray-600 leading-loose text-justify">
-                                作品用以紀念雷光夏未曾謀面的外祖父李漢湖，歌名源自臺鐵基層員工的互助團體「明朗俱樂部」。當年團體遭政府認定為共產黨外圍組織，李漢湖則被指控參與其中，並以「知匪不報」等罪名判刑，於1950年遭槍決。
-                            </p>
-                        </article>
-
-                        <article class="music-piece-card border border-gray-200 shadow-sm transition-all" data-work="出巡">
-                            <div class="music-cover-box"><img src="images/chhut-sun-song.jpg" alt="〈出巡〉歌曲圖片"></div>
-                            <div class="music-card-content">
-                                <h4 class="serif-title text-2xl font-black mb-1">〈出巡〉</h4>
-                                <p class="text-sm text-gray-500 mb-5">拍謝少年</p>
-                                <div class="music-player-row">
-                                    <button onclick="toggleMusicTrack('出巡', this)" class="music-play-button bg-[#1A202C] text-white font-bold hover:bg-[#9B2C2C] transition-colors" aria-label="播放出巡">播放</button>
-                                    <div class="music-waveform" aria-hidden="true"></div>
-                                    <span class="music-time">0:00 / 0:00</span>
-                                </div>
-                            </div>
-                            <p class="music-description text-sm md:text-base text-gray-600 leading-loose text-justify">
-                                MV邀請政治受難者蔡寬裕親自出演男主角。歌曲結合臺灣廟會「出巡」的意象，透過遶境儀式走訪不義遺址，撫慰受難者的靈魂，喚醒大眾對於這段歷史的重視。
-                            </p>
-                        </article>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 影視內容 -->
-        <div id="culture-film-panel" class="culture-panel bg-[#111820] border-t border-white/10 scroll-mt-20">
-            <div class="culture-text-block culture-reveal min-h-0">
-                <p class="culture-text-copy culture-copy-wide culture-report-copy">
-                    影視作品如《超級大國民》、《返校》、《流麻溝十五號》、《餘燼》、《星空下的黑潮島嶼》及《大濛》等，分別以不同的敘事角度，呈現威權時期人民所面臨的不公與壓迫。
-                </p>
-            </div>
-
-            <div id="film-scroll-story" class="film-scroll-story">
-                <div class="film-sticky-stage">
-                    <div class="w-full max-w-6xl mx-auto mb-1">
-                        <p class="film-scroll-hint">向下滾動，依序觀看作品簡介</p>
-                    </div>
-
-                    <div id="film-carousel" class="film-carousel" aria-label="影視作品海報輪盤">
-                        <button onclick="scrollToFilmWork(0)" class="film-wheel-card" data-film-index="0" aria-label="查看《超級大國民》">
-                            <img src="posters/poster-super-citizen.webp" alt="《超級大國民》海報">
-                        </button>
-                        <button onclick="scrollToFilmWork(1)" class="film-wheel-card" data-film-index="1" aria-label="查看《返校》">
-                            <img src="posters/poster-detention.webp" alt="《返校》海報">
-                        </button>
-                        <button onclick="scrollToFilmWork(2)" class="film-wheel-card" data-film-index="2" aria-label="查看《流麻溝十五號》">
-                            <img src="posters/poster-untold.webp" alt="《流麻溝十五號》海報">
-                        </button>
-                        <button onclick="scrollToFilmWork(3)" class="film-wheel-card" data-film-index="3" aria-label="查看《餘燼》">
-                            <img src="posters/poster-embers.webp" alt="《餘燼》海報">
-                        </button>
-                        <button onclick="scrollToFilmWork(4)" class="film-wheel-card" data-film-index="4" aria-label="查看《星空下的黑潮島嶼》">
-                            <img src="posters/poster-black-tide.webp" alt="《星空下的黑潮島嶼》海報">
-                        </button>
-                        <button onclick="scrollToFilmWork(5)" class="film-wheel-card" data-film-index="5" aria-label="查看《大濛》">
-                            <img src="posters/poster-foggy.webp" alt="《大濛》海報">
-                        </button>
-                        <div class="film-progress-track flex items-center justify-center gap-2" aria-hidden="true">
-                            <span class="film-progress-dot is-active" data-film-dot="0"></span>
-                            <span class="film-progress-dot" data-film-dot="1"></span>
-                            <span class="film-progress-dot" data-film-dot="2"></span>
-                            <span class="film-progress-dot" data-film-dot="3"></span>
-                            <span class="film-progress-dot" data-film-dot="4"></span>
-                            <span class="film-progress-dot" data-film-dot="5"></span>
-                        </div>
-                    </div>
-
-                    <div class="film-scroll-detail grid md:grid-cols-[1.12fr_0.88fr] bg-white text-[#1A202C] shadow-2xl">
-                        <div class="film-detail-copy flex flex-col justify-center">
-                            <p id="film-meta" class="text-[#9B2C2C] font-bold tracking-widest mb-1">1994｜電影</p>
-                            <h4 id="film-title" class="serif-title font-black mb-3">超級大國民</h4>
-                            <p class="film-detail-label">作品故事</p>
-                            <p id="film-desc" class="text-gray-600 text-justify mb-4">
-                                政治犯許毅生因刑求而供出好友，導致好友被判死刑。出獄多年後，他背負愧疚尋找好友埋骨之處，也重新面對遭白色恐怖拆散的家庭與人生。
-                            </p>
-                            <p class="film-detail-label">故事關鍵字</p>
-                            <div id="film-tags" class="flex flex-wrap gap-2 mb-4">
-                                <span class="px-3 py-1.5 bg-gray-100 rounded-full text-xs">政治讀書會</span>
-                                <span class="px-3 py-1.5 bg-gray-100 rounded-full text-xs">刑求與自白</span>
-                                <span class="px-3 py-1.5 bg-gray-100 rounded-full text-xs">創傷記憶</span>
-                            </div>
-                            <p class="film-detail-label">作品與白色恐怖的關聯</p>
-                            <p id="film-youth" class="text-gray-600 border-l-4 border-[#9B2C2C] pl-4">
-                                作品直視倖存者的罪惡感與跨世代創傷，讓白色恐怖不只是政治事件，也成為一段關於記憶、責任與修復的人生故事。
-                            </p>
-                        </div>
-                        <div class="film-trailer-card aspect-video bg-black overflow-hidden relative self-center w-full" role="button" tabindex="0" onclick="openFilmTrailerModal()" onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openFilmTrailerModal(); }" aria-label="放大觀看目前作品預告片">
-                            <iframe
-                                id="film-trailer"
-                                class="absolute inset-0 w-full h-full pointer-events-none"
-                                src="https://www.youtube.com/embed/PXDJXU72haw?playsinline=1&rel=0&origin=https%3A%2F%2Fckyling25.github.io"
-                                title="《超級大國民》電影預告"
-                                loading="lazy"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
-                                referrerpolicy="origin"
-                                allowfullscreen>
-                            </iframe>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="film-trailer-modal" class="film-trailer-modal" role="dialog" aria-modal="true" aria-label="放大觀看電影預告片" onclick="closeFilmTrailerModal(event)">
-                <div class="film-trailer-modal-panel" onclick="event.stopPropagation()">
-                    <button type="button" class="film-trailer-modal-close" onclick="closeFilmTrailerModal()" aria-label="關閉放大影片">關閉 ×</button>
-                    <iframe
-                        id="film-trailer-modal-frame"
-                        class="absolute inset-0 w-full h-full"
-                        src=""
-                        title="放大觀看電影預告片"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
-                        referrerpolicy="origin"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-            </div>
-
-            <div class="culture-text-block culture-reveal min-h-0 pb-24">
-                <div class="culture-text-copy culture-copy-panel">
-                    <p class="culture-report-copy">
-                        黃長玲指出，雖然部分作品的論述仍相對粗淺，但其核心功能在於<br>激發大眾對國家暴力的警惕，可作為年輕人接觸議題的第一步。
-                    </p>
-                </div>
-            </div>
-        </div>
         <div id="culture-next-sentinel" class="h-px" aria-hidden="true"></div>
 
         <script>
@@ -4320,33 +4832,114 @@
                 }
             };
 
+            let cultureScrolly = null;
+
+            function initCultureScrolly() {
+                if (cultureScrolly) return cultureScrolly;
+
+                const shell = document.getElementById('culture-scrolly-shell');
+                const viewport = shell?.querySelector('.culture-sticky-viewport');
+                const musicLayer = document.getElementById('culture-music-layer');
+                const filmLayer = document.getElementById('culture-film-layer');
+                const overlay = shell?.querySelector('.culture-scrolly-overlay');
+                if (!shell || !viewport || !musicLayer || !filmLayer || !overlay) return null;
+
+                const filmModal = document.getElementById('film-trailer-modal');
+                if (filmModal && filmModal.parentElement !== document.body) {
+                    document.body.appendChild(filmModal);
+                }
+
+                cultureScrolly = { shell, viewport, musicLayer, filmLayer, overlay };
+                updateCulturePinning(cultureScrolly);
+                return cultureScrolly;
+            }
+
+            function updateCulturePinning(state) {
+                if (!state) return;
+                const rect = state.shell.getBoundingClientRect();
+                const isBefore = rect.top > 0;
+                const isEnded = rect.bottom <= window.innerHeight;
+                state.viewport.classList.toggle('is-fixed', !isBefore && !isEnded);
+                state.viewport.classList.toggle('is-ended', isEnded);
+            }
+
+            function getCultureScrollyProgress() {
+                const state = cultureScrolly || initCultureScrolly();
+                if (!state) return 0;
+                const rect = state.shell.getBoundingClientRect();
+                const travel = Math.max(1, state.shell.offsetHeight - window.innerHeight);
+                return Math.max(0, Math.min(1, -rect.top / travel));
+            }
+
+            function scrollCultureToProgress(progress) {
+                const state = cultureScrolly || initCultureScrolly();
+                if (!state) return;
+                const travel = Math.max(1, state.shell.offsetHeight - window.innerHeight);
+                const top = state.shell.getBoundingClientRect().top + window.scrollY + travel * Math.max(0, Math.min(1, progress));
+                window.scrollTo({ top, behavior: 'smooth' });
+            }
+
             function showCultureTab(tab) {
-                const target = document.getElementById(tab === 'film' ? 'culture-film-panel' : 'culture-music-panel');
-                if (!target) return;
-                const targetTop = target.getBoundingClientRect().top + window.scrollY;
-                window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+                scrollCultureToProgress(tab === 'film' ? 0.68 : 0.20);
             }
 
             function updateCultureIntroText() {
-                const intro = document.getElementById('culture-scroll-intro');
-                if (!intro) return;
-                const copies = intro.querySelectorAll('.culture-scroll-copy');
-                if (!copies.length) return;
+                const state = cultureScrolly || initCultureScrolly();
+                if (!state) return;
+                updateCulturePinning(state);
 
-                const rect = intro.getBoundingClientRect();
-                const travel = Math.max(1, intro.offsetHeight - window.innerHeight);
-                const progress = Math.max(0, Math.min(1, -rect.top / travel));
-                const activeIndex = Math.min(copies.length - 1, Math.floor(progress * copies.length));
-                intro.style.setProperty('--culture-intro-blur', `${Math.max(0, 14 - progress * 18)}px`);
+                const clamp01 = value => Math.max(0, Math.min(1, value));
+                const range = (value, start, end) => clamp01((value - start) / Math.max(0.001, end - start));
+                const p = getCultureScrollyProgress();
 
-                copies.forEach((copy, index) => {
-                    const start = index / copies.length;
-                    const end = (index + 1) / copies.length;
-                    const localProgress = Math.max(0, Math.min(1, (progress - start) / Math.max(0.001, end - start)));
-                    copy.style.setProperty('--culture-copy-y', `${42 - localProgress * 92}vh`);
-                    copy.classList.toggle('is-active', index === activeIndex);
-                });
+                const moveCopy = (key, start, end) => {
+                    const copy = state.overlay.querySelector(`[data-culture-copy="${key}"]`);
+                    if (!copy) return;
+                    const local = range(p, start, end);
+                    const y = 120 - local * 240;
+                    const visible = p >= start && p <= end && y < 118 && y > -118;
+                    copy.style.transform = `translate(-50%, ${y}vh)`;
+                    copy.classList.toggle('is-active', visible);
+                };
+
+                moveCopy('a', 0.02, 0.14);
+                moveCopy('b', 0.36, 0.48);
+                moveCopy('c', 0.50, 0.62);
+                moveCopy('d', 0.88, 0.99);
+
+                const musicFadeOut = range(p, 0.36, 0.62);
+                const filmFadeIn = range(p, 0.36, 0.62);
+                const musicOpacity = 1 - musicFadeOut;
+                const filmOpacity = filmFadeIn;
+                const musicBlur = p < 0.18
+                    ? 14 * (1 - range(p, 0.14, 0.20))
+                    : 14 * range(p, 0.32, 0.38);
+                const filmBlur = p < 0.62
+                    ? 14 * (1 - range(p, 0.58, 0.62))
+                    : 14 * range(p, 0.86, 0.88);
+                const safeMusicBlur = Math.min(14, Math.max(0, musicBlur));
+                const safeFilmBlur = Math.min(14, Math.max(0, filmBlur));
+                const musicInteractive = p >= 0.20 && p <= 0.32 && safeMusicBlur < 1.2 && musicOpacity > 0.98;
+                const filmInteractive = p >= 0.62 && p <= 0.86 && safeFilmBlur < 1.2 && filmOpacity > 0.98;
+
+                state.musicLayer.style.opacity = String(musicOpacity);
+                state.musicLayer.style.filter = `blur(${safeMusicBlur}px)`;
+                state.musicLayer.classList.toggle('is-interactive', musicInteractive);
+
+                state.filmLayer.style.opacity = String(filmOpacity);
+                state.filmLayer.style.filter = `blur(${safeFilmBlur}px)`;
+                state.filmLayer.classList.toggle('is-interactive', filmInteractive);
+
+                if (p >= 0.62 && p <= 0.86) {
+                    const filmProgress = range(p, 0.62, 0.86);
+                    const index = Math.min(
+                        filmOrder.length - 1,
+                        Math.floor(filmProgress * filmOrder.length)
+                    );
+                    renderFilmWork(index);
+                }
             }
+            window.updateCultureScrolly = updateCultureIntroText;
 
             function initCultureTextReveals() {
                 const blocks = document.querySelectorAll('.culture-reveal');
@@ -4483,6 +5076,13 @@
             }
 
             function scrollToFilmWork(index) {
+                const state = cultureScrolly || initCultureScrolly();
+                if (state) {
+                    const safeIndex = Math.max(0, Math.min(filmOrder.length - 1, index));
+                    const filmProgress = filmOrder.length <= 1 ? 0 : safeIndex / (filmOrder.length - 1);
+                    scrollCultureToProgress(0.62 + filmProgress * 0.24);
+                    return;
+                }
                 const story = document.getElementById('film-scroll-story');
                 if (!story) return;
                 const storyTop = story.getBoundingClientRect().top + window.scrollY;
@@ -4494,6 +5094,18 @@
             let filmScrollTicking = false;
             function updateFilmFromScroll() {
                 filmScrollTicking = false;
+                if (cultureScrolly) {
+                    const p = getCultureScrollyProgress();
+                    if (p >= 0.62 && p <= 0.86) {
+                        const progress = Math.max(0, Math.min(1, (p - 0.62) / 0.24));
+                        const index = Math.min(
+                            filmOrder.length - 1,
+                            Math.floor(progress * filmOrder.length)
+                        );
+                        renderFilmWork(index);
+                    }
+                    return;
+                }
                 const story = document.getElementById('film-scroll-story');
                 if (!story) return;
                 const rect = story.getBoundingClientRect();
@@ -4612,7 +5224,7 @@
 
             window.updateCultureControlsVisibility = function() {
                 const culturePage = document.getElementById('page-approach-1');
-                const controls = document.querySelectorAll('#page-approach-1 .approach-return-nav, #page-approach-1 .culture-floating-nav');
+                const controls = document.querySelectorAll('#page-approach-1 .approach-return-nav');
                 if (!culturePage || !controls.length) return;
 
                 const rect = culturePage.getBoundingClientRect();
@@ -4635,6 +5247,7 @@
                 }
                 initMusicWaveforms();
                 renderFilmWork(0);
+                initCultureScrolly();
                 updateCultureIntroText();
                 initCultureTextReveals();
                 initCultureAutoAdvance();
@@ -4654,12 +5267,861 @@
     </section>
 
 <!-- ==========================================
-     頁面 7：身歷其境詳細頁（沉浸式改版）
-     用法：整個 <section> 取代原本的 page-approach-2
+     Page 7: character story inline page
      ========================================== -->
-<section id="page-approach-2" class="hidden min-h-screen bg-[#F4F1EC] text-[#1A202C] approach-inline-shell">
+<section id="page-approach-2" class="hidden min-h-screen text-[#1A202C] chen-story-shell">
   <button onclick="window.returnToApproachSelector()" class="approach-return-nav" type="button">返回入口頁面</button>
-  <iframe id="chen-story-frame" class="approach-inline-frame" src="chen-story.html" title="人物故事：我是陳欽生" scrolling="no"></iframe>
+  <style>
+
+    @font-face {
+      font-family: "Iansui";
+      src: url("https://cdn.jsdelivr.net/gh/ButTaiwan/iansui@main/Iansui-Regular.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "ChenTitleFont";
+      src: url("https://drive.google.com/uc?export=download&id=1VjTOSrqws_4XSTWeSGxieibSN05w1SZO") format("truetype");
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    #page-approach-2 {
+      --paper: #f7f2e8;
+      --paper-strong: rgba(255, 252, 246, 0.96);
+      --ink: #211a14;
+      --muted: #6f6251;
+      --line: #d8cbb5;
+      --red: #842524;
+      --red-dark: #5f1719;
+      --green: #31594c;
+      --shadow: 0 18px 50px rgba(35, 27, 19, 0.14);
+    }
+
+    #page-approach-2 .chen-story-page, #page-approach-2 .chen-story-page * { box-sizing: border-box; }
+
+    #page-approach-2 .chen-story-page { scroll-behavior: smooth; }
+
+    #page-approach-2 .chen-story-page {
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--ink);
+      font-family: "Noto Serif TC", "PingFang TC", "Microsoft JhengHei", serif;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(168, 121, 50, 0.16) 0 2px, transparent 3px),
+        radial-gradient(circle at 78% 26%, rgba(95, 73, 38, 0.10) 0 1px, transparent 3px),
+        radial-gradient(circle at 42% 78%, rgba(120, 82, 38, 0.12) 0 2px, transparent 4px),
+        linear-gradient(110deg, rgba(255, 252, 238, 0.86), rgba(226, 207, 164, 0.58) 48%, rgba(250, 239, 203, 0.9)),
+        repeating-linear-gradient(0deg, rgba(92, 63, 30, 0.025) 0 1px, transparent 1px 6px),
+        #ead9ad;
+      background-size: 360px 360px, 420px 420px, 520px 520px, cover, auto, auto;
+      background-attachment: fixed;
+      background-position: center;
+      line-height: 1.8;
+    }
+
+    #page-approach-2 .chen-story-page a { color: inherit; }
+
+    #page-approach-2 .chen-story-page .site-header {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 14px clamp(18px, 4vw, 48px);
+      background: rgba(255, 252, 246, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+
+    #page-approach-2 .chen-story-page .site-header.is-visible {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    #page-approach-2 .chen-story-page .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    #page-approach-2 .chen-story-page .brand-mark {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 0 5px rgba(132, 37, 36, 0.12);
+      flex: 0 0 auto;
+    }
+
+    #page-approach-2 .chen-story-page .side-nav {
+      position: fixed;
+      right: 22px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 15;
+      display: grid;
+      gap: 14px;
+      padding: 14px 10px;
+      background: rgba(255, 252, 246, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+    }
+
+    #page-approach-2 .chen-story-page .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1px solid #bba98c;
+      background: #e8dcc8;
+      opacity: 0.45;
+      pointer-events: none;
+      transition: transform 180ms ease, background 180ms ease, opacity 180ms ease;
+    }
+
+    #page-approach-2 .chen-story-page .dot.unlocked {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #page-approach-2 .chen-story-page .dot.active {
+      background: var(--red);
+      border-color: var(--red);
+      transform: scale(1.35);
+    }
+
+    #page-approach-2 .chen-story-page main {
+      width: min(1080px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    #page-approach-2 .chen-story-page .chapter {
+      margin: clamp(56px, 9vw, 112px) 0;
+      scroll-margin-top: 96px;
+    }
+
+    #page-approach-2 .chen-story-page .chapter.locked {
+      display: none;
+    }
+
+    #page-approach-2 .chen-story-page .hero {
+      min-height: 100vh;
+      display: grid;
+      align-items: center;
+      padding: clamp(76px, 9vh, 104px) 0 clamp(58px, 8vh, 82px);
+      margin-top: 0;
+    }
+
+    #page-approach-2 .chen-story-page .hero-grid,
+    #page-approach-2 .chen-story-page .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.86fr);
+      gap: clamp(28px, 6vw, 72px);
+      align-items: center;
+    }
+
+    #page-approach-2 .chen-story-page .layout.reverse {
+      grid-template-columns: minmax(280px, 0.86fr) minmax(0, 1fr);
+    }
+
+    #page-approach-2 .chen-story-page .layout.reverse .text-panel { order: 2; }
+
+    #page-approach-2 .chen-story-page .eyebrow,
+    #page-approach-2 .chen-story-page .chapter-label {
+      display: inline-block;
+      margin-bottom: 14px;
+      color: var(--red);
+      font-family: "Microsoft JhengHei", sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    #page-approach-2 .chen-story-page h1, #page-approach-2 .chen-story-page h2, #page-approach-2 .chen-story-page h3, #page-approach-2 .chen-story-page p { margin: 0; }
+
+    #page-approach-2 .chen-story-page h1, #page-approach-2 .chen-story-page h2, #page-approach-2 .chen-story-page h3 {
+      font-family: "Noto Serif TC", "PingFang TC", "Microsoft JhengHei", serif;
+      letter-spacing: 0;
+    }
+
+    #page-approach-2 .chen-story-page h1 {
+      max-width: 7em;
+      font-family: "ChenTitleFont", "Noto Serif TC", "PingFang TC", "Microsoft JhengHei", serif;
+      font-size: clamp(42px, 6vw, 76px);
+      font-weight: 900;
+      line-height: 1.22;
+      letter-spacing: 0;
+    }
+
+    #page-approach-2 .chen-story-page h2 {
+      max-width: 12em;
+      margin-bottom: 24px;
+      font-size: clamp(30px, 5vw, 54px);
+      line-height: 1.18;
+    }
+
+    #page-approach-2 .chen-story-page h3 {
+      font-size: clamp(22px, 3vw, 32px);
+      line-height: 1.28;
+    }
+
+    #page-approach-2 .chen-story-page .lead-stack,
+    #page-approach-2 .chen-story-page .body-copy,
+    #page-approach-2 .chen-story-page .interaction,
+    #page-approach-2 .chen-story-page .check-list,
+    #page-approach-2 .chen-story-page .result {
+      font-family: "Iansui", "Microsoft JhengHei", sans-serif;
+    }
+
+    #page-approach-2 .chen-story-page .lead-stack {
+      margin-top: 26px;
+      display: grid;
+      gap: 12px;
+      max-width: 620px;
+      font-size: clamp(18px, 2.2vw, 22px);
+      line-height: 1.9;
+      font-weight: 400;
+    }
+
+    #page-approach-2 .chen-story-page .body-copy {
+      display: grid;
+      gap: 18px;
+      font-size: 19px;
+      line-height: 1.9;
+      font-weight: 400;
+    }
+
+    #page-approach-2 .chen-story-page .line {
+      display: block;
+    }
+
+    #page-approach-2 .chen-story-page h1 .line,
+    #page-approach-2 .chen-story-page h2 .line {
+      display: block;
+    }
+
+    #page-approach-2 .chen-story-page h1 .line {
+      white-space: nowrap;
+    }
+
+    #page-approach-2 .chen-story-page .body-copy strong,
+    #page-approach-2 .chen-story-page .emphasis {
+      font-weight: 600;
+      color: var(--red-dark);
+    }
+
+    #page-approach-2 .chen-story-page .text-panel {
+      padding: clamp(22px, 4vw, 42px);
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    #page-approach-2 .chen-story-page .photo {
+      margin: 0;
+      background: #fffdfa;
+      border: 1px solid rgba(140, 118, 82, 0.25);
+      box-shadow: var(--shadow);
+      padding: 12px;
+    }
+
+    #page-approach-2 .chen-story-page .photo img {
+      display: block;
+      width: 100%;
+      min-height: 240px;
+      object-fit: cover;
+      filter: sepia(0.24) contrast(1.04) saturate(0.82);
+    }
+
+    #page-approach-2 .chen-story-page .photo figcaption {
+      padding: 12px 4px 2px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      font-family: "Iansui", "Microsoft JhengHei", sans-serif;
+    }
+
+    #page-approach-2 .chen-story-page .photo.tall img { aspect-ratio: 4 / 5; }
+    #page-approach-2 .chen-story-page .photo.wide img { aspect-ratio: 16 / 9; }
+    #page-approach-2 .chen-story-page .photo.small { max-width: 360px; justify-self: center; }
+    #page-approach-2 .chen-story-page .photo.small img { aspect-ratio: 1 / 1; min-height: 220px; }
+
+    #page-approach-2 .chen-story-page .image-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    #page-approach-2 .chen-story-page .image-pair .photo:nth-child(2) {
+      transform: translateY(38px);
+    }
+
+    #page-approach-2 .chen-story-page .media-column {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    #page-approach-2 .chen-story-page .full-quote {
+      min-height: 74vh;
+      display: grid;
+      align-items: center;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      padding: clamp(70px, 10vw, 120px) max(24px, calc((100vw - 1080px) / 2));
+      color: #fffaf2;
+      background:
+        linear-gradient(rgba(42, 21, 21, 0.6), rgba(42, 21, 21, 0.72)),
+        url("images/chen-story/time.gif");
+      background-size: cover;
+      background-position: center;
+    }
+
+    #page-approach-2 .chen-story-page .full-quote p {
+      max-width: 900px;
+      font-size: clamp(36px, 7vw, 78px);
+      line-height: 1.24;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    #page-approach-2 .chen-story-page .interaction {
+      padding: 22px;
+      background: rgba(241, 232, 216, 0.72);
+      border: 1px solid var(--line);
+    }
+
+    #page-approach-2 .chen-story-page .interaction-title {
+      margin-bottom: 14px;
+      color: #493d30;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.75;
+      display: block;
+    }
+
+    #page-approach-2 .chen-story-page .choice-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    #page-approach-2 .chen-story-page button,
+    #page-approach-2 .chen-story-page .link-button {
+      appearance: none;
+      border: 1px solid #bca989;
+      border-radius: 6px;
+      background: #fffaf0;
+      color: var(--ink);
+      padding: 12px 15px;
+      font: 700 16px/1.45 "Microsoft JhengHei", sans-serif;
+      cursor: pointer;
+      text-align: left;
+      text-decoration: none;
+      transition: background 160ms ease, border-color 160ms ease;
+    }
+
+    #page-approach-2 .chen-story-page button:hover,
+    #page-approach-2 .chen-story-page .link-button:hover {
+      background: #f1e5cf;
+      border-color: #987b52;
+    }
+
+    #page-approach-2 .chen-story-page .primary {
+      background: var(--red);
+      color: #fffaf2;
+      border-color: var(--red);
+    }
+
+    #page-approach-2 .chen-story-page .primary:hover {
+      background: var(--red-dark);
+      border-color: var(--red-dark);
+    }
+
+    #page-approach-2 .chen-story-page .result {
+      min-height: 0;
+      margin-top: 16px;
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.9;
+      opacity: 0;
+      transition: opacity 180ms ease;
+    }
+
+    #page-approach-2 .chen-story-page .result.visible { opacity: 1; }
+
+    /* 重新設計點選後的呈現樣式（刪除紅邊線，改用淡雅的古典卡片風格） */
+    #page-approach-2 .chen-story-page .result-box {
+      background: rgba(132, 37, 36, 0.04);
+      border: 1px dashed rgba(132, 37, 36, 0.35);
+      border-radius: 6px;
+      padding: 16px;
+      color: var(--ink);
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    #page-approach-2 .chen-story-page .check-list {
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      font-size: 18px;
+      line-height: 1.8;
+      color: #42372b;
+    }
+
+    #page-approach-2 .chen-story-page .check-list li::before {
+      content: "✓";
+      color: var(--green);
+      font-weight: 800;
+      margin-right: 10px;
+    }
+
+    #page-approach-2 .chen-story-page .age-input {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+    }
+
+    #page-approach-2 .chen-story-page input {
+      width: 100%;
+      border: 1px solid #bca989;
+      border-radius: 6px;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--ink);
+      font: 700 16px/1.45 "Microsoft JhengHei", sans-serif;
+    }
+
+    #page-approach-2 .chen-story-page input:focus {
+      outline: 2px solid rgba(132, 37, 36, 0.25);
+      border-color: var(--red);
+    }
+
+    #page-approach-2 .chen-story-page .final {
+      min-height: 88vh;
+      display: grid;
+      align-items: center;
+      padding-bottom: 72px;
+    }
+
+    #page-approach-2 .chen-story-page .final-card {
+      max-width: 820px;
+      margin: 0 auto;
+      text-align: center;
+      padding: clamp(30px, 6vw, 64px);
+      background: var(--paper-strong);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    #page-approach-2 .chen-story-page .final-card h2 {
+      margin: 0 auto 24px;
+      max-width: none;
+    }
+
+    #page-approach-2 .chen-story-page .final-card .body-copy {
+      max-width: 660px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    #page-approach-2 .chen-story-page .pause-question {
+      margin: 34px auto 0;
+      max-width: 620px;
+      color: var(--red-dark);
+      font-family: "Noto Serif TC", "PingFang TC", "Microsoft JhengHei", serif;
+      font-size: clamp(22px, 3vw, 32px);
+      line-height: 1.55;
+      font-weight: 700;
+    }
+
+    #page-approach-2 .chen-story-page .sources {
+      margin-top: 28px;
+      color: var(--muted);
+      font: 13px/1.7 "Microsoft JhengHei", sans-serif;
+    }
+
+    @media (max-width: 900px) {
+      #page-approach-2 .chen-story-page .side-nav { display: none; }
+      #page-approach-2 .chen-story-page .hero-grid,
+      #page-approach-2 .chen-story-page .layout,
+      #page-approach-2 .chen-story-page .layout.reverse {
+        grid-template-columns: 1fr;
+      }
+      #page-approach-2 .chen-story-page .layout.reverse .text-panel { order: 0; }
+      #page-approach-2 .chen-story-page .hero { min-height: auto; }
+      #page-approach-2 .chen-story-page .photo.small { max-width: none; }
+      #page-approach-2 .chen-story-page .image-pair .photo:nth-child(2) { transform: none; }
+    }
+
+    @media (max-width: 640px) {
+      #page-approach-2 .chen-story-page .site-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      #page-approach-2 .chen-story-page .brand { font-size: 15px; }
+      #page-approach-2 .chen-story-page main { width: min(100% - 28px, 1080px); }
+      #page-approach-2 .chen-story-page .text-panel { padding: 22px 18px; }
+      #page-approach-2 .chen-story-page .body-copy { font-size: 18px; line-height: 1.9; }
+      #page-approach-2 .chen-story-page .lead-stack { font-size: 18px; }
+      #page-approach-2 .chen-story-page h1 {
+        font-size: clamp(30px, 9.2vw, 48px);
+        max-width: 100%;
+      }
+      #page-approach-2 .chen-story-page .image-pair {
+        grid-template-columns: 1fr;
+      }
+      #page-approach-2 .chen-story-page .age-input {
+        grid-template-columns: 1fr;
+      }
+      #page-approach-2 .chen-story-page button,
+      #page-approach-2 .chen-story-page .link-button {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  
+#page-approach-2.chen-story-shell { min-height: 100vh; overflow: visible; background: #ead9ad; }
+#page-approach-2 .chen-story-page { min-height: 100vh; width: 100%; }
+#page-approach-2 .chen-story-page .site-header { display: none; }
+
+  </style>
+  <div class="chen-story-page">
+
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>我是陳欽生</span>
+    </div>
+  </header>
+
+  <nav class="side-nav" aria-label="章節導覽">
+    <a class="dot unlocked active" id="dot-1" href="#section-1" title="Chapter 1"></a>
+    <a class="dot unlocked" id="dot-2" href="#section-2" title="Chapter 2"></a>
+    <a class="dot" id="dot-3" href="#section-3" title="Chapter 3"></a>
+    <a class="dot" id="dot-4" href="#section-4" title="Chapter 4"></a>
+    <a class="dot" id="dot-5" href="#section-5" title="Chapter 5"></a>
+  </nav>
+
+  <main>
+    <section class="chapter hero" id="section-1">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Chapter 01 / 1967</span>
+          <h1>
+            <span class="line">我是陳欽生</span>
+          </h1>
+          <div class="lead-stack">
+            <p>
+              <span class="line">1967 年，</span>
+              <span class="line">我從馬來西亞怡保來到台灣求學。</span>
+            </p>
+            <p>
+              <span class="line">我以為自己只是離家， 去一個新的地方念書。</span>
+ 
+            </p>
+            <p>
+              <span class="line">我不知道，等待我的不是單純的夢想，</span>
+              
+              <span class="line"><strong class="emphasis">而是戒嚴年代。</strong></span>
+            </p>
+          </div>
+        </div>
+        <figure class="photo tall">
+          <img src="images/chen-story/before-taiwan.jpg" alt="陳欽生來臺前照片" />
+          <figcaption>我來台灣前拍下照片，準備朝著夢想前行</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="chapter" id="section-2">
+      <div class="layout reverse">
+        <div class="media-column">
+          <figure class="photo wide">
+            <img src="images/chen-story/student-id.JPG" alt="陳欽生學生證" />
+            <figcaption>我以僑生身分來台，在成功大學化工系求學。</figcaption>
+          </figure>
+          
+          <!-- 將互動區塊移至圖片下方 -->
+          <div class="interaction">
+            <div class="interaction-title">如果你是當年的我，你的留學理由是什麼？</div>
+            <div class="choice-list">
+              <button type="button" data-study="world">希望探索更大的世界</button>
+              <button type="button" data-study="work">替未來找一份更好的工作</button>
+              <button type="button" data-study="family">完成家人的期待</button>
+            </div>
+            <div class="result" id="studyResult" aria-live="polite"></div>
+          </div>
+        </div>
+        
+        <div class="text-panel">
+          <div class="chapter-label">Chapter 02 / 留學</div>
+          <h2>
+            <span class="line">我只是想</span>
+            <span class="line">把人生往前走</span>
+          </h2>
+          <div class="body-copy">
+            <p>
+              <span class="line">離家求學的理由，其實沒有多複雜。</span>
+              <span class="line">我想看更遠的世界，也想讓家人放心。</span>
+            </p>
+            <p>
+              <span class="line">我在臺灣享受著校園生活，</span>
+              <span class="line">我以為這些日常會繼續下去，</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter locked" id="section-3">
+      <div class="full-quote">
+        <div>
+          <span class="eyebrow">Chapter 03 / 1971.03</span>
+          <p>
+            <span class="line">1971 年 3 月</span>
+            <span class="line">我的人生停止了</span>
+          </p>
+        </div>
+      </div>
+      <div class="layout" style="margin-top: 52px;">
+        <div class="text-panel">
+          <h2>
+            <span class="line">一句有人要見你</span>
+            <span class="line">改變了我的十二年</span>
+          </h2>
+          <div class="body-copy">
+            <p>
+              <span class="line">大學三年級時，發生了台南美國新聞處爆炸案。</span>
+              <span class="line">我被帶走、偵訊，普通的留學生活突然被砍斷。</span>
+              <span class="line"></span>
+            </p>
+            <p>
+              <span class="line"><strong>我不知道自己會被帶到哪裡</strong></span>
+              <span class="line"><strong>我的話未必會被聽見</strong></span>
+            </p>
+            <p>
+              <span class="line">被羈押之後，</span>
+              <span class="line">失去了校園、課業、青春，</span>
+              <span class="line">我不堪刑求，曾自殺三次都未成功。</span>
+            </p>
+          </div>
+        </div>
+        <figure class="photo small">
+          <img src="images/chen-story/case-record.jpg" alt="陳欽生相關案件紀錄" />
+          <figcaption>案件、筆錄與審判，成為我此後人生的陰影。</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 融合後的第四章 (刪除12年大字刑期，左側改回經典雙照片樣式) -->
+    <section class="chapter locked" id="section-4">
+      <div class="layout reverse">
+        <div class="image-pair">
+          <figure class="photo">
+            <img src="images/chen-story/hate-land.jpg" alt="陳欽生受難記憶相關照片" />
+            <figcaption>我開始痛恨這片土地。</figcaption>
+          </figure>
+          <figure class="photo">
+            <img src="images/chen-story/mother.jpg" alt="陳欽生母親相關照片" />
+            <figcaption>記憶裡最難承受的，往往是家人（媽媽）的身影。</figcaption>
+          </figure>
+        </div>
+        <div class="text-panel">
+          <div class="chapter-label">Chapter 04 / 1973-1983</div>
+          <h2>
+            <span class="line">十二年</span>
+            <span class="line">不是數字</span>
+          </h2>
+          <div class="body-copy">
+            <p>
+              <span class="line">1973 年，我被判刑十二年，</span>
+              <span class="line">這幾年同學早就畢業、工作、成家。</span>
+	</p>
+	<p>
+              <span class="line">當我出來時，發現世界已經往前走了很遠，</span>
+              <span class="line">重新開始是一件非常孤單的事。</span>
+            </p>
+          </div>
+         
+
+          <div class="interaction" style="margin-top: 32px;">
+            <label class="interaction-title" for="ageInput">如果是你，十二年後會幾歲？</label>
+            <div class="age-input">
+              <input id="ageInput" type="number" min="1" max="100" placeholder="輸入你現在的年齡，例如：22" />
+              <button type="button" class="primary" id="ageButton">計算</button>
+            </div>
+            <div class="result" id="ageResult" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter locked" id="section-5">
+      <div class="final">
+        <div class="final-card">
+          <div class="chapter-label">Chapter 05 / 我是陳欽生</div>
+          <h2>
+            <span class="line">我不是案號</span>
+            <span class="line">我是陳欽生</span>
+          </h2>
+          <div class="body-copy">
+            <p>
+              <span class="line">後來，案情真相至今仍有爭議，</span>
+              <span class="line">但我已經服完十二年刑期。</span>
+            </p>
+            <p>
+              <span class="line">出獄後，我繼續留在台灣，</span>
+              <span class="line">後來投入人權教育。</span>
+              <span class="line">我把自己的傷口，變成提醒後人的證詞。</span>
+            </p>
+          </div>
+          <div class="pause-question">
+            我不是個案，<br />
+            是白色恐怖時代下的犧牲品<br />
+            請你不要忘記這段歷史
+          </div>
+          <div class="sources">
+            內容依公開資料改寫整理：
+            <a href="https://zh.wikipedia.org/wiki/%E9%99%B3%E6%AC%BD%E7%94%9F" target="_blank" rel="noreferrer">陳欽生</a>、
+            <a href="https://zh.wikipedia.org/wiki/%E5%8F%B0%E5%8D%97%E7%BE%8E%E5%9C%8B%E6%96%B0%E8%81%9E%E8%99%95" target="_blank" rel="noreferrer">台南美國新聞處爆炸事件</a>、
+            <a href="https://www.nhrm.gov.tw" target="_blank" rel="noreferrer">國家人權博物館</a>。
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+(() => {
+
+    const storyRoot = document.getElementById("page-approach-2");
+    const dots = Array.from(storyRoot.querySelectorAll(".dot"));
+    const sections = Array.from(storyRoot.querySelectorAll(".chapter"));
+
+    function notifyFrameResize() {
+      
+    }
+
+    function scrollToStorySection(selector) {
+      const target = storyRoot.querySelector(selector);
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    const studyReplies = {
+      world: "你選擇了探索世界。對未知的好奇，也是我當年離家的心情。",
+      work: "你選擇了更好的未來。努力念書，只是想讓人生多一點可能。",
+      family: "你選擇了家人的期待。那時的我，也只是想學成後回家陪伴母親。"
+    };
+
+    function unlockChapter(number) {
+      const chapter = storyRoot.querySelector(`#section-${number}`);
+      const dot = storyRoot.querySelector(`#dot-${number}`);
+      if (!chapter) return;
+
+      chapter.classList.remove("locked");
+      if (dot) dot.classList.add("unlocked");
+      requestAnimationFrame(notifyFrameResize);
+    }
+
+    function showResult(element, html) {
+      element.classList.remove("visible");
+      window.setTimeout(() => {
+        element.innerHTML = html;
+        element.classList.add("visible");
+        notifyFrameResize();
+      }, 120);
+    }
+
+    storyRoot.querySelectorAll("[data-study]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const key = button.dataset.study;
+        const result = storyRoot.querySelector("#studyResult");
+        // 移除了最後的輔助提示語，改以溫和優雅的古樸卡片樣式呈現回答
+        showResult(result, `
+          <div class="result-box">
+            ${studyReplies[key]}
+          </div>
+        `);
+        unlockChapter(3);
+        unlockChapter(4);
+      });
+    });
+
+    function calculateAge() {
+      const input = storyRoot.querySelector("#ageInput");
+      const result = storyRoot.querySelector("#ageResult");
+      const age = Number.parseInt(input.value, 10);
+
+      if (!Number.isFinite(age) || age <= 0 || age > 100) {
+        showResult(result, `<div class="result-box">請輸入一個合理的年齡。</div>`);
+        return;
+      }
+
+      const future = age + 12;
+      // 移除了提示開啟下一章的說明字眼
+      showResult(result, `
+        <div class="result-box">
+          你今年 ${age} 歲。十二年後，你會是 ${future} 歲。
+          <br />
+          今天才要準備重新開始人生。
+        </div>
+      `);
+      unlockChapter(5);
+      window.unlockChenStoryContent?.();
+    }
+
+    storyRoot.querySelector("#ageButton").addEventListener("click", calculateAge);
+    storyRoot.querySelector("#ageInput").addEventListener("keydown", (event) => {
+      if (event.key === "Enter") calculateAge();
+    });
+
+    storyRoot.querySelectorAll('a[href^="#section-"]').forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        scrollToStorySection(link.getAttribute("href"));
+      });
+    });
+
+    function setActiveDot(index) {
+      dots.forEach((dot) => dot.classList.remove("active"));
+      storyRoot.querySelector(`#dot-${index}`)?.classList.add("active");
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || entry.target.classList.contains("locked")) return;
+        const index = Number(entry.target.id.replace("section-", ""));
+        setActiveDot(index);
+      });
+    }, { threshold: 0.22, rootMargin: "-80px 0px -25% 0px" });
+
+    sections.forEach((section) => observer.observe(section));
+    storyRoot.querySelectorAll("img").forEach((image) => {
+      if (!image.complete) image.addEventListener("load", notifyFrameResize, { once: true });
+    });
+    window.addEventListener("load", notifyFrameResize);
+    window.addEventListener("resize", notifyFrameResize);
+  
+})();
+</script>
+
+  </div>
 </section>
 
 <section id="page-approach-3" class="hidden min-h-screen bg-[#F4F1EC] text-[#1A202C]">
@@ -5033,30 +6495,30 @@
                 window.updateCultureControlsVisibility?.();
             }
 
+            function updateInlineApproachReturnVisibility() {
+                ['page-approach-2', 'page-approach-3', 'page-approach-4'].forEach(id => {
+                    const page = document.getElementById(id);
+                    const control = page?.querySelector('.approach-return-nav');
+                    if (!page || !control) return;
 
-            window.addEventListener('message', event => {
-                if (!event.data || event.data.type !== 'chenStoryFrameResize') return;
-                const frame = document.getElementById('chen-story-frame');
-                if (!frame) return;
-                const nextHeight = Math.max(window.innerHeight, Number(event.data.height) || 0);
-                frame.style.height = nextHeight + 'px';
-            });
-
-            function resizeChenStoryFrame() {
-                const frame = document.getElementById('chen-story-frame');
-                if (!frame || !frame.contentDocument) return;
-
-                const doc = frame.contentDocument;
-                const nextHeight = Math.max(
-                    window.innerHeight,
-                    doc.body?.scrollHeight || 0,
-                    doc.documentElement?.scrollHeight || 0,
-                    doc.body?.offsetHeight || 0,
-                    doc.documentElement?.offsetHeight || 0
-                );
-                frame.style.height = nextHeight + 'px';
+                    const rect = page.getBoundingClientRect();
+                    const isPageActive = !page.classList.contains('hidden');
+                    const viewportFullyInsidePage = isPageActive && rect.top <= 4 && rect.bottom >= window.innerHeight - 4;
+                    control.classList.toggle('culture-controls-hidden', !viewportFullyInsidePage);
+                });
             }
-            window.addEventListener('resize', resizeChenStoryFrame);
+
+
+            window.unlockChenStoryContent = function() {
+                const unlockedDiv = document.getElementById('unlocked-content');
+                const arrowIndicator = document.getElementById('unlocked-arrow-indicator');
+                if (unlockedDiv) unlockedDiv.classList.remove('hidden');
+                if (arrowIndicator) {
+                    arrowIndicator.classList.remove('hidden');
+                    arrowIndicator.classList.add('flex');
+                }
+            };
+
 
             window.showInlineApproach = function(pageKey) {
                 mountInlineApproachSections();
@@ -5078,25 +6540,33 @@
                 }
 
                 targetPage.classList.remove('hidden');
+                updateInlineApproachReturnVisibility();
 
                 const unlockedDiv = document.getElementById('unlocked-content');
                 if (unlockedDiv) {
                     unlockedDiv.classList.toggle('hidden', pageKey === 'approach-2');
+                }
+                const arrowIndicator = document.getElementById('unlocked-arrow-indicator');
+                if (pageKey === 'approach-2' && arrowIndicator) {
+                    arrowIndicator.classList.add('hidden');
+                    arrowIndicator.classList.remove('flex');
                 }
 
                 if (pageKey === 'approach-1') {
                     targetPage.classList.remove('fade-in-active');
                     window.cultureAutoAdvanceReady = true;
                     updateCultureControlsVisibility();
+                    window.requestAnimationFrame(() => {
+                        window.updateCultureScrolly?.();
+                        window.requestAnimationFrame(() => window.updateCultureScrolly?.());
+                    });
                 } else {
                     targetPage.classList.add('fade-in-active');
                 }
 
                 setTimeout(() => {
                     updateCultureControlsVisibility();
-                    if (pageKey === 'approach-2') {
-                        resizeChenStoryFrame();
-                    }
+                    updateInlineApproachReturnVisibility();
                     targetPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 60);
             };
@@ -5124,6 +6594,7 @@
                         stopCultureMusic();
                     }
                     updateCultureControlsVisibility();
+                    updateInlineApproachReturnVisibility();
 
                     setTimeout(() => {
                         selector.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -5133,6 +6604,9 @@
 
                 window.switchView('5-education', true);
             };
+
+            window.addEventListener('scroll', updateInlineApproachReturnVisibility, { passive: true });
+            window.addEventListener('resize', updateInlineApproachReturnVisibility);
 
             // --- 新增：首頁滑鼠與手機滾動偵測 (已加入防連點保護) ---
             let isTransitioning = false; // 建立一個鎖定變數
@@ -5949,6 +7423,21 @@
                     },
                     options: {
                         responsive: true,
+                        maintainAspectRatio: true,
+                        onClick: function(event, elements, chart) {
+                            const note = document.getElementById("youth-chart-note");
+                            if (!note) return;
+                            if (!elements.length) {
+                                note.textContent = "點擊圖表區塊，可查看各類別比例說明。";
+                                return;
+                            }
+                            const index = elements[0].index;
+                            const label = chart.data.labels[index];
+                            const value = chart.data.datasets[0].data[index];
+                            note.textContent = index === 0 || label === "不關心"
+                                ? `不關心：${value}%。排除中立回答後，超過半數青年表示不關心白色恐怖議題。`
+                                : `關心：${value}%。排除中立回答後，仍有部分青年表示關心白色恐怖議題。`;
+                        },
                         plugins: {
                             legend: { display: false },
                             tooltip: {
@@ -5966,23 +7455,56 @@
 
             function initParallaxChartSwap() {
                 const report = document.querySelector('.parallax-report');
-                const trigger = document.querySelector('.chart-trigger');
-                if (!report || !trigger) return;
+                const row = report?.querySelector('.parallax-row');
+                const paragraphs = Array.from(report?.querySelectorAll('.parallax-text p') || []);
+                if (!report || !row || !paragraphs.length) return;
+
+                const clamp01 = (value) => Math.max(0, Math.min(1, value));
 
                 const setChartState = () => {
-                    const rect = trigger.getBoundingClientRect();
-                    const middle = window.innerHeight * 0.58;
-                    report.classList.toggle('show-cloud', rect.top < middle);
-                };
+                    const rect = report.getBoundingClientRect();
+                    const travel = Math.max(1, report.offsetHeight - window.innerHeight);
+                    const progress = clamp01(-rect.top / travel);
+                    const isBefore = rect.top > 0;
+                    const isEnded = rect.bottom <= window.innerHeight;
+                    row.classList.toggle('is-fixed', !isBefore && !isEnded);
+                    row.classList.toggle('is-ended', isEnded);
 
-                if ('IntersectionObserver' in window) {
-                    const observer = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) report.classList.add('show-cloud');
-                        });
-                    }, { threshold: 0.25 });
-                    observer.observe(trigger);
-                }
+                    const chartProgress = clamp01(progress / 0.42);
+                    const cloudProgress = clamp01((progress - 0.24) / 0.42);
+                    const chartGroupY = -110 * chartProgress;
+                    const cloudGroupY = 110 * (1 - cloudProgress);
+                    const shouldShowCloud = progress >= 0.40;
+                    report.classList.toggle('show-cloud', shouldShowCloud);
+
+                    paragraphs.forEach((paragraph, index) => {
+                        const isChartText = progress < 0.46 && index < 2;
+                        const isCloudText = progress >= 0.24 && index >= 2;
+                        paragraph.classList.toggle('is-active', isChartText || isCloudText);
+                        paragraph.style.setProperty('--group-y', `${index < 2 ? chartGroupY : cloudGroupY}vh`);
+
+                        if (index === 0 || index === 2) {
+                            paragraph.style.setProperty('--text-top', '31%');
+                            paragraph.style.setProperty('--text-shift', '-50%');
+                            paragraph.style.setProperty('--text-max-height', '32vh');
+                        } else if (index === 1 || index === 3) {
+                            paragraph.style.setProperty('--text-top', shouldShowCloud ? '61%' : '67%');
+                            paragraph.style.setProperty('--text-shift', '-50%');
+                            paragraph.style.setProperty('--text-max-height', shouldShowCloud ? '32vh' : '34vh');
+                        } else if (index === 4) {
+                            paragraph.style.setProperty('--text-top', '85%');
+                            paragraph.style.setProperty('--text-shift', '-50%');
+                            paragraph.style.setProperty('--text-max-height', '8vh');
+                        } else {
+                            paragraph.style.setProperty('--text-top', '92%');
+                            paragraph.style.setProperty('--text-shift', '-50%');
+                            paragraph.style.setProperty('--text-max-height', '8vh');
+                        }
+                    });
+
+                    updateWordCloudInteractivity();
+                    if (!shouldShowCloud) window.closeBox?.();
+                };
 
                 window.addEventListener('scroll', setChartState, { passive: true });
                 window.addEventListener('resize', setChartState);
@@ -6008,6 +7530,21 @@
                     <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                 </svg>
             `;
+
+            function isWordCloudActive() {
+                return !!document.querySelector('.parallax-report.show-cloud .parallax-cloud-panel');
+            }
+
+            function updateWordCloudInteractivity() {
+                const active = isWordCloudActive();
+                document.querySelectorAll("#cloud .circle").forEach(circle => {
+                    circle.style.pointerEvents = active ? "auto" : "none";
+                });
+                const cloud = document.getElementById("cloud");
+                const wrapper = document.getElementById("cloud-wrapper");
+                if (cloud) cloud.style.pointerEvents = active ? "auto" : "none";
+                if (wrapper) wrapper.style.pointerEvents = active ? "auto" : "none";
+            }
 
             function initWordCloud() {
                 const cloud = document.getElementById("cloud");
@@ -6039,21 +7576,30 @@
                     div.style.left = div.dataset.origLeft;
                     div.style.top = div.dataset.origTop;
                     div.style.opacity = 1;
-                    div.style.pointerEvents = 'auto';
-                    div.onclick = () => showCloudDetail(div, {
+                    div.style.pointerEvents = isWordCloudActive() ? 'auto' : 'none';
+                    div.onclick = (event) => {
+                        if (!isWordCloudActive()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            return;
+                        }
+                        showCloudDetail(div, {
                         word: div.dataset.word,
                         count: div.dataset.count,
                         reply: (div.dataset.replies || '').split('|').filter(Boolean)
-                    });
+                        });
+                    };
                 });
 
                 cloud.dataset.ready = 'true';
+                updateWordCloudInteractivity();
                 adjustCloudScale();
                 requestAnimationFrame(adjustCloudScale);
                 setTimeout(adjustCloudScale, 250);
             }
 
             function showCloudDetail(node, d) {
+                if (!isWordCloudActive()) return;
                 const overlay = document.getElementById("cloud-overlay");
                 const chatContainer = document.getElementById("chat-container");
                 const chatTitle = document.getElementById("chat-title");
@@ -6115,7 +7661,7 @@
 
                 document.querySelectorAll(".circle").forEach(c => {
                     c.style.opacity = 1;
-                    c.style.pointerEvents = "auto";
+                    c.style.pointerEvents = isWordCloudActive() ? "auto" : "none";
                     c.style.transform = "";
                     c.style.zIndex = "";
                     c.style.left = c.dataset.origLeft;
@@ -6129,7 +7675,7 @@
                 if (!wrapper || !cloud) return;
                 const wrapperWidth = wrapper.clientWidth || window.innerWidth || 800;
                 const wrapperHeight = wrapper.clientHeight || 560;
-                const scale = Math.min(wrapperWidth / 800, wrapperHeight / 520, 1);
+                const scale = Math.min(wrapperWidth / 800, wrapperHeight / 520, 0.72);
                 cloud.style.transform = `scale(${scale})`;
             }
 
