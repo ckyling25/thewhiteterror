@@ -3075,11 +3075,28 @@
                             const sceneProgress = progress * count;
                             const activeIndex = Math.min(count - 1, Math.floor(sceneProgress));
 
-                            backgrounds.forEach((bg, index) => {
-                                const distance = Math.abs(sceneProgress - index);
-                                const isLastHold = index === backgrounds.length - 1 && sceneProgress >= index;
-                                bg.style.opacity = String(isLastHold ? 1 : clamp(1 - distance, 0, 1));
-                            });
+                            const currentScene = Math.min(count - 1, Math.floor(sceneProgress));
+							const localProgress = sceneProgress - currentScene;
+							
+							/*
+							  背景轉場時機：
+							  0.00～0.88：維持目前這張背景
+							  0.88～1.00：當文字框幾乎離開螢幕上緣後，才淡入下一張背景
+							*/
+							const bgSwitchStart = 0.9;
+							const bgFadeProgress = clamp((localProgress - bgSwitchStart) / (1 - bgSwitchStart));
+							
+							backgrounds.forEach((bg, index) => {
+							    if (index === currentScene) {
+							        bg.style.opacity = String(1 - bgFadeProgress);
+							    } else if (index === currentScene + 1) {
+							        bg.style.opacity = String(bgFadeProgress);
+							    } else if (currentScene === count - 1 && index === count - 1) {
+							        bg.style.opacity = '1';
+							    } else {
+							        bg.style.opacity = '0';
+							    }
+							});
 
                             copies.forEach((copy, index) => {
                                 const local = sceneProgress - index;
