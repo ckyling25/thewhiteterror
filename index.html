@@ -2282,7 +2282,7 @@
               background: rgba(0, 0, 0, .5);
               border: 1px solid rgba(255,255,255,.22);
               box-shadow: 0 22px 50px rgba(0,0,0,.28);
-              opacity: 0;
+              opacity: 1;
               transform: translateY(86vh);
               z-index: 2;
               pointer-events: none;
@@ -3103,12 +3103,13 @@
                                 const enter = clamp(local / 0.34);
                                 const leave = clamp((local - 0.68) / 0.32);
                                 const y = 86 - (enter * 86) - (leave * 86);
-                                const opacity = clamp(enter * 1.25) * (1 - leave);
-                                const translate = copy.classList.contains('quote-center')
-                                    ? `translate(-50%, ${y}vh)`
-                                    : `translateY(${y}vh)`;
-                                copy.style.opacity = String(opacity);
-                                copy.style.transform = translate;
+                                const isCurrentOrMoving = local >= 0 && local < 1;
+								const translate = copy.classList.contains('quote-center')
+								    ? `translate(-50%, ${y}vh)`
+								    : `translateY(${y}vh)`;
+								
+								copy.style.opacity = isCurrentOrMoving ? '1' : '0';
+								copy.style.transform = translate;
                             });
 
                             if (backgrounds.length && progress >= 0.995) {
