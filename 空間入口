@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>白色恐怖景美紀念園區</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#0b0b0b}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overscroll-behavior-y:none}
+.stage{height:900vh;position:relative}
+.frame{position:sticky;top:0;width:100%;height:100svh;overflow:hidden;background:#0b0b0b;display:grid;place-items:center;isolation:isolate;contain:layout paint}
+.video-shell{width:100%;height:100%;display:grid;place-items:center;overflow:hidden;transform:translateZ(0);will-change:transform}
+video{width:100%;height:100%;object-fit:contain;display:block;background:#0b0b0b;transform:translateZ(0);will-change:transform,width,height}
+.hint{position:fixed;left:50%;bottom:1.25rem;transform:translateX(-50%);z-index:10;padding:.55rem .85rem;border-radius:999px;color:#fff;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);font-size:.9rem;letter-spacing:.04em;opacity:.88;transition:opacity .25s;pointer-events:none}
+.hint.is-hidden{opacity:0}
+.end-card{position:fixed;left:clamp(1.5rem,5vw,4rem);bottom:clamp(2rem,7vh,5rem);z-index:12;max-width:min(36rem,calc(100vw - 3rem));padding:clamp(1rem,2.4vw,1.6rem) clamp(1.15rem,3vw,2rem);border-radius:8px;color:#fff;background:rgba(0,0,0,.58);border:1px solid rgba(255,255,255,.25);box-shadow:0 18px 48px rgba(0,0,0,.28);backdrop-filter:blur(10px);font-size:clamp(1.25rem,2.6vw,2.05rem);font-weight:800;line-height:1.5;opacity:0;transform:translateY(18px);transition:opacity .35s,transform .35s;pointer-events:none}
+.end-card.is-visible{opacity:1;transform:translateY(0)}
+.tour{position:fixed;inset:0;z-index:30;display:none;background:#050505;overflow:hidden}
+.tour.is-active{display:block}
+.scene{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .28s;background:#050505}
+.scene.is-active{opacity:1;pointer-events:auto}
+.scene iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.info-box{position:absolute;left:clamp(1rem,4vw,4.4rem);bottom:clamp(1.2rem,6vh,4rem);z-index:3;width:min(30rem,calc(100vw - 2rem));padding:clamp(.95rem,2vw,1.35rem) clamp(1rem,2.2vw,1.55rem);border-radius:8px;color:#161616;background:rgba(255,255,255,.72);border:1px solid rgba(0,0,0,.16);box-shadow:0 14px 38px rgba(0,0,0,.22);backdrop-filter:blur(8px);font-size:clamp(.95rem,1.5vw,1.2rem);line-height:1.8;font-weight:500}
+.next-control{position:absolute;right:clamp(1rem,4vw,4rem);bottom:clamp(1.2rem,6vh,4rem);z-index:4;display:grid;justify-items:center;gap:.55rem}
+.next-arrow{width:clamp(4.25rem,9vw,6.5rem);aspect-ratio:1;border:0;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;cursor:pointer;transition:transform .18s,background .18s;backdrop-filter:blur(3px)}
+.next-arrow:hover{transform:translateY(-3px);background:rgba(255,255,255,.28)}
+.next-arrow:before{content:"";width:52%;height:52%;background:rgba(255,255,255,.92);clip-path:polygon(50% 0,92% 48%,67% 48%,67% 100%,33% 100%,33% 48%,8% 48%)}
+.arrow-label{color:#161616;background:rgba(255,255,255,.72);border:1px solid rgba(0,0,0,.16);box-shadow:0 14px 38px rgba(0,0,0,.18);backdrop-filter:blur(8px);border-radius:8px;padding:.38rem .65rem;font-size:clamp(.82rem,1.2vw,.98rem);font-weight:800;white-space:nowrap}
+.back-button{position:absolute;left:1rem;top:1rem;z-index:8;border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:.5rem .8rem;color:#fff;background:rgba(0,0,0,.46);cursor:pointer;backdrop-filter:blur(8px);font-weight:700}
+@media(max-width:720px){
+.info-box{left:1rem;right:1rem;bottom:1rem;width:auto;max-width:calc(100vw - 2rem)}
+.next-control{right:1rem;bottom:calc(1rem + 11.5rem)}
+.next-arrow{width:4.2rem}
+.arrow-label{font-size:.78rem}
+}
+</style>
+</head>
+<body>
+<main class="stage" id="stage">
+<section class="frame">
+<div class="video-shell">
+<video id="scrollVideo" preload="auto" muted playsinline src="白恐景美滾動地圖.mp4"></video>
+</div>
+<div class="hint" id="hint">滾動滑鼠探索園區</div>
+<div class="end-card" id="endCard">白色恐怖景美紀念園區<br>（原景美看守所）</div>
+</section>
+</main>
+
+<section class="tour" id="tour" aria-label="白色恐怖景美紀念園區全景導覽">
+<button class="back-button" id="backButton" type="button">返回影片</button>
+
+<article class="scene" id="gate" data-scene="gate">
+<iframe title="白色恐怖景美紀念園區大門全景" allow="xr-spatial-tracking; gyroscope; accelerometer" allowfullscreen scrolling="no" src="https://kuula.co/share/Lc5Vf?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1"></iframe>
+<div class="info-box">仁愛樓為二層樓建物，於1968年改建完工，作為警總軍法處看守所。戒嚴時期有許多政治犯皆曾羈押於此，此為犯人進入牢房前必經之路與門口。</div>
+<div class="next-control">
+<button class="next-arrow" type="button" data-next="cell-door" aria-label="前往監獄門口"></button>
+<div class="arrow-label">點此前往下一場景</div>
+</div>
+</article>
+
+<article class="scene" id="cell-door" data-scene="cell-door">
+<iframe title="仁愛樓59號房門全景" allow="xr-spatial-tracking; gyroscope; accelerometer" allowfullscreen scrolling="no" src="https://kuula.co/share/Lc5Cy?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1"></iframe>
+<div class="info-box">此處為仁愛樓二樓的女性押房，1979年12月13日，陳菊因美麗島事件遭逮捕，並關押於59號房。</div>
+<div class="next-control">
+<button class="next-arrow" type="button" data-next="inside" aria-label="前往監獄內部"></button>
+<div class="arrow-label">點此前往下一場景</div>
+</div>
+</article>
+
+<article class="scene" id="inside" data-scene="inside">
+<iframe title="仁愛樓監獄內部全景" allow="xr-spatial-tracking; gyroscope; accelerometer" allowfullscreen scrolling="no" src="https://kuula.co/share/collection/7T9yQ?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1"></iframe>
+</article>
+</section>
+
+<script>
+const video=document.getElementById('scrollVideo');
+const stage=document.getElementById('stage');
+const hint=document.getElementById('hint');
+const endCard=document.getElementById('endCard');
+const tour=document.getElementById('tour');
+const backButton=document.getElementById('backButton');
+const scenes=[...document.querySelectorAll('.scene')];
+
+let targetTime=0;
+let displayedTime=0;
+let duration=1;
+let rafId=null;
+let tourOpen=false;
+
+function clamp(v,min,max){return Math.min(max,Math.max(min,v))}
+function maxScroll(){return Math.max(1,stage.offsetHeight-innerHeight)}
+
+function syncTargetFromScroll(){
+const progress=clamp(scrollY/maxScroll(),0,1);
+targetTime=progress*duration;
+endCard.classList.toggle('is-visible',progress>.985&&!tourOpen);
+hint.classList.toggle('is-hidden',progress>.06||tourOpen);
+if(!rafId)rafId=requestAnimationFrame(tick);
+}
+
+function tick(){
+rafId=null;
+if(!Number.isFinite(duration)||duration<=0)return;
+const diff=targetTime-displayedTime;
+displayedTime=Math.abs(diff)>.012?displayedTime+diff*.32:targetTime;
+try{video.currentTime=clamp(displayedTime,0,duration)}catch(e){}
+if(Math.abs(targetTime-displayedTime)>.012)rafId=requestAnimationFrame(tick);
+}
+
+function setupVideo(){
+duration=Number.isFinite(video.duration)&&video.duration>0?video.duration:1;
+syncTargetFromScroll();
+}
+
+function showScene(id){
+tourOpen=true;
+tour.classList.add('is-active');
+document.body.style.overflow='hidden';
+scenes.forEach(s=>s.classList.toggle('is-active',s.dataset.scene===id));
+endCard.classList.remove('is-visible');
+hint.classList.add('is-hidden');
+}
+
+function closeTour(){
+tourOpen=false;
+tour.classList.remove('is-active');
+document.body.style.overflow='';
+scenes.forEach(s=>s.classList.remove('is-active'));
+syncTargetFromScroll();
+}
+
+addEventListener('scroll',syncTargetFromScroll,{passive:true});
+addEventListener('resize',syncTargetFromScroll);
+addEventListener('wheel',e=>{
+if(tourOpen)return;
+const atEnd=scrollY>=maxScroll()-4;
+if(atEnd&&e.deltaY>0){
+e.preventDefault();
+showScene('gate');
+}
+},{passive:false});
+
+document.querySelectorAll('[data-next]').forEach(b=>b.addEventListener('click',()=>showScene(b.dataset.next)));
+backButton.addEventListener('click',closeTour);
+video.addEventListener('loadedmetadata',setupVideo,{once:true});
+video.addEventListener('canplay',setupVideo,{once:true});
+video.load();
+setupVideo();
+</script>
+</body>
+</html>
