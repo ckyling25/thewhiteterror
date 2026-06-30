@@ -7456,62 +7456,115 @@
             }
 
             function initParallaxChartSwap() {
-                const report = document.querySelector('.parallax-report');
-                const row = report?.querySelector('.parallax-row');
-                const paragraphs = Array.from(report?.querySelectorAll('.parallax-text p') || []);
-                if (!report || !row || !paragraphs.length) return;
-
-                const clamp01 = (value) => Math.max(0, Math.min(1, value));
-
-                const setChartState = () => {
-                    const rect = report.getBoundingClientRect();
-                    const travel = Math.max(1, report.offsetHeight - window.innerHeight);
-                    const progress = clamp01(-rect.top / travel);
-                    const isBefore = rect.top > 0;
-                    const isEnded = rect.bottom <= window.innerHeight;
-                    row.classList.toggle('is-fixed', !isBefore && !isEnded);
-                    row.classList.toggle('is-ended', isEnded);
-
-                    const chartProgress = clamp01(progress / 0.42);
-                    const cloudProgress = clamp01((progress - 0.24) / 0.42);
-                    const chartGroupY = -110 * chartProgress;
-                    const cloudGroupY = 110 * (1 - cloudProgress);
-                    const shouldShowCloud = progress >= 0.40;
-                    report.classList.toggle('show-cloud', shouldShowCloud);
-
-                    paragraphs.forEach((paragraph, index) => {
-                        const isChartText = progress < 0.46 && index < 2;
-                        const isCloudText = progress >= 0.24 && index >= 2;
-                        paragraph.classList.toggle('is-active', isChartText || isCloudText);
-                        paragraph.style.setProperty('--group-y', `${index < 2 ? chartGroupY : cloudGroupY}vh`);
-
-                        if (index === 0 || index === 2) {
-                            paragraph.style.setProperty('--text-top', '31%');
-                            paragraph.style.setProperty('--text-shift', '-50%');
-                            paragraph.style.setProperty('--text-max-height', '32vh');
-                        } else if (index === 1 || index === 3) {
-                            paragraph.style.setProperty('--text-top', shouldShowCloud ? '61%' : '67%');
-                            paragraph.style.setProperty('--text-shift', '-50%');
-                            paragraph.style.setProperty('--text-max-height', shouldShowCloud ? '32vh' : '34vh');
-                        } else if (index === 4) {
-                            paragraph.style.setProperty('--text-top', '85%');
-                            paragraph.style.setProperty('--text-shift', '-50%');
-                            paragraph.style.setProperty('--text-max-height', '8vh');
-                        } else {
-                            paragraph.style.setProperty('--text-top', '92%');
-                            paragraph.style.setProperty('--text-shift', '-50%');
-                            paragraph.style.setProperty('--text-max-height', '8vh');
-                        }
-                    });
-
-                    updateWordCloudInteractivity();
-                    if (!shouldShowCloud) window.closeBox?.();
-                };
-
-                window.addEventListener('scroll', setChartState, { passive: true });
-                window.addEventListener('resize', setChartState);
-                setChartState();
-            }
+			    const report = document.querySelector('.parallax-report');
+			    const row = report?.querySelector('.parallax-row');
+			    const paragraphs = Array.from(report?.querySelectorAll('.parallax-text p') || []);
+			    if (!report || !row || !paragraphs.length) return;
+			
+			    const clamp01 = (value) => Math.max(0, Math.min(1, value));
+			
+			    const setParagraph = (paragraph, {
+			        active,
+			        top,
+			        shift = '-50%',
+			        y = 0,
+			        maxHeight = 'none'
+			    }) => {
+			        paragraph.classList.toggle('is-active', active);
+			        paragraph.style.setProperty('--text-top', top);
+			        paragraph.style.setProperty('--text-shift', shift);
+			        paragraph.style.setProperty('--group-y', `${y}vh`);
+			        paragraph.style.setProperty('--text-max-height', maxHeight);
+			    };
+			
+			    const setChartState = () => {
+			        const rect = report.getBoundingClientRect();
+			        const travel = Math.max(1, report.offsetHeight - window.innerHeight);
+			        const progress = clamp01(-rect.top / travel);
+			
+			        const isBefore = rect.top > 0;
+			        const isEnded = rect.bottom <= window.innerHeight;
+			
+			        row.classList.toggle('is-fixed', !isBefore && !isEnded);
+			        row.classList.toggle('is-ended', isEnded);
+			
+			        /*
+			          文字顯示時機：
+			          0.00～0.42：第一組文字往上離開
+			          0.24～0.66：第二組文字從下方進場
+			          0.34 後：開始切換成文字雲
+			        */
+			        const firstProgress = clamp01(progress / 0.42);
+			        const secondProgress = clamp01((progress - 0.24) / 0.42);
+			
+			        const firstY = -115 * firstProgress;
+			        const secondY = 115 * (1 - secondProgress);
+			
+			        const shouldShowCloud = progress >= 0.34;
+			        report.classList.toggle('show-cloud', shouldShowCloud);
+			
+			        paragraphs.forEach((paragraph, index) => {
+			            // 第一組：白恐之所以...、國立臺灣大學...
+			            if (index === 0) {
+			                setParagraph(paragraph, {
+			                    active: progress < 0.50,
+			                    top: '30%',
+			                    y: firstY,
+			                    maxHeight: '34vh'
+			                });
+			            } else if (index === 1) {
+			                setParagraph(paragraph, {
+			                    active: progress < 0.50,
+			                    top: '62%',
+			                    y: firstY,
+			                    maxHeight: '34vh'
+			                });
+			
+			            // 第二組：根據本報記者...、黃長玲提醒...
+			            } else if (index === 2) {
+			                setParagraph(paragraph, {
+			                    active: progress >= 0.24,
+			                    top: '30%',
+			                    y: secondY,
+			                    maxHeight: '32vh'
+			                });
+			            } else if (index === 3) {
+			                setParagraph(paragraph, {
+			                    active: progress >= 0.24,
+			                    top: '58%',
+			                    y: secondY,
+			                    maxHeight: '32vh'
+			                });
+			
+			            // 註一、註二
+			            } else if (index === 4) {
+			                setParagraph(paragraph, {
+			                    active: progress >= 0.30,
+			                    top: '82%',
+			                    y: secondY,
+			                    maxHeight: '8vh'
+			                });
+			            } else if (index === 5) {
+			                setParagraph(paragraph, {
+			                    active: progress >= 0.30,
+			                    top: '90%',
+			                    y: secondY,
+			                    maxHeight: '8vh'
+			                });
+			            }
+			        });
+			
+			        updateWordCloudInteractivity();
+			
+			        if (!shouldShowCloud) {
+			            window.closeBox?.();
+			        }
+			    };
+			
+			    window.addEventListener('scroll', setChartState, { passive: true });
+			    window.addEventListener('resize', setChartState);
+			    setChartState();
+			}
 
             initParallaxChartSwap();
             initYouthAttitudeChart();
