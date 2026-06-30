@@ -2213,6 +2213,148 @@
               transform: scale(1.08);
               background: #eee;
             }
+
+            .outer-circle-scrolly {
+              position: relative;
+              width: 100vw;
+              margin-left: calc(50% - 50vw);
+              height: 480vh;
+              background: #0e0e0c;
+            }
+
+            .outer-circle-stage {
+              position: sticky;
+              top: 0;
+              height: 100vh;
+              overflow: hidden;
+              background: #0e0e0c;
+            }
+
+            .outer-circle-bg {
+              position: absolute;
+              inset: 0;
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              opacity: 0;
+              transform: scale(1.04);
+              transition: opacity .18s linear;
+            }
+
+            .outer-circle-stage::after {
+              content: "";
+              position: absolute;
+              inset: 0;
+              background:
+                linear-gradient(90deg, rgba(0,0,0,.58), rgba(0,0,0,.18) 48%, rgba(0,0,0,.34)),
+                linear-gradient(0deg, rgba(0,0,0,.42), rgba(0,0,0,.08) 38%, rgba(0,0,0,.35));
+              pointer-events: none;
+              z-index: 1;
+            }
+
+            .outer-circle-copy {
+              position: absolute;
+              left: clamp(1.25rem, 7vw, 7rem);
+              bottom: 50%;
+              width: min(680px, 58vw);
+              padding: clamp(1.2rem, 2.4vw, 2rem);
+              color: #fffaf2;
+              background: rgba(0, 0, 0, .5);
+              border: 1px solid rgba(255,255,255,.22);
+              box-shadow: 0 22px 50px rgba(0,0,0,.28);
+              opacity: 0;
+              transform: translateY(86vh);
+              z-index: 2;
+              pointer-events: none;
+            }
+
+            .outer-circle-copy p {
+              margin: 0;
+              font-size: clamp(1rem, 1.35vw, 1.22rem);
+              line-height: 2;
+              letter-spacing: .02em;
+              text-align: justify;
+            }
+
+            .outer-circle-copy .outer-circle-note {
+              display: block;
+              margin-top: 1rem;
+              color: rgba(255,250,242,.78);
+              font-size: clamp(.82rem, .95vw, .95rem);
+              line-height: 1.7;
+            }
+
+            .outer-circle-copy.quote-center {
+              left: 50%;
+              bottom: 50%;
+              width: min(760px, 72vw);
+              transform: translate(-50%, 86vh);
+            }
+
+            .outer-circle-copy.quote-center p {
+              text-align: justify;
+              font-size: clamp(1rem, 1.25vw, 1.15rem);
+              font-family: "Noto Serif TC", serif;
+              line-height: 1.8;
+            }
+
+            .outer-circle-quote {
+              display: block;
+              margin-bottom: 1rem;
+              text-align: center;
+              font-size: clamp(1.25rem, 2.4vw, 2rem);
+              font-weight: 700;
+              line-height: 1.7;
+            }
+
+            .outer-circle-body {
+              display: block;
+              font-family: "Noto Sans TC", sans-serif;
+              font-weight: 400;
+              line-height: 2;
+            }
+
+            @media (max-width: 768px) {
+              .outer-circle-scrolly {
+                height: 500vh;
+              }
+
+              .outer-circle-copy,
+              .outer-circle-copy.quote-center {
+                left: 50%;
+                bottom: 11vh;
+                width: min(92vw, 620px);
+                padding: 1rem;
+                transform: translate(-50%, 86vh);
+              }
+
+              .outer-circle-copy p {
+                font-size: .98rem;
+                line-height: 1.85;
+              }
+
+              .outer-circle-copy.quote-center p {
+                font-size: 1.35rem;
+              }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+              .outer-circle-scrolly {
+                height: auto;
+              }
+
+              .outer-circle-stage {
+                position: relative;
+                height: auto;
+              }
+
+              .outer-circle-bg,
+              .outer-circle-copy {
+                position: relative;
+                opacity: 1 !important;
+                transform: none !important;
+              }
+            }
         
             @keyframes envelopeNudge {
               50% {
@@ -2864,17 +3006,79 @@
                         </h2>
                     </div>
 
-                                        <div class="space-y-8 text-base md:text-lg text-gray-600 leading-loose text-justify">
-                        <p>儘管政府和民間做了許多努力，但白恐及轉型正義議題依舊難以打破同溫層，陳永謙分享籌辦活動時的觀察，「基本上七、八成參與者對這個議題有一定程度的了解，參加是想要加深認識或精進認知。」雖持續有講座、電影會等活動帶動討論，然而青年多為個人或小組行動，觸及對象往往僅限於既有關注者。張惠君也有類似觀察，因此他積極嘗試突破同溫層，如在邀請講者時，不一定限制於研究白色恐怖的學者，也會邀請作家、詩人、Podcaster等多元領域的創作者參與，「有些粉絲從來不會到中正紀念堂裡，但因為有他們的演講，粉絲就會願意進來。」</p>
+                    <section class="outer-circle-scrolly" id="outerCircleScrolly" aria-label="如何走出同溫層的四段故事">
+                        <div class="outer-circle-stage">
+                            <img class="outer-circle-bg" src="images/outer-circle-1.jpeg" alt="青年走讀壁畫現場">
+                            <img class="outer-circle-bg" src="images/outer-circle-2.jpeg" alt="版畫作品展出現場">
+                            <img class="outer-circle-bg" src="images/outer-circle-3.jpg" alt="青年體驗營於白色恐怖綠島紀念園區合影">
+                            <img class="outer-circle-bg" src="images/outer-circle-4.jpg" alt="青年於園區空間中討論">
 
-                        <p>青年學子也試圖透過自身力量，讓更多人認識威權時期的臺灣。如臺大學生會轉型正義小組舉辦轉型正義相關講座、電影會等，並製作事件懶人包，希望提供大眾正確的資訊管道；探霧者工作隊則選擇利用版畫、讀劇與速寫走讀等多元活動，將生硬的學術知識轉化為公眾易理解的形式。探霧者成員楊矞菁解釋，比起學術路線，團隊的主要目的是與公眾對話，「像你今天可能不會看一個學術論文，但你可能會去看讀劇（註二）。」他們以熱愛的藝術為媒介，希望讓認為白恐知識難以入口的民眾願意接觸。</p>
+                            <article class="outer-circle-copy">
+                                <p>青年學子也試圖透過自身力量，讓更多人認識威權時期的臺灣。如臺大學生會轉型正義小組舉辦轉型正義相關講座、電影會等，並製作事件懶人包，希望提供大眾正確的資訊管道。</p>
+                            </article>
 
-                        <div class="bg-gray-100 p-6 rounded-xl border border-gray-200/50 text-sm md:text-base text-gray-600 my-8">
-                            <strong>註二：</strong>讀劇（Play Reading）是一種以劇本文本為核心的舞台演出形式。
+                            <article class="outer-circle-copy">
+                                <p>探霧者工作隊則選擇利用版畫、讀劇與速寫走讀等多元活動，將生硬的學術知識轉化為公眾易理解的形式。探霧者成員楊矞菁解釋，比起學術路線，團隊的主要目的是與公眾對話，「像你今天可能不會看一個學術論文，但你可能會去看讀劇（註二）。」他們以熱愛的藝術為媒介，希望讓認為白恐知識難以入口的民眾願意接觸。<span class="outer-circle-note">註二：讀劇（Play Reading）是一種以劇本文本為核心的舞台演出形式。</span></p>
+                            </article>
+
+                            <article class="outer-circle-copy quote-center">
+                                <p><span class="outer-circle-quote">「年輕人喜歡什麼，年輕人自己知道。」</span><span class="outer-circle-body">每年暑假的「人權之路-青年體驗營」由學子青年主導活動規劃與課程設計，陳文成博士紀念基金會從旁協助，帶領學員遠赴曾為政治犯監獄的白色恐怖綠島紀念園區。張龍橋解釋，為了避免活動淪為沉重的歷史教育，同時也要吸引青年參與，最好的方式就是從青年的角度出發。例如其中一個活動是在監獄牢房中撰寫家書，讓學員身處在沒有冷氣且體感高達40度的環境，透過生理上的不適來同理受難者。</span></p>
+                            </article>
+
+                            <article class="outer-circle-copy">
+                                <p>此外，也有在園區現場與遊客講解的社會溝通課程，蘇悅則對此印象深刻，「遊客多數不是不在乎就是認知程度為零，我覺得如果沒有去跟大家溝通的話，大家只會疑惑為何不要蓋成觀光區。」他也認為監獄不只是冷冰冰的歷史建築，而是一個家庭或是一個人的生命故事，受難者的創傷應該要被傾聽，讓記憶可以傳承下去。</p>
+                            </article>
                         </div>
+                    </section>
 
-                        <p>每年暑假的「人權之路-青年體驗營」由學子青年主導活動規劃與課程設計，陳文成博士紀念基金會從旁協助，帶領學員遠赴曾為政治犯監獄的白色恐怖綠島紀念園區。張龍橋解釋，為了避免活動淪為沉重的歷史教育，同時也要吸引青年參與，最好的方式就是從青年的角度出發，「年輕人喜歡什麼，年輕人自己知道。」例如其中一個活動是在監獄牢房中撰寫家書，讓學員身處在沒有冷氣且體感高達40度的環境，透過生理上的不適來同理受難者 。此外，也有在園區現場與遊客講解的社會溝通課程，蘇悅則對此印象深刻，「遊客多數不是不在乎就是認知程度為零，我覺得如果沒有去跟大家溝通的話，大家只會疑惑為何不要蓋成觀光區。」他也認為監獄不只是冷冰冰的歷史建築，而是一個家庭或是一個人的生命故事，受難者的創傷應該要被傾聽，讓記憶可以傳承下去。</p>
-                    </div>
+                    <script>
+                    (() => {
+                        const scrolly = document.getElementById('outerCircleScrolly');
+                        if (!scrolly) return;
+
+                        const backgrounds = Array.from(scrolly.querySelectorAll('.outer-circle-bg'));
+                        const copies = Array.from(scrolly.querySelectorAll('.outer-circle-copy'));
+                        const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+
+                        function updateOuterCircleScrolly() {
+                            const rect = scrolly.getBoundingClientRect();
+                            const travel = Math.max(1, scrolly.offsetHeight - window.innerHeight);
+                            const progress = clamp(-rect.top / travel);
+                            const count = Math.max(1, copies.length);
+                            const sceneProgress = progress * count;
+                            const activeIndex = Math.min(count - 1, Math.floor(sceneProgress));
+
+                            backgrounds.forEach((bg, index) => {
+                                const distance = Math.abs(sceneProgress - index);
+                                const isLastHold = index === backgrounds.length - 1 && sceneProgress >= index;
+                                bg.style.opacity = String(isLastHold ? 1 : clamp(1 - distance, 0, 1));
+                            });
+
+                            copies.forEach((copy, index) => {
+                                const local = sceneProgress - index;
+                                const enter = clamp(local / 0.34);
+                                const leave = clamp((local - 0.68) / 0.32);
+                                const y = 86 - (enter * 86) - (leave * 86);
+                                const opacity = clamp(enter * 1.25) * (1 - leave);
+                                const translate = copy.classList.contains('quote-center')
+                                    ? `translate(-50%, ${y}vh)`
+                                    : `translateY(${y}vh)`;
+                                copy.style.opacity = String(opacity);
+                                copy.style.transform = translate;
+                            });
+
+                            if (backgrounds.length && progress >= 0.995) {
+                                backgrounds.forEach((bg, index) => {
+                                    bg.style.opacity = index === backgrounds.length - 1 ? '1' : '0';
+                                });
+                            }
+                        }
+
+                        window.addEventListener('scroll', updateOuterCircleScrolly, { passive: true });
+                        window.addEventListener('resize', updateOuterCircleScrolly);
+                        updateOuterCircleScrolly();
+                    })();
+                    </script>
 
 <div class="my-16 text-center w-screen relative left-1/2 -translate-x-1/2">
                         <section id="letters" class="letters-section">
