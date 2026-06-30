@@ -2223,12 +2223,32 @@
             }
 
             .outer-circle-stage {
-              position: sticky;
-              top: 0;
-              height: 100vh;
-              overflow: hidden;
-              background: #0e0e0c;
-            }
+			  position: absolute;
+			  top: 0;
+			  left: 0;
+			  width: 100%;
+			  height: 100vh;
+			  overflow: hidden;
+			  background: #0e0e0c;
+			}
+			
+			.outer-circle-stage.is-fixed {
+			  position: fixed;
+			  top: 0;
+			  left: 0;
+			  width: 100%;
+			  height: 100vh;
+			  z-index: 40;
+			}
+			
+			.outer-circle-stage.is-ended {
+			  position: absolute;
+			  top: auto;
+			  bottom: 0;
+			  left: 0;
+			  width: 100%;
+			  height: 100vh;
+			}
 
             .outer-circle-bg {
               position: absolute;
@@ -3036,14 +3056,21 @@
                         const scrolly = document.getElementById('outerCircleScrolly');
                         if (!scrolly) return;
 
-                        const backgrounds = Array.from(scrolly.querySelectorAll('.outer-circle-bg'));
-                        const copies = Array.from(scrolly.querySelectorAll('.outer-circle-copy'));
+                        const stage = scrolly.querySelector('.outer-circle-stage');
+						const backgrounds = Array.from(scrolly.querySelectorAll('.outer-circle-bg'));
+						const copies = Array.from(scrolly.querySelectorAll('.outer-circle-copy'));
+						if (!stage) return;
                         const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 
                         function updateOuterCircleScrolly() {
                             const rect = scrolly.getBoundingClientRect();
                             const travel = Math.max(1, scrolly.offsetHeight - window.innerHeight);
                             const progress = clamp(-rect.top / travel);
+							const isBefore = rect.top > 0;
+							const isEnded = rect.bottom <= window.innerHeight;
+							
+							stage.classList.toggle('is-fixed', !isBefore && !isEnded);
+							stage.classList.toggle('is-ended', isEnded);
                             const count = Math.max(1, copies.length);
                             const sceneProgress = progress * count;
                             const activeIndex = Math.min(count - 1, Math.floor(sceneProgress));
