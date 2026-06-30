@@ -7495,13 +7495,13 @@
 			          0.24～0.66：第二組文字從下方進場
 			          0.34 後：開始切換成文字雲
 			        */
-			        const firstProgress = clamp01(progress / 0.42);
-			        const secondProgress = clamp01((progress - 0.24) / 0.42);
-			
-			        const firstY = -115 * firstProgress;
-			        const secondY = 115 * (1 - secondProgress);
-			
-			        const shouldShowCloud = progress >= 0.34;
+			        const firstProgress = clamp01(progress / 0.44);
+					const secondProgress = clamp01((progress - 0.12) / 0.32);
+					
+					const firstY = -125 * firstProgress;
+					const secondY = 90 * (1 - secondProgress);
+					
+					const shouldShowCloud = progress >= 0.30;
 			        report.classList.toggle('show-cloud', shouldShowCloud);
 			
 			        paragraphs.forEach((paragraph, index) => {
@@ -7524,14 +7524,14 @@
 			            // 第二組：根據本報記者...、黃長玲提醒...
 			            } else if (index === 2) {
 			                setParagraph(paragraph, {
-			                    active: progress >= 0.24,
+			                    active: progress >= 0.12,
 			                    top: '30%',
 			                    y: secondY,
 			                    maxHeight: '32vh'
 			                });
 			            } else if (index === 3) {
 			                setParagraph(paragraph, {
-			                    active: progress >= 0.24,
+			                    active: progress >= 0.12,
 			                    top: '58%',
 			                    y: secondY,
 			                    maxHeight: '32vh'
