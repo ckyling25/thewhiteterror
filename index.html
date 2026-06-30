@@ -54,6 +54,9 @@
             scrollbar-width: none;
         }
 
+		.section-divider-line {
+		    border-top: 1px solid rgba(160, 150, 140, 0.32);
+		}
         /* 頁面切換過渡 */
         .section-view {
             transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
@@ -2998,7 +3001,7 @@
 
         <!-- 倒數器後的新敘事內容 -->
         <div id="article-body-start">
-            <section class="democracy-timeline-stage" id="democracyTimelineSection">
+            <section class="democracy-timeline-stage section-divider-line" id="democracyTimelineSection">
                 <div class="democracy-timeline-pin">
             <section class="democracy-intro">
                 <div class="democracy-copy">
@@ -3237,7 +3240,7 @@
     </section>
 
     <!-- 頁面 4：逐題展開的互動測驗 -->
-    <section id="page-4-quiz-container" class="section-view hidden min-h-screen flex-col items-center py-14 md:py-20 px-3 md:px-6 z-10">
+    <section id="page-4-quiz-container" class="section-divider-line section-view hidden min-h-screen flex-col items-center py-14 md:py-20 px-3 md:px-6 z-10">
         <header class="max-w-3xl text-center mb-4 md:mb-6 px-4 shrink-0">
             <h2 class="serif-title text-3xl md:text-5xl font-bold text-gray-800 leading-tight whitespace-nowrap">你對白色恐怖了解多少？</h2>
             <p class="text-sm md:text-base text-stone-600 leading-relaxed">作答後立即查看解答，以及和你做出相同選擇的填答者比例。</p>
