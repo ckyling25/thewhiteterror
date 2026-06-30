@@ -7700,7 +7700,7 @@
 			          0.34 後：開始切換成文字雲
 			        */
 			        const firstProgress = clamp01(progress / 0.44);
-					const secondProgress = clamp01((progress - 0.12) / 0.32);
+					const secondProgress = clamp01((progress - 0.05) / 0.32);
 					
 					const firstY = -125 * firstProgress;
 					const secondY = 90 * (1 - secondProgress);
@@ -7728,14 +7728,14 @@
 			            // 第二組：根據本報記者...、黃長玲提醒...
 			            } else if (index === 2) {
 			                setParagraph(paragraph, {
-			                    active: progress >= 0.12,
+			                    active: progress >= 0.05,
 			                    top: '30%',
 			                    y: secondY,
 			                    maxHeight: '32vh'
 			                });
 			            } else if (index === 3) {
 			                setParagraph(paragraph, {
-			                    active: progress >= 0.12,
+			                    active: progress >= 0.05,
 			                    top: '58%',
 			                    y: secondY,
 			                    maxHeight: '32vh'
