@@ -1833,13 +1833,30 @@
             line-height: 1;
         }
 
+        #page-4-quiz-container {
+            padding-top: clamp(1.75rem, 4vh, 3rem) !important;
+            padding-bottom: clamp(1.75rem, 4vh, 3rem) !important;
+        }
+
+        #page-4-quiz-container > h2 {
+            margin-bottom: 0.45rem !important;
+            font-size: clamp(2.45rem, 4vw, 3.5rem) !important;
+            line-height: 1.12 !important;
+        }
+
+        #page-4-quiz-container > p {
+            margin-bottom: clamp(1.5rem, 3.2vh, 2.25rem) !important;
+            font-size: clamp(0.86rem, 1vw, 1rem) !important;
+        }
+
         .quiz-list {
             --quiz-divider-gap: clamp(2.1rem, 4vh, 2.8rem);
-            width: min(70vw, 1180px);
+            width: min(82vw, 1320px);
             margin-inline: auto;
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: clamp(1.25rem, 2.2vw, 2rem);
+            column-gap: clamp(2.25rem, 4vw, 4rem);
+            row-gap: clamp(1rem, 2.2vh, 1.75rem);
         }
 
         .quiz-item + .quiz-item {
@@ -1849,28 +1866,37 @@
         }
 
         .quiz-item:nth-child(n + 3) {
-            margin-top: clamp(1.25rem, 3.8vh, 2.75rem);
+            margin-top: clamp(0.7rem, 1.8vh, 1.35rem);
         }
 
         .quiz-card {
             position: relative;
-            min-height: clamp(315px, 38vh, 400px);
-		    padding: clamp(2.4rem, 4.2vw, 3.8rem) clamp(2.9rem, 5vw, 4.9rem);
+            min-height: clamp(200px, 24vh, 260px);
+		    padding: clamp(1.6rem, 2.75vw, 2.35rem) clamp(2.55rem, 4.4vw, 4.25rem);
             background: url('quiz-paper.webp') center / 100% 100% no-repeat;
             filter: drop-shadow(0 18px 22px rgba(31, 24, 17, 0.2));
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             opacity: 0;
             transform: translateY(28px);
             animation: quizCardIn 0.65s ease forwards;
         }
 
         .quiz-card h3 {
-		    overflow-wrap: anywhere;
-		    font-size: clamp(1rem, 1.55vw, 1.28rem) !important;
-		    line-height: 1.65;
+		    overflow-wrap: normal;
+            min-height: 4.6em;
+		    font-size: clamp(0.78rem, 1vw, 0.98rem) !important;
+		    line-height: 1.5;
+            display: flex;
+            align-items: center;
 		}
+
+        .quiz-item:nth-child(n + 3) .quiz-card h3 {
+            white-space: normal;
+            min-height: 4.6em;
+            font-size: clamp(0.78rem, 1vw, 0.98rem) !important;
+        }
 
         @keyframes quizCardIn {
             to { opacity: 1; transform: translateY(0); }
@@ -1881,16 +1907,16 @@
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: clamp(0.75rem, 1.35vw, 1rem);
-            margin-top: 1.15rem;
+            margin-top: auto;
         }
 
         .quiz-option {
             position: relative;
             overflow: visible;
             isolation: isolate;
-            min-height: 58px;
-            padding-inline: 0.85rem;
-			font-size: clamp(0.92rem, 1vw, 1rem);
+            min-height: 46px;
+            padding-inline: 0.75rem;
+			font-size: clamp(0.84rem, 0.9vw, 0.94rem);
             border: 1px solid rgba(67, 55, 42, 0.38);
             border-radius: 0.65rem;
             background: linear-gradient(rgba(255, 253, 248, 0.94), rgba(255, 253, 248, 0.94)), #fff;
@@ -1925,7 +1951,7 @@
             z-index: 20;
             left: var(--fingerprint-x);
             top: var(--fingerprint-y);
-            width: clamp(52px, 42%, 72px);
+            width: min(50px, 62%);
             height: auto;
             pointer-events: none;
             user-select: none;
@@ -1937,25 +1963,25 @@
                 rotate(var(--fingerprint-rotation))
                 scale(0.42);
             transform-origin: center;
-            animation: fingerprintStamp 0.56s cubic-bezier(0.2, 0.8, 0.25, 1) forwards;
+            animation: fingerprintStamp 0.68s cubic-bezier(0.16, 0.9, 0.24, 1) forwards;
         }
 
         @keyframes fingerprintStamp {
             0% {
                 opacity: 0;
-                filter: blur(1.5px);
+                filter: blur(2px) contrast(1.2);
                 transform:
-                    translate(-50%, -50%)
+                    translate(-50%, -135%)
                     rotate(var(--fingerprint-rotation))
-                    scale(0.42);
+                    scale(2);
             }
-            58% {
+            52% {
                 opacity: 1;
                 filter: blur(0) contrast(1.35);
                 transform:
-                    translate(-50%, -50%)
+                    translate(-50%, -45%)
                     rotate(var(--fingerprint-rotation))
-                    scale(1.08);
+                    scale(0.92);
             }
             100% {
                 opacity: 1;
@@ -2016,19 +2042,26 @@
 
         .quiz-feedback-copy {
             color: #57534e;
-            font-size: clamp(1rem, 1.35vw, 1.12rem);
-            line-height: 1.7;
+            font-size: clamp(0.84rem, 0.95vw, 0.98rem);
+            line-height: 1.6;
+            white-space: nowrap;
         }
 
         .quiz-scale {
             position: relative;
-            height: 42px;
-            display: flex;
             overflow: visible;
-            width: 82%;
+            width: 96%;
+            margin: 3rem auto 0;
+            padding-top: 2.25rem;
+        }
+
+        .quiz-scale-track {
+            display: flex;
+            height: 42px;
+            overflow: visible;
             border: 1px solid rgba(67, 55, 42, 0.38);
             border-radius: 0.4rem;
-            margin: 3.25rem auto 0;
+            background: rgba(255, 255, 255, 0.42);
         }
 
         .quiz-feedback .quiz-scale {
@@ -2040,14 +2073,23 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            height: 100%;
             min-width: 0;
             overflow: visible;
             color: #29251f;
-            font-size: 0.78rem;
+            font-size: clamp(0.62rem, 0.72vw, 0.74rem);
             font-weight: 700;
             white-space: nowrap;
             background: rgba(115, 101, 84, 0.14);
-            border-right: 1px solid rgba(67, 55, 42, 0.2);
+            border-right: 0;
+        }
+
+        .quiz-scale-label {
+            display: block;
+            max-width: 100%;
+            overflow: visible;
+            padding-inline: 0.16rem;
+            text-align: center;
         }
 
         .quiz-scale-segment:hover,
@@ -2097,10 +2139,18 @@
         }
         .quiz-scale-segment:last-child { border-right: 0; }
 
+        .quiz-scale-segment:first-child {
+            border-radius: 0.34rem 0 0 0.34rem;
+        }
+
+        .quiz-scale-segment:last-child {
+            border-radius: 0 0.34rem 0.34rem 0;
+        }
+
         .quiz-marker {
             position: absolute;
             z-index: 2;
-            bottom: calc(100% + 8px);
+            top: 0;
             transform: translateX(-50%);
             padding: 0.42rem 0.68rem;
             border-radius: 0.35rem;
@@ -2118,6 +2168,30 @@
             border: 5px solid transparent;
             border-top-color: #8d2d2d;
             transform: translateX(-50%);
+        }
+
+        .quiz-scale-legend {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(0.85rem, 2vw, 1.45rem);
+            margin-top: 0.7rem;
+            color: #57534e;
+            font-size: clamp(0.78rem, 0.9vw, 0.88rem);
+            font-weight: 700;
+        }
+
+        .quiz-scale-legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.36rem;
+        }
+
+        .quiz-scale-dot {
+            width: 0.68rem;
+            height: 0.68rem;
+            border-radius: 999px;
+            box-shadow: inset 0 0 0 1px rgba(67, 55, 42, 0.18);
         }
 
         @media (max-width: 900px) {
@@ -8292,6 +8366,15 @@
                 const markerPosition = question.options
                     .slice(0, selectedIndex)
                     .reduce((sum, option) => sum + option.stat, 0) + selected.stat / 2;
+                const scaleOptions = question.options.map((option, optionIndex, options) => {
+                    const previousTotal = options
+                        .slice(0, optionIndex)
+                        .reduce((sum, current) => sum + current.stat, 0);
+                    const visualStat = optionIndex === options.length - 1
+                        ? Math.max(0, 100 - previousTotal)
+                        : option.stat;
+                    return { ...option, visualStat };
+                });
 
                 stampFingerprint(selectedButton, event);
                 item.classList.add('is-answered');
@@ -8313,11 +8396,21 @@
                         <section class="quiz-panel">
                             <div class="quiz-scale">
                                 <span class="quiz-marker" style="left:${markerPosition}%">你的選擇</span>
-                                ${question.options.map((option, optionIndex) => `
-                                    <span class="quiz-scale-segment ${['scale-yes', 'scale-no', 'scale-unknown'][optionIndex]}" style="width:${option.stat}%" data-count="${option.count}">
-                                        ${option.text} ${option.stat}%
-                                    </span>
-                                `).join('')}
+                                <div class="quiz-scale-track">
+                                    ${scaleOptions.map((option, optionIndex) => `
+                                        <span class="quiz-scale-segment ${['scale-yes', 'scale-no', 'scale-unknown'][optionIndex]}" style="width:${option.visualStat}%" data-count="${option.count}">
+                                            <span class="quiz-scale-label">${option.stat}%</span>
+                                        </span>
+                                    `).join('')}
+                                </div>
+                                <div class="quiz-scale-legend" aria-label="比例尺圖例">
+                                    ${scaleOptions.map((option, optionIndex) => `
+                                        <span class="quiz-scale-legend-item">
+                                            <span class="quiz-scale-dot ${['scale-yes', 'scale-no', 'scale-unknown'][optionIndex]}" aria-hidden="true"></span>
+                                            <span>${option.text}</span>
+                                        </span>
+                                    `).join('')}
+                                </div>
                             </div>
                         </section>
                     </div>
