@@ -2036,11 +2036,12 @@
         }
 
         .quiz-scale-segment {
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             min-width: 0;
-            overflow: hidden;
+            overflow: visible;
             color: #29251f;
             font-size: 0.78rem;
             font-weight: 700;
@@ -2049,9 +2050,51 @@
             border-right: 1px solid rgba(67, 55, 42, 0.2);
         }
 
-        .scale-yes { background: #b9b2a7; }
-        .scale-no { background: #69645d; }
-        .scale-unknown { background: #d9d4cc; }
+        .quiz-scale-segment:hover,
+        .quiz-scale-segment:focus-visible {
+            z-index: 3;
+        }
+
+        .quiz-scale-segment::after {
+            content: '共' attr(data-count) '人';
+            position: absolute;
+            left: 50%;
+            bottom: calc(100% + 10px);
+            min-width: 4.4rem;
+            padding: 0.42rem 0.68rem;
+            border-radius: 0.45rem;
+            background: #3f3b36;
+            color: #fff;
+            font-size: 0.76rem;
+            line-height: 1;
+            text-align: center;
+            box-shadow: 0 8px 18px rgba(41, 37, 31, 0.22);
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, 4px);
+            transition: opacity 0.16s ease, transform 0.16s ease;
+        }
+
+        .quiz-scale-segment:hover::after,
+        .quiz-scale-segment:focus-visible::after {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        .scale-yes {
+            background: #B8A99A;
+            color: #29251f;
+        }
+
+        .scale-no {
+            background: #AAA097;
+            color: #29251f;
+        }
+
+        .scale-unknown {
+            background: #D8D1C7;
+            color: #29251f;
+        }
         .quiz-scale-segment:last-child { border-right: 0; }
 
         .quiz-marker {
@@ -8135,31 +8178,31 @@
                 {
                     title: "白色恐怖（White Terror）一詞，源自法國大革命，指當時以白色為代表色的右派王室對左派人士所採取的報復行動。",
                     correct: "是",
-                    explanation: "「白色恐怖」一詞源自法國大革命後，保王派對革命派人士展開的報復與迫害。",
+                    explanation: "後續「白色恐怖」一詞更常用來指稱威權統治下，國家對人民的迫害與不當審判。",
                     options: [
-                        { text: "是", stat: 33.7 },
-                        { text: "否", stat: 11 },
-                        { text: "不知道", stat: 55.3 }
+                        { text: "是", count: 80, stat: 33.1 },
+                        { text: "否", count: 26, stat: 10.7 },
+                        { text: "不知道", count: 136, stat: 56.2 }
                     ]
                 },
                 {
-                    title: "白恐受難者絕大多數為本省人，外省人極少受到迫害。",
+                    title: "228事件是發生在白色恐怖時期。",
                     correct: "否",
-                    explanation: "外省人約占受難者總數 40～46%，並非極少受到迫害。",
+                    explanation: "228事件發生於1947年，早於白色恐怖。",
                     options: [
-                        { text: "是", stat: 13.4 },
-                        { text: "否", stat: 63.4 },
-                        { text: "不知道", stat: 23.2 }
+                        { text: "是", count: 120, stat: 49.6 },
+                        { text: "否", count: 106, stat: 43.8 },
+                        { text: "不知道", count: 16, stat: 6.6 }
                     ]
                 },
                 {
-                    title: "白恐時期政府鼓勵互相舉報，造成人與人之間不互信。",
-                    correct: "是",
-                    explanation: "威權統治下的檢舉與告密制度滲入日常生活，也加深社會中的恐懼與不信任。",
+                    title: "鹿窟事件是一場由民眾主動發起的大規模抗議行動。",
+                    correct: "否",
+                    explanation: "為白色恐怖時期，政府對疑似共產黨地下組織進行的清查與逮捕行動。",
                     options: [
-                        { text: "是", stat: 89 },
-                        { text: "否", stat: 2 },
-                        { text: "不知道", stat: 9 }
+                        { text: "是", count: 40, stat: 16.5 },
+                        { text: "否", count: 40, stat: 16.5 },
+                        { text: "不知道", count: 162, stat: 66.9 }
                     ]
                 },
                 {
@@ -8167,9 +8210,9 @@
                     correct: "否",
                     explanation: "促進轉型正義委員會以完成階段性任務為由，已於 2022 年 5 月 30 日解散。",
                     options: [
-                        { text: "是", stat: 67.9 },
-                        { text: "否", stat: 15.4 },
-                        { text: "不知道", stat: 16.7 }
+                        { text: "是", count: 165, stat: 68.2 },
+                        { text: "否", count: 36, stat: 14.9 },
+                        { text: "不知道", count: 41, stat: 16.9 }
                     ]
                 }
             ];
@@ -8271,7 +8314,7 @@
                             <div class="quiz-scale">
                                 <span class="quiz-marker" style="left:${markerPosition}%">你的選擇</span>
                                 ${question.options.map((option, optionIndex) => `
-                                    <span class="quiz-scale-segment ${['scale-yes', 'scale-no', 'scale-unknown'][optionIndex]}" style="width:${option.stat}%">
+                                    <span class="quiz-scale-segment ${['scale-yes', 'scale-no', 'scale-unknown'][optionIndex]}" style="width:${option.stat}%" data-count="${option.count}">
                                         ${option.text} ${option.stat}%
                                     </span>
                                 `).join('')}
