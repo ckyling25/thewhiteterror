@@ -1835,11 +1835,11 @@
 
         .quiz-list {
             --quiz-divider-gap: clamp(2.1rem, 4vh, 2.8rem);
-            width: min(100%, 1180px);
+            width: min(70vw, 1180px);
             margin-inline: auto;
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: clamp(2rem, 4vw, 3.5rem);
+            gap: clamp(1.5rem, 3vw, 3rem);
         }
 
         .quiz-item + .quiz-item {
@@ -1854,8 +1854,8 @@
 
         .quiz-card {
             position: relative;
-            min-height: clamp(460px, 56vh, 590px);
-		    padding: clamp(3.8rem, 6.2vw, 5.6rem) clamp(3.1rem, 6.6vw, 5.6rem);
+            min-height: clamp(315px, 38vh, 400px);
+		    padding: clamp(2.4rem, 4.2vw, 3.8rem) clamp(2.9rem, 5vw, 4.9rem);
             background: url('quiz-paper.webp') center / 100% 100% no-repeat;
             filter: drop-shadow(0 18px 22px rgba(31, 24, 17, 0.2));
             display: flex;
@@ -1868,8 +1868,8 @@
 
         .quiz-card h3 {
 		    overflow-wrap: anywhere;
-		    font-size: clamp(1.2rem, 2.1vw, 1.65rem) !important;
-		    line-height: 1.75;
+		    font-size: clamp(1rem, 1.55vw, 1.28rem) !important;
+		    line-height: 1.65;
 		}
 
         @keyframes quizCardIn {
@@ -1880,16 +1880,17 @@
         .quiz-options {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 0.9rem;
-            margin-top: 1.35rem;
+            gap: clamp(0.75rem, 1.35vw, 1rem);
+            margin-top: 1.15rem;
         }
 
         .quiz-option {
             position: relative;
             overflow: visible;
             isolation: isolate;
-            min-height: 76px;
-			font-size: clamp(1rem, 1.25vw, 1.15rem);
+            min-height: 58px;
+            padding-inline: 0.85rem;
+			font-size: clamp(0.92rem, 1vw, 1rem);
             border: 1px solid rgba(67, 55, 42, 0.38);
             border-radius: 0.65rem;
             background: linear-gradient(rgba(255, 253, 248, 0.94), rgba(255, 253, 248, 0.94)), #fff;
@@ -1973,6 +1974,7 @@
         }
 
         .quiz-feedback {
+            width: 100%;
             margin-top: 1rem;
             border: 1px solid rgba(67, 55, 42, 0.3);
             border-radius: 1rem;
@@ -1996,7 +1998,7 @@
         }
 
         .quiz-panel {
-            padding: 1rem 1.35rem;
+            padding: 0.9rem 1.2rem;
         }
 
         .quiz-panel + .quiz-panel {
@@ -2004,18 +2006,18 @@
         }
 
         .quiz-feedback-answer {
-            font-size: clamp(1.32rem, 2.45vw, 1.68rem);
+            font-size: clamp(1.18rem, 2vw, 1.46rem);
             line-height: 1.35;
         }
 
         .quiz-feedback .quiz-panel:nth-child(2) .quiz-feedback-answer {
-            font-size: clamp(1.08rem, 2vw, 1.25rem);
+            font-size: clamp(1rem, 1.5vw, 1.12rem);
         }
 
         .quiz-feedback-copy {
             color: #57534e;
-            font-size: clamp(1.14rem, 2.05vw, 1.28rem);
-            line-height: 1.8;
+            font-size: clamp(1rem, 1.35vw, 1.12rem);
+            line-height: 1.7;
         }
 
         .quiz-scale {
@@ -2637,6 +2639,13 @@
               transform: translate(-50%, 86vh);
             }
 
+            .outer-circle-copy.frame-center {
+              left: 50%;
+              bottom: 50%;
+              width: min(720px, 68vw);
+              transform: translate(-50%, 86vh);
+            }
+
             .outer-circle-copy.quote-center p {
               text-align: justify;
               font-size: clamp(1rem, 1.25vw, 1.15rem);
@@ -2666,7 +2675,8 @@
               }
 
               .outer-circle-copy,
-              .outer-circle-copy.quote-center {
+              .outer-circle-copy.quote-center,
+              .outer-circle-copy.frame-center {
                 left: 50%;
                 bottom: 11vh;
                 width: min(92vw, 620px);
@@ -3275,7 +3285,7 @@
                                 <p><span class="outer-circle-quote">「年輕人喜歡什麼，年輕人自己知道。」</span><span class="outer-circle-body">每年暑假的「人權之路-青年體驗營」由學子青年主導活動規劃與課程設計，陳文成博士紀念基金會從旁協助，帶領學員遠赴曾為政治犯監獄的白色恐怖綠島紀念園區。張龍橋解釋，為了避免活動淪為沉重的歷史教育，同時也要吸引青年參與，最好的方式就是從青年的角度出發。例如其中一個活動是在監獄牢房中撰寫家書，讓學員身處在沒有冷氣且體感高達40度的環境，透過生理上的不適來同理受難者。</span></p>
                             </article>
 
-                            <article class="outer-circle-copy">
+                            <article class="outer-circle-copy frame-center">
                                 <p>此外，也有在園區現場與遊客講解的社會溝通課程，蘇悅則對此印象深刻，「遊客多數不是不在乎就是認知程度為零，我覺得如果沒有去跟大家溝通的話，大家只會疑惑為何不要蓋成觀光區。」他也認為監獄不只是冷冰冰的歷史建築，而是一個家庭或是一個人的生命故事，受難者的創傷應該要被傾聽，讓記憶可以傳承下去。</p>
                             </article>
                         </div>
@@ -3334,7 +3344,7 @@
                                 const leave = clamp((local - 0.68) / 0.32);
                                 const y = 86 - (enter * 86) - (leave * 86);
                                 const isCurrentOrMoving = local >= 0 && local < 1;
-								const translate = copy.classList.contains('quote-center')
+								const translate = (copy.classList.contains('quote-center') || copy.classList.contains('frame-center'))
 								    ? `translate(-50%, ${y}vh)`
 								    : `translateY(${y}vh)`;
 								
@@ -8223,11 +8233,12 @@
 
             function scrollQuizToFeedback(feedback) {
                 if (!feedback) return;
-                const feedbackTop = feedback.getBoundingClientRect().top + window.scrollY;
+                const item = feedback.closest('.quiz-item') || feedback;
+                const itemTop = item.getBoundingClientRect().top + window.scrollY;
                 const offset = window.innerWidth <= 640
-                    ? 28
-                    : Math.min(72, Math.max(48, window.innerHeight * 0.07));
-                window.scrollTo({ top: Math.max(0, feedbackTop - offset), behavior: 'smooth' });
+                    ? 22
+                    : Math.min(96, Math.max(72, window.innerHeight * 0.1));
+                window.scrollTo({ top: Math.max(0, itemTop - offset), behavior: 'smooth' });
             }
 
             function answerQuizQuestion(index, answer, item, selectedButton, event) {
