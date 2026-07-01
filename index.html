@@ -1844,6 +1844,11 @@
             padding-bottom: clamp(1.25rem, 2.8vh, 2rem) !important;
         }
 
+        #page-4-quiz-container.has-quiz-feedback {
+            height: auto !important;
+            max-height: none !important;
+        }
+
         #page-4-quiz-container > h2 {
             margin-bottom: 0.35rem !important;
             font-size: clamp(2.35rem, 3.8vw, 3.35rem) !important;
@@ -8366,6 +8371,7 @@
 
             function answerQuizQuestion(index, answer, item, selectedButton, event) {
                 if (item.classList.contains('is-answered')) return;
+                document.getElementById('page-4-quiz-container')?.classList.add('has-quiz-feedback');
                 const question = quizData[index];
                 const selected = question.options.find(option => option.text === answer);
                 const selectedIndex = question.options.findIndex(option => option.text === answer);
