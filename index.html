@@ -1849,13 +1849,13 @@
         }
 
         .quiz-item:nth-child(n + 3) {
-            margin-top: clamp(24vh, 30vh, 22rem);
+            margin-top: clamp(5rem, 10vh, 7rem);
         }
 
         .quiz-card {
             position: relative;
-            min-height: clamp(390px, 48vh, 500px);
-            padding: clamp(3.2rem, 5.4vw, 4.8rem) clamp(2.6rem, 5.8vw, 4.8rem);
+            min-height: clamp(460px, 56vh, 590px);
+		    padding: clamp(3.8rem, 6.2vw, 5.6rem) clamp(3.1rem, 6.6vw, 5.6rem);
             background: url('quiz-paper.webp') center / 100% 100% no-repeat;
             filter: drop-shadow(0 18px 22px rgba(31, 24, 17, 0.2));
             display: flex;
@@ -1867,9 +1867,10 @@
         }
 
         .quiz-card h3 {
-            overflow-wrap: anywhere;
-            font-size: clamp(1.05rem, 1.85vw, 1.45rem) !important;
-        }
+		    overflow-wrap: anywhere;
+		    font-size: clamp(1.2rem, 2.1vw, 1.65rem) !important;
+		    line-height: 1.75;
+		}
 
         @keyframes quizCardIn {
             to { opacity: 1; transform: translateY(0); }
@@ -1887,7 +1888,8 @@
             position: relative;
             overflow: visible;
             isolation: isolate;
-            min-height: 64px;
+            min-height: 76px;
+			font-size: clamp(1rem, 1.25vw, 1.15rem);
             border: 1px solid rgba(67, 55, 42, 0.38);
             border-radius: 0.65rem;
             background: linear-gradient(rgba(255, 253, 248, 0.94), rgba(255, 253, 248, 0.94)), #fff;
@@ -3094,7 +3096,7 @@
     <!-- 頁面 4：逐題展開的互動測驗 -->
     <section id="page-4-quiz-container" class="section-divider-line section-view hidden min-h-screen flex-col items-center py-14 md:py-20 px-3 md:px-6 z-10">
         <header class="max-w-3xl text-center mb-4 md:mb-6 px-4 shrink-0">
-            <h2 class="serif-title text-3xl md:text-5xl font-bold text-gray-800 leading-tight whitespace-nowrap">你對白色恐怖了解多少？</h2>
+            <h2 class="serif-title text-3xl md:text-5xl font-bold text-gray-800 leading-tight whitespace-nowrap mb-6">你對白色恐怖了解多少？</h2>
             <p class="text-sm md:text-base text-stone-600 leading-relaxed">作答後立即查看解答，以及和你做出相同選擇的填答者比例。</p>
         </header>
 
@@ -8255,9 +8257,6 @@
                             <p class="quiz-feedback-copy mt-3">${question.explanation}</p>
                         </section>
                         <section class="quiz-panel">
-                            <p class="quiz-feedback-answer serif-title font-black text-stone-800">
-                                有多少填答者和你做出相同選擇
-                            </p>
                             <div class="quiz-scale">
                                 <span class="quiz-marker" style="left:${markerPosition}%">你的選擇</span>
                                 ${question.options.map((option, optionIndex) => `
