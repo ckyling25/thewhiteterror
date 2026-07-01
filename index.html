@@ -4725,10 +4725,10 @@
             }
             #page-approach-1 #culture-film-panel .film-sticky-stage {
                 display: grid !important;
-                grid-template-rows: 24px minmax(185px, 27vh) minmax(0, 38vh) !important;
-                align-content: center !important;
-                row-gap: clamp(.55rem, 1.25vh, .85rem) !important;
-                padding: clamp(.75rem, 1.6vh, 1.1rem) clamp(1rem, 3vw, 2.5rem) !important;
+                grid-template-rows: minmax(28px, 4vh) minmax(285px, 39vh) minmax(280px, 37vh) !important;
+                align-content: start !important;
+                row-gap: clamp(.8rem, 1.65vh, 1.2rem) !important;
+                padding: clamp(2.4rem, 6.6vh, 4.75rem) clamp(2rem, 4.5vw, 4.75rem) clamp(1.5rem, 4vh, 3.25rem) !important;
             }
             #page-approach-1 .culture-scrolly-overlay {
                 position: absolute !important;
@@ -4759,76 +4759,83 @@
                 align-self: center !important;
                 margin: 0 auto !important;
                 line-height: 1.2 !important;
+                font-size: clamp(.72rem, .9vw, .88rem) !important;
             }
             #page-approach-1 #culture-film-panel .film-carousel {
                 height: 100% !important;
                 min-height: 0 !important;
-                max-height: 27vh !important;
+                max-height: 39vh !important;
+                width: min(100%, 1160px) !important;
                 z-index: 20 !important;
             }
             #page-approach-1 #culture-film-panel .film-wheel-card {
-                width: clamp(108px, 10.5vw, 152px) !important;
+                width: clamp(154px, 14.2vw, 220px) !important;
             }
             #page-approach-1 #culture-film-panel .film-scroll-detail {
                 z-index: 60 !important;
-                width: min(100%, 1040px) !important;
-                height: min(38vh, 340px) !important;
+                width: min(100%, 1120px) !important;
+                height: min(36vh, 380px) !important;
                 min-height: 0 !important;
-                max-height: 38vh !important;
+                max-height: 36vh !important;
                 overflow: hidden !important;
-                padding: clamp(.45rem, .8vh, .65rem) !important;
-                column-gap: clamp(.45rem, 1vw, .75rem) !important;
+                padding: clamp(1.18rem, 2vh, 1.55rem) !important;
+                column-gap: clamp(1.4rem, 3vw, 2.8rem) !important;
                 align-self: start !important;
+                margin-top: clamp(.45rem, 1vh, .75rem) !important;
+                transform: translateY(clamp(.65rem, 1.35vh, 1rem)) !important;
                 align-items: center !important;
             }
             #page-approach-1 #culture-film-panel .film-detail-copy {
                 min-height: 0 !important;
                 overflow: hidden !important;
-                padding: clamp(.35rem, .75vh, .55rem) !important;
+                padding: clamp(.75rem, 1.25vh, 1.05rem) clamp(.5rem, 1vw, .85rem) !important;
             }
             #page-approach-1 #culture-film-panel .film-detail-label {
-                margin-bottom: .14rem !important;
-                font-size: clamp(.58rem, .68vw, .68rem) !important;
-                line-height: 1.2 !important;
+                margin-bottom: .28rem !important;
+                font-size: clamp(.66rem, .74vw, .76rem) !important;
+                line-height: 1.25 !important;
             }
             #page-approach-1 #culture-film-panel #film-meta {
-                margin-bottom: .08rem !important;
-                font-size: clamp(.68rem, .8vw, .8rem) !important;
-                line-height: 1.2 !important;
+                margin-bottom: .18rem !important;
+                font-size: clamp(.76rem, .86vw, .9rem) !important;
+                line-height: 1.24 !important;
             }
             #page-approach-1 #culture-film-panel #film-title {
-                margin-bottom: .25rem !important;
-                font-size: clamp(1.15rem, 1.55vw, 1.55rem) !important;
-                line-height: 1.12 !important;
+                margin-bottom: .5rem !important;
+                font-size: clamp(1.34rem, 1.86vw, 1.86rem) !important;
+                line-height: 1.15 !important;
             }
             #page-approach-1 #culture-film-panel #film-desc,
             #page-approach-1 #culture-film-panel #film-youth {
-                margin-bottom: .32rem !important;
-                font-size: clamp(.68rem, .82vw, .82rem) !important;
-                line-height: 1.36 !important;
+                margin-bottom: .56rem !important;
+                font-size: clamp(.78rem, .9vw, .94rem) !important;
+                line-height: 1.54 !important;
             }
             #page-approach-1 #culture-film-panel #film-youth {
-                padding-left: .55rem !important;
+                padding-left: .75rem !important;
                 border-left-width: 3px !important;
                 margin-bottom: 0 !important;
             }
             #page-approach-1 #culture-film-panel #film-tags {
-                gap: .25rem !important;
-                margin-bottom: .35rem !important;
+                gap: .46rem !important;
+                margin-bottom: .62rem !important;
             }
             #page-approach-1 #culture-film-panel #film-tags span {
-                padding: .22rem .5rem !important;
-                font-size: clamp(.56rem, .64vw, .66rem) !important;
-                line-height: 1.15 !important;
+                padding: .34rem .68rem !important;
+                font-size: clamp(.62rem, .7vw, .74rem) !important;
+                line-height: 1.18 !important;
             }
             #page-approach-1 #culture-film-panel .film-trailer-card {
-                width: min(100%, 360px) !important;
-                max-height: calc(38vh - 1.3rem) !important;
+                width: min(100%, 440px) !important;
+                max-height: calc(36vh - 2.4rem) !important;
                 align-self: center !important;
                 justify-self: center !important;
             }
             #page-approach-1 #culture-film-panel .film-trailer-card iframe {
                 display: block !important;
+            }
+            #page-approach-1 #culture-film-panel .film-progress-track {
+                transform: translate(-50%, clamp(.65rem, 1.35vh, 1rem)) !important;
             }
         </style>
 
@@ -4940,17 +4947,17 @@
                                         </div>
                     
                                         <div id="film-carousel" class="film-carousel" aria-label="影視作品海報輪盤">
-                                            <button onclick="scrollToFilmWork(0)" class="film-wheel-card" data-film-index="0" aria-label="查看《超級大國民》">
+                                            <button onclick="scrollToFilmWork(0)" class="film-wheel-card" data-film-index="0" aria-label="查看《牯嶺街少年殺人事件》">
+                                                <img src="posters/poster-brighter-summer-day.jpg" alt="《牯嶺街少年殺人事件》海報">
+                                            </button>
+                                            <button onclick="scrollToFilmWork(1)" class="film-wheel-card" data-film-index="1" aria-label="查看《超級大國民》">
                                                 <img src="posters/poster-super-citizen.webp" alt="《超級大國民》海報">
                                             </button>
-                                            <button onclick="scrollToFilmWork(1)" class="film-wheel-card" data-film-index="1" aria-label="查看《返校》">
+                                            <button onclick="scrollToFilmWork(2)" class="film-wheel-card" data-film-index="2" aria-label="查看《返校》">
                                                 <img src="posters/poster-detention.webp" alt="《返校》海報">
                                             </button>
-                                            <button onclick="scrollToFilmWork(2)" class="film-wheel-card" data-film-index="2" aria-label="查看《流麻溝十五號》">
+                                            <button onclick="scrollToFilmWork(3)" class="film-wheel-card" data-film-index="3" aria-label="查看《流麻溝十五號》">
                                                 <img src="posters/poster-untold.webp" alt="《流麻溝十五號》海報">
-                                            </button>
-                                            <button onclick="scrollToFilmWork(3)" class="film-wheel-card" data-film-index="3" aria-label="查看《餘燼》">
-                                                <img src="posters/poster-embers.webp" alt="《餘燼》海報">
                                             </button>
                                             <button onclick="scrollToFilmWork(4)" class="film-wheel-card" data-film-index="4" aria-label="查看《星空下的黑潮島嶼》">
                                                 <img src="posters/poster-black-tide.webp" alt="《星空下的黑潮島嶼》海報">
@@ -4970,29 +4977,29 @@
                     
                                         <div class="film-scroll-detail grid md:grid-cols-[1.12fr_0.88fr] bg-white text-[#1A202C] shadow-2xl">
                                             <div class="film-detail-copy flex flex-col justify-center">
-                                                <p id="film-meta" class="text-[#9B2C2C] font-bold tracking-widest mb-1">1994｜電影</p>
-                                                <h4 id="film-title" class="serif-title font-black mb-3">超級大國民</h4>
+                                                <p id="film-meta" class="text-[#9B2C2C] font-bold tracking-widest mb-1">1991｜電影</p>
+                                                <h4 id="film-title" class="serif-title font-black mb-3">牯嶺街少年殺人事件</h4>
                                                 <p class="film-detail-label">作品故事</p>
                                                 <p id="film-desc" class="text-gray-600 text-justify mb-4">
-                                                    政治犯許毅生因刑求而供出好友，導致好友被判死刑。出獄多年後，他背負愧疚尋找好友埋骨之處，也重新面對遭白色恐怖拆散的家庭與人生。
+                                                    故事設定於1960年代初的臺北，少年小四在家庭遷徙、校園管束、幫派衝突與青春情感之間逐漸失序。電影改編自1961年牯嶺街青少年殺人事件，也描繪戰後臺灣社會在威權秩序與世代迷惘中的壓力。
                                                 </p>
                                                 <p class="film-detail-label">故事關鍵字</p>
                                                 <div id="film-tags" class="flex flex-wrap gap-2 mb-4">
-                                                    <span class="px-3 py-1.5 bg-gray-100 rounded-full text-xs">政治讀書會</span>
-                                                    <span class="px-3 py-1.5 bg-gray-100 rounded-full text-xs">刑求與自白</span>
-                                                    <span class="px-3 py-1.5 bg-gray-100 rounded-full text-xs">創傷記憶</span>
+                                                    <span class="px-3 py-1.5 bg-gray-100 rounded-full text-xs">威權時代</span>
+                                                    <span class="px-3 py-1.5 bg-gray-100 rounded-full text-xs">青少年幫派</span>
+                                                    <span class="px-3 py-1.5 bg-gray-100 rounded-full text-xs">外省家庭</span>
                                                 </div>
                                                 <p class="film-detail-label">作品與白色恐怖的關聯</p>
                                                 <p id="film-youth" class="text-gray-600 border-l-4 border-[#9B2C2C] pl-4">
-                                                    作品直視倖存者的罪惡感與跨世代創傷，讓白色恐怖不只是政治事件，也成為一段關於記憶、責任與修復的人生故事。
+                                                    作品未直接描寫政治案件，卻以校園、家庭與街頭日常呈現戒嚴社會的壓抑氛圍，讓觀眾看見白色恐怖時代不只存在於監獄，也滲入青少年的成長環境與人際關係。
                                                 </p>
                                             </div>
                                             <div class="film-trailer-card aspect-video bg-black overflow-hidden relative self-center w-full" role="button" tabindex="0" onclick="openFilmTrailerModal()" onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openFilmTrailerModal(); }" aria-label="放大觀看目前作品預告片">
                                                 <iframe
                                                     id="film-trailer"
                                                     class="absolute inset-0 w-full h-full pointer-events-none"
-                                                    src="https://www.youtube.com/embed/PXDJXU72haw?playsinline=1&rel=0&origin=https%3A%2F%2Fckyling25.github.io"
-                                                    title="《超級大國民》電影預告"
+                                                    src="https://www.youtube.com/embed/Lh_QL1mBxvM?playsinline=1&rel=0&origin=https%3A%2F%2Fckyling25.github.io"
+                                                    title="《牯嶺街少年殺人事件》電影預告"
                                                     loading="lazy"
                                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
                                                     referrerpolicy="origin"
@@ -5029,7 +5036,7 @@
                                         陳彥蓉認為，音樂是現今年輕人的共同語言，更是讓他們了解這段歷史的一大途徑，「就是你很難找到有人是沒有喜歡的樂團或音樂。」
                                     </p>
                     <p data-culture-copy="c" class="culture-text-copy culture-copy-panel culture-copy-wide culture-report-copy culture-scrolly-copy">
-                                        影視作品如《超級大國民》、《返校》、《流麻溝十五號》、《餘燼》、《星空下的黑潮島嶼》及《大濛》等，分別以不同的敘事角度，呈現威權時期人民所面臨的不公與壓迫。
+                                        影視作品如《牯嶺街少年殺人事件》、《超級大國民》、《返校》、《流麻溝十五號》、《星空下的黑潮島嶼》及《大濛》等，分別以不同的敘事角度，呈現威權時期人民所面臨的不公與壓迫。
                                     </p>
                     <p data-culture-copy="d" class="culture-copy-panel culture-copy-wide culture-report-copy culture-scrolly-copy">
                                             黃長玲指出，雖然部分作品的論述仍相對粗淺，但其核心功能在於激發大眾對國家暴力的警惕，可作為年輕人接觸議題的第一步。
@@ -5042,11 +5049,20 @@
 
         <script>
             const filmWorks = {
+                '牯嶺街少年殺人事件': {
+                    meta: '1991｜電影',
+                    title: '牯嶺街少年殺人事件',
+                    poster: 'posters/poster-brighter-summer-day.jpg',
+                    trailer: 'Lh_QL1mBxvM',
+                    desc: '故事設定於1960年代初的臺北，少年小四在家庭遷徙、校園管束、幫派衝突與青春情感之間逐漸失序。電影改編自1961年牯嶺街青少年殺人事件，也描繪戰後臺灣社會在威權秩序與世代迷惘中的壓力。',
+                    tags: ['威權時代', '青少年幫派', '外省家庭'],
+                    youth: '作品未直接描寫政治案件，卻以校園、家庭與街頭日常呈現戒嚴社會的壓抑氛圍，讓觀眾看見白色恐怖時代不只存在於監獄，也滲入青少年的成長環境與人際關係。'
+                },
                 '超級大國民': {
                     meta: '1994｜電影',
                     title: '超級大國民',
                     poster: 'posters/poster-super-citizen.webp',
-                    trailer: 'PXDJXU72haw',
+                    trailer: '2D_DV8Wb5SA',
                     desc: '1950年代，許毅生因參與政治讀書會遭逮捕，在刑求下供出好友陳政一，使對方被判死刑。多年後，他帶著深重愧疚尋找好友埋骨之處，也重新面對妻女因自己入獄而破碎的人生。',
                     tags: ['政治讀書會', '刑求與自白', '倖存者創傷'],
                     youth: '作品從政治受難者出獄後的餘生切入，呈現白色恐怖不只發生在監獄與刑場，其罪惡感、失落與家庭創傷還會延續數十年。'
@@ -5068,15 +5084,6 @@
                     desc: '電影以1950年代綠島新生訓導處為背景，透過女學生、舞者與年輕母親等女性政治受難者的處境，描寫她們遭囚禁、勞動與思想改造，仍努力守住尊嚴、友情與求生意志。',
                     tags: ['女性受難者', '思想改造', '政治囚禁'],
                     youth: '作品補足白色恐怖敘事中常被忽略的女性經驗，也呈現綠島監禁制度與「獄中再叛亂案」如何持續製造恐懼和死亡。'
-                },
-                '餘燼': {
-                    meta: '2024｜電影',
-                    title: '餘燼',
-                    poster: 'posters/poster-embers.webp',
-                    trailer: '9rDhemVoVC8',
-                    desc: '2006年，一名刑警調查兩起相連的命案，線索逐漸指向1956年的讀書會共諜案；另一名男子也在追查父親離奇死亡的真相。兩條調查線讓沉埋半世紀的祕密與復仇重新浮現。',
-                    tags: ['讀書會案件', '歷史懸案', '代際復仇'],
-                    youth: '電影以犯罪懸疑連結白色恐怖，討論國家暴力留下的傷口如何在沉默、誤解與復仇中跨越世代，直到數十年後仍影響活著的人。'
                 },
                 '星空下的黑潮島嶼': {
                     meta: '2025｜電視劇',
@@ -5286,7 +5293,7 @@
                 observer.observe(sentinel);
             }
 
-            const filmOrder = ['超級大國民', '返校', '流麻溝十五號', '餘燼', '星空下的黑潮島嶼', '大濛'];
+            const filmOrder = ['牯嶺街少年殺人事件', '超級大國民', '返校', '流麻溝十五號', '星空下的黑潮島嶼', '大濛'];
             let activeFilmIndex = -1;
 
             function getActiveFilmTrailerUrl(autoplay = false) {
