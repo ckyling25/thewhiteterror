@@ -9211,6 +9211,7 @@ transition: none !important;
             let storyClickLocked = false;
             let storyWheelLocked = false;
             let storyFinalScrollProgress = 0;
+            let storyFinalClickPrimed = false;
             const storyIntroLength = storyLineups.findIndex(scene => scene.final);
             const storyProgressLength = storyIntroLength > 0 ? storyIntroLength : storyLineups.length;
             
@@ -9269,6 +9270,7 @@ transition: none !important;
                 window.switchView(2);
                 await renderStoryScene(storyLineups.length - 1);
                 storyFinalScrollProgress = 0.02;
+                storyFinalClickPrimed = false;
                 const finalCopy = document.getElementById('story-final-copy');
                 if (finalCopy) {
                     finalCopy.style.setProperty('--story-final-y', '115vh');
@@ -9294,6 +9296,7 @@ transition: none !important;
 
                 currentScriptIdx = index;
                 storyFinalScrollProgress = 0;
+                storyFinalClickPrimed = false;
                 pages[2]?.style.setProperty('--story-bg-blur', '0px');
                 pages[2]?.classList.toggle('is-story-final', Boolean(scene.final));
                 document.querySelectorAll('[data-story-bg]').forEach(img => {
@@ -9365,11 +9368,7 @@ transition: none !important;
                 if (deltaY < 0 && storyFinalScrollProgress <= 0) return false;
 
                 storyFinalScrollProgress = Math.max(0, Math.min(1.12, storyFinalScrollProgress + (deltaY / 520)));
-                const y = 115 - (storyFinalScrollProgress * 195);
-                const opacity = storyFinalScrollProgress > 0.82 ? Math.max(0, 1 - ((storyFinalScrollProgress - 0.82) / 0.28)) : 1;
-                finalCopy.style.setProperty('--story-final-y', `${y}vh`);
-                finalCopy.style.setProperty('--story-final-opacity', String(opacity));
-                pages[2]?.style.setProperty('--story-bg-blur', `${Math.min(9, storyFinalScrollProgress * 11).toFixed(2)}px`);
+                applyStoryFinalProgress(storyFinalScrollProgress);
 
                 if (storyFinalScrollProgress >= 1.08) {
                     triggerFlashTransition();
@@ -9377,13 +9376,39 @@ transition: none !important;
                 return true;
             }
 
+            function applyStoryFinalProgress(progress) {
+                const finalCopy = document.getElementById('story-final-copy');
+                if (!finalCopy) return;
+                const safeProgress = Math.max(0, Math.min(1.12, progress));
+                const y = 115 - (safeProgress * 195);
+                const opacity = safeProgress > 0.82 ? Math.max(0, 1 - ((safeProgress - 0.82) / 0.28)) : 1;
+                finalCopy.style.setProperty('--story-final-y', `${y}vh`);
+                finalCopy.style.setProperty('--story-final-opacity', String(opacity));
+                pages[2]?.style.setProperty('--story-bg-blur', `${Math.min(9, safeProgress * 11).toFixed(2)}px`);
+            }
+
+            function handleStoryFinalClick() {
+                const scene = storyLineups[currentScriptIdx];
+                if (!scene?.final) return false;
+                if (!storyFinalClickPrimed) {
+                    storyFinalScrollProgress = 115 / 195;
+                    applyStoryFinalProgress(storyFinalScrollProgress);
+                    pages[2]?.style.setProperty('--story-bg-blur', '9px');
+                    storyFinalClickPrimed = true;
+                    return true;
+                }
+                triggerFlashTransition();
+                return true;
+            }
+
             // 點擊全螢幕任意處皆可快轉/前進
             function handleStoryClick() {
                 if (pages[2].classList.contains('hidden')) return;
                 if (storyClickLocked) return;
-                if (storyLineups[currentScriptIdx]?.final) return;
                 storyClickLocked = true;
-                advanceStoryScene(false);
+                if (!handleStoryFinalClick()) {
+                    advanceStoryScene(false);
+                }
                 setTimeout(() => { storyClickLocked = false; }, 120);
             }
 
