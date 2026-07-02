@@ -325,891 +325,1433 @@
             font-weight: 800;
         }
 
-        .democracy-timeline-stage {
-		    --intro-copy-shift: 0px;
-		    --intro-track-shift: 0px;
-		    --intro-rail-height: clamp(540px, 68vh, 720px);
-		    min-height: 272vh;
-		    position: relative;
-		    color: #40362c;
-		    background: #FAFAFA;
-		    overflow: clip;
-		}
 
-        .democracy-timeline-stage::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            opacity: .34;
-            background-image:
-                linear-gradient(rgba(86, 67, 50, .024) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(86, 67, 50, .018) 1px, transparent 1px),
-                radial-gradient(circle at 30% 20%, rgba(255, 255, 255, .28), transparent 28%),
-                radial-gradient(circle at 70% 80%, rgba(71, 52, 36, .05), transparent 26%);
-            background-size: 28px 28px, 28px 28px, auto, auto;
-            mix-blend-mode: multiply;
+        /* 修正：page-3 外層原本的 fade-in transform/animation 會破壞 sticky，導致時間軸像一般頁面往上滑走 */
+        #page-3-article-1,
+        #page-3-article-1.fade-in-active {
+            transform: none !important;
+            animation: none !important;
         }
 
-        .democracy-timeline-stage::after {
-            content: "1949  至今";
-            position: absolute;
-            right: 1vw;
-            bottom: 8vh;
-            font-size: clamp(4.4rem, 14vw, 12rem);
-            line-height: 1;
-            letter-spacing: -.1em;
-            font-weight: 900;
-            color: rgba(78, 58, 40, .09);
-            white-space: nowrap;
-            pointer-events: none;
+        #page-3-article-1 #article-body-start,
+        #page-3-article-1 #democracyTimelineSection,
+        #page-3-article-1 #democracyTimelineSection .page,
+        #page-3-article-1 #democracyTimelineSection .timeline-module,
+        #page-3-article-1 #democracyTimelineSection .collapsed-panel {
+            overflow: visible !important;
         }
 
-        .democracy-timeline-pin {
-            position: sticky;
-            top: 0;
-            z-index: 1;
-            display: grid;
-            grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-            gap: clamp(16px, 1.8vw, 26px);
-            align-items: stretch;
-            width: min(1480px, calc(100% - 48px));
-            height: 100vh;
-            margin: 0 auto;
-            padding: clamp(34px, 4vw, 56px) clamp(18px, 3vw, 36px) clamp(30px, 3vw, 46px);
+        #page-3-article-1 #democracyTimelineSection.groupmate-inline-timeline .page {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
         }
 
-        .democracy-timeline-pin.is-fixed {
-            position: fixed;
-            top: 0;
-            left: 50%;
-            z-index: 80;
-            width: min(1480px, calc(100vw - 48px));
-            transform: translateX(-50%);
+        /* 時間軸滾動敘事固定層：
+           不再混用原生 sticky 與組員版手機斷點。桌機版由 JS 切換 normal / fixed / ended，
+           三種狀態都使用同一個置中寬度，避免切換時整組時間軸向左偏移。 */
+        #democracyTimelineSection.groupmate-inline-timeline .collapsed-panel {
+            position: relative !important;
+            min-height: 272vh !important;
+            overflow: visible !important;
         }
 
-        .democracy-timeline-pin.is-ended {
-            position: absolute;
-            top: auto;
-            bottom: 0;
-            left: 50%;
-            width: min(1480px, calc(100% - 48px));
-            transform: translateX(-50%);
+        #democracyTimelineSection.groupmate-inline-timeline .intro-stage {
+            position: absolute !important;
+            top: 0 !important;
+            left: 50% !important;
+            right: auto !important;
+            width: min(1480px, calc(100vw - 48px)) !important;
+            max-width: none !important;
+            height: 100vh !important;
+            min-height: 100vh !important;
+            transform: translateX(-50%) !important;
+            z-index: 1 !important;
         }
 
-        .democracy-timeline-stage .democracy-intro {
-            min-height: 0;
-            height: 100%;
-            display: flex;
-            align-items: flex-start;
-            padding: 0;
-            background: transparent;
-            overflow: hidden;
+        #democracyTimelineSection.groupmate-inline-timeline .intro-stage.is-fixed {
+            position: fixed !important;
+            top: 0 !important;
+            left: 50% !important;
+            right: auto !important;
+            width: min(1480px, calc(100vw - 48px)) !important;
+            max-width: none !important;
+            height: 100vh !important;
+            min-height: 100vh !important;
+            transform: translateX(-50%) !important;
+            z-index: 80 !important;
         }
 
-        .democracy-timeline-stage .democracy-copy {
-            position: relative;
-            width: 100%;
-            max-width: none;
-            height: var(--intro-rail-height);
-            overflow: hidden;
+        #democracyTimelineSection.groupmate-inline-timeline .intro-stage.is-ended {
+            position: absolute !important;
+            top: auto !important;
+            bottom: 0 !important;
+            left: 50% !important;
+            right: auto !important;
+            width: min(1480px, calc(100vw - 48px)) !important;
+            max-width: none !important;
+            height: 100vh !important;
+            min-height: 100vh !important;
+            transform: translateX(-50%) !important;
+            z-index: 1 !important;
         }
 
-        .democracy-timeline-stage .democracy-copy-inner {
-            transform: translateY(var(--intro-copy-shift));
-            transition: transform 180ms linear;
+        @media (max-width: 760px) {
+            #democracyTimelineSection.groupmate-inline-timeline .collapsed-panel {
+                min-height: auto !important;
+            }
+
+            #democracyTimelineSection.groupmate-inline-timeline .intro-stage,
+            #democracyTimelineSection.groupmate-inline-timeline .intro-stage.is-fixed,
+            #democracyTimelineSection.groupmate-inline-timeline .intro-stage.is-ended {
+                position: relative !important;
+                top: auto !important;
+                bottom: auto !important;
+                left: auto !important;
+                right: auto !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                height: auto !important;
+                min-height: 0 !important;
+                transform: none !important;
+            }
         }
 
-        .democracy-timeline-stage .democracy-copy p {
-            margin: 0;
-            color: rgba(64, 54, 44, .96);
-            font-size: clamp(1.2rem, 1.46vw, 1.46rem);
-            line-height: 2.02;
-            font-weight: 500;
-            text-align: left;
-        }
-
-        .democracy-timeline-stage .democracy-copy p + p {
-            margin-top: 30px;
-        }
-
-        .democracy-timeline-stage .democracy-copy .quote-line {
-            display: block;
-            width: fit-content;
-            max-width: 100%;
-            margin-inline: auto;
-            padding: .22em .42em;
-            color: #2f271f;
-            font-family: "BiauKai", "DFKai-SB", "Kaiti TC", "STKaiti", "KaiTi", "Noto Serif TC", serif;
-            font-size: clamp(1.45rem, 2.35vw, 2.5rem);
-            line-height: 1.48;
-            font-weight: 800;
-            text-align: center;
-            text-shadow: 0 1px 0 rgba(255, 255, 255, .34);
-        }
-
-        .democracy-timeline-stage .white-terror-timeline {
-            min-height: 0;
-            height: 100%;
-            padding: 0;
-            background: transparent;
-            overflow: visible;
-        }
-
-        .democracy-timeline-stage .timeline-module {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            border-radius: 0;
-            overflow: visible;
-            background: transparent;
-            box-shadow: none;
-        }
-
-        .democracy-timeline-stage .timeline-module::before {
-            display: none;
-        }
-
-        .democracy-timeline-stage .collapsed-panel {
-            min-height: 0;
-            height: 100%;
-            display: block;
-            padding: 0;
-        }
-
-        .democracy-timeline-stage .collapsed-panel::after {
-            display: none;
-        }
-
-        .intro-timeline-card {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
-            height: 100%;
-            padding: clamp(22px, 3vw, 34px);
-            border: 1px solid rgba(244, 239, 230, .15);
-            border-radius: 30px;
-            background:
-                linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .026)),
-                rgba(18, 17, 16, .84);
-            box-shadow: 0 30px 90px rgba(0, 0, 0, .42);
-            overflow: hidden;
-        }
-
-        .intro-timeline-card::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            background:
-                radial-gradient(circle at 14% 16%, rgba(184, 74, 66, .18), transparent 28%),
-                radial-gradient(circle at 88% 78%, rgba(244, 239, 230, .08), transparent 32%);
-        }
-
-        .intro-timeline-card > * {
-            position: relative;
-            z-index: 1;
-        }
-
-        .democracy-timeline-stage .module-title {
-            font-size: clamp(1.6rem, 2.5vw, 2.55rem);
-        }
-
-        .democracy-timeline-stage .module-deck {
-            max-width: 780px;
-            font-size: clamp(.96rem, 1.2vw, 1.08rem);
-        }
-
-        .democracy-timeline-stage .intro-timeline-card > .compact-timeline {
-            position: relative;
-            flex: 1 1 auto;
-            width: 100%;
-            min-height: clamp(330px, 39vh, 404px);
-            margin-top: clamp(22px, 4vh, 36px);
-            padding: 0;
-            border: 1px solid rgba(244, 239, 230, .14);
-            border-radius: 22px;
-            background:
-                radial-gradient(circle at 18% 40%, rgba(184, 74, 66, .18), transparent 32%),
-                linear-gradient(120deg, rgba(244, 239, 230, .07), rgba(244, 239, 230, .015));
-            overflow: hidden;
-            scrollbar-width: none;
-        }
-
-        .democracy-timeline-stage .intro-timeline-card > .compact-timeline::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 50%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(244, 239, 230, .52), transparent);
-            transform: translateY(-50%);
-        }
-
-        .democracy-timeline-stage .compact-timeline::-webkit-scrollbar {
-            display: none;
-        }
-
-        .democracy-timeline-stage .compact-track {
-            min-width: 2600px;
-            height: 100%;
-            display: grid;
-            grid-template-columns: repeat(8, minmax(300px, 1fr));
-            align-items: center;
-            padding: 0 7%;
-            transform: translateX(var(--intro-track-shift));
-            transition: transform 180ms linear;
-        }
-
-        .democracy-timeline-stage .compact-track::before {
-            left: 7%;
-            right: 7%;
-            top: 50%;
-            background: linear-gradient(90deg, transparent, rgba(244, 239, 230, .56), transparent);
-        }
-
-        .democracy-timeline-stage .compact-item {
-            min-height: 230px;
-            display: grid;
-            grid-template-rows: 1fr auto auto 1fr;
-            align-items: center;
-            opacity: .72;
-            transition: opacity .22s ease, transform .22s ease;
-        }
-
-        .democracy-timeline-stage .compact-item.is-active {
-            opacity: 1;
-            transform: translateY(-4px);
-        }
-
-        .democracy-timeline-stage .compact-date {
-            min-height: 0;
-            align-items: end;
-            font-size: clamp(1rem, 1.4vw, 1.2rem);
-        }
-
-        .democracy-timeline-stage .compact-dot {
-            width: 26px;
-            height: 26px;
-            margin: 24px auto 20px;
-        }
-
-        .democracy-timeline-stage .compact-item.priority-1 .compact-dot {
-            width: 44px;
-            height: 44px;
-            margin-top: 24px;
-        }
-
-        .democracy-timeline-stage .compact-label {
-            font-size: clamp(.95rem, 1.2vw, 1.08rem);
-        }
-
-        .democracy-timeline-stage .expand-row {
-            justify-content: flex-end;
-            padding-top: clamp(18px, 3vh, 28px);
-        }
-
-        .democracy-timeline-stage .expanded-panel {
-            height: 100%;
-            min-height: 100%;
-            border-radius: 30px;
-            overflow: hidden;
-        }
-
-        .white-terror-timeline {
-            --tl-paper: #f4efe6;
-            --tl-ink: #f1ece4;
-            --tl-muted: rgba(244, 239, 230, .66);
-            --tl-line: rgba(244, 239, 230, .34);
-            --tl-accent: #b84a42;
-            --tl-accent-soft: rgba(184, 74, 66, .24);
-            --tl-bg-a: #21130f;
-            --tl-bg-b: #0d0d0c;
-            --tl-spot-x: 32%;
-            --tl-spot-y: 32%;
-            --tl-ghost: "1949";
-            --tl-event-image: none;
-            --tl-radius: 940px;
-            min-height: 100vh;
-            padding: clamp(3rem, 7vw, 6rem) 1.5rem;
-            background:
-                radial-gradient(circle at 20% 10%, rgba(156, 47, 42, .16), transparent 34vw),
-                radial-gradient(circle at 78% 82%, rgba(151, 119, 72, .12), transparent 38vw),
-                linear-gradient(135deg, #0f0d0c 0%, #191613 50%, #0f0e0d 100%);
-            color: var(--tl-ink);
-            overflow: hidden;
-        }
-
-        .timeline-module {
-            position: relative;
-            isolation: isolate;
-            width: min(1180px, 100%);
-            margin: 0 auto;
-            border-radius: 32px;
-            overflow: hidden;
-            background:
-                linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.022)),
-                rgba(17, 16, 15, .74);
-            box-shadow: 0 30px 90px rgba(0, 0, 0, .42);
-        }
-
-        .timeline-module::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            background:
-                radial-gradient(circle at 15% 20%, rgba(184,74,66,.18), transparent 28%),
-                radial-gradient(circle at 88% 78%, rgba(244,239,230,.08), transparent 32%);
-            z-index: -1;
-        }
-
-        .collapsed-panel {
-            position: relative;
-            min-height: min(76vh, 720px);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: clamp(1.5rem, 4vw, 3rem);
-            padding: clamp(2rem, 5.5vw, 4.5rem) clamp(1.25rem, 5vw, 4rem);
-        }
-
-        .collapsed-panel::after {
-            content: "1949  至今";
-            position: absolute;
-            right: -2vw;
-            bottom: 2vh;
-            font-size: clamp(5rem, 17vw, 15rem);
-            line-height: 1;
-            letter-spacing: -.12em;
-            font-weight: 900;
-            color: rgba(244,239,230,.055);
-            z-index: -1;
-            white-space: nowrap;
-        }
-
-        .module-title {
-            margin: 0;
-            color: var(--tl-paper);
-            font-family: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
-            font-size: clamp(1.35rem, 2.4vw, 2.2rem);
-            line-height: 1.35;
-            letter-spacing: .03em;
-            font-weight: 850;
-        }
-
-        .module-deck {
-            max-width: 720px;
-            margin: 1rem 0 0;
-            color: rgba(244,239,230,.7);
-            font-size: clamp(.98rem, 1.45vw, 1.15rem);
-            line-height: 1.9;
-        }
-
-        .compact-timeline {
-            width: 100%;
-            overflow-x: auto;
-            padding: .5rem .125rem 1.25rem;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(244,239,230,.3) transparent;
-        }
-
-        .compact-track {
-            min-width: 940px;
-            position: relative;
-            display: grid;
-            grid-template-columns: repeat(8, minmax(100px, 1fr));
-            align-items: start;
-            padding: 0 .25rem;
-        }
-
-        .compact-track::before {
-            content: "";
-            position: absolute;
-            left: 5.6%;
-            right: 5.6%;
-            top: 76px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(244,239,230,.56), transparent);
-        }
-
-        .compact-item {
-            position: relative;
-            min-height: 142px;
-            border: 0;
-            background: transparent;
-            color: rgba(244,239,230,.78);
-            text-align: center;
-            cursor: pointer;
-            font: inherit;
-        }
-
-        .compact-date {
-            min-height: 44px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            padding: 0 5px;
-            font-weight: 800;
-            font-size: .9rem;
-            line-height: 1.2;
-        }
-
-        .compact-dot {
-            position: relative;
-            z-index: 1;
-            width: 13px;
-            height: 13px;
-            border-radius: 99px;
-            margin: 25px auto 14px;
-            background: rgba(244,239,230,.82);
-            box-shadow: 0 0 0 7px rgba(244,239,230,.07);
-            transition: transform .2s ease, background .2s ease;
-        }
-
-        .compact-label {
-            padding: 0 4px;
-            font-size: .88rem;
-            font-weight: 700;
-            line-height: 1.35;
-            color: rgba(244,239,230,.72);
-        }
-
-        .compact-item:hover .compact-dot {
-            transform: scale(1.25);
-            background: var(--tl-accent);
-        }
-
-        .compact-item.priority-1 .compact-date,
-        .compact-item.priority-1 .compact-label {
-            color: var(--tl-paper);
-        }
-
-        .compact-item.priority-1 .compact-dot {
-            width: 20px;
-            height: 20px;
-            margin-top: 21px;
-            background: var(--tl-accent);
-            box-shadow: 0 0 0 9px rgba(184,74,66,.18), 0 0 28px rgba(184,74,66,.48);
-        }
-
-        .expand-row {
-            display: flex;
-            justify-content: center;
-        }
-
-        .expand-button,
-        .collapse-button,
-        .nav-button,
-        .arrow-button {
-            font: inherit;
-        }
-
-        .expand-button,
-        .collapse-button {
-            border: 1px solid rgba(244,239,230,.22);
-            border-radius: 999px;
-            padding: .8rem 1.2rem;
-            background: rgba(244,239,230,.1);
-            color: var(--tl-paper);
-            cursor: pointer;
-            font-weight: 800;
-            letter-spacing: .04em;
-            transition: transform .2s ease, background .2s ease, border-color .2s ease;
-        }
-
-        .expand-button:hover,
-        .collapse-button:hover {
-            transform: translateY(-2px);
-            background: rgba(184,74,66,.22);
-            border-color: rgba(244,239,230,.36);
-        }
-
-        .expanded-panel {
-            display: none;
-            position: relative;
-            min-height: min(100vh, 900px);
-            background:
-                radial-gradient(circle at var(--tl-spot-x) var(--tl-spot-y), var(--tl-accent-soft), transparent 32%),
-                linear-gradient(135deg, var(--tl-bg-a), var(--tl-bg-b));
-        }
-
-        .timeline-module.is-expanded .collapsed-panel {
-            display: none;
-        }
-
-        .timeline-module.is-expanded .expanded-panel {
-            display: block;
-        }
-
-        .expanded-background {
-            position: absolute;
-            inset: 0;
-            overflow: hidden;
-            opacity: .38;
-            pointer-events: none;
-        }
-
-        .expanded-background::before {
-            content: var(--tl-ghost);
-            position: absolute;
-            left: 2vw;
-            bottom: 3vh;
-            font-size: clamp(7rem, 24vw, 22rem);
-            line-height: 1;
-            font-weight: 900;
-            letter-spacing: -.08em;
-            color: rgba(244,239,230,.08);
-        }
-
-        .expanded-background::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background-image: var(--tl-event-image);
-            background-size: cover;
-            background-position: center;
-            opacity: .34;
-            filter: grayscale(.6) contrast(1.05);
-        }
-
-        .expanded-topbar {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 1.25rem;
-            padding: clamp(1.25rem, 3.5vw, 2.5rem);
-        }
-
-        .expanded-topbar h2 {
-            margin: 0;
-            font-family: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
-            font-size: clamp(1.2rem, 2.1vw, 1.9rem);
-            color: var(--tl-paper);
-        }
-
-        .expanded-hint {
-            max-width: 560px;
-            margin: .65rem 0 0;
-            color: rgba(244,239,230,.68);
-            font-size: .95rem;
+        /* 白色恐怖時間軸：外層保留原 index.html 米白背景；時間軸本體使用組員版程式碼 inline 執行 */
+        #democracyTimelineSection.groupmate-inline-timeline {
+            width: 100vw;
+            margin-left: calc(50% - 50vw);
+            background: #FAFAFA;
+            border-top: 1px solid rgba(160, 150, 140, 0.32);
+            border-bottom: 1px solid rgba(160, 150, 140, 0.32);
+            color: var(--paper-ink);
+            font-family: var(--sans);
             line-height: 1.8;
-        }
-
-        .timeline-stage {
+            overflow: visible;
             position: relative;
-            height: clamp(520px, 68vh, 690px);
-            perspective: 1800px;
-            z-index: 1;
         }
 
-        .prism-shell {
-            position: absolute;
-            inset: 0;
-            cursor: grab;
-            touch-action: pan-y;
+        #democracyTimelineSection.groupmate-inline-timeline .page {
+            padding-top: 0;
+            padding-bottom: 0;
         }
 
-        .prism-shell.is-dragging {
-            cursor: grabbing;
+        body.detail-open,
+        html.detail-open {
+            overflow: hidden !important;
+            overscroll-behavior: none;
         }
 
-        .prism-halo {
-            position: absolute;
-            left: 50%;
-            top: 52%;
-            width: min(72vw, 820px);
-            height: min(52vw, 520px);
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(244,239,230,.12), transparent 64%);
-            opacity: .74;
-            pointer-events: none;
+        /* 展開時間軸強制作為全螢幕覆蓋層顯示，避免只切換 module 狀態但面板仍被 display:none 蓋掉 */
+        #democracyTimelineSection.groupmate-inline-timeline .expanded-panel.is-open {
+            display: block !important;
+            position: fixed !important;
+            inset: 0 !important;
+            z-index: 99999 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            height: 100dvh !important;
+            max-height: 100dvh !important;
+            overflow-x: hidden !important;
+            overflow-y: auto !important;
+            overscroll-behavior: contain !important;
         }
 
-        .prism-carousel {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: min(720px, 66vw);
-            height: 460px;
-            transform-style: preserve-3d;
-            transform: translate(-50%, -50%) translateZ(calc(var(--tl-radius) * -1)) rotateY(0deg);
-            transition: transform .72s cubic-bezier(.2, .75, .2, 1);
+/* ==============================
+       Module Tokens
+       調整尺寸、速度、層級差異時，優先看這一區
+    ============================== */
+
+#democracyTimelineSection.groupmate-inline-timeline {
+--bg: #11100f;
+      --paper: #f4efe6;
+      --ink: #f1ece4;
+      --muted: rgba(244, 239, 230, 0.64);
+      --faint: rgba(244, 239, 230, 0.18);
+      --line: rgba(244, 239, 230, 0.35);
+      --accent: #b84a42;
+      --accent-soft: rgba(184, 74, 66, 0.24);
+      --panel: rgba(18, 17, 16, 0.84);
+      --max: 1180px;
+      --shadow: 0 30px 90px rgba(0, 0, 0, 0.42);
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      --serif: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+      --hand: "BiauKai", "DFKai-SB", "Kaiti TC", "STKaiti", "KaiTi", serif;
+      --paper-bg: #e4d7c3;
+      --paper-bg-deep: #d7c4a7;
+      --paper-ink: #40362c;
+      --paper-line: rgba(64, 54, 44, 0.12);
+      --intro-rail-height: clamp(560px, 80vh, 900px);
+      --intro-card-height: clamp(440px, 60vh, 680px);
+      --intro-window-height: clamp(236px, 30vh, 308px);
+      --intro-window-radius: 22px;
+
+      --face-w: min(720px, 66vw);
+      --face-h: 460px;
+      --radius: 940px;
+      --carousel-duration: 650ms;
+      --background-duration: 520ms;
+      --event-image: none;
+
+      --priority-1-compact-opacity: 1;
+      --priority-1-compact-text-color: var(--paper);
+      --priority-1-compact-label-color: var(--paper);
+      --priority-1-compact-dot-size: 36px;
+      --priority-1-compact-dot-margin-top: 0px;
+      --priority-1-compact-dot-color: var(--accent);
+      --priority-1-compact-dot-shadow: 0 0 0 14px rgba(184, 74, 66, 0.18), 0 0 44px rgba(184, 74, 66, 0.48);
+      --priority-1-nav-dot-size: 14px;
+      --priority-1-nav-dot-color: rgba(244, 239, 230, 0.52);
+      --priority-1-title-size: clamp(2.4rem, 6.6vw, 6.2rem);
+
+      --priority-2-compact-opacity: 1;
+      --priority-2-compact-text-color: rgba(244, 239, 230, 0.78);
+      --priority-2-compact-label-color: rgba(244, 239, 230, 0.7);
+      --priority-2-compact-dot-size: 26px;
+      --priority-2-compact-dot-margin-top: 0px;
+      --priority-2-compact-dot-color: rgba(244, 239, 230, 0.82);
+      --priority-2-compact-dot-shadow: 0 0 0 11px rgba(244, 239, 230, 0.09);
+      --priority-2-nav-dot-size: 12px;
+      --priority-2-nav-dot-color: rgba(244, 239, 230, 0.45);
+      --priority-2-title-size: clamp(2rem, 5.6vw, 5.3rem);
+
+      --priority-3-compact-opacity: 0.68;
+      --priority-3-compact-text-color: rgba(244, 239, 230, 0.72);
+      --priority-3-compact-label-color: rgba(244, 239, 230, 0.62);
+      --priority-3-compact-dot-size: 18px;
+      --priority-3-compact-dot-margin-top: 0px;
+      --priority-3-compact-dot-color: rgba(244, 239, 230, 0.58);
+      --priority-3-compact-dot-shadow: 0 0 0 9px rgba(244, 239, 230, 0.05);
+      --priority-3-nav-dot-size: 10px;
+      --priority-3-nav-dot-color: rgba(244, 239, 230, 0.36);
+      --priority-3-title-size: clamp(1.9rem, 5vw, 5rem);
+}
+
+/* ==============================
+       Base
+    ============================== */
+
+#democracyTimelineSection.groupmate-inline-timeline * {
+box-sizing: border-box;
+}
+
+body.detail-open, html.detail-open {
+overflow: hidden !important;
+overscroll-behavior: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline button {
+font: inherit;
+}
+
+/* ==============================
+       Layout Shell
+    ============================== */
+
+#democracyTimelineSection.groupmate-inline-timeline .page {
+width: min(1480px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 4vh 0 8vh;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .timeline-module {
+position: relative;
+      isolation: isolate;
+      margin: 0 auto;
+      border-radius: 0;
+      overflow: visible;
+      background: transparent;
+      box-shadow: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .timeline-module::before {
+display: none;
+}
+
+/* ==============================
+       Collapsed Timeline
+    ============================== */
+
+#democracyTimelineSection.groupmate-inline-timeline .collapsed-panel {
+position: relative;
+      min-height: 272vh;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .collapsed-panel::after {
+content: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-stage {
+position: sticky;
+      top: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      gap: clamp(16px, 1.8vw, 26px);
+      align-items: start;
+      height: 100vh;
+      padding: clamp(34px, 4vw, 56px) clamp(18px, 3vw, 36px) clamp(30px, 3vw, 46px);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-copy-column, #democracyTimelineSection.groupmate-inline-timeline .intro-timeline-column {
+min-width: 0;
+      height: 100%;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-copy-column {
+display: flex;
+      flex-direction: column;
+      justify-content: center;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-timeline-column {
+display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-copy-rail {
+position: relative;
+      width: 100%;
+      height: var(--intro-rail-height);
+      min-height: 0;
+      overflow-x: visible;
+      overflow-y: hidden;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-copy-card {
+position: absolute;
+      inset: 0 auto auto 0;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      transform: translateY(var(--intro-copy-shift, 0px));
+      transition: transform 180ms linear;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-copy-card p {
+margin: 0;
+      color: rgba(64, 54, 44, 0.96);
+      font-size: clamp(1.2rem, 1.46vw, 1.46rem);
+      line-height: 2.02;
+      font-weight: 500;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-copy-card p + p {
+margin-top: 30px;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-copy-quote {
+display: block;
+      width: 100%;
+      max-width: 100%;
+      font-family: var(--hand);
+      font-size: clamp(1.18rem, 1.34vw, 1.34rem);
+      line-height: 1.54;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      color: rgba(64, 54, 44, 0.96);
+      white-space: nowrap;
+      transform: none;
+      overflow: visible;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-copy-quote.is-long {
+font-size: clamp(0.96rem, 1.04vw, 1.04rem);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-copy-note {
+margin-top: 38px;
+      color: rgba(64, 54, 44, 0.82);
+      font-size: clamp(0.94rem, 1.08vw, 1.04rem);
+      line-height: 1.9;
+      font-weight: 500;
+      white-space: normal;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-timeline-card {
+position: relative;
+      isolation: isolate;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: clamp(12px, 1.4vw, 18px);
+      width: 100%;
+      height: var(--intro-card-height);
+      min-height: 0;
+      padding: clamp(22px, 2.6vw, 30px);
+      border-radius: 26px;
+      border: 1px solid transparent;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.018)) padding-box,
+        linear-gradient(180deg, rgba(23, 21, 19, 0.9), rgba(23, 21, 19, 0.9)) padding-box,
+        linear-gradient(135deg, rgba(228, 215, 195, 0.22), rgba(228, 215, 195, 0.08) 24%, rgba(228, 215, 195, 0.12) 48%, rgba(228, 215, 195, 0.04) 70%, rgba(228, 215, 195, 0.2)) border-box;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.02),
+        inset 0 0 0 1px rgba(244, 239, 230, 0.012),
+        0 0 0 1px rgba(228, 215, 195, 0.08),
+        0 0 26px rgba(228, 215, 195, 0.18),
+        0 20px 60px rgba(47, 33, 22, 0.24);
+      overflow: hidden;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-timeline-card::before {
+content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(228, 215, 195, 0.34), rgba(228, 215, 195, 0.14) 20px, rgba(228, 215, 195, 0.05) 38px, transparent 68px),
+        linear-gradient(270deg, rgba(228, 215, 195, 0.3), rgba(228, 215, 195, 0.12) 18px, rgba(228, 215, 195, 0.04) 36px, transparent 66px),
+        linear-gradient(180deg, rgba(228, 215, 195, 0.24), rgba(228, 215, 195, 0.1) 18px, rgba(228, 215, 195, 0.04) 36px, transparent 62px),
+        linear-gradient(0deg, rgba(228, 215, 195, 0.2), rgba(228, 215, 195, 0.08) 16px, rgba(228, 215, 195, 0.03) 34px, transparent 58px),
+        radial-gradient(circle at 18% 16%, rgba(184, 74, 66, 0.13), transparent 22%),
+        radial-gradient(circle at 82% 78%, rgba(244, 239, 230, 0.07), transparent 28%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 42%),
+        radial-gradient(circle at 1px 1px, rgba(244, 239, 230, 0.03) 0 0.8px, transparent 1.4px);
+      background-size: auto, auto, auto, auto, auto, auto, auto, 7px 7px;
+      pointer-events: none;
+      z-index: 0;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-timeline-card::after {
+content: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-timeline-card > * {
+position: relative;
+      z-index: 1;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-timeline-card > :first-child {
+z-index: 3;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .module-title {
+margin: 0;
+      font-size: clamp(1.76rem, 2.36vw, 2.16rem);
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+      font-weight: 850;
+      color: var(--paper);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .module-deck {
+margin: 10px 0 0;
+      max-width: 700px;
+      color: rgba(244, 239, 230, 0.7);
+      font-size: clamp(0.94rem, 1.02vw, 1rem);
+      line-height: 1.54;
+      position: relative;
+      z-index: 2;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-timeline-window {
+position: relative;
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      height: var(--intro-window-height);
+      margin-top: 0;
+      padding: 6px 0;
+      border-radius: var(--intro-window-radius);
+      border: 1px solid rgba(244, 239, 230, 0.06);
+      background:
+        linear-gradient(180deg, rgba(26, 24, 22, 0.8), rgba(15, 14, 13, 0.92)),
+        radial-gradient(circle at 18% 16%, rgba(244, 239, 230, 0.025), transparent 24%);
+      box-shadow:
+        inset 0 0 0 1px rgba(244, 239, 230, 0.02),
+        0 16px 28px rgba(0, 0, 0, 0.18);
+      z-index: 1;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-timeline-window::before, #democracyTimelineSection.groupmate-inline-timeline .intro-timeline-window::after {
+content: "";
+      position: absolute;
+      top: 12px;
+      bottom: 12px;
+      width: clamp(26px, 4vw, 54px);
+      z-index: 3;
+      pointer-events: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-timeline-window::before {
+left: 0;
+      background: linear-gradient(90deg, rgba(17, 16, 15, 0.9), transparent);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-timeline-window::after {
+right: 0;
+      background: linear-gradient(270deg, rgba(17, 16, 15, 0.9), transparent);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .compact-timeline {
+position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 0;
+      scrollbar-width: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .compact-track {
+min-width: 2940px;
+      min-height: 100%;
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(9, minmax(324px, 1fr));
+      gap: 0;
+      align-items: center;
+      padding: 0 8px;
+      transform: translateX(var(--intro-track-shift, 0px));
+      transition: transform 180ms linear;
+      will-change: transform;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .compact-track::before {
+content: "";
+      position: absolute;
+      left: 6.8%;
+      right: 6.8%;
+      top: 50%;
+      height: 2px;
+      transform: translateY(-1px);
+      background: linear-gradient(90deg, transparent, rgba(244, 239, 230, 0.56), transparent);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .compact-item {
+--compact-opacity: var(--priority-2-compact-opacity);
+      --compact-text-color: var(--priority-2-compact-text-color);
+      --compact-label-color: var(--priority-2-compact-label-color);
+      --compact-dot-size: var(--priority-2-compact-dot-size);
+      --compact-dot-margin-top: var(--priority-2-compact-dot-margin-top);
+      --compact-dot-color: var(--priority-2-compact-dot-color);
+      --compact-dot-shadow: var(--priority-2-compact-dot-shadow);
+      position: relative;
+      min-height: 196px;
+      display: grid;
+      grid-template-rows: minmax(58px, 1fr) auto minmax(58px, 1fr);
+      align-items: center;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      text-align: center;
+      cursor: pointer;
+      opacity: var(--compact-opacity);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .compact-item.priority-1 {
+--compact-opacity: var(--priority-1-compact-opacity);
+      --compact-text-color: var(--priority-1-compact-text-color);
+      --compact-label-color: var(--priority-1-compact-label-color);
+      --compact-dot-size: var(--priority-1-compact-dot-size);
+      --compact-dot-margin-top: var(--priority-1-compact-dot-margin-top);
+      --compact-dot-color: var(--priority-1-compact-dot-color);
+      --compact-dot-shadow: var(--priority-1-compact-dot-shadow);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .compact-item.priority-3 {
+--compact-opacity: var(--priority-3-compact-opacity);
+      --compact-text-color: var(--priority-3-compact-text-color);
+      --compact-label-color: var(--priority-3-compact-label-color);
+      --compact-dot-size: var(--priority-3-compact-dot-size);
+      --compact-dot-margin-top: var(--priority-3-compact-dot-margin-top);
+      --compact-dot-color: var(--priority-3-compact-dot-color);
+      --compact-dot-shadow: var(--priority-3-compact-dot-shadow);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .compact-item.is-active {
+transform: translateY(-8px);
+      opacity: 1;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .compact-item:focus-visible {
+outline: 2px solid rgba(244, 239, 230, 0.58);
+      outline-offset: 5px;
+      border-radius: 12px;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .compact-date {
+min-height: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0 8px 12px;
+      font-weight: 800;
+      font-size: 1.42rem;
+      line-height: 1.08;
+      color: var(--compact-text-color);
+      transition: color 0.25s ease;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .compact-dot {
+position: relative;
+      z-index: 1;
+      width: var(--compact-dot-size);
+      height: var(--compact-dot-size);
+      border-radius: 99px;
+      margin: var(--compact-dot-margin-top) auto 0;
+      background: var(--compact-dot-color);
+      box-shadow: var(--compact-dot-shadow);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .compact-label {
+width: 100%;
+      align-self: start;
+      padding: 12px 8px 0;
+      font-size: 1.22rem;
+      font-weight: 680;
+      line-height: 1.26;
+      color: var(--compact-label-color);
+      transition: color 0.25s ease;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .compact-item.is-active .compact-date, #democracyTimelineSection.groupmate-inline-timeline .compact-item.is-active .compact-label {
+color: var(--paper);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .compact-item.is-active .compact-dot {
+transform: scale(1.08);
+      background: var(--accent);
+      box-shadow: 0 0 0 8px var(--accent-soft), 0 0 30px rgba(184, 74, 66, 0.42);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .expand-row {
+display: flex;
+      justify-content: center;
+      margin-top: -10px;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-expand-row {
+justify-content: flex-end;
+      align-items: flex-end;
+      align-self: end;
+      margin-top: 0;
+      padding: clamp(24px, 2.8vw, 34px) 2px 2px 0;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-expand-row .expand-button {
+opacity: 1;
+      pointer-events: auto;
+      transform: none;
+      z-index: 2;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-expand-row .expand-button.is-visible {
+opacity: 1;
+      pointer-events: auto;
+      transform: none;
+}
+
+/* ==============================
+       Shared Buttons
+    ============================== */
+
+#democracyTimelineSection.groupmate-inline-timeline .expand-button, #democracyTimelineSection.groupmate-inline-timeline .collapse-button, #democracyTimelineSection.groupmate-inline-timeline .nav-button, #democracyTimelineSection.groupmate-inline-timeline .arrow-button {
+appearance: none;
+      border: 0;
+      color: var(--paper);
+      background: rgba(244, 239, 230, 0.12);
+      border: 1px solid rgba(244, 239, 230, 0.18);
+      cursor: pointer;
+      transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .expand-button {
+border-radius: 999px;
+      padding: 13px 22px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: 0.05em;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .expand-button:hover, #democracyTimelineSection.groupmate-inline-timeline .collapse-button:hover, #democracyTimelineSection.groupmate-inline-timeline .nav-button:hover, #democracyTimelineSection.groupmate-inline-timeline .arrow-button:hover {
+transform: translateY(-1px);
+      background: rgba(184, 74, 66, 0.22);
+      border-color: rgba(184, 74, 66, 0.48);
+}
+
+/* ==============================
+       Expanded Panel & Background
+    ============================== */
+
+#democracyTimelineSection.groupmate-inline-timeline .expanded-panel {
+position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      max-height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      background: rgba(12, 11, 10, 0.94);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .timeline-module.is-expanded {
+border-radius: 0;
+      overflow: visible;
+      background: transparent;
+      box-shadow: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .timeline-module.is-expanded::before {
+display: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .timeline-module.is-expanded .collapsed-panel {
+display: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .timeline-module.is-expanded .expanded-panel {
+display: block;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .expanded-background {
+position: absolute;
+      inset: 0;
+      z-index: -2;
+      background-image:
+        linear-gradient(90deg, rgba(17, 16, 15, 0.96) 0%, rgba(17, 16, 15, 0.72) 40%, rgba(17, 16, 15, 0.9) 100%),
+        var(--event-image),
+        radial-gradient(circle at var(--spot-x, 22%) var(--spot-y, 28%), color-mix(in srgb, var(--accent) 36%, transparent), transparent 31%),
+        linear-gradient(132deg, var(--bg-a, #181411), var(--bg-b, #0f0e0d));
+      background-size: cover, cover, auto, auto;
+      background-position: center, center, center, center;
+      transition: background var(--background-duration) ease;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .expanded-background::before {
+content: var(--ghost, "1949");
+      position: absolute;
+      inset: auto auto 3vh 2vw;
+      font-size: clamp(7rem, 24vw, 22rem);
+      line-height: 0.8;
+      letter-spacing: -0.13em;
+      font-weight: 950;
+      color: rgba(244, 239, 230, 0.058);
+      white-space: nowrap;
+      transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .expanded-background::after {
+content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 7px),
+        radial-gradient(circle at 50% 50%, transparent 0 38%, rgba(0, 0, 0, 0.38) 72%);
+      mix-blend-mode: normal;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .expanded-topbar {
+position: relative;
+      z-index: 5;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      padding: clamp(22px, 4vw, 46px) clamp(20px, 4vw, 54px) 0;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .expanded-topbar h2 {
+margin: 0;
+      font-size: clamp(1.25rem, 2.2vw, 1.68rem);
+      line-height: 1.35;
+      letter-spacing: 0.02em;
+      font-weight: 850;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .expanded-hint {
+margin: 12px 0 0;
+      color: rgba(244, 239, 230, 0.62);
+      font-size: 0.95rem;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .collapse-button {
+flex: 0 0 auto;
+      border-radius: 999px;
+      min-height: 54px;
+      padding: 14px 24px;
+      font-size: 1.04rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      background: rgba(184, 74, 66, 0.26);
+      border-color: rgba(244, 239, 230, 0.24);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+      white-space: nowrap;
+}
+
+/* ==============================
+       Prism Stage
+    ============================== */
+
+#democracyTimelineSection.groupmate-inline-timeline .stage {
+position: relative;
+      z-index: 1;
+      padding: 36px 0 18px;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .side-arrow-button {
+position: fixed;
+      top: 50%;
+      z-index: 6;
+      width: 56px;
+      height: 56px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      font-size: 1.6rem;
+      transform: translateY(-50%);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.24);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .side-arrow-button-left {
+left: clamp(14px, 2vw, 24px);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .side-arrow-button-right {
+right: clamp(14px, 2vw, 24px);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-shell {
+position: relative;
+      height: 540px;
+      perspective: 1600px;
+      perspective-origin: 50% 48%;
+      overflow: hidden;
+      cursor: grab;
+      touch-action: pan-y;
+      user-select: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-shell.is-dragging {
+cursor: grabbing;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-halo {
+position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(84vw, 980px);
+      height: 380px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, color-mix(in srgb, var(--accent) 20%, transparent), transparent 66%);
+      filter: blur(18px);
+      opacity: 0.74;
+      pointer-events: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-carousel {
+position: absolute;
+      left: 50%;
+      top: 50%;
+      width: var(--face-w);
+      height: var(--face-h);
+      transform-style: preserve-3d;
+      transform: translate(-50%, -50%) translateZ(calc(var(--radius) * -1)) rotateY(0deg);
+      transition: transform var(--carousel-duration) cubic-bezier(0.18, 0.72, 0.22, 1);
+      will-change: transform;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-shell.is-dragging .prism-carousel {
+transition: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face {
+position: absolute;
+      inset: 0;
+      display: grid;
+      grid-auto-rows: max-content;
+      align-content: start;
+      gap: clamp(10px, 1vw, 14px);
+      width: 100%;
+      height: 100%;
+      padding: clamp(24px, 4vw, 50px);
+      border-radius: 8px;
+      border: 1px solid rgba(244, 239, 230, 0.18);
+      border-left-color: rgba(244, 239, 230, 0.27);
+      border-right-color: rgba(0, 0, 0, 0.32);
+      background:
+        linear-gradient(90deg, rgba(244, 239, 230, 0.075), transparent 10%, transparent 90%, rgba(0, 0, 0, 0.18)),
+        linear-gradient(180deg, rgba(27, 25, 23, 0.92), rgba(13, 12, 11, 0.88));
+      box-shadow:
+        inset 1px 0 0 rgba(244, 239, 230, 0.08),
+        inset -1px 0 0 rgba(0, 0, 0, 0.34),
+        0 14px 44px rgba(0, 0, 0, 0.24);
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+      opacity: 0.46;
+      filter: saturate(0.85) brightness(0.7);
+      transition: opacity 0.35s ease, filter 0.35s ease, box-shadow 0.35s ease;
+      overflow: hidden;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face::before {
+content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px solid rgba(244, 239, 230, 0.08);
+      border-left-color: rgba(244, 239, 230, 0.17);
+      pointer-events: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face::after {
+content: "檔案";
+      position: absolute;
+      right: 20px;
+      top: 18px;
+      color: rgba(244, 239, 230, 0.16);
+      letter-spacing: 0.4em;
+      font-size: 0.75rem;
+      font-weight: 800;
+      writing-mode: vertical-rl;
+      pointer-events: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face.is-active {
+opacity: 1;
+      filter: none;
+      box-shadow:
+        inset 1px 0 0 rgba(244, 239, 230, 0.14),
+        inset -1px 0 0 rgba(0, 0, 0, 0.28),
+        0 24px 80px rgba(0, 0, 0, 0.36),
+        0 0 0 1px color-mix(in srgb, var(--accent) 38%, transparent);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face.priority-1 {
+background:
+        linear-gradient(90deg, rgba(184, 74, 66, 0.18), transparent 12%, transparent 88%, rgba(0, 0, 0, 0.22)),
+        linear-gradient(180deg, rgba(35, 24, 21, 0.96), rgba(14, 12, 11, 0.9));
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face.priority-3 {
+background:
+        linear-gradient(90deg, rgba(244, 239, 230, 0.045), transparent 12%, transparent 88%, rgba(0, 0, 0, 0.18)),
+        linear-gradient(180deg, rgba(22, 21, 20, 0.86), rgba(13, 12, 11, 0.82));
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .file-pin {
+position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 34px;
+      height: 6px;
+      border-radius: 99px;
+      background: color-mix(in srgb, var(--accent) 68%, rgba(244, 239, 230, 0.48));
+      box-shadow: 0 0 26px color-mix(in srgb, var(--accent) 34%, transparent);
+      opacity: 0.82;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .event-meta {
+display: flex;
+      align-items: center;
+      gap: 12px;
+      max-width: 100%;
+      min-width: 0;
+      color: rgba(244, 239, 230, 0.64);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .event-meta::before {
+content: "";
+      width: 12px;
+      height: 12px;
+      border-radius: 99px;
+      background: var(--accent);
+      box-shadow: 0 0 0 8px var(--accent-soft);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face h3 {
+display: flex;
+      align-items: flex-end;
+      gap: 0.14em;
+      max-width: 100%;
+      min-width: 0;
+      margin: 0;
+      padding-right: 34px;
+      font-size: var(--priority-2-title-size);
+      line-height: 0.95;
+      letter-spacing: -0.08em;
+      color: var(--paper);
+      white-space: nowrap;
+      overflow: hidden;
+      transform: translateZ(1px);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face.priority-1 h3 {
+font-size: var(--priority-1-title-size);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face.priority-3 h3 {
+font-size: var(--priority-3-title-size);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face.is-compact-copy h3 {
+gap: 0.08em;
+      padding-right: 16px;
+      font-size: clamp(1.32rem, 2.2vw, 2.12rem);
+      letter-spacing: -0.05em;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .event-title-prefix {
+flex: 0 0 auto;
+      font-size: 0.5em;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      transform: translateY(-0.04em);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .event-title-main {
+min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face.is-compact-copy .event-title-prefix {
+font-size: 0.44em;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face.is-compact-copy .event-title-main {
+overflow: visible;
+      text-overflow: clip;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .event-copy {
+max-width: 100%;
+      min-width: 0;
+      margin: 0;
+      color: rgba(244, 239, 230, 0.78);
+      font-size: clamp(0.96rem, 1.18vw, 1.05rem);
+      line-height: 1.76;
+      overflow: hidden;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      transform: translateZ(1px);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face.is-compact-copy .event-copy {
+font-size: clamp(0.9rem, 1.04vw, 0.98rem);
+      line-height: 1.68;
+}
+
+/* ==============================
+       Event Media
+    ============================== */
+
+#democracyTimelineSection.groupmate-inline-timeline .event-figure {
+position: relative;
+      max-width: 100%;
+      margin: 0;
+      transform: translateZ(1px);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face.is-compact-copy .event-image {
+height: 162px;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .event-image {
+display: block;
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid rgba(244, 239, 230, 0.12);
+      background: rgba(255, 255, 255, 0.03);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .event-source {
+position: absolute;
+      right: 10px;
+      bottom: 10px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(244, 239, 230, 0.16);
+      background: rgba(17, 16, 15, 0.82);
+      color: rgba(244, 239, 230, 0.82);
+      font-size: 0.72rem;
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+}
+
+/* ==============================
+       Navigation & Status
+    ============================== */
+
+#democracyTimelineSection.groupmate-inline-timeline .event-controls {
+position: relative;
+      z-index: 5;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      padding: 0 clamp(20px, 4vw, 54px) 28px;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .arrow-group {
+display: flex; gap: 8px;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .arrow-button {
+border-radius: 99px;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      font-size: 1.2rem;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .mini-nav-wrap {
+overflow-x: auto;
+      flex: 1;
+      padding: 12px 0;
+      scrollbar-width: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .mini-nav-wrap::-webkit-scrollbar {
+display: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .mini-nav {
+min-width: 760px;
+      display: grid;
+      grid-template-columns: repeat(9, minmax(78px, 1fr));
+      position: relative;
+      align-items: start;
+      gap: 0;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .mini-nav::before {
+content: "";
+      position: absolute;
+      top: 22px;
+      left: 5%;
+      right: 5%;
+      height: 1px;
+      background: rgba(244, 239, 230, 0.25);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .nav-button {
+--nav-dot-size: var(--priority-2-nav-dot-size);
+      --nav-dot-color: var(--priority-2-nav-dot-color);
+      position: relative;
+      z-index: 1;
+      border: 0;
+      background: transparent;
+      display: grid;
+      justify-items: center;
+      gap: 7px;
+      color: rgba(244, 239, 230, 0.58);
+      padding: 0 2px;
+      min-height: 74px;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .nav-button.priority-1 {
+--nav-dot-size: var(--priority-1-nav-dot-size);
+      --nav-dot-color: var(--priority-1-nav-dot-color);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .nav-button.priority-3 {
+--nav-dot-size: var(--priority-3-nav-dot-size);
+      --nav-dot-color: var(--priority-3-nav-dot-color);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .nav-button:hover {
+background: transparent;
+      transform: none;
+      color: rgba(244, 239, 230, 0.9);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .nav-dot {
+width: var(--nav-dot-size);
+      height: var(--nav-dot-size);
+      margin-top: 16px;
+      border-radius: 999px;
+      background: var(--nav-dot-color);
+      box-shadow: 0 0 0 6px rgba(244, 239, 230, 0.05);
+      transition: 0.25s ease;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .nav-button.is-active .nav-dot {
+width: 18px;
+      height: 18px;
+      margin-top: 13px;
+      background: var(--accent);
+      box-shadow: 0 0 0 8px var(--accent-soft), 0 0 26px rgba(184, 74, 66, 0.42);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .nav-date {
+font-size: 0.78rem;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .nav-title {
+font-size: 0.75rem;
+      line-height: 1.2;
+      color: rgba(244, 239, 230, 0.46);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .nav-button.is-active .nav-date, #democracyTimelineSection.groupmate-inline-timeline .nav-button.is-active .nav-title {
+color: var(--paper);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .rotate-status {
+position: absolute;
+      left: clamp(20px, 4vw, 54px);
+      bottom: 104px;
+      z-index: 4;
+      color: rgba(244, 239, 230, 0.48);
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      pointer-events: none;
+}
+
+/* ==============================
+       Responsive
+    ============================== */
+
+@media (max-width: 760px) {
+#democracyTimelineSection.groupmate-inline-timeline .collapsed-panel {
+min-height: auto;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-stage {
+position: relative;
+        grid-template-columns: 1fr;
+        height: auto;
+        padding: 18px;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-copy-column, #democracyTimelineSection.groupmate-inline-timeline .intro-timeline-column {
+height: auto;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-copy-card {
+position: relative;
+        inset: auto;
+        width: 100%;
+        transform: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-copy-quote {
+white-space: normal;
+        width: auto;
+        transform: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-copy-rail {
+height: auto;
+        overflow: visible;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-timeline-card {
+height: auto;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-timeline-window {
+height: auto;
+        min-height: 0;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-timeline-window::before, #democracyTimelineSection.groupmate-inline-timeline .intro-timeline-window::after {
+display: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .compact-timeline {
+overflow-x: auto;
+        padding-inline: 2px;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(244, 239, 230, 0.3) transparent;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .compact-track {
+min-width: 900px;
+        transform: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .intro-expand-row .expand-button {
+opacity: 1;
+        pointer-events: auto;
+        transform: none;
+}
+}
+
+@media (max-width: 860px) {
+#democracyTimelineSection.groupmate-inline-timeline {
+--face-w: min(620px, 76vw);
+        --face-h: 510px;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .page {
+width: min(100% - 22px, var(--max));
+        padding-top: 4vh;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .module-title {
+font-size: clamp(1.22rem, 5vw, 1.55rem);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .expanded-panel {
+min-height: 760px;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .expanded-topbar {
+flex-direction: column;
+        padding: 26px 18px 0;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .side-arrow-button {
+width: 48px;
+        height: 48px;
+        font-size: 1.35rem;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .collapse-button {
+align-self: flex-start;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .stage {
+padding-top: 22px;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-shell {
+height: 600px; perspective: 1250px;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face {
+padding: 28px 22px;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face h3 {
+font-size: clamp(2rem, 12vw, 4.1rem);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face.priority-1 h3 {
+font-size: clamp(2.25rem, 13vw, 4.5rem);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face.priority-3 h3 {
+font-size: clamp(1.85rem, 11vw, 3.95rem);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face.is-compact-copy h3 {
+font-size: clamp(1.42rem, 7vw, 2.56rem);
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .event-controls {
+flex-direction: column-reverse;
+        align-items: stretch;
+        padding-inline: 18px;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .arrow-group {
+justify-content: center;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .mini-nav {
+min-width: 820px;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .expanded-background::before {
+font-size: 26vw; inset: auto auto 6vh -3vw;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .rotate-status {
+left: 18px; bottom: 140px;
+}
+}
+
+@media (max-width: 560px) {
+#democracyTimelineSection.groupmate-inline-timeline .side-arrow-button {
+display: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-shell {
+height: auto;
+        min-height: 0;
+        overflow-x: auto;
+        perspective: none;
+        cursor: auto;
+        padding: 0 18px 14px;
+        touch-action: pan-x pan-y;
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: 18px;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-halo {
+display: none;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-carousel {
+position: static;
+        width: max-content;
+        height: auto;
+        display: flex;
+        gap: 14px;
+        transform: none !important;
+        transition: none;
+        margin: 0;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face {
+position: relative;
+        flex: 0 0 86vw;
+        min-height: 500px;
+        transform: none !important;
+        opacity: 0.58;
+        filter: none;
+        backface-visibility: visible;
+        scroll-snap-align: center;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-face.is-active {
+opacity: 1;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .rotate-status {
+display: none;
+}
+}
+
+/* ==============================
+       Reduced Motion
+    ============================== */
+
+@media (prefers-reduced-motion: reduce) {
+#democracyTimelineSection.groupmate-inline-timeline *, #democracyTimelineSection.groupmate-inline-timeline *::before, #democracyTimelineSection.groupmate-inline-timeline *::after {
+transition: none !important;
+        scroll-behavior: auto !important;
+}
+
+#democracyTimelineSection.groupmate-inline-timeline .prism-carousel {
+transition: none !important;
+}
+}
+
+
+
+        /* Inline 組員時間軸放回外層頁面滾動流後，外圍仍維持原 index 米白底，並讓 sticky 畫面吃滿 100vh。 */
+        #democracyTimelineSection.groupmate-inline-timeline {
+            background: #FAFAFA !important;
         }
 
-        .prism-face {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            padding: clamp(1rem, 2.6vw, 1.9rem);
-            border: 1px solid rgba(244,239,230,.14);
-            border-left: 4px solid var(--tl-accent);
-            border-radius: 10px;
-            background: rgba(18, 17, 16, .86);
-            box-shadow: 0 28px 70px rgba(0, 0, 0, .38);
-            backface-visibility: hidden;
-            transform-style: preserve-3d;
-            opacity: .42;
-            filter: saturate(.85);
-            transition: opacity .32s ease, filter .32s ease;
-        }
-
-        .prism-face.is-active {
-            opacity: 1;
-            filter: saturate(1);
-        }
-
-        .event-meta {
-            color: var(--tl-accent);
-            font-weight: 900;
-            letter-spacing: .08em;
-            font-size: .96rem;
-        }
-
-        .prism-face h3 {
-            margin: .35rem 0 1rem;
-            color: var(--tl-paper);
-            font-family: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
-            font-size: clamp(1.55rem, 3.1vw, 2.6rem);
-            line-height: 1.25;
-            font-weight: 900;
-        }
-
-        .event-image-wrap {
-            position: relative;
-            margin: 0 0 1rem;
-        }
-
-        .event-image-wrap img {
-            display: block;
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 6px;
-            border: 1px solid rgba(244,239,230,.12);
-        }
-
-        .event-image-source {
-            position: absolute;
-            right: .6rem;
-            bottom: .6rem;
-            padding: .25rem .5rem;
-            border-radius: 999px;
-            background: rgba(17,16,15,.82);
-            border: 1px solid rgba(244,239,230,.16);
-            color: rgba(244,239,230,.82);
-            font-size: .72rem;
-            line-height: 1.2;
-        }
-
-        .event-copy {
-            margin: 0;
-            color: rgba(244,239,230,.79);
-            font-size: clamp(.95rem, 1.2vw, 1.05rem);
-            line-height: 1.85;
-            text-align: justify;
-        }
-
-        .rotate-status {
-            position: absolute;
-            right: clamp(1.2rem, 4vw, 3rem);
-            bottom: clamp(5.5rem, 9vw, 7.25rem);
-            color: rgba(244,239,230,.55);
-            font-weight: 900;
-            letter-spacing: .12em;
-        }
-
-        .event-controls {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 clamp(1.25rem, 3.5vw, 2.5rem) clamp(1.25rem, 3.5vw, 2.5rem);
-        }
-
-        .mini-nav-wrap {
-            flex: 1;
-            overflow-x: auto;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(244,239,230,.28) transparent;
-        }
-
-        .mini-nav {
-            display: flex;
-            gap: .6rem;
-            min-width: max-content;
-        }
-
-        .nav-button {
-            display: grid;
-            grid-template-columns: auto 1fr;
-            grid-template-rows: auto auto;
-            column-gap: .5rem;
-            align-items: center;
-            min-width: 116px;
-            border: 1px solid rgba(244,239,230,.13);
-            border-radius: 999px;
-            padding: .55rem .7rem;
-            background: rgba(244,239,230,.06);
-            color: rgba(244,239,230,.72);
-            cursor: pointer;
-            text-align: left;
-        }
-
-        .nav-button.is-active {
-            background: rgba(184,74,66,.18);
-            border-color: rgba(244,239,230,.32);
-            color: var(--tl-paper);
-        }
-
-        .nav-dot {
-            grid-row: 1 / 3;
-            width: .55rem;
-            height: .55rem;
-            border-radius: 50%;
-            background: currentColor;
-        }
-
-        .nav-date {
-            font-size: .72rem;
-            font-weight: 900;
-            line-height: 1.1;
-        }
-
-        .nav-title {
-            font-size: .8rem;
-            line-height: 1.25;
-            white-space: nowrap;
-        }
-
-        .arrow-group {
-            display: flex;
-            gap: .55rem;
-        }
-
-        .arrow-button {
-            width: 2.7rem;
-            height: 2.7rem;
-            border-radius: 50%;
-            border: 1px solid rgba(244,239,230,.2);
-            background: rgba(244,239,230,.08);
-            color: var(--tl-paper);
-            cursor: pointer;
-            font-size: 1.25rem;
-            font-weight: 900;
-        }
-
-        .arrow-button:not(:disabled):hover {
-            background: rgba(184,74,66,.22);
-        }
-
-        @media (max-width: 860px) {
-            .democracy-timeline-stage {
-                min-height: auto;
-                overflow: visible;
-            }
-
-            .democracy-timeline-stage::after {
-                display: none;
-            }
-
-            .democracy-timeline-pin {
-                position: relative;
-                display: grid;
-                grid-template-columns: 1fr;
-                height: auto;
-                width: min(100%, calc(100% - 24px));
-                padding: 3rem 0;
-            }
-
-            .democracy-timeline-stage .democracy-intro {
-                height: auto;
-                overflow: visible;
-            }
-
-            .democracy-timeline-stage .democracy-copy {
-                height: auto;
-                overflow: visible;
-            }
-
-            .democracy-timeline-stage .democracy-copy-inner {
-                transform: none !important;
-            }
-
-            .democracy-timeline-stage .white-terror-timeline,
-            .democracy-timeline-stage .timeline-module,
-            .democracy-timeline-stage .collapsed-panel,
-            .intro-timeline-card {
-                height: auto;
-            }
-
-            .democracy-timeline-stage .compact-track {
-                min-width: 940px;
-                transform: none !important;
-                grid-template-columns: repeat(8, minmax(100px, 1fr));
-            }
-
-            .white-terror-timeline {
-                padding-inline: 1rem;
-            }
-
-            .expanded-topbar,
-            .event-controls {
-                flex-direction: column;
-            }
-
-            .timeline-stage {
-                height: auto;
-                min-height: 0;
-                padding: 0 1rem 1.25rem;
-                perspective: none;
-            }
-
-            .prism-shell {
-                position: relative;
-                cursor: auto;
-            }
-
-            .prism-carousel {
-                position: relative;
-                left: auto;
-                top: auto;
-                width: 100%;
-                height: auto;
-                transform: none !important;
-                display: grid;
-                gap: 1rem;
-            }
-
-            .prism-face {
-                position: relative;
-                display: none;
-                transform: none !important;
-                opacity: 1;
-            }
-
-            .prism-face.is-active {
-                display: block;
-            }
-
-            .prism-halo,
-            .rotate-status {
-                display: none;
-            }
-
-            .event-image-wrap img {
-                height: 220px;
-            }
+        #democracyTimelineSection.groupmate-inline-timeline .page {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
         }
 
         .parallax-report {
@@ -2984,6 +3526,335 @@
                 transform: none !important;
               }
             }
+
+
+        /* 修正：展開詳細時間軸時，不能讓 collapsed-panel display:none。
+           否則時間軸區塊高度會瞬間縮掉，瀏覽器會把畫面推到下一區圖表文字群組。 */
+        #democracyTimelineSection.groupmate-inline-timeline .timeline-module.is-expanded .collapsed-panel {
+            display: block !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
+
+        #democracyTimelineSection.groupmate-inline-timeline .expanded-panel.is-open,
+        #democracyTimelineSection.groupmate-inline-timeline .timeline-module.is-expanded .expanded-panel {
+            display: block !important;
+            position: fixed !important;
+            inset: 0 !important;
+            z-index: 2147483647 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            height: 100dvh !important;
+            max-height: 100dvh !important;
+            overflow-x: hidden !important;
+            overflow-y: auto !important;
+            overscroll-behavior: contain !important;
+        }
+
+    </style>
+
+
+<!-- FINAL FIX: 展開後時間軸排版完全回到組員截圖位置；不改功能，只覆蓋位置/尺寸/字重 -->
+<style id="timeline-detail-groupmate-layout-fix">
+  /* 鎖住主頁，不讓展開頁背景上下滾動。 */
+  html.detail-open,
+  body.detail-open {
+    overflow: hidden !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    overscroll-behavior: none !important;
+  }
+
+  html.detail-open::-webkit-scrollbar,
+  body.detail-open::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  /* 展開頁本身：保留組員版 fixed 全螢幕邏輯，但禁止出現垂直卷軸。 */
+  #democracyTimelineSection.groupmate-inline-timeline .expanded-panel.is-open,
+  #democracyTimelineSection.groupmate-inline-timeline .timeline-module.is-expanded .expanded-panel,
+  body.detail-open #democracyTimelineSection.groupmate-inline-timeline .expanded-panel.is-open,
+  body.detail-open #democracyTimelineSection.groupmate-inline-timeline .timeline-module.is-expanded .expanded-panel,
+  html.detail-open #democracyTimelineSection.groupmate-inline-timeline .expanded-panel.is-open,
+  html.detail-open #democracyTimelineSection.groupmate-inline-timeline .timeline-module.is-expanded .expanded-panel {
+    display: block !important;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 2147483647 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 0 !important;
+    max-height: 100vh !important;
+    max-height: 100dvh !important;
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+    overscroll-behavior: none !important;
+    scrollbar-width: none !important;
+    box-sizing: border-box !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .expanded-panel.is-open::-webkit-scrollbar,
+  #democracyTimelineSection.groupmate-inline-timeline .timeline-module.is-expanded .expanded-panel::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  /* 關鍵：以下位置全部回到組員原始展開頁設定，不再使用前一版的壓縮 grid。 */
+  #democracyTimelineSection.groupmate-inline-timeline .expanded-topbar {
+    position: relative !important;
+    z-index: 5 !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 18px !important;
+    padding: clamp(22px, 4vw, 46px) clamp(20px, 4vw, 54px) 0 !important;
+    margin: 0 !important;
+    min-height: 0 !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .expanded-topbar h2 {
+    margin: 0 !important;
+    font-size: clamp(1.25rem, 2.2vw, 1.68rem) !important;
+    line-height: 1.35 !important;
+    letter-spacing: 0.02em !important;
+    font-weight: 850 !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .expanded-hint {
+    margin: 12px 0 0 !important;
+    color: rgba(244, 239, 230, 0.62) !important;
+    font-size: 0.95rem !important;
+    line-height: normal !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .collapse-button {
+    flex: 0 0 auto !important;
+    border-radius: 999px !important;
+    min-height: 54px !important;
+    padding: 14px 24px !important;
+    font-size: 1.04rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.06em !important;
+    background: rgba(184, 74, 66, 0.26) !important;
+    border-color: rgba(244, 239, 230, 0.24) !important;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18) !important;
+    white-space: nowrap !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .stage {
+    position: relative !important;
+    z-index: 1 !important;
+    padding: 36px 0 18px !important;
+    margin: 0 !important;
+    display: block !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .side-arrow-button {
+    position: fixed !important;
+    top: 50% !important;
+    z-index: 6 !important;
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 999px !important;
+    display: grid !important;
+    place-items: center !important;
+    font-size: 1.6rem !important;
+    transform: translateY(-50%) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.24) !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .side-arrow-button-left {
+    left: clamp(14px, 2vw, 24px) !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .side-arrow-button-right {
+    right: clamp(14px, 2vw, 24px) !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .prism-shell {
+    position: relative !important;
+    height: 540px !important;
+    min-height: 0 !important;
+    perspective: 1600px !important;
+    perspective-origin: 50% 48% !important;
+    overflow: hidden !important;
+    cursor: grab !important;
+    touch-action: pan-y !important;
+    user-select: none !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .prism-carousel {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    width: var(--face-w) !important;
+    height: var(--face-h) !important;
+    transform-style: preserve-3d !important;
+    transform: translate(-50%, -50%) translateZ(calc(var(--radius) * -1)) rotateY(0deg);
+    transition: transform var(--carousel-duration) cubic-bezier(0.18, 0.72, 0.22, 1) !important;
+    will-change: transform !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .prism-shell.is-dragging .prism-carousel {
+    transition: none !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .prism-face {
+    position: absolute !important;
+    inset: 0 !important;
+    display: grid !important;
+    grid-auto-rows: max-content !important;
+    align-content: start !important;
+    gap: clamp(10px, 1vw, 14px) !important;
+    width: 100% !important;
+    height: 100% !important;
+    padding: clamp(24px, 4vw, 50px) !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(244, 239, 230, 0.18) !important;
+    border-left-color: rgba(244, 239, 230, 0.27) !important;
+    border-right-color: rgba(0, 0, 0, 0.32) !important;
+    background:
+      linear-gradient(90deg, rgba(244, 239, 230, 0.075), transparent 10%, transparent 90%, rgba(0, 0, 0, 0.18)),
+      linear-gradient(180deg, rgba(27, 25, 23, 0.92), rgba(13, 12, 11, 0.88)) !important;
+    box-shadow:
+      inset 1px 0 0 rgba(244, 239, 230, 0.08),
+      inset -1px 0 0 rgba(0, 0, 0, 0.34),
+      0 14px 44px rgba(0, 0, 0, 0.24) !important;
+    backface-visibility: hidden !important;
+    transform-style: preserve-3d !important;
+    opacity: 0.46;
+    filter: saturate(0.85) brightness(0.7);
+    overflow: hidden !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .prism-face.is-active {
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .event-image {
+    display: block !important;
+    width: 100% !important;
+    height: 180px !important;
+    object-fit: cover !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .event-copy {
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    color: rgba(244, 239, 230, 0.78) !important;
+    font-size: clamp(0.96rem, 1.18vw, 1.05rem) !important;
+    line-height: 1.76 !important;
+    overflow: hidden !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+    transform: translateZ(1px) !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .event-controls {
+    position: relative !important;
+    z-index: 5 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 18px !important;
+    padding: 0 clamp(20px, 4vw, 54px) 28px !important;
+    margin: 0 !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    background: transparent !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .mini-nav-wrap {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    flex: 1 !important;
+    padding: 12px 0 !important;
+    scrollbar-width: none !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .mini-nav-wrap::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .nav-button {
+    min-height: 74px !important;
+    gap: 7px !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .arrow-button {
+    border-radius: 99px !important;
+    width: 42px !important;
+    height: 42px !important;
+    display: grid !important;
+    place-items: center !important;
+    font-size: 1.2rem !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .rotate-status {
+    position: absolute !important;
+    left: clamp(20px, 4vw, 54px) !important;
+    bottom: 104px !important;
+    z-index: 4 !important;
+    color: rgba(244, 239, 230, 0.48) !important;
+    font-size: 0.82rem !important;
+    letter-spacing: 0.08em !important;
+    pointer-events: none !important;
+  }
+
+  /* 補回組員獨立頁面裡的粗黑標題感，避免 Tailwind preflight 把 h3 變細。 */
+  #democracyTimelineSection.groupmate-inline-timeline .prism-face h3,
+  #democracyTimelineSection.groupmate-inline-timeline .prism-face h3 .event-title-prefix,
+  #democracyTimelineSection.groupmate-inline-timeline .prism-face h3 .event-title-main {
+    font-family: var(--sans) !important;
+    font-weight: 950 !important;
+    line-height: 0.95 !important;
+    letter-spacing: -0.08em !important;
+    color: var(--paper) !important;
+    -webkit-font-smoothing: antialiased !important;
+    text-rendering: geometricPrecision !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .prism-face h3 {
+    display: flex !important;
+    align-items: flex-end !important;
+    gap: 0.14em !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding-right: 34px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    transform: translateZ(1px) !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .prism-face.priority-1 h3 { font-size: var(--priority-1-title-size) !important; }
+  #democracyTimelineSection.groupmate-inline-timeline .prism-face.priority-2 h3 { font-size: var(--priority-2-title-size) !important; }
+  #democracyTimelineSection.groupmate-inline-timeline .prism-face.priority-3 h3 { font-size: var(--priority-3-title-size) !important; }
+
+  #democracyTimelineSection.groupmate-inline-timeline .event-title-prefix {
+    flex: 0 0 auto !important;
+    font-size: 0.5em !important;
+    line-height: 1 !important;
+    letter-spacing: -0.03em !important;
+    transform: translateY(-0.04em) !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .event-title-main {
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
 </style>
 </head>
 <body class="antialiased selection:bg-[#9B2C2C]/20 selection:text-[#9B2C2C]">
@@ -3104,72 +3975,957 @@
 
         <!-- 倒數器後的新敘事內容 -->
         <div id="article-body-start">
-            <section class="democracy-timeline-stage section-divider-line" id="democracyTimelineSection">
-                <div class="democracy-timeline-pin">
-            <section class="democracy-intro">
-                <div class="democracy-copy">
-                    <div class="democracy-copy-inner">
-                    <p>1992年《中華民國刑法》第100條修訂後（註一），白恐時期也隨之結束，自此臺灣開始踏入民主社會，而在這前後出生的世代則被稱為民主富二代或是民主原住民。</p>
-                    <p class="quote-line">「民主於我而言好像是很稀鬆平常的事。」</p>
-                    <p>國立政治大學財政學系學生陳彥蓉認為，與他一樣年齡介於18到29歲的青年，普遍很難想像沒有民主會是什麼樣子。法律白話文運動成員珞亦以自身經驗比喻，小時候因為家長不曾讓他受餓，所以不認為吃飯有什麼重要性，甚至產生反感。他認為青年與民主的關係也是如此，青年享有民主的成果，卻不一定理解民主是從威權中爭取而來的。</p>
-                    <p class="quote-line">「當大家沒有被建立『什麼是威權』的認知，就不知道什麼是民主。」</p>
-                    </div>
-                </div>
-            </section>
+            <section id="democracyTimelineSection" class="groupmate-inline-timeline section-divider-line" aria-label="白色恐怖大事記時間軸">
+<main class="page">
+<section aria-label="白色恐怖大事記時間軸" class="timeline-module" id="timelineModule">
+<div class="collapsed-panel" id="collapsedPanel">
+<div class="intro-stage" id="introStage">
+<aside aria-label="敘事文字區域" class="intro-copy-column">
+<div class="intro-copy-rail" id="introCopyRail">
+<article class="intro-copy-card" id="introCopyCard">
+<p>1992年《中華民國刑法》第100條修訂後（註一），白恐時期也隨之結束，自此臺灣開始踏入民主社會，而在這前後出生的世代則被稱為民主富二代或是民主原住民。</p>
+<p class="intro-copy-quote">「民主於我而言好像是很稀鬆平常的事。」</p>
+<p>國立政治大學財政學系學生陳彥蓉認為，與他一樣年齡介於18到29歲的青年，普遍很難想像沒有民主會是什麼樣子。法律白話文運動成員珞亦以自身經驗比喻，小時候因為家長不曾讓他受餓，所以不認為吃飯有什麼重要性，甚至產生反感。他認為青年與民主的關係也是如此，青年享有民主的成果，卻不一定理解民主是從威權中爭取而來的，</p>
+<p class="intro-copy-quote is-long">「當大家沒有被建立『什麼是威權』的認知，就不知道什麼是民主。」</p>
+<p class="intro-copy-note">註一：刑法第100條現行條文：「意圖破壞國體，竊據國土，或以非法之方法變更國憲，顛覆政府，而以強暴或脅迫著手實行者，處七年以上有期徒刑；首謀者，處無期徒刑。」 修訂內容為新增「以強暴或脅迫著手實行」，不再僅憑思想、言論定罪。</p>
+</article>
+</div>
+</aside>
+<section aria-labelledby="collapsedTitle" class="intro-timeline-column">
+<div class="intro-timeline-card">
+<div>
+<h2 class="module-title" id="collapsedTitle">白色恐怖大事記：1949至今</h2>
+<p class="module-deck">白色恐怖的歷史脈絡，從戒嚴體制、校園與地方政治案件，延伸至民主化後的法律修正與記憶工作。</p>
+</div>
+<div class="intro-timeline-window">
+<div aria-label="簡版時間軸，會隨頁面捲動露出不同節點" class="compact-timeline" id="compactTimeline">
+<div class="compact-track" id="compactTrack"></div>
+</div>
+</div>
+<div class="expand-row intro-expand-row">
+<button aria-controls="expandedPanel" aria-expanded="false" class="expand-button" id="expandButton" type="button">
+                  點擊展開了解更多 <span aria-hidden="true">→</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</div>
+<div aria-hidden="true" class="expanded-panel" id="expandedPanel">
+<div class="expanded-background" id="expandedBackground"></div>
+<div class="expanded-topbar">
+<div>
+<h2>白色恐怖大事記：1949至今</h2>
+<p class="expanded-hint">左右拖曳，或點選兩側與下方按鍵，九張檔案卡會像九角柱一樣轉動；背景視覺會隨事件切換。</p>
+</div>
+<button class="collapse-button" id="collapseButton" type="button">收起時間軸</button>
+</div>
+<button aria-label="上一個事件" class="arrow-button side-arrow-button side-arrow-button-left" id="sidePrevButton" type="button">←</button>
+<button aria-label="下一個事件" class="arrow-button side-arrow-button side-arrow-button-right" id="sideNextButton" type="button">→</button>
+<div class="stage">
+<div aria-label="九角柱式詳細事件卡，可拖曳旋轉瀏覽" class="prism-shell" id="prismShell">
+<div aria-hidden="true" class="prism-halo"></div>
+<div class="prism-carousel" id="prismCarousel"></div>
+</div>
+<div class="rotate-status" id="rotateStatus">01 / 09</div>
+</div>
+<div class="event-controls">
+<div aria-label="事件節點導覽" class="mini-nav-wrap">
+<div class="mini-nav" id="miniNav"></div>
+</div>
+<div aria-label="切換事件" class="arrow-group">
+<button aria-label="上一個事件" class="arrow-button" id="prevButton" type="button">←</button>
+<button aria-label="下一個事件" class="arrow-button" id="nextButton" type="button">→</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<script id="groupmate-timeline-inline-js">
 
-            <section class="white-terror-timeline" aria-label="白色恐怖大事記時間軸">
-                <div class="timeline-module" id="timelineModule">
-                    <div class="collapsed-panel" id="collapsedPanel">
-                        <div class="intro-timeline-card">
-                        <div>
-                            <h2 class="module-title">白色恐怖大事記　Timeline：1949至今</h2>
-                            <p class="module-deck">白色恐怖的歷史脈絡，從戒嚴體制、校園與地方政治案件，延伸至民主化後的法律修正與記憶工作。</p>
-                        </div>
+    // ==============================
+    // Config
+    // 調整尺寸、速度與導引門檻時，優先看這一區
+    // ==============================
+    const CONFIG = {
+      layout: {
+        desktopFaceWidth: "min(720px, 66vw)",
+        desktopFaceHeight: "460px",
+        tabletBreakpoint: 860,
+        tabletFaceWidth: "min(620px, 76vw)",
+        tabletFaceHeight: "510px",
+        initialRadius: "940px"
+      },
+      assets: {
+        // 本地 file:// 預覽時，改由 GitHub Pages 載入圖片
+        previewBaseUrl: "https://fangk-ship-it.github.io/white-terror-timeline/"
+      },
+      cssVars: {
+        "--carousel-duration": "650ms",
+        "--background-duration": "520ms",
+        "--priority-1-compact-opacity": "1",
+        "--priority-1-compact-dot-size": "36px",
+        "--priority-1-compact-dot-margin-top": "0px",
+        "--priority-1-nav-dot-size": "14px",
+        "--priority-1-title-size": "clamp(2.4rem, 6.6vw, 6.2rem)",
+        "--priority-2-compact-opacity": "1",
+        "--priority-2-compact-dot-size": "26px",
+        "--priority-2-compact-dot-margin-top": "0px",
+        "--priority-2-nav-dot-size": "12px",
+        "--priority-2-title-size": "clamp(2rem, 5.6vw, 5.3rem)",
+        "--priority-3-compact-opacity": "0.68",
+        "--priority-3-compact-dot-size": "18px",
+        "--priority-3-compact-dot-margin-top": "0px",
+        "--priority-3-nav-dot-size": "10px",
+        "--priority-3-title-size": "clamp(1.9rem, 5vw, 5rem)"
+      },
+      interaction: {
+        dragSensitivity: 0.13,
+        edgeResistance: 12,
+        introBreakpoint: 760,
+        introTrackStartAt: 0.74,
+        introCopyEndAt: 0.74,
+        introRevealThreshold: 0.96,
+        mobileBreakpoint: 560,
+        focusReturnDelayMs: 220,
+        scrollBehavior: "smooth"
+      }
+    };
 
-                        <div class="compact-timeline" aria-label="簡版時間軸，可左右滑動瀏覽">
-                            <div class="compact-track" id="compactTrack"></div>
-                        </div>
+    // ==============================
+    // Events
+    // 之後更換圖片時，直接改各事件的 image 欄位即可
+    // ==============================
+    const events = [
+      {
+        date: "1949年",
+        shortDate: "1949",
+        title: "白色恐怖開始",
+        label: "白恐開始",
+        importance: 2,
+        image: "images/1949-white-terror-start.jpg",
+        imageSource: "維基百科",
+        content: "中華民國頒佈《臺灣省戒嚴令》，並施行《懲治叛亂條例》。",
+        theme: {
+          ghostText: "1949",
+          accent: "#b84a42",
+          bgA: "#21130f",
+          bgB: "#0d0d0c",
+          spotX: "18%",
+          spotY: "22%"
+        }
+      },
+      {
+        date: "1949年4月6日",
+        shortDate: "1949.04.06",
+        title: "四六事件",
+        label: "四六事件",
+        importance: 2,
+        image: "images/1949-april-sixth.jpeg",
+        imageSource: "新台灣和平基金會",
+        content: "臺灣省警備總司令部派遣軍警進入臺灣省立師範學院及國立臺灣大學，逮捕涉嫌「張貼標語，散發傳單，煽惑人心，擾亂秩序，妨害治安，搗毀公署，私擅拘禁執行公務之人員，居心叵測」之學生，可謂校園白色恐怖的開始。",
+        theme: {
+          ghostText: "04.06",
+          accent: "#a9543f",
+          bgA: "#1e1b17",
+          bgB: "#11100f",
+          spotX: "26%",
+          spotY: "30%"
+        }
+      },
+      {
+        date: "1952年",
+        shortDate: "1952",
+        title: "鹿窟事件",
+        label: "鹿窟事件",
+        importance: 2,
+        image: "images/1952-luku.jpeg",
+        imageSource: "國家人權記憶庫",
+        content: "逃亡的中國共產黨地下黨員躲藏於鹿窟山區，並吸收部分當地村民組成「台灣人民武裝保衛隊」。後遭政府軍隊嚴刑拷打，估計150名農民、礦工遭判刑與感訓，其中37人遭槍決死刑，98人入獄，導致該山村幾乎滅村。",
+        theme: {
+          ghostText: "1952",
+          accent: "#92704b",
+          bgA: "#1d1b12",
+          bgB: "#0f1110",
+          spotX: "72%",
+          spotY: "28%"
+        }
+      },
+      {
+        date: "1979年",
+        shortDate: "1979",
+        title: "美麗島事件",
+        label: "美麗島",
+        importance: 3,
+        image: "images/1979-kaohsiung-incident.jpg",
+        imageSource: "維基百科",
+        content: "《美麗島》雜誌社在高雄舉行世界人權日紀念日大會，未獲批准，但全臺黨外人士如施明德、呂秀蓮及陳菊等人，仍照計劃至高雄參加紀念活動，遭部隊鎮壓。",
+        theme: {
+          ghostText: "1979",
+          accent: "#7c6859",
+          bgA: "#1a1715",
+          bgB: "#10100f",
+          spotX: "62%",
+          spotY: "72%"
+        }
+      },
+      {
+        date: "1991年5月9日",
+        shortDate: "1991.05.09",
+        title: "獨台會案",
+        label: "獨台會案",
+        importance: 1,
+        image: "images/1991-independence-association.jpg",
+        imageSource: "新台灣和平基金會",
+        content: "法務部調查局進入清華大學校園拘捕歷史研究所學生廖偉程與數名人士，引發全臺各大學生罷課抗議，促成政府廢除《戡亂時期檢肅匪諜條例》。",
+        theme: {
+          ghostText: "1991",
+          accent: "#d55a4d",
+          bgA: "#27120f",
+          bgB: "#10100f",
+          spotX: "28%",
+          spotY: "34%"
+        }
+      },
+      {
+        date: "1991年5月22日",
+        shortDate: "1991.05.22",
+        title: "（狹義）白色恐怖結束",
+        titlePrefix: "（狹義）",
+        titleMain: "白色恐怖結束",
+        label: "狹義結束",
+        importance: 2,
+        image: "images/1991-narrow-end.jpg",
+        imageSource: "中華民國總統府公報",
+        content: "廢除《戡亂時期檢肅匪諜條例》，38年的戒嚴結束。",
+        cardDensity: "compact",
+        theme: {
+          ghostText: "05.22",
+          accent: "#b67a4e",
+          bgA: "#1e1710",
+          bgB: "#11100f",
+          spotX: "74%",
+          spotY: "36%"
+        }
+      },
+      {
+        date: "1992年",
+        shortDate: "1992",
+        title: "（廣義）白色恐怖結束",
+        titlePrefix: "（廣義）",
+        titleMain: "白色恐怖結束",
+        label: "廣義結束",
+        importance: 1,
+        image: "images/1992-broad-end.jpg",
+        imageSource: "100行動聯盟30週年",
+        content: "由林山田、李鎮源、鍾肇政、陳傳岳等十人共同發起「一〇〇行動聯盟」，各界合力促成立法院修正《中華民國刑法》第一百條。",
+        cardDensity: "compact",
+        theme: {
+          ghostText: "1992",
+          accent: "#d65e50",
+          bgA: "#241512",
+          bgB: "#0e0f10",
+          spotX: "20%",
+          spotY: "62%"
+        }
+      },
+      {
+        date: "2024年",
+        shortDate: "2024",
+        title: "制定白色恐怖記憶日",
+        label: "記憶日",
+        importance: 3,
+        image: "images/2024-memory-day.jpg",
+        imageSource: "新台灣和平基金會",
+        content: "行政院核定每年5月19日為「白色恐怖記憶日」，使白恐記憶以公共紀念形式被重新標記。",
+        theme: {
+          ghostText: "2024",
+          accent: "#8a6d58",
+          bgA: "#191716",
+          bgB: "#0d0e0f",
+          spotX: "62%",
+          spotY: "32%"
+        }
+      },
+      {
+        date: "2026年至今",
+        shortDate: "2026",
+        title: "記憶工作持續進行",
+        label: "至今",
+        importance: 2,
+        image: "",
+        imageSource: "",
+        content: "",
+        theme: {
+          ghostText: "至今",
+          accent: "#9b8a76",
+          bgA: "#181818",
+          bgB: "#0d0d0d",
+          spotX: "76%",
+          spotY: "68%"
+        }
+      }
+    ];
 
-                        <div class="expand-row">
-                            <button class="expand-button" id="expandButton" type="button" aria-expanded="false" aria-controls="expandedPanel">
-                                點擊展開了解更多 <span aria-hidden="true">→</span>
-                            </button>
-                        </div>
-                    </div>
+    // ==============================
+    // DOM & State
+    // ==============================
+    const DOM = {
+      module: document.getElementById("timelineModule"),
+      collapsedPanel: document.getElementById("collapsedPanel"),
+      introStage: document.getElementById("introStage"),
+      introCopyRail: document.getElementById("introCopyRail"),
+      introCopyCard: document.getElementById("introCopyCard"),
+      compactTimeline: document.getElementById("compactTimeline"),
+      compactTrack: document.getElementById("compactTrack"),
+      expandButton: document.getElementById("expandButton"),
+      collapseButton: document.getElementById("collapseButton"),
+      expandedPanel: document.getElementById("expandedPanel"),
+      prismShell: document.getElementById("prismShell"),
+      prismCarousel: document.getElementById("prismCarousel"),
+      miniNav: document.getElementById("miniNav"),
+      prevButton: document.getElementById("prevButton"),
+      nextButton: document.getElementById("nextButton"),
+      sidePrevButton: document.getElementById("sidePrevButton"),
+      sideNextButton: document.getElementById("sideNextButton"),
+      rotateStatus: document.getElementById("rotateStatus")
+    };
 
-                        </div>
-                    <div class="expanded-panel" id="expandedPanel" aria-hidden="true">
-                        <div class="expanded-background" id="expandedBackground"></div>
-                        <div class="expanded-topbar">
-                            <div>
-                                <h2>白色恐怖大事記　Timeline：1949至今</h2>
-                                <p class="expanded-hint">左右拖曳或點選下方節點，檔案卡會像多面柱一樣轉動；背景視覺會隨事件切換。</p>
-                            </div>
-                            <button class="collapse-button" id="collapseButton" type="button">收起時間軸</button>
-                        </div>
+    const state = {
+      step: 360 / events.length,
+      activeIndex: 0,
+      currentRotation: 0,
+      dragStartX: 0,
+      dragStartRotation: 0,
+      isDragging: false,
+      mobileScrollFrame: 0,
+      introFrame: 0,
+      lockedScrollY: 0,
+      previousBodyPosition: "",
+      previousBodyTop: "",
+      previousBodyLeft: "",
+      previousBodyRight: "",
+      previousBodyWidth: "",
+      previousHtmlOverflow: ""
+    };
 
-                        <div class="timeline-stage">
-                            <div class="prism-shell" id="prismShell" aria-label="多面柱式詳細事件卡，可拖曳旋轉瀏覽">
-                                <div class="prism-halo" aria-hidden="true"></div>
-                                <div class="prism-carousel" id="prismCarousel"></div>
-                            </div>
-                            <div class="rotate-status" id="rotateStatus">01 / 08</div>
-                        </div>
+    // ==============================
+    // Initialization
+    // ==============================
+    initializeTimeline();
 
-                        <div class="event-controls">
-                            <div class="mini-nav-wrap" aria-label="事件節點導覽">
-                                <div class="mini-nav" id="miniNav"></div>
-                            </div>
-                            <div class="arrow-group" aria-label="切換事件">
-                                <button class="arrow-button" id="prevButton" type="button" aria-label="上一個事件">←</button>
-                                <button class="arrow-button" id="nextButton" type="button" aria-label="下一個事件">→</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-                </div>
-            </section>
+    function initializeTimeline() {
+      applyConfigTokens();
+      applyResponsiveLayoutVars();
+      createCompactTimeline();
+      createPrismTimeline();
+      bindEvents();
+
+      requestAnimationFrame(() => {
+        updateIntroProgress();
+      });
+    }
+
+    function applyConfigTokens() {
+      DOM.module.style.setProperty("--radius", CONFIG.layout.initialRadius);
+
+      Object.entries(CONFIG.cssVars).forEach(([name, value]) => {
+        DOM.module.style.setProperty(name, value);
+      });
+    }
+
+    function applyResponsiveLayoutVars() {
+      const isTabletWidth = window.innerWidth <= CONFIG.layout.tabletBreakpoint;
+
+      DOM.module.style.setProperty(
+        "--face-w",
+        isTabletWidth ? CONFIG.layout.tabletFaceWidth : CONFIG.layout.desktopFaceWidth
+      );
+      DOM.module.style.setProperty(
+        "--face-h",
+        isTabletWidth ? CONFIG.layout.tabletFaceHeight : CONFIG.layout.desktopFaceHeight
+      );
+    }
+
+    // ==============================
+    // Rendering
+    // ==============================
+    function createCompactTimeline() {
+      DOM.compactTrack.innerHTML = "";
+
+      events.forEach((event, index) => {
+        const item = document.createElement("button");
+        item.type = "button";
+        item.className = `compact-item priority-${event.importance}`;
+        item.dataset.index = String(index);
+        item.setAttribute("aria-label", `移到 ${event.date} ${event.title}`);
+        item.innerHTML = `
+          <div class="compact-date">${event.shortDate}</div>
+          <div class="compact-dot" aria-hidden="true"></div>
+          <div class="compact-label">${event.label}</div>
+        `;
+        item.addEventListener("click", () => handleCompactItemSelect(index));
+        DOM.compactTrack.appendChild(item);
+      });
+    }
+
+    function createPrismTimeline() {
+      DOM.prismCarousel.innerHTML = "";
+      DOM.miniNav.innerHTML = "";
+
+      events.forEach((event, index) => {
+        DOM.prismCarousel.appendChild(createPrismFace(event, index));
+        DOM.miniNav.appendChild(createNavButton(event, index));
+      });
+
+      updateRadius();
+      updateActiveEvent(0);
+    }
+
+    function createPrismFace(event, index) {
+      const face = document.createElement("article");
+      const content = event.content ? `<p class="event-copy">${event.content}</p>` : "";
+      const titleMarkup = createPrismTitle(event);
+
+      face.className = `prism-face priority-${event.importance}${event.cardDensity === "compact" ? " is-compact-copy" : ""}`;
+      face.dataset.index = String(index);
+      face.style.transform = `rotateY(${index * state.step}deg) translateZ(var(--radius))`;
+      face.setAttribute("aria-labelledby", `event-title-${index}`);
+      face.innerHTML = `
+        <div class="file-pin" aria-hidden="true"></div>
+        <div class="event-meta">${event.date}</div>
+        <h3 id="event-title-${index}">${titleMarkup}</h3>
+        ${createEventMedia(event)}
+        ${content}
+      `;
+
+      return face;
+    }
+
+    function createPrismTitle(event) {
+      if (!event.titlePrefix || !event.titleMain) {
+        return `<span class="event-title-main">${event.title}</span>`;
+      }
+
+      return `
+        <span class="event-title-prefix">${event.titlePrefix}</span>
+        <span class="event-title-main">${event.titleMain}</span>
+      `;
+    }
+
+    function createEventMedia(event) {
+      const resolvedImage = resolveAssetUrl(event.image);
+      if (!resolvedImage) return "";
+
+      return `
+        <figure class="event-figure">
+          <img class="event-image" src="${resolvedImage}" alt="${event.title}相關圖片" loading="lazy" />
+          ${event.imageSource ? `<figcaption class="event-source">圖片來源｜${event.imageSource}</figcaption>` : ""}
+        </figure>
+      `;
+    }
+
+    function createNavButton(event, index) {
+      const navButton = document.createElement("button");
+
+      navButton.type = "button";
+      navButton.className = `nav-button priority-${event.importance}`;
+      navButton.dataset.index = String(index);
+      navButton.setAttribute("aria-label", `跳到 ${event.date} ${event.title}`);
+      navButton.innerHTML = `
+        <span class="nav-dot" aria-hidden="true"></span>
+        <span class="nav-date">${event.shortDate}</span>
+        <span class="nav-title">${event.label}</span>
+      `;
+      navButton.addEventListener("click", () => goToEvent(index));
+
+      return navButton;
+    }
+
+    // ==============================
+    // Intro Stage
+    // 左側文字先往上推進，右側時間軸在後段才開始揭露
+    // ==============================
+    function handleCompactItemSelect(index) {
+      updateActiveEvent(index);
+
+      if (isIntroStackedLayout()) {
+        DOM.compactTrack.children[index]?.scrollIntoView({
+          inline: "center",
+          block: "nearest",
+          behavior: CONFIG.interaction.scrollBehavior
+        });
+        return;
+      }
+
+      scrollIntroToIndex(index);
+    }
+
+    function getIntroProgressForIndex(index) {
+      const normalized = clamp(index, 0, events.length - 1);
+      const trackProgress = events.length > 1 ? normalized / (events.length - 1) : 0;
+
+      return trackProgress === 0
+        ? 0
+        : CONFIG.interaction.introTrackStartAt +
+          (1 - CONFIG.interaction.introTrackStartAt) * trackProgress;
+    }
+
+    function scrollIntroToIndex(index, behavior = CONFIG.interaction.scrollBehavior) {
+      const scrollSpan = Math.max(DOM.collapsedPanel.offsetHeight - window.innerHeight, 0);
+      if (!scrollSpan) return;
+
+      const progress = getIntroProgressForIndex(index);
+      const panelTop = window.scrollY + DOM.collapsedPanel.getBoundingClientRect().top;
+
+      window.scrollTo({
+        top: panelTop + scrollSpan * progress,
+        behavior
+      });
+    }
+
+    function updateIntroPinState() {
+      if (!DOM.introStage) return;
+
+      if (isIntroStackedLayout() || DOM.module.classList.contains("is-expanded")) {
+        DOM.introStage.classList.remove("is-fixed", "is-ended");
+        return;
+      }
+
+      const panelRect = DOM.collapsedPanel.getBoundingClientRect();
+
+      if (panelRect.top > 0) {
+        DOM.introStage.classList.remove("is-fixed", "is-ended");
+        return;
+      }
+
+      if (panelRect.bottom <= window.innerHeight) {
+        DOM.introStage.classList.remove("is-fixed");
+        DOM.introStage.classList.add("is-ended");
+        return;
+      }
+
+      DOM.introStage.classList.add("is-fixed");
+      DOM.introStage.classList.remove("is-ended");
+    }
+
+    function updateIntroProgress() {
+      updateIntroPinState();
+
+      if (DOM.module.classList.contains("is-expanded")) return;
+
+      if (isIntroStackedLayout()) {
+        DOM.module.style.setProperty("--intro-copy-shift", "0px");
+        DOM.module.style.setProperty("--intro-track-shift", "0px");
+        DOM.expandButton.classList.add("is-visible");
+        return;
+      }
+
+      const scrollSpan = Math.max(DOM.collapsedPanel.offsetHeight - window.innerHeight, 1);
+      const panelRect = DOM.collapsedPanel.getBoundingClientRect();
+      const progress = clamp(-panelRect.top / scrollSpan, 0, 1);
+      const copyProgress = clamp(progress / CONFIG.interaction.introCopyEndAt, 0, 1);
+      const trackProgress = clamp(
+        (progress - CONFIG.interaction.introTrackStartAt) /
+          (1 - CONFIG.interaction.introTrackStartAt),
+        0,
+        1
+      );
+      const copyTravel = Math.max(DOM.introCopyCard.offsetHeight - DOM.introCopyRail.clientHeight, 0);
+      const trackTravel = Math.max(DOM.compactTrack.scrollWidth - DOM.compactTimeline.clientWidth, 0);
+      const targetIndex = Math.round(trackProgress * (events.length - 1));
+
+      DOM.module.style.setProperty("--intro-copy-shift", `${Math.round(copyTravel * -copyProgress)}px`);
+      DOM.module.style.setProperty("--intro-track-shift", `${Math.round(trackTravel * -trackProgress)}px`);
+
+      if (targetIndex !== state.activeIndex) {
+        updateActiveEvent(targetIndex);
+      }
+
+      DOM.expandButton.classList.toggle("is-visible", progress >= CONFIG.interaction.introRevealThreshold);
+    }
+
+    function queueIntroProgressUpdate() {
+      cancelAnimationFrame(state.introFrame);
+      state.introFrame = requestAnimationFrame(() => {
+        state.introFrame = 0;
+        updateIntroProgress();
+      });
+    }
+
+    function syncCollapsedIntroToIndex(index) {
+      const normalized = clamp(index, 0, events.length - 1);
+      updateActiveEvent(normalized);
+
+      if (isIntroStackedLayout()) {
+        DOM.module.style.setProperty("--intro-copy-shift", "0px");
+        DOM.module.style.setProperty("--intro-track-shift", "0px");
+        DOM.compactTrack.children[normalized]?.scrollIntoView({
+          inline: "center",
+          block: "nearest",
+          behavior: "auto"
+        });
+        DOM.expandButton.classList.add("is-visible");
+        return;
+      }
+
+      const progress = getIntroProgressForIndex(normalized);
+      const copyProgress = clamp(progress / CONFIG.interaction.introCopyEndAt, 0, 1);
+      const trackProgress = clamp(
+        (progress - CONFIG.interaction.introTrackStartAt) /
+          (1 - CONFIG.interaction.introTrackStartAt),
+        0,
+        1
+      );
+      const copyTravel = Math.max(DOM.introCopyCard.offsetHeight - DOM.introCopyRail.clientHeight, 0);
+      const trackTravel = Math.max(DOM.compactTrack.scrollWidth - DOM.compactTimeline.clientWidth, 0);
+
+      DOM.module.style.setProperty("--intro-copy-shift", `${Math.round(copyTravel * -copyProgress)}px`);
+      DOM.module.style.setProperty("--intro-track-shift", `${Math.round(trackTravel * -trackProgress)}px`);
+      DOM.expandButton.classList.add("is-visible");
+    }
+
+    function lockPageScrollForTimelineDetail() {
+      state.lockedScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+      state.previousHtmlOverflow = document.documentElement.style.overflow;
+      state.previousBodyOverflow = document.body.style.overflow;
+
+      document.documentElement.classList.add("detail-open");
+      document.body.classList.add("detail-open");
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+    }
+
+    function unlockPageScrollForTimelineDetail() {
+      document.documentElement.classList.remove("detail-open");
+      document.body.classList.remove("detail-open");
+      document.documentElement.style.overflow = state.previousHtmlOverflow || "";
+      document.body.style.overflow = state.previousBodyOverflow || "";
+      window.scrollTo(0, state.lockedScrollY || 0);
+    }
+
+    // ==============================
+    // View State
+    // ==============================
+    function openTimeline(index = 0) {
+      const initialIndex = clamp(index, 0, events.length - 1);
+
+      updateActiveEvent(initialIndex);
+      lockPageScrollForTimelineDetail();
+      DOM.module.classList.add("is-expanded");
+      DOM.expandedPanel.classList.add("is-open");
+      DOM.expandedPanel.style.display = "block";
+      DOM.expandButton.setAttribute("aria-expanded", "true");
+      DOM.expandedPanel.setAttribute("aria-hidden", "false");
+      DOM.expandedPanel.scrollTop = 0;
+
+      requestAnimationFrame(() => {
+        applyResponsiveLayoutVars();
+        updateRadius();
+        goToEvent(initialIndex, true);
+        DOM.collapseButton.focus({ preventScroll: true });
+      });
+    }
+
+    function closeTimeline() {
+      const lastViewedIndex = state.activeIndex;
+
+      DOM.module.classList.remove("is-expanded");
+      DOM.expandedPanel.classList.remove("is-open");
+      DOM.expandedPanel.style.display = "";
+      unlockPageScrollForTimelineDetail();
+      DOM.expandButton.setAttribute("aria-expanded", "false");
+      DOM.expandedPanel.setAttribute("aria-hidden", "true");
+
+      requestAnimationFrame(() => {
+        syncCollapsedIntroToIndex(lastViewedIndex);
+        scrollIntroToIndex(lastViewedIndex, "auto");
+        queueIntroProgressUpdate();
+      });
+
+      setTimeout(() => {
+        DOM.expandButton.focus({ preventScroll: true });
+      }, CONFIG.interaction.focusReturnDelayMs);
+    }
+
+    function goToEvent(index, instant = false) {
+      const normalized = clamp(index, 0, events.length - 1);
+
+      updateActiveEvent(normalized);
+
+      if (isMobileLayout()) {
+        if (DOM.module.classList.contains("is-expanded")) {
+          scrollToMobileCard(normalized, instant);
+        }
+        return;
+      }
+
+      if (instant) DOM.prismCarousel.style.transition = "none";
+      setCarouselRotation(-normalized * state.step);
+
+      if (instant) {
+        requestAnimationFrame(() => {
+          DOM.prismCarousel.style.transition = "";
+        });
+      }
+    }
+
+    function updateActiveEvent(index) {
+      state.activeIndex = clamp(index, 0, events.length - 1);
+
+      const event = events[state.activeIndex];
+      const theme = event.theme;
+      const resolvedImage = resolveAssetUrl(event.image);
+
+      DOM.module.style.setProperty("--accent", theme.accent);
+      DOM.module.style.setProperty("--accent-soft", `${theme.accent}33`);
+      DOM.module.style.setProperty("--bg-a", theme.bgA);
+      DOM.module.style.setProperty("--bg-b", theme.bgB);
+      DOM.module.style.setProperty("--spot-x", theme.spotX);
+      DOM.module.style.setProperty("--spot-y", theme.spotY);
+      DOM.module.style.setProperty("--ghost", `"${theme.ghostText}"`);
+      DOM.module.style.setProperty("--event-image", resolvedImage ? `url("${resolvedImage}")` : "none");
+
+      DOM.prismCarousel.querySelectorAll(".prism-face").forEach((face, faceIndex) => {
+        face.classList.toggle("is-active", faceIndex === state.activeIndex);
+      });
+
+      DOM.miniNav.querySelectorAll(".nav-button").forEach((button, buttonIndex) => {
+        button.classList.toggle("is-active", buttonIndex === state.activeIndex);
+
+        if (DOM.module.classList.contains("is-expanded") && buttonIndex === state.activeIndex) {
+          button.scrollIntoView({
+            inline: "center",
+            block: "nearest",
+            behavior: CONFIG.interaction.scrollBehavior
+          });
+        }
+      });
+
+      DOM.compactTrack.querySelectorAll(".compact-item").forEach((button, buttonIndex) => {
+        button.classList.toggle("is-active", buttonIndex === state.activeIndex);
+      });
+
+      const prevButtons = [DOM.prevButton, DOM.sidePrevButton];
+      const nextButtons = [DOM.nextButton, DOM.sideNextButton];
+      const isAtStart = state.activeIndex === 0;
+      const isAtEnd = state.activeIndex === events.length - 1;
+
+      prevButtons.forEach((button) => {
+        if (!button) return;
+        button.disabled = isAtStart;
+        button.style.opacity = isAtStart ? 0.42 : 1;
+      });
+
+      nextButtons.forEach((button) => {
+        if (!button) return;
+        button.disabled = isAtEnd;
+        button.style.opacity = isAtEnd ? 0.42 : 1;
+      });
+
+      DOM.rotateStatus.textContent = `${String(state.activeIndex + 1).padStart(2, "0")} / ${String(events.length).padStart(2, "0")}`;
+    }
+
+    // ==============================
+    // Desktop Prism Rotation
+    // ==============================
+    function updateRadius() {
+      const face = DOM.prismCarousel.querySelector(".prism-face");
+      if (!face) return;
+
+      const width = face.getBoundingClientRect().width || 700;
+      const radius = (width / 2) / Math.tan(Math.PI / events.length);
+      DOM.module.style.setProperty("--radius", `${Math.round(radius)}px`);
+    }
+
+    function setCarouselRotation(rotation) {
+      state.currentRotation = rotation;
+      DOM.prismCarousel.style.transform = `translate(-50%, -50%) translateZ(calc(var(--radius) * -1)) rotateY(${rotation}deg)`;
+    }
+
+    function nearestIndexFromRotation(rotation) {
+      const rawIndex = -rotation / state.step;
+      return clamp(Math.round(rawIndex), 0, events.length - 1);
+    }
+
+    // ==============================
+    // Mobile Card Scrolling
+    // 手機版改為穩定的橫向滑動卡片，並同步背景
+    // ==============================
+    function scrollToMobileCard(index, instant = false) {
+      const cards = DOM.prismCarousel.querySelectorAll(".prism-face");
+      const targetCard = cards[index];
+      if (!targetCard) return;
+
+      const shellRect = DOM.prismShell.getBoundingClientRect();
+      const cardRect = targetCard.getBoundingClientRect();
+      const nextScrollLeft =
+        DOM.prismShell.scrollLeft +
+        (cardRect.left - shellRect.left) -
+        (shellRect.width - cardRect.width) / 2;
+
+      DOM.prismShell.scrollTo({
+        left: nextScrollLeft,
+        behavior: instant ? "auto" : CONFIG.interaction.scrollBehavior
+      });
+    }
+
+    function syncActiveIndexFromMobileScroll() {
+      if (!isMobileLayout() || !DOM.module.classList.contains("is-expanded")) return;
+
+      const cards = Array.from(DOM.prismCarousel.querySelectorAll(".prism-face"));
+      if (!cards.length) return;
+
+      const shellRect = DOM.prismShell.getBoundingClientRect();
+      const shellCenter = shellRect.left + shellRect.width / 2;
+
+      let closestIndex = state.activeIndex;
+      let smallestDistance = Number.POSITIVE_INFINITY;
+
+      cards.forEach((card, index) => {
+        const cardRect = card.getBoundingClientRect();
+        const cardCenter = cardRect.left + cardRect.width / 2;
+        const distance = Math.abs(cardCenter - shellCenter);
+
+        if (distance < smallestDistance) {
+          smallestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      if (closestIndex !== state.activeIndex) {
+        updateActiveEvent(closestIndex);
+      }
+    }
+
+    // ==============================
+    // Drag Interaction
+    // ==============================
+    function handleDragMove(clientX) {
+      const dx = clientX - state.dragStartX;
+      const rotation = state.dragStartRotation + dx * CONFIG.interaction.dragSensitivity;
+      const minRotation = -(events.length - 1) * state.step;
+      const maxRotation = 0;
+      const resistedRotation = Math.max(
+        minRotation - CONFIG.interaction.edgeResistance,
+        Math.min(maxRotation + CONFIG.interaction.edgeResistance, rotation)
+      );
+
+      setCarouselRotation(resistedRotation);
+
+      const previewIndex = nearestIndexFromRotation(resistedRotation);
+      if (previewIndex !== state.activeIndex) {
+        updateActiveEvent(previewIndex);
+      }
+    }
+
+    function startDrag(event) {
+      if (isMobileLayout()) return;
+
+      state.isDragging = true;
+      state.dragStartX = event.clientX;
+      state.dragStartRotation = state.currentRotation;
+      DOM.prismShell.classList.add("is-dragging");
+      DOM.prismShell.setPointerCapture(event.pointerId);
+    }
+
+    function moveDrag(event) {
+      if (!state.isDragging) return;
+      handleDragMove(event.clientX);
+    }
+
+    function endDrag() {
+      if (!state.isDragging) return;
+
+      state.isDragging = false;
+      DOM.prismShell.classList.remove("is-dragging");
+
+      const snapIndex = nearestIndexFromRotation(state.currentRotation);
+      goToEvent(snapIndex);
+    }
+
+    // ==============================
+    // Events Binding
+    // ==============================
+    function bindEvents() {
+      DOM.expandButton.addEventListener("click", () => openTimeline(0));
+      DOM.collapseButton.addEventListener("click", closeTimeline);
+      DOM.expandedPanel.addEventListener("wheel", (event) => event.stopPropagation(), { passive: true });
+      DOM.expandedPanel.addEventListener("touchmove", (event) => event.stopPropagation(), { passive: true });
+      DOM.prevButton.addEventListener("click", () => goToEvent(state.activeIndex - 1));
+      DOM.nextButton.addEventListener("click", () => goToEvent(state.activeIndex + 1));
+      DOM.sidePrevButton.addEventListener("click", () => goToEvent(state.activeIndex - 1));
+      DOM.sideNextButton.addEventListener("click", () => goToEvent(state.activeIndex + 1));
+
+      DOM.prismShell.addEventListener("pointerdown", startDrag);
+      DOM.prismShell.addEventListener("pointermove", moveDrag);
+      DOM.prismShell.addEventListener("pointerup", endDrag);
+      DOM.prismShell.addEventListener("pointercancel", endDrag);
+      DOM.prismShell.addEventListener("lostpointercapture", endDrag);
+
+      DOM.prismShell.addEventListener("scroll", () => {
+        if (!isMobileLayout()) return;
+
+        cancelAnimationFrame(state.mobileScrollFrame);
+        state.mobileScrollFrame = requestAnimationFrame(syncActiveIndexFromMobileScroll);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (!DOM.module.classList.contains("is-expanded")) return;
+
+        if (event.key === "Escape") closeTimeline();
+        if (event.key === "ArrowRight") goToEvent(state.activeIndex + 1);
+        if (event.key === "ArrowLeft") goToEvent(state.activeIndex - 1);
+      });
+
+      window.addEventListener("scroll", queueIntroProgressUpdate, { passive: true });
+
+      window.addEventListener("resize", () => {
+        applyResponsiveLayoutVars();
+        updateRadius();
+        goToEvent(state.activeIndex, true);
+        queueIntroProgressUpdate();
+      });
+
+      window.addEventListener("load", queueIntroProgressUpdate);
+    }
+
+    // ==============================
+    // Utilities
+    // ==============================
+    function resolveAssetUrl(path) {
+      if (!path) return "";
+      if (/^(https?:)?\/\//.test(path) || path.startsWith("data:") || path.startsWith("blob:")) {
+        return path;
+      }
+
+      const normalizedPath = path.replace(/^\.?\//, "");
+      const isLocalPreview =
+        window.location.protocol === "file:" ||
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1";
+
+      if (isLocalPreview) {
+        return new URL(normalizedPath, CONFIG.assets.previewBaseUrl).toString();
+      }
+
+      return normalizedPath;
+    }
+
+    function isIntroStackedLayout() {
+      return window.matchMedia(`(max-width: ${CONFIG.interaction.introBreakpoint}px)`).matches;
+    }
+
+    function isMobileLayout() {
+      return window.matchMedia(`(max-width: ${CONFIG.interaction.mobileBreakpoint}px)`).matches;
+    }
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
+  
+</script>
+</section>
 
             <section class="parallax-report">
                 <div class="parallax-row">
@@ -7721,392 +9477,9 @@
                 target.scrollIntoView({ behavior: 'smooth' });
             }
 
-            function initWhiteTerrorTimeline() {
-                const moduleEl = document.getElementById("timelineModule");
-                const compactTrack = document.getElementById("compactTrack");
-                const expandButton = document.getElementById("expandButton");
-                const collapseButton = document.getElementById("collapseButton");
-                const expandedPanel = document.getElementById("expandedPanel");
-                const prismShell = document.getElementById("prismShell");
-                const prismCarousel = document.getElementById("prismCarousel");
-                const miniNav = document.getElementById("miniNav");
-                const prevButton = document.getElementById("prevButton");
-                const nextButton = document.getElementById("nextButton");
-                const rotateStatus = document.getElementById("rotateStatus");
-                const introSection = document.getElementById("democracyTimelineSection");
-                const introPin = introSection?.querySelector(".democracy-timeline-pin");
-                const introCopyRail = introSection?.querySelector(".democracy-copy");
-                const introCopyInner = introSection?.querySelector(".democracy-copy-inner");
-                const introCompactWindow = introSection?.querySelector(".compact-timeline");
-
-                if (!moduleEl || !compactTrack || !prismCarousel || moduleEl.dataset.ready === "true") return;
-                moduleEl.dataset.ready = "true";
-
-                const timelineEvents = [
-                    {
-                        date: "1949年",
-                        shortDate: "1949",
-                        title: "白恐開始",
-                        fullTitle: "白色恐怖開始",
-                        importance: 2,
-                        bgText: "1949",
-                        accent: "#b84a42",
-                        bgA: "#21130f",
-                        bgB: "#0d0d0c",
-                        spotX: "32%",
-                        spotY: "22%",
-                        image: "images/1949-white-terror-start.jpg",
-                        imageSource: "維基百科",
-                        content: "中華民國頒佈《臺灣省戒嚴令》，並施行《懲治叛亂條例》，政治案件與思想控制逐漸成為社會日常的一部分。"
-                    },
-                    {
-                        date: "1949年4月6日",
-                        shortDate: "1949.04.06",
-                        title: "四六事件",
-                        fullTitle: "四六事件",
-                        importance: 2,
-                        bgText: "04.06",
-                        accent: "#a8483d",
-                        bgA: "#1d1716",
-                        bgB: "#0f0d0c",
-                        spotX: "58%",
-                        spotY: "30%",
-                        image: "images/1949-april-sixth.jpeg",
-                        imageSource: "新台灣和平基金會",
-                        content: "臺灣省警備總司令部派遣軍警進入臺灣省立師範學院及國立臺灣大學，逮捕學生，成為校園白色恐怖的重要開端。"
-                    },
-                    {
-                        date: "1952年",
-                        shortDate: "1952",
-                        title: "鹿窟事件",
-                        fullTitle: "鹿窟事件",
-                        importance: 2,
-                        bgText: "1952",
-                        accent: "#92704b",
-                        bgA: "#1c1711",
-                        bgB: "#0e0f0d",
-                        spotX: "78%",
-                        spotY: "48%",
-                        image: "images/1952-luku.jpeg",
-                        imageSource: "國家人權記憶庫",
-                        content: "逃亡的中國共產黨地下黨員躲藏於鹿窟山區，並吸收部分當地村民組成「台灣人民武裝保衛隊」。後遭政府軍隊嚴刑拷打，估計150名農民、礦工遭判刑與感訓，其中37人遭槍決死刑，98人入獄，導致該山村幾乎滅村。"
-                    },
-                    {
-                        date: "1979年",
-                        shortDate: "1979",
-                        title: "美麗島",
-                        fullTitle: "美麗島事件",
-                        importance: 3,
-                        bgText: "1979",
-                        accent: "#7c6859",
-                        bgA: "#171616",
-                        bgB: "#0f1111",
-                        spotX: "36%",
-                        spotY: "62%",
-                        image: "images/1979-kaohsiung-incident.jpg",
-                        imageSource: "維基百科",
-                        content: "《美麗島》雜誌社在高雄舉行世界人權日紀念日大會，未獲批准，但全臺黨外人士如施明德、呂秀蓮及陳菊等人，仍照計劃至高雄參加紀念活動，遭部隊鎮壓。"
-                    },
-                    {
-                        date: "1991年5月9日",
-                        shortDate: "1991.05.09",
-                        title: "獨台會案",
-                        fullTitle: "獨台會案",
-                        importance: 1,
-                        bgText: "1991",
-                        accent: "#d55a4d",
-                        bgA: "#27120f",
-                        bgB: "#10100f",
-                        spotX: "28%",
-                        spotY: "34%",
-                        image: "images/1991-independence-association.jpg",
-                        imageSource: "新台灣和平基金會",
-                        content: "法務部調查局進入清華大學校園拘捕歷史研究所學生廖偉程與數名人士，引發全臺各大學生罷課抗議，促成政府廢除《戡亂時期檢肅匪諜條例》。"
-                    },
-                    {
-                        date: "1991年5月22日",
-                        shortDate: "1991.05.22",
-                        title: "狹義結束",
-                        fullTitle: "（狹義）白色恐怖結束",
-                        importance: 2,
-                        bgText: "05.22",
-                        accent: "#b67a4e",
-                        bgA: "#1e1710",
-                        bgB: "#11100f",
-                        spotX: "74%",
-                        spotY: "36%",
-                        image: "images/1991-narrow-end.jpg",
-                        imageSource: "中華民國總統府公報",
-                        content: "廢除《戡亂時期檢肅匪諜條例》，標誌著狹義白色恐怖的結束，也使政治案件的壓制機制逐步鬆動。"
-                    },
-                    {
-                        date: "1992年",
-                        shortDate: "1992",
-                        title: "廣義結束",
-                        fullTitle: "（廣義）白色恐怖結束",
-                        importance: 1,
-                        bgText: "1992",
-                        accent: "#d65e50",
-                        bgA: "#241512",
-                        bgB: "#0e0f10",
-                        spotX: "20%",
-                        spotY: "62%",
-                        image: "images/1992-broad-end.jpg",
-                        imageSource: "100行動聯盟30週年",
-                        content: "由林山田、李鎮源、鍾肇政、陳傳岳等十人共同發起「一〇〇行動聯盟」，各界合力促成立法院修正《中華民國刑法》第一百條。"
-                    },
-                    {
-                        date: "2024年",
-                        shortDate: "2024",
-                        title: "記憶日",
-                        fullTitle: "制定白色恐怖記憶日",
-                        importance: 3,
-                        bgText: "2024",
-                        accent: "#8a6d58",
-                        bgA: "#191716",
-                        bgB: "#0d0e0f",
-                        spotX: "62%",
-                        spotY: "32%",
-                        image: "images/2024-memory-day.jpg",
-                        imageSource: "新台灣和平基金會",
-                        content: "行政院核定每年5月19日為「白色恐怖記憶日」，使白恐記憶以公共紀念形式被重新標記。"
-                    }
-                ];
-
-                const step = 360 / timelineEvents.length;
-                let activeIndex = 0;
-                let currentRotation = 0;
-                let dragStartX = 0;
-                let dragStartRotation = 0;
-                let isDragging = false;
-
-                function createCompactTimeline() {
-                    compactTrack.innerHTML = "";
-                    timelineEvents.forEach((event, index) => {
-                        const item = document.createElement("button");
-                        item.type = "button";
-                        item.className = `compact-item priority-${event.importance}`;
-                        item.setAttribute("aria-label", `展開並查看 ${event.date} ${event.fullTitle}`);
-                        item.innerHTML = `
-                            <div class="compact-date">${event.shortDate}</div>
-                            <div class="compact-dot" aria-hidden="true"></div>
-                            <div class="compact-label">${event.title}</div>
-                        `;
-                        item.addEventListener("click", () => openTimeline(index));
-                        compactTrack.appendChild(item);
-                    });
-                }
-
-                function clamp01(value) {
-                    return Math.max(0, Math.min(1, value));
-                }
-
-                function updateIntroScrollProgress() {
-                    if (!introSection || !introCopyRail || !introCopyInner || !introCompactWindow) return;
-                    if (moduleEl.classList.contains("is-expanded") || window.matchMedia("(max-width: 860px)").matches) {
-                        introPin?.classList.remove("is-fixed", "is-ended");
-                        introSection.style.setProperty("--intro-copy-shift", "0px");
-                        introSection.style.setProperty("--intro-track-shift", "0px");
-                        return;
-                    }
-
-                    const rect = introSection.getBoundingClientRect();
-                    const isFixed = rect.top <= 0 && rect.bottom > window.innerHeight;
-                    const isEnded = rect.bottom <= window.innerHeight;
-                    introPin?.classList.toggle("is-fixed", isFixed);
-                    introPin?.classList.toggle("is-ended", isEnded);
-                    const scrollRange = Math.max(introSection.offsetHeight - window.innerHeight, 1);
-                    const progress = clamp01(-rect.top / scrollRange);
-                    const copyProgress = clamp01(progress / .72);
-                    const trackProgress = clamp01((progress - .12) / .82);
-                    const copyTravel = Math.max(introCopyInner.scrollHeight - introCopyRail.clientHeight, 0);
-                    const trackTravel = Math.max(compactTrack.scrollWidth - introCompactWindow.clientWidth, 0);
-
-                    introSection.style.setProperty("--intro-copy-shift", `${Math.round(copyTravel * -copyProgress)}px`);
-                    introSection.style.setProperty("--intro-track-shift", `${Math.round(trackTravel * -trackProgress)}px`);
-
-                    const scrollIndex = Math.round(trackProgress * (timelineEvents.length - 1));
-                    if (scrollIndex !== activeIndex) updateActiveEvent(scrollIndex);
-                }
-
-                function createPrismTimeline() {
-                    prismCarousel.innerHTML = "";
-                    miniNav.innerHTML = "";
-
-                    timelineEvents.forEach((event, index) => {
-                        const face = document.createElement("article");
-                        face.className = `prism-face priority-${event.importance}`;
-                        face.dataset.index = index;
-                        face.style.transform = `rotateY(${index * step}deg) translateZ(var(--tl-radius))`;
-                        face.setAttribute("aria-labelledby", `event-title-${index}`);
-
-                        const media = event.image
-                            ? `<figure class="event-image-wrap"><img src="${event.image}" alt="${event.fullTitle}相關圖片" loading="lazy" />${event.imageSource ? `<figcaption class="event-image-source">圖片來源｜${event.imageSource}</figcaption>` : ``}</figure>`
-                            : "";
-
-                        face.innerHTML = `
-                            <div class="event-meta">${event.date}</div>
-                            <h3 id="event-title-${index}">${event.fullTitle}</h3>
-                            ${media}
-                            <p class="event-copy">${event.content}</p>
-                        `;
-                        prismCarousel.appendChild(face);
-
-                        const navButton = document.createElement("button");
-                        navButton.type = "button";
-                        navButton.className = "nav-button";
-                        navButton.dataset.index = index;
-                        navButton.setAttribute("aria-label", `跳到 ${event.date} ${event.fullTitle}`);
-                        navButton.innerHTML = `
-                            <span class="nav-dot" aria-hidden="true"></span>
-                            <span class="nav-date">${event.shortDate}</span>
-                            <span class="nav-title">${event.title}</span>
-                        `;
-                        navButton.addEventListener("click", () => goToEvent(index));
-                        miniNav.appendChild(navButton);
-                    });
-
-                    updateRadius();
-                    updateActiveEvent(0);
-                    setCarouselRotation(0);
-                }
-
-                function updateRadius() {
-                    const face = prismCarousel.querySelector(".prism-face");
-                    if (!face) return;
-                    const width = face.getBoundingClientRect().width || 700;
-                    const radius = (width / 2) / Math.tan(Math.PI / timelineEvents.length);
-                    moduleEl.style.setProperty("--tl-radius", `${Math.round(radius)}px`);
-                }
-
-                function openTimeline(index = 0) {
-                    moduleEl.classList.add("is-expanded");
-                    expandButton.setAttribute("aria-expanded", "true");
-                    expandedPanel.setAttribute("aria-hidden", "false");
-                    requestAnimationFrame(() => {
-                        updateRadius();
-                        goToEvent(index, true);
-                        moduleEl.scrollIntoView({ block: "start", behavior: "smooth" });
-                    });
-                }
-
-                function closeTimeline() {
-                    moduleEl.classList.remove("is-expanded");
-                    expandButton.setAttribute("aria-expanded", "false");
-                    expandedPanel.setAttribute("aria-hidden", "true");
-                    moduleEl.scrollIntoView({ block: "center", behavior: "smooth" });
-                }
-
-                function setCarouselRotation(rotation) {
-                    currentRotation = rotation;
-                    prismCarousel.style.transform = `translate(-50%, -50%) translateZ(calc(var(--tl-radius) * -1)) rotateY(${rotation}deg)`;
-                }
-
-                function goToEvent(index, instant = false) {
-                    const normalized = Math.max(0, Math.min(timelineEvents.length - 1, index));
-                    if (instant) prismCarousel.style.transition = "none";
-                    updateActiveEvent(normalized);
-                    setCarouselRotation(-normalized * step);
-                    if (instant) requestAnimationFrame(() => { prismCarousel.style.transition = ""; });
-                }
-
-                function updateActiveEvent(index) {
-                    activeIndex = Math.max(0, Math.min(timelineEvents.length - 1, index));
-                    const event = timelineEvents[activeIndex];
-                    moduleEl.style.setProperty("--tl-accent", event.accent);
-                    moduleEl.style.setProperty("--tl-accent-soft", `${event.accent}33`);
-                    moduleEl.style.setProperty("--tl-bg-a", event.bgA);
-                    moduleEl.style.setProperty("--tl-bg-b", event.bgB);
-                    moduleEl.style.setProperty("--tl-spot-x", event.spotX);
-                    moduleEl.style.setProperty("--tl-spot-y", event.spotY);
-                    moduleEl.style.setProperty("--tl-ghost", `"${event.bgText}"`);
-                    moduleEl.style.setProperty("--tl-event-image", event.image ? `url("${event.image}")` : "none");
-
-                    prismCarousel.querySelectorAll(".prism-face").forEach((face, i) => {
-                        face.classList.toggle("is-active", i === activeIndex);
-                    });
-                    miniNav.querySelectorAll(".nav-button").forEach((button, i) => {
-                        button.classList.toggle("is-active", i === activeIndex);
-                        if (i === activeIndex && moduleEl.classList.contains("is-expanded")) {
-                            button.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
-                        }
-                    });
-                    compactTrack.querySelectorAll(".compact-item").forEach((item, i) => {
-                        item.classList.toggle("is-active", i === activeIndex);
-                    });
-                    prevButton.disabled = activeIndex === 0;
-                    nextButton.disabled = activeIndex === timelineEvents.length - 1;
-                    prevButton.style.opacity = prevButton.disabled ? .42 : 1;
-                    nextButton.style.opacity = nextButton.disabled ? .42 : 1;
-                    rotateStatus.textContent = `${String(activeIndex + 1).padStart(2, "0")} / ${String(timelineEvents.length).padStart(2, "0")}`;
-                }
-
-                function nearestIndexFromRotation(rotation) {
-                    const raw = -rotation / step;
-                    return Math.max(0, Math.min(timelineEvents.length - 1, Math.round(raw)));
-                }
-
-                function handleDragMove(clientX) {
-                    const dx = clientX - dragStartX;
-                    const rotation = dragStartRotation + dx * 0.13;
-                    const minRotation = -(timelineEvents.length - 1) * step;
-                    const resisted = Math.max(minRotation - 12, Math.min(12, rotation));
-                    setCarouselRotation(resisted);
-                    const previewIndex = nearestIndexFromRotation(resisted);
-                    if (previewIndex !== activeIndex) updateActiveEvent(previewIndex);
-                }
-
-                prismShell.addEventListener("pointerdown", (event) => {
-                    if (window.matchMedia("(max-width: 860px)").matches) return;
-                    isDragging = true;
-                    dragStartX = event.clientX;
-                    dragStartRotation = currentRotation;
-                    prismShell.classList.add("is-dragging");
-                    prismShell.setPointerCapture(event.pointerId);
-                });
-
-                prismShell.addEventListener("pointermove", (event) => {
-                    if (!isDragging) return;
-                    handleDragMove(event.clientX);
-                });
-
-                function endDrag() {
-                    if (!isDragging) return;
-                    isDragging = false;
-                    prismShell.classList.remove("is-dragging");
-                    goToEvent(nearestIndexFromRotation(currentRotation));
-                }
-
-                prismShell.addEventListener("pointerup", endDrag);
-                prismShell.addEventListener("pointercancel", endDrag);
-                prismShell.addEventListener("lostpointercapture", endDrag);
-                expandButton.addEventListener("click", () => openTimeline(0));
-                collapseButton.addEventListener("click", closeTimeline);
-                prevButton.addEventListener("click", () => goToEvent(activeIndex - 1));
-                nextButton.addEventListener("click", () => goToEvent(activeIndex + 1));
-
-                document.addEventListener("keydown", (event) => {
-                    if (!moduleEl.classList.contains("is-expanded")) return;
-                    if (event.key === "Escape") closeTimeline();
-                    if (event.key === "ArrowRight") goToEvent(activeIndex + 1);
-                    if (event.key === "ArrowLeft") goToEvent(activeIndex - 1);
-                });
-
-                window.addEventListener("scroll", updateIntroScrollProgress, { passive: true });
-                window.addEventListener("resize", () => {
-                    updateRadius();
-                    goToEvent(activeIndex, true);
-                    updateIntroScrollProgress();
-                });
-
-                createCompactTimeline();
-                createPrismTimeline();
-                updateIntroScrollProgress();
-            }
-
-            initWhiteTerrorTimeline();
-
-            function initYouthAttitudeChart() {
+            
+        /* 舊版 initWhiteTerrorTimeline 已移除，改用組員版 inline 時間軸。 */
+function initYouthAttitudeChart() {
                 const canvas = document.getElementById("youth-attitude-chart");
                 if (!canvas || canvas.dataset.rendered === "true" || typeof Chart === "undefined") return;
                 canvas.dataset.rendered = "true";
