@@ -329,11 +329,27 @@
 		    --intro-copy-shift: 0px;
 		    --intro-track-shift: 0px;
 		    --intro-rail-height: clamp(540px, 68vh, 720px);
+            --intro-card-height: clamp(600px, 78vh, 760px);
+            --intro-window-height: clamp(360px, 47vh, 470px);
+            --intro-window-radius: 22px;
+            --tl-paper: #f4efe6;
+            --tl-ink: #f1ece4;
+            --tl-muted: rgba(244, 239, 230, .66);
+            --tl-line: rgba(244, 239, 230, .34);
+            --tl-accent: #b84a42;
+            --tl-accent-soft: rgba(184, 74, 66, .24);
+            --tl-bg-a: #21130f;
+            --tl-bg-b: #0d0d0c;
+            --tl-spot-x: 32%;
+            --tl-spot-y: 32%;
+            --tl-ghost: "1949";
+            --tl-event-image: none;
+            --tl-radius: 940px;
 		    min-height: 272vh;
 		    position: relative;
 		    color: #40362c;
 		    background: #FAFAFA;
-		    overflow: clip;
+		    overflow: visible;
 		}
 
         .democracy-timeline-stage::before {
@@ -397,17 +413,17 @@
             transform: translateX(-50%);
         }
 
-        .democracy-timeline-stage .democracy-intro {
+        .democracy-timeline-stage .intro-copy-column {
             min-height: 0;
             height: 100%;
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             padding: 0;
             background: transparent;
             overflow: hidden;
         }
 
-        .democracy-timeline-stage .democracy-copy {
+        .democracy-timeline-stage .intro-copy-rail {
             position: relative;
             width: 100%;
             max-width: none;
@@ -415,12 +431,20 @@
             overflow: hidden;
         }
 
-        .democracy-timeline-stage .democracy-copy-inner {
+        .democracy-timeline-stage .intro-copy-card {
+            position: absolute;
+            inset: 0 auto auto 0;
+            width: 100%;
+            padding: 0;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            box-shadow: none;
             transform: translateY(var(--intro-copy-shift));
             transition: transform 180ms linear;
         }
 
-        .democracy-timeline-stage .democracy-copy p {
+        .democracy-timeline-stage .intro-copy-card p {
             margin: 0;
             color: rgba(64, 54, 44, .96);
             font-size: clamp(1.2rem, 1.46vw, 1.46rem);
@@ -429,25 +453,43 @@
             text-align: left;
         }
 
-        .democracy-timeline-stage .democracy-copy p + p {
+        .democracy-timeline-stage .intro-copy-card p + p {
             margin-top: 30px;
         }
 
-        .democracy-timeline-stage .democracy-copy .quote-line {
+        .democracy-timeline-stage .intro-copy-quote {
             display: block;
-            width: fit-content;
+            width: 100%;
             max-width: 100%;
-            margin-inline: auto;
-            padding: .22em .42em;
-            color: #2f271f;
+            margin-inline: 0;
+            padding: 0;
+            border-left: 0;
+            color: rgba(64, 54, 44, .96);
             font-family: "BiauKai", "DFKai-SB", "Kaiti TC", "STKaiti", "KaiTi", "Noto Serif TC", serif;
-            font-size: clamp(1.45rem, 2.35vw, 2.5rem);
-            line-height: 1.48;
-            font-weight: 800;
-            text-align: center;
-            text-shadow: 0 1px 0 rgba(255, 255, 255, .34);
+            font-size: clamp(1.18rem, 1.34vw, 1.34rem);
+            line-height: 1.54;
+            font-weight: 700;
+            letter-spacing: .03em;
+            text-align: left;
+            white-space: nowrap;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, .12);
         }
 
+        .democracy-timeline-stage .intro-copy-quote.is-long {
+            font-size: clamp(.96rem, 1.04vw, 1.04rem);
+        }
+
+        .democracy-timeline-stage .intro-copy-note {
+            margin-top: 38px;
+            padding-top: 0;
+            border-top: 0;
+            color: rgba(64, 54, 44, .82);
+            font-size: clamp(.94rem, 1.08vw, 1.04rem);
+            line-height: 1.9;
+            font-weight: 500;
+        }
+
+        .democracy-timeline-stage .intro-timeline-column,
         .democracy-timeline-stage .white-terror-timeline {
             min-height: 0;
             height: 100%;
@@ -481,72 +523,118 @@
             display: none;
         }
 
-        .intro-timeline-card {
+        .democracy-timeline-stage .intro-timeline-card {
             position: relative;
-            display: flex;
-            flex-direction: column;
+            isolation: isolate;
+            display: grid;
+            grid-template-rows: auto minmax(0, 1fr) auto;
+            gap: clamp(12px, 1.4vw, 18px);
             min-height: 0;
-            height: 100%;
-            padding: clamp(22px, 3vw, 34px);
-            border: 1px solid rgba(244, 239, 230, .15);
-            border-radius: 30px;
+            height: var(--intro-card-height);
+            padding: clamp(22px, 2.6vw, 30px);
+            border-radius: 26px;
+            border: 1px solid transparent;
             background:
-                linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .026)),
-                rgba(18, 17, 16, .84);
-            box-shadow: 0 30px 90px rgba(0, 0, 0, .42);
+                linear-gradient(180deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .018)) padding-box,
+                linear-gradient(180deg, rgba(23, 21, 19, .9), rgba(23, 21, 19, .9)) padding-box,
+                linear-gradient(135deg, rgba(228, 215, 195, .22), rgba(228, 215, 195, .08) 24%, rgba(228, 215, 195, .12) 48%, rgba(228, 215, 195, .04) 70%, rgba(228, 215, 195, .2)) border-box;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, .02),
+                inset 0 0 0 1px rgba(244, 239, 230, .012),
+                0 0 0 1px rgba(228, 215, 195, .08),
+                0 0 26px rgba(228, 215, 195, .18),
+                0 20px 60px rgba(47, 33, 22, .24);
             overflow: hidden;
         }
 
-        .intro-timeline-card::before {
+        .democracy-timeline-stage .intro-timeline-card::before {
             content: "";
             position: absolute;
             inset: 0;
             z-index: 0;
             pointer-events: none;
             background:
-                radial-gradient(circle at 14% 16%, rgba(184, 74, 66, .18), transparent 28%),
-                radial-gradient(circle at 88% 78%, rgba(244, 239, 230, .08), transparent 32%);
+                linear-gradient(90deg, rgba(228, 215, 195, .34), rgba(228, 215, 195, .14) 20px, rgba(228, 215, 195, .05) 38px, transparent 68px),
+                linear-gradient(270deg, rgba(228, 215, 195, .3), rgba(228, 215, 195, .12) 18px, rgba(228, 215, 195, .04) 36px, transparent 66px),
+                linear-gradient(180deg, rgba(228, 215, 195, .24), rgba(228, 215, 195, .1) 18px, rgba(228, 215, 195, .04) 36px, transparent 62px),
+                linear-gradient(0deg, rgba(228, 215, 195, .2), rgba(228, 215, 195, .08) 16px, rgba(228, 215, 195, .03) 34px, transparent 58px),
+                radial-gradient(circle at 18% 16%, rgba(184, 74, 66, .13), transparent 22%),
+                radial-gradient(circle at 82% 78%, rgba(244, 239, 230, .07), transparent 28%),
+                linear-gradient(180deg, rgba(255, 255, 255, .03), transparent 42%),
+                radial-gradient(circle at 1px 1px, rgba(244, 239, 230, .03) 0 .8px, transparent 1.4px);
+            background-size: auto, auto, auto, auto, auto, auto, auto, 7px 7px;
         }
 
-        .intro-timeline-card > * {
+        .democracy-timeline-stage .intro-timeline-card > * {
             position: relative;
             z-index: 1;
         }
 
         .democracy-timeline-stage .module-title {
-            font-size: clamp(1.6rem, 2.5vw, 2.55rem);
+            font-size: clamp(1.76rem, 2.36vw, 2.16rem);
+            line-height: 1.2;
         }
 
         .democracy-timeline-stage .module-deck {
-            max-width: 780px;
-            font-size: clamp(.96rem, 1.2vw, 1.08rem);
+            max-width: 700px;
+            margin: 10px 0 0;
+            font-size: clamp(.94rem, 1.02vw, 1rem);
+            line-height: 1.54;
         }
 
-        .democracy-timeline-stage .intro-timeline-card > .compact-timeline {
+        .democracy-timeline-stage .intro-timeline-window {
             position: relative;
-            flex: 1 1 auto;
+            align-self: stretch;
+            display: flex;
+            align-items: center;
             width: 100%;
-            min-height: clamp(330px, 39vh, 404px);
-            margin-top: clamp(22px, 4vh, 36px);
-            padding: 0;
-            border: 1px solid rgba(244, 239, 230, .14);
-            border-radius: 22px;
+            height: var(--intro-window-height);
+            min-height: 0;
+            margin-top: 0;
+            padding: 6px 0;
+            border: 1px solid rgba(244, 239, 230, .06);
+            border-radius: var(--intro-window-radius);
             background:
-                radial-gradient(circle at 18% 40%, rgba(184, 74, 66, .18), transparent 32%),
-                linear-gradient(120deg, rgba(244, 239, 230, .07), rgba(244, 239, 230, .015));
+                linear-gradient(180deg, rgba(26, 24, 22, .8), rgba(15, 14, 13, .92)),
+                radial-gradient(circle at 18% 16%, rgba(244, 239, 230, .025), transparent 24%);
+            box-shadow:
+                inset 0 0 0 1px rgba(244, 239, 230, .02),
+                0 16px 28px rgba(0, 0, 0, .18);
             overflow: hidden;
             scrollbar-width: none;
         }
 
-        .democracy-timeline-stage .intro-timeline-card > .compact-timeline::after {
+        .democracy-timeline-stage .intro-timeline-window::before,
+        .democracy-timeline-stage .intro-timeline-window::after {
             content: "";
             position: absolute;
+            top: 12px;
+            bottom: 12px;
+            width: clamp(26px, 4vw, 54px);
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .democracy-timeline-stage .intro-timeline-window::before {
             left: 0;
+            background: linear-gradient(90deg, rgba(17, 16, 15, .9), transparent);
+        }
+
+        .democracy-timeline-stage .intro-timeline-window::after {
             right: 0;
-            top: 50%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(244, 239, 230, .52), transparent);
-            transform: translateY(-50%);
+            background: linear-gradient(270deg, rgba(17, 16, 15, .9), transparent);
+        }
+
+        .democracy-timeline-stage .intro-timeline-window .compact-timeline {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0;
+            scrollbar-width: none;
         }
 
         .democracy-timeline-stage .compact-timeline::-webkit-scrollbar {
@@ -555,67 +643,114 @@
 
         .democracy-timeline-stage .compact-track {
             min-width: 2600px;
-            height: 100%;
+            min-height: 100%;
+            position: relative;
             display: grid;
             grid-template-columns: repeat(8, minmax(300px, 1fr));
             align-items: center;
-            padding: 0 7%;
+            padding: 0 8px;
             transform: translateX(var(--intro-track-shift));
             transition: transform 180ms linear;
+            will-change: transform;
         }
 
         .democracy-timeline-stage .compact-track::before {
-            left: 7%;
-            right: 7%;
+            left: 6.8%;
+            right: 6.8%;
             top: 50%;
             background: linear-gradient(90deg, transparent, rgba(244, 239, 230, .56), transparent);
         }
 
         .democracy-timeline-stage .compact-item {
-            min-height: 230px;
+            --compact-opacity: .82;
+            --compact-text-color: rgba(244, 239, 230, .76);
+            --compact-label-color: rgba(244, 239, 230, .72);
+            --compact-dot-size: 26px;
+            --compact-dot-color: rgba(244, 239, 230, .82);
+            --compact-dot-shadow: 0 0 0 8px rgba(244, 239, 230, .07);
+            min-height: 196px;
             display: grid;
-            grid-template-rows: 1fr auto auto 1fr;
+            grid-template-rows: minmax(58px, 1fr) auto minmax(58px, 1fr);
             align-items: center;
-            opacity: .72;
+            opacity: var(--compact-opacity);
             transition: opacity .22s ease, transform .22s ease;
         }
 
         .democracy-timeline-stage .compact-item.is-active {
             opacity: 1;
-            transform: translateY(-4px);
+            transform: translateY(-8px);
         }
 
         .democracy-timeline-stage .compact-date {
             min-height: 0;
             align-items: end;
-            font-size: clamp(1rem, 1.4vw, 1.2rem);
+            padding: 0 8px 12px;
+            color: var(--compact-text-color);
+            font-size: clamp(1.05rem, 1.5vw, 1.42rem);
+            line-height: 1.08;
         }
 
         .democracy-timeline-stage .compact-dot {
-            width: 26px;
-            height: 26px;
-            margin: 24px auto 20px;
+            width: var(--compact-dot-size);
+            height: var(--compact-dot-size);
+            margin: 0 auto;
+            background: var(--compact-dot-color);
+            box-shadow: var(--compact-dot-shadow);
         }
 
         .democracy-timeline-stage .compact-item.priority-1 .compact-dot {
-            width: 44px;
-            height: 44px;
-            margin-top: 24px;
+            --compact-dot-size: 44px;
+            --compact-dot-color: var(--tl-accent);
+            --compact-dot-shadow: 0 0 0 9px rgba(184, 74, 66, .18), 0 0 28px rgba(184, 74, 66, .48);
+        }
+
+        .democracy-timeline-stage .compact-item.priority-3 {
+            --compact-opacity: .68;
+            --compact-dot-size: 18px;
+            --compact-text-color: rgba(244, 239, 230, .55);
+            --compact-label-color: rgba(244, 239, 230, .58);
         }
 
         .democracy-timeline-stage .compact-label {
-            font-size: clamp(.95rem, 1.2vw, 1.08rem);
+            align-self: start;
+            padding: 12px 8px 0;
+            color: var(--compact-label-color);
+            font-size: clamp(.95rem, 1.28vw, 1.22rem);
+            line-height: 1.26;
+        }
+
+        .democracy-timeline-stage .compact-item.is-active .compact-date,
+        .democracy-timeline-stage .compact-item.is-active .compact-label {
+            color: var(--tl-paper);
+        }
+
+        .democracy-timeline-stage .compact-item.is-active .compact-dot {
+            transform: scale(1.08);
+            background: var(--tl-accent);
+            box-shadow: 0 0 0 8px var(--tl-accent-soft), 0 0 30px rgba(184, 74, 66, .42);
         }
 
         .democracy-timeline-stage .expand-row {
             justify-content: flex-end;
-            padding-top: clamp(18px, 3vh, 28px);
+            margin-top: 0;
+            padding: clamp(24px, 2.8vw, 34px) 2px 2px 0;
         }
 
         .democracy-timeline-stage .expanded-panel {
-            height: 100%;
-            min-height: 100%;
-            border-radius: 30px;
+            position: fixed;
+            inset: 0;
+            z-index: 220;
+            width: 100vw;
+            height: 100vh;
+            min-height: 0;
+            border-radius: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            overscroll-behavior: contain;
+        }
+
+        body.timeline-detail-open,
+        html.timeline-detail-open {
             overflow: hidden;
         }
 
@@ -1132,24 +1267,26 @@
                 padding: 3rem 0;
             }
 
-            .democracy-timeline-stage .democracy-intro {
+            .democracy-timeline-stage .intro-copy-column {
                 height: auto;
                 overflow: visible;
             }
 
-            .democracy-timeline-stage .democracy-copy {
+            .democracy-timeline-stage .intro-copy-rail {
                 height: auto;
                 overflow: visible;
             }
 
-            .democracy-timeline-stage .democracy-copy-inner {
+            .democracy-timeline-stage .intro-copy-card {
+                position: relative;
+                padding: 1.4rem;
                 transform: none !important;
             }
 
             .democracy-timeline-stage .white-terror-timeline,
             .democracy-timeline-stage .timeline-module,
             .democracy-timeline-stage .collapsed-panel,
-            .intro-timeline-card {
+            .democracy-timeline-stage .intro-timeline-card {
                 height: auto;
             }
 
@@ -3106,18 +3243,18 @@
         <div id="article-body-start">
             <section class="democracy-timeline-stage section-divider-line" id="democracyTimelineSection">
                 <div class="democracy-timeline-pin">
-            <section class="democracy-intro">
-                <div class="democracy-copy">
-                    <div class="democracy-copy-inner">
-                    <p>1992年《中華民國刑法》第100條修訂後（註一），白恐時期也隨之結束，自此臺灣開始踏入民主社會，而在這前後出生的世代則被稱為民主富二代或是民主原住民。</p>
-                    <p class="quote-line">「民主於我而言好像是很稀鬆平常的事。」</p>
-                    <p>國立政治大學財政學系學生陳彥蓉認為，與他一樣年齡介於18到29歲的青年，普遍很難想像沒有民主會是什麼樣子。法律白話文運動成員珞亦以自身經驗比喻，小時候因為家長不曾讓他受餓，所以不認為吃飯有什麼重要性，甚至產生反感。他認為青年與民主的關係也是如此，青年享有民主的成果，卻不一定理解民主是從威權中爭取而來的。</p>
-                    <p class="quote-line">「當大家沒有被建立『什麼是威權』的認知，就不知道什麼是民主。」</p>
-                    </div>
+            <aside class="intro-copy-column" aria-label="敘事文字區域">
+                <div class="intro-copy-rail" id="introCopyRail">
+                    <article class="intro-copy-card" id="introCopyCard">
+                        <p>1992年《中華民國刑法》第100條修訂後（註一），白恐時期也隨之結束，自此臺灣開始踏入民主社會，而在這前後出生的世代則被稱為民主富二代或是民主原住民。</p>
+                        <p class="intro-copy-quote">「民主於我而言好像是很稀鬆平常的事。」</p>
+                        <p>國立政治大學財政學系學生陳彥蓉認為，與他一樣年齡介於18到29歲的青年，普遍很難想像沒有民主會是什麼樣子。法律白話文運動成員珞亦以自身經驗比喻，小時候因為家長不曾讓他受餓，所以不認為吃飯有什麼重要性，甚至產生反感。他認為青年與民主的關係也是如此，青年享有民主的成果，卻不一定理解民主是從威權中爭取而來的。</p>
+                        <p class="intro-copy-quote is-long">「當大家沒有被建立『什麼是威權』的認知，就不知道什麼是民主。」</p>
+                    </article>
                 </div>
-            </section>
+            </aside>
 
-            <section class="white-terror-timeline" aria-label="白色恐怖大事記時間軸">
+            <section class="white-terror-timeline intro-timeline-column" aria-label="白色恐怖大事記時間軸">
                 <div class="timeline-module" id="timelineModule">
                     <div class="collapsed-panel" id="collapsedPanel">
                         <div class="intro-timeline-card">
@@ -3126,8 +3263,10 @@
                             <p class="module-deck">白色恐怖的歷史脈絡，從戒嚴體制、校園與地方政治案件，延伸至民主化後的法律修正與記憶工作。</p>
                         </div>
 
-                        <div class="compact-timeline" aria-label="簡版時間軸，可左右滑動瀏覽">
-                            <div class="compact-track" id="compactTrack"></div>
+                        <div class="intro-timeline-window">
+                            <div class="compact-timeline" id="compactTimeline" aria-label="簡版時間軸，可左右滑動瀏覽">
+                                <div class="compact-track" id="compactTrack"></div>
+                            </div>
                         </div>
 
                         <div class="expand-row">
@@ -7735,9 +7874,9 @@
                 const rotateStatus = document.getElementById("rotateStatus");
                 const introSection = document.getElementById("democracyTimelineSection");
                 const introPin = introSection?.querySelector(".democracy-timeline-pin");
-                const introCopyRail = introSection?.querySelector(".democracy-copy");
-                const introCopyInner = introSection?.querySelector(".democracy-copy-inner");
-                const introCompactWindow = introSection?.querySelector(".compact-timeline");
+                const introCopyRail = document.getElementById("introCopyRail");
+                const introCopyCard = document.getElementById("introCopyCard");
+                const introCompactWindow = document.getElementById("compactTimeline");
 
                 if (!moduleEl || !compactTrack || !prismCarousel || moduleEl.dataset.ready === "true") return;
                 moduleEl.dataset.ready = "true";
@@ -7879,6 +8018,10 @@
                 let dragStartX = 0;
                 let dragStartRotation = 0;
                 let isDragging = false;
+                let detailScrollLocked = false;
+                let previousHtmlOverflow = "";
+                let previousBodyOverflow = "";
+                let introFrame = 0;
 
                 function createCompactTimeline() {
                     compactTrack.innerHTML = "";
@@ -7892,7 +8035,7 @@
                             <div class="compact-dot" aria-hidden="true"></div>
                             <div class="compact-label">${event.title}</div>
                         `;
-                        item.addEventListener("click", () => openTimeline(index));
+                        item.addEventListener("click", () => handleCompactItemSelect(index));
                         compactTrack.appendChild(item);
                     });
                 }
@@ -7902,31 +8045,70 @@
                 }
 
                 function updateIntroScrollProgress() {
-                    if (!introSection || !introCopyRail || !introCopyInner || !introCompactWindow) return;
-                    if (moduleEl.classList.contains("is-expanded") || window.matchMedia("(max-width: 860px)").matches) {
-                        introPin?.classList.remove("is-fixed", "is-ended");
+                    if (!introSection || !introCopyRail || !introCopyCard || !introCompactWindow) return;
+                    if (moduleEl.classList.contains("is-expanded")) return;
+
+                    if (window.matchMedia("(max-width: 860px)").matches) {
                         introSection.style.setProperty("--intro-copy-shift", "0px");
                         introSection.style.setProperty("--intro-track-shift", "0px");
                         return;
                     }
 
                     const rect = introSection.getBoundingClientRect();
-                    const isFixed = rect.top <= 0 && rect.bottom > window.innerHeight;
-                    const isEnded = rect.bottom <= window.innerHeight;
-                    introPin?.classList.toggle("is-fixed", isFixed);
-                    introPin?.classList.toggle("is-ended", isEnded);
                     const scrollRange = Math.max(introSection.offsetHeight - window.innerHeight, 1);
                     const progress = clamp01(-rect.top / scrollRange);
-                    const copyProgress = clamp01(progress / .72);
-                    const trackProgress = clamp01((progress - .12) / .82);
-                    const copyTravel = Math.max(introCopyInner.scrollHeight - introCopyRail.clientHeight, 0);
+
+                    /*
+                      依照組員版本設定：
+                      0%～74%：左側文字先往上移
+                      74%～100%：右側時間軸再往左移
+                    */
+                    const introCopyEndAt = 0.74;
+                    const introTrackStartAt = 0.74;
+
+                    const copyProgress = clamp01(progress / introCopyEndAt);
+                    const trackProgress = clamp01(
+                        (progress - introTrackStartAt) / (1 - introTrackStartAt)
+                    );
+
+                    const copyTravel = Math.max(introCopyCard.offsetHeight - introCopyRail.clientHeight, 0);
                     const trackTravel = Math.max(compactTrack.scrollWidth - introCompactWindow.clientWidth, 0);
+                    const nextIndex = Math.round(trackProgress * (timelineEvents.length - 1));
 
                     introSection.style.setProperty("--intro-copy-shift", `${Math.round(copyTravel * -copyProgress)}px`);
                     introSection.style.setProperty("--intro-track-shift", `${Math.round(trackTravel * -trackProgress)}px`);
 
-                    const scrollIndex = Math.round(trackProgress * (timelineEvents.length - 1));
-                    if (scrollIndex !== activeIndex) updateActiveEvent(scrollIndex);
+                    if (nextIndex !== activeIndex) updateActiveEvent(nextIndex);
+                }
+
+                function queueIntroScrollProgress() {
+                    cancelAnimationFrame(introFrame);
+                    introFrame = requestAnimationFrame(() => {
+                        introFrame = 0;
+                        updateIntroScrollProgress();
+                    });
+                }
+
+                function getIntroProgressForIndex(index) {
+                    const normalized = Math.max(0, Math.min(timelineEvents.length - 1, index));
+                    const trackProgress = timelineEvents.length > 1 ? normalized / (timelineEvents.length - 1) : 0;
+                    return trackProgress === 0 ? 0 : .18 + .78 * trackProgress;
+                }
+
+                function scrollIntroToIndex(index, behavior = "smooth") {
+                    if (!introSection || window.matchMedia("(max-width: 860px)").matches) {
+                        openTimeline(index);
+                        return;
+                    }
+                    const scrollRange = Math.max(introSection.offsetHeight - window.innerHeight, 1);
+                    const sectionTop = window.scrollY + introSection.getBoundingClientRect().top;
+                    const targetTop = sectionTop + scrollRange * getIntroProgressForIndex(index);
+                    window.scrollTo({ top: targetTop, behavior });
+                }
+
+                function handleCompactItemSelect(index) {
+                    updateActiveEvent(index);
+                    scrollIntroToIndex(index);
                 }
 
                 function createPrismTimeline() {
@@ -7980,21 +8162,49 @@
                 }
 
                 function openTimeline(index = 0) {
+                    lockDetailScroll();
                     moduleEl.classList.add("is-expanded");
                     expandButton.setAttribute("aria-expanded", "true");
                     expandedPanel.setAttribute("aria-hidden", "false");
+                    expandedPanel.scrollTop = 0;
                     requestAnimationFrame(() => {
                         updateRadius();
                         goToEvent(index, true);
-                        moduleEl.scrollIntoView({ block: "start", behavior: "smooth" });
+                        collapseButton.focus({ preventScroll: true });
                     });
                 }
 
                 function closeTimeline() {
+                    const lastIndex = activeIndex;
                     moduleEl.classList.remove("is-expanded");
                     expandButton.setAttribute("aria-expanded", "false");
                     expandedPanel.setAttribute("aria-hidden", "true");
-                    moduleEl.scrollIntoView({ block: "center", behavior: "smooth" });
+                    unlockDetailScroll();
+                    if (!window.matchMedia("(max-width: 860px)").matches) {
+                        scrollIntroToIndex(lastIndex, "auto");
+                        queueIntroScrollProgress();
+                    }
+                    expandButton.focus({ preventScroll: true });
+                }
+
+                function lockDetailScroll() {
+                    if (detailScrollLocked) return;
+                    detailScrollLocked = true;
+                    previousHtmlOverflow = document.documentElement.style.overflow;
+                    previousBodyOverflow = document.body.style.overflow;
+                    document.documentElement.classList.add("timeline-detail-open");
+                    document.body.classList.add("timeline-detail-open");
+                    document.documentElement.style.overflow = "hidden";
+                    document.body.style.overflow = "hidden";
+                }
+
+                function unlockDetailScroll() {
+                    if (!detailScrollLocked) return;
+                    detailScrollLocked = false;
+                    document.documentElement.classList.remove("timeline-detail-open");
+                    document.body.classList.remove("timeline-detail-open");
+                    document.documentElement.style.overflow = previousHtmlOverflow;
+                    document.body.style.overflow = previousBodyOverflow;
                 }
 
                 function setCarouselRotation(rotation) {
@@ -8092,11 +8302,11 @@
                     if (event.key === "ArrowLeft") goToEvent(activeIndex - 1);
                 });
 
-                window.addEventListener("scroll", updateIntroScrollProgress, { passive: true });
+                window.addEventListener("scroll", queueIntroScrollProgress, { passive: true });
                 window.addEventListener("resize", () => {
                     updateRadius();
                     goToEvent(activeIndex, true);
-                    updateIntroScrollProgress();
+                    queueIntroScrollProgress();
                 });
 
                 createCompactTimeline();
