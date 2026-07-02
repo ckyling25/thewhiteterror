@@ -2369,6 +2369,27 @@ transition: none !important;
             overflow-x: hidden;
         }
 
+        #page-5-education.approach-detail-mode > .max-w-3xl,
+        #page-5-education.approach-detail-mode > #unlocked-content {
+            display: none !important;
+        }
+
+        #page-5-education:not(.approach-unlocked) > #unlocked-content {
+            display: none !important;
+        }
+
+        .approach-standalone-detail {
+            display: block;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        html.route-jump-hidden,
+        html.route-jump-hidden body {
+            visibility: hidden !important;
+            scroll-behavior: auto !important;
+        }
+
         .approach-return-nav::before {
             content: "\2190";
             font-size: 1.05em;
@@ -5139,11 +5160,11 @@ transition: none !important;
                 </div>
             </section>
 
-        </div>
-
         <!-- ==========================================
              面向五：突破同溫層與記憶傳承 (解鎖後動態插入此區)
              ========================================== -->
+        </div>
+
         <div id="unlocked-content">
             <section id="page-10-perspective-five" class="bg-[#FAFAFA] py-24 px-6 border-t border-gray-200">
                 <div class="max-w-6xl mx-auto">
@@ -5491,14 +5512,14 @@ transition: none !important;
                 </div>
             </section>
 
-        </div>
-
         <!-- 專題落款尾部 (永久置於 page-5 底部) -->
         <div class="site-footer-credit px-6 md:px-8 py-16 text-center border-t border-gray-200/60 mt-16">
             <p class="text-xs md:text-sm tracking-[0.18em] text-gray-500 font-medium leading-loose">
                 《大學報》NCCU UONLINE NEWS<br>
                 製作團隊｜鄭丞傑、陳筱雯、方凱琪、林婷妤
             </p>
+        </div>
+
         </div>
 
     </section>
@@ -7132,34 +7153,7 @@ transition: none !important;
             }
 
             function initCultureAutoAdvance() {
-                const sentinel = document.getElementById('culture-next-sentinel');
-                if (!sentinel || !('IntersectionObserver' in window)) return;
-
-                const observer = new IntersectionObserver(entries => {
-                    entries.forEach(entry => {
-                        const approachPage = document.getElementById('page-approach-1');
-                        const isCultureVisible = approachPage && !approachPage.classList.contains('hidden');
-                        if (entry.isIntersecting && isCultureVisible && window.cultureAutoAdvanceReady) {
-                            window.cultureAutoAdvanceReady = false;
-                            const isInlineCulture = approachPage.classList.contains('culture-inline-detail');
-                            const educationPage = document.getElementById('page-5-education');
-
-                            if (isInlineCulture && educationPage && !educationPage.classList.contains('hidden')) {
-                                const unlockedDiv = document.getElementById('unlocked-content');
-                                const arrowIndicator = document.getElementById('unlocked-arrow-indicator');
-                                if (unlockedDiv) unlockedDiv.classList.remove('hidden');
-                                if (arrowIndicator) {
-                                    arrowIndicator.classList.remove('hidden');
-                                    arrowIndicator.classList.add('flex');
-                                }
-                            } else {
-                                window.switchView('5-education', true);
-                            }
-                        }
-                    });
-                }, { threshold: 1 });
-
-                observer.observe(sentinel);
+                window.cultureAutoAdvanceReady = false;
             }
 
             const filmOrder = ['牯嶺街少年殺人事件', '超級大國民', '返校', '流麻溝十五號', '星空下的黑潮島嶼', '大濛'];
@@ -8900,6 +8894,7 @@ transition: none !important;
                     }
 
                     page.classList.add('approach-inline-detail');
+                    page.classList.remove('approach-standalone-detail');
                     if (id === 'page-approach-1') {
                         page.classList.add('culture-inline-detail');
                     }
@@ -8927,10 +8922,39 @@ transition: none !important;
                 });
             }
 
+            function setInstantScrollTop(top) {
+                const target = Math.max(0, Math.round(top || 0));
+                window.scrollTo(0, target);
+                document.documentElement.scrollTop = target;
+                document.body.scrollTop = target;
+            }
+
+            function getApproachSelectorScrollTop() {
+                const selector = document.getElementById('approach-selector');
+                if (!selector) return 0;
+                return selector.getBoundingClientRect().top + window.scrollY;
+            }
+
+            function beginRouteJump() {
+                document.documentElement.classList.add('route-jump-hidden');
+                document.documentElement.style.scrollBehavior = 'auto';
+                document.body.style.scrollBehavior = 'auto';
+
+                return function finishRouteJump() {
+                    requestAnimationFrame(() => {
+                        document.documentElement.classList.remove('route-jump-hidden');
+                        document.documentElement.style.scrollBehavior = '';
+                        document.body.style.scrollBehavior = '';
+                    });
+                };
+            }
+
 
             window.unlockChenStoryContent = function() {
+                const educationPage = document.getElementById('page-5-education');
                 const unlockedDiv = document.getElementById('unlocked-content');
                 const arrowIndicator = document.getElementById('unlocked-arrow-indicator');
+                if (educationPage) educationPage.classList.add('approach-unlocked');
                 if (unlockedDiv) unlockedDiv.classList.remove('hidden');
                 if (arrowIndicator) {
                     arrowIndicator.classList.remove('hidden');
@@ -8940,16 +8964,42 @@ transition: none !important;
 
 
             window.showInlineApproach = function(pageKey) {
+                const finishRouteJump = beginRouteJump();
                 mountInlineApproachSections();
 
                 const selector = document.getElementById('approach-selector');
+                const educationPage = document.getElementById('page-5-education');
                 const targetPage = pages[pageKey];
 
-                if (!targetPage) return;
+                if (!targetPage) {
+                    finishRouteJump();
+                    return;
+                }
+
+                if (educationPage) {
+                    educationPage.classList.remove('approach-detail-mode');
+                }
+
+                Object.keys(pages).forEach(key => {
+                    const page = pages[key];
+                    if (page) {
+                        page.classList.add('hidden');
+                        page.classList.remove('flex', 'fade-in-active');
+                    }
+                });
+
+                document.body.appendChild(targetPage);
+                targetPage.classList.add('approach-standalone-detail');
+                targetPage.classList.remove('approach-inline-detail');
+                targetPage.classList.remove('hidden');
+                setInstantScrollTop(0);
 
                 Object.keys(pages).forEach(key => {
                     if (key.startsWith('approach-') && pages[key]) {
-                        pages[key].classList.add('hidden');
+                        if (pages[key] !== targetPage) {
+                            pages[key].classList.add('hidden');
+                            pages[key].classList.remove('approach-standalone-detail');
+                        }
                         pages[key].classList.remove('fade-in-active');
                     }
                 });
@@ -8963,17 +9013,17 @@ transition: none !important;
 
                 const unlockedDiv = document.getElementById('unlocked-content');
                 if (unlockedDiv) {
-                    unlockedDiv.classList.toggle('hidden', pageKey === 'approach-2');
+                    unlockedDiv.classList.add('hidden');
                 }
                 const arrowIndicator = document.getElementById('unlocked-arrow-indicator');
-                if (pageKey === 'approach-2' && arrowIndicator) {
+                if (arrowIndicator) {
                     arrowIndicator.classList.add('hidden');
                     arrowIndicator.classList.remove('flex');
                 }
 
                 if (pageKey === 'approach-1') {
                     targetPage.classList.remove('fade-in-active');
-                    window.cultureAutoAdvanceReady = true;
+                    window.cultureAutoAdvanceReady = false;
                     updateCultureControlsVisibility();
                     window.requestAnimationFrame(() => {
                         window.updateCultureScrolly?.();
@@ -8986,7 +9036,8 @@ transition: none !important;
                 setTimeout(() => {
                     updateCultureControlsVisibility();
                     updateInlineApproachReturnVisibility();
-                    targetPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    setInstantScrollTop(0);
+                    finishRouteJump();
                 }, 60);
             };
 
@@ -8996,6 +9047,9 @@ transition: none !important;
                 const isInlineApproach = selector && educationPage && !educationPage.classList.contains('hidden');
 
                 if (isInlineApproach) {
+                    educationPage.classList.remove('approach-detail-mode');
+                    educationPage.classList.add('approach-unlocked');
+
                     Object.keys(pages).forEach(key => {
                         if (key.startsWith('approach-') && pages[key]) {
                             pages[key].classList.add('hidden');
@@ -9008,6 +9062,11 @@ transition: none !important;
                     if (unlockedDiv) {
                         unlockedDiv.classList.remove('hidden');
                     }
+                    const arrowIndicator = document.getElementById('unlocked-arrow-indicator');
+                    if (arrowIndicator) {
+                        arrowIndicator.classList.remove('hidden');
+                        arrowIndicator.classList.add('flex');
+                    }
                     window.cultureAutoAdvanceReady = false;
                     if (typeof stopCultureMusic === 'function') {
                         stopCultureMusic();
@@ -9016,12 +9075,20 @@ transition: none !important;
                     updateInlineApproachReturnVisibility();
 
                     setTimeout(() => {
-                        selector.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        setInstantScrollTop(getApproachSelectorScrollTop());
                     }, 60);
                     return;
                 }
 
+                const finishRouteJump = beginRouteJump();
                 window.switchView('5-education', true);
+                requestAnimationFrame(() => {
+                    setInstantScrollTop(getApproachSelectorScrollTop());
+                    requestAnimationFrame(() => {
+                        setInstantScrollTop(getApproachSelectorScrollTop());
+                        finishRouteJump();
+                    });
+                });
             };
 
             window.addEventListener('scroll', updateInlineApproachReturnVisibility, { passive: true });
@@ -9100,12 +9167,18 @@ transition: none !important;
                     }
                     initWordCloud();
                     startQuizIfNeeded();
-                    window.scrollTo({ top: 0, behavior: 'instant' });
+                    setInstantScrollTop(0);
                     startDaysCalculation(); // 啟動時間計數器
                 } else if (pageKey === '4' || pageKey === '1') {
                     targetPage.classList.add('flex');
                 } else if (pageKey === '5-education') {
+                    const articlePage = pages['3'];
+                    if (articlePage) {
+                        articlePage.classList.remove('hidden');
+                        articlePage.classList.add('flex');
+                    }
                     targetPage.classList.add('flex');
+                    targetPage.classList.remove('approach-detail-mode');
                     mountInlineApproachSections();
 
                     const selector = document.getElementById('approach-selector');
@@ -9122,6 +9195,7 @@ transition: none !important;
                     if (scrollToAnchor) {
                         // 1. 顯示原本隱藏的置中箭頭
                         const arrowIndicator = document.getElementById('unlocked-arrow-indicator');
+                        targetPage.classList.add('approach-unlocked');
                         if (arrowIndicator) {
                             arrowIndicator.classList.remove('hidden');
                             arrowIndicator.classList.add('flex');
@@ -9134,20 +9208,25 @@ transition: none !important;
                         }
                 
                         // 3. 平滑滾動至卡片區域錨點
-                        setTimeout(() => {
-                            const anchor = document.getElementById('approaches-anchor');
-                            if (anchor) {
-                                anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            }
-                        }, 100);
+                        setInstantScrollTop(getApproachSelectorScrollTop());
                     } else {
-                        window.scrollTo({ top: 0, behavior: 'instant' });
+                        targetPage.classList.remove('approach-unlocked');
+                        const unlockedDiv = document.getElementById('unlocked-content');
+                        if (unlockedDiv) {
+                            unlockedDiv.classList.add('hidden');
+                        }
+                        const arrowIndicator = document.getElementById('unlocked-arrow-indicator');
+                        if (arrowIndicator) {
+                            arrowIndicator.classList.add('hidden');
+                            arrowIndicator.classList.remove('flex');
+                        }
+                        setInstantScrollTop(0);
                     }
                 } else if (pageKey === 'approach-1') {
                     // 文化入口含固定式頁內導覽；避免 transform 讓 fixed 導覽隨頁面捲走
                     targetPage.classList.remove('fade-in-active');
-                    window.cultureAutoAdvanceReady = true;
-                    window.scrollTo({ top: 0, behavior: 'instant' });
+                    window.cultureAutoAdvanceReady = false;
+                    setInstantScrollTop(0);
                 } else {
                     targetPage.classList.add('fade-in-active');
                 }
