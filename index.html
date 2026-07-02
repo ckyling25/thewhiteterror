@@ -8066,10 +8066,8 @@
                     const introCopyEndAt = 0.74;
                     const introTrackStartAt = 0.74;
 
-                    const copyProgress = clamp01(progress / introCopyEndAt);
-                    const trackProgress = clamp01(
-                        (progress - introTrackStartAt) / (1 - introTrackStartAt)
-                    );
+                    const copyProgress = clamp01(progress / .74);
+					const trackProgress = clamp01((progress - .18) / .78);
 
                     const copyTravel = Math.max(introCopyCard.offsetHeight - introCopyRail.clientHeight, 0);
                     const trackTravel = Math.max(compactTrack.scrollWidth - introCompactWindow.clientWidth, 0);
@@ -8090,10 +8088,13 @@
                 }
 
                 function getIntroProgressForIndex(index) {
-                    const normalized = Math.max(0, Math.min(timelineEvents.length - 1, index));
-                    const trackProgress = timelineEvents.length > 1 ? normalized / (timelineEvents.length - 1) : 0;
-                    return trackProgress === 0 ? 0 : .18 + .78 * trackProgress;
-                }
+				    const normalized = Math.max(0, Math.min(timelineEvents.length - 1, index));
+				    const trackProgress = timelineEvents.length > 1 ? normalized / (timelineEvents.length - 1) : 0;
+				
+				    const introTrackStartAt = 0.74;
+				
+				    return introTrackStartAt + (1 - introTrackStartAt) * trackProgress;
+				}
 
                 function scrollIntroToIndex(index, behavior = "smooth") {
                     if (!introSection || window.matchMedia("(max-width: 860px)").matches) {
