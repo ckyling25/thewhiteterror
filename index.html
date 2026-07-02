@@ -1037,70 +1037,79 @@
         }
 
         .timeline-stage {
-            position: relative;
-            height: clamp(520px, 68vh, 690px);
-            perspective: 1800px;
-            z-index: 1;
-        }
-
-        .prism-shell {
-            position: absolute;
-            inset: 0;
-            cursor: grab;
-            touch-action: pan-y;
-        }
-
-        .prism-shell.is-dragging {
-            cursor: grabbing;
-        }
-
-        .prism-halo {
-            position: absolute;
-            left: 50%;
-            top: 52%;
-            width: min(72vw, 820px);
-            height: min(52vw, 520px);
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(244,239,230,.12), transparent 64%);
-            opacity: .74;
-            pointer-events: none;
-        }
-
-        .prism-carousel {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: min(720px, 66vw);
-            height: 460px;
-            transform-style: preserve-3d;
-            transform: translate(-50%, -50%) translateZ(calc(var(--tl-radius) * -1)) rotateY(0deg);
-            transition: transform .72s cubic-bezier(.2, .75, .2, 1);
-        }
-
-        .prism-face {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            padding: clamp(1rem, 2.6vw, 1.9rem);
-            border: 1px solid rgba(244,239,230,.14);
-            border-left: 4px solid var(--tl-accent);
-            border-radius: 10px;
-            background: rgba(18, 17, 16, .86);
-            box-shadow: 0 28px 70px rgba(0, 0, 0, .38);
-            backface-visibility: hidden;
-            transform-style: preserve-3d;
-            opacity: .42;
-            filter: saturate(.85);
-            transition: opacity .32s ease, filter .32s ease;
-        }
-
-        .prism-face.is-active {
-            opacity: 1;
-            filter: saturate(1);
-        }
+		    position: relative;
+		    height: clamp(520px, 68vh, 690px);
+		    perspective: 1800px;
+		    perspective-origin: 50% 50%;
+		    z-index: 1;
+		}
+		
+		.prism-shell {
+		    position: absolute;
+		    inset: 0;
+		    cursor: grab;
+		    touch-action: pan-y;
+		    perspective: 1800px;
+		    perspective-origin: 50% 50%;
+		    overflow: hidden;
+		}
+		
+		.prism-shell.is-dragging {
+		    cursor: grabbing;
+		}
+		
+		.prism-shell.is-dragging .prism-carousel {
+		    transition: none;
+		}
+		
+		.prism-halo {
+		    position: absolute;
+		    left: 50%;
+		    top: 52%;
+		    width: min(72vw, 820px);
+		    height: min(52vw, 520px);
+		    transform: translate(-50%, -50%);
+		    border-radius: 50%;
+		    background: radial-gradient(circle, rgba(244,239,230,.12), transparent 64%);
+		    opacity: .74;
+		    pointer-events: none;
+		}
+		
+		.prism-carousel {
+		    position: absolute;
+		    left: 50%;
+		    top: 50%;
+		    width: min(720px, 66vw);
+		    height: 460px;
+		    transform-style: preserve-3d;
+		    transform: translate(-50%, -50%) translateZ(calc(var(--tl-radius) * -1)) rotateY(0deg);
+		    transition: transform 650ms cubic-bezier(.18, .72, .22, 1);
+		    will-change: transform;
+		}
+		
+		.prism-face {
+		    position: absolute;
+		    inset: 0;
+		    display: flex;
+		    flex-direction: column;
+		    justify-content: flex-start;
+		    padding: clamp(1rem, 2.6vw, 1.9rem);
+		    border: 1px solid rgba(244,239,230,.14);
+		    border-left: 4px solid var(--tl-accent);
+		    border-radius: 10px;
+		    background: rgba(18, 17, 16, .86);
+		    box-shadow: 0 28px 70px rgba(0, 0, 0, .38);
+		    backface-visibility: hidden;
+		    transform-style: preserve-3d;
+		    opacity: .42;
+		    filter: saturate(.85);
+		    transition: opacity .32s ease, filter .32s ease;
+		}
+		
+		.prism-face.is-active {
+		    opacity: 1;
+		    filter: saturate(1);
+		}
 
         .event-meta {
             color: var(--tl-accent);
@@ -1180,52 +1189,88 @@
         }
 
         .mini-nav {
-            display: flex;
-            gap: .6rem;
-            min-width: max-content;
-        }
-
-        .nav-button {
-            display: grid;
-            grid-template-columns: auto 1fr;
-            grid-template-rows: auto auto;
-            column-gap: .5rem;
-            align-items: center;
-            min-width: 116px;
-            border: 1px solid rgba(244,239,230,.13);
-            border-radius: 999px;
-            padding: .55rem .7rem;
-            background: rgba(244,239,230,.06);
-            color: rgba(244,239,230,.72);
-            cursor: pointer;
-            text-align: left;
-        }
-
-        .nav-button.is-active {
-            background: rgba(184,74,66,.18);
-            border-color: rgba(244,239,230,.32);
-            color: var(--tl-paper);
-        }
-
-        .nav-dot {
-            grid-row: 1 / 3;
-            width: .55rem;
-            height: .55rem;
-            border-radius: 50%;
-            background: currentColor;
-        }
-
-        .nav-date {
-            font-size: .72rem;
-            font-weight: 900;
-            line-height: 1.1;
-        }
-
-        .nav-title {
-            font-size: .8rem;
-            line-height: 1.25;
-            white-space: nowrap;
-        }
+		    min-width: 760px;
+		    display: grid;
+		    grid-template-columns: repeat(9, minmax(78px, 1fr));
+		    position: relative;
+		    align-items: start;
+		    gap: 0;
+		}
+		
+		.mini-nav::before {
+		    content: "";
+		    position: absolute;
+		    top: 22px;
+		    left: 5%;
+		    right: 5%;
+		    height: 1px;
+		    background: rgba(244, 239, 230, 0.25);
+		}
+		
+		.nav-button {
+		    --nav-dot-size: 12px;
+		    --nav-dot-color: rgba(244, 239, 230, 0.45);
+		    position: relative;
+		    z-index: 1;
+		    border: 0;
+		    background: transparent;
+		    display: grid;
+		    justify-items: center;
+		    gap: 7px;
+		    color: rgba(244, 239, 230, 0.58);
+		    padding: 0 2px;
+		    min-height: 74px;
+		    cursor: pointer;
+		    text-align: center;
+		}
+		
+		.nav-button:hover,
+		.nav-button.is-active {
+		    color: var(--tl-paper);
+		    background: transparent;
+		}
+		
+		.nav-dot {
+		    width: var(--nav-dot-size);
+		    height: var(--nav-dot-size);
+		    border-radius: 999px;
+		    background: var(--nav-dot-color);
+		    box-shadow: 0 0 0 7px rgba(244, 239, 230, 0.05);
+		}
+		
+		.nav-button.is-active .nav-dot {
+		    background: var(--tl-accent);
+		    box-shadow: 0 0 0 8px var(--tl-accent-soft), 0 0 28px rgba(184, 74, 66, 0.42);
+		}
+		
+		.nav-date {
+		    font-size: 0.78rem;
+		    font-weight: 900;
+		    line-height: 1.1;
+		    white-space: nowrap;
+		}
+		
+		.nav-title {
+		    font-size: 0.74rem;
+		    line-height: 1.25;
+		    text-align: center;
+		    white-space: normal;
+		}
+		
+		.nav-button.priority-1 {
+		    --nav-dot-size: 14px;
+		    --nav-dot-color: rgba(244, 239, 230, 0.52);
+		}
+		
+		.nav-button.priority-2 {
+		    --nav-dot-size: 12px;
+		    --nav-dot-color: rgba(244, 239, 230, 0.45);
+		}
+		
+		.nav-button.priority-3 {
+		    --nav-dot-size: 10px;
+		    --nav-dot-color: rgba(244, 239, 230, 0.36);
+		}
 
         .arrow-group {
             display: flex;
@@ -8066,8 +8111,10 @@
                     const introCopyEndAt = 0.74;
                     const introTrackStartAt = 0.74;
 
-                    const copyProgress = clamp01(progress / .74);
-					const trackProgress = clamp01((progress - .18) / .78);
+                    const copyProgress = clamp01(progress / introCopyEndAt);
+					const trackProgress = clamp01(
+					    (progress - introTrackStartAt) / (1 - introTrackStartAt)
+					);
 
                     const copyTravel = Math.max(introCopyCard.offsetHeight - introCopyRail.clientHeight, 0);
                     const trackTravel = Math.max(compactTrack.scrollWidth - introCompactWindow.clientWidth, 0);
@@ -8137,7 +8184,7 @@
 
                         const navButton = document.createElement("button");
                         navButton.type = "button";
-                        navButton.className = "nav-button";
+                        navButton.className = `nav-button priority-${event.importance}`;
                         navButton.dataset.index = index;
                         navButton.setAttribute("aria-label", `跳到 ${event.date} ${event.fullTitle}`);
                         navButton.innerHTML = `
