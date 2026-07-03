@@ -3294,7 +3294,7 @@ transition: none !important;
             .outer-circle-copy {
               position: absolute;
               left: clamp(1.25rem, 7vw, 7rem);
-              bottom: 50%;
+              top: 50%;
               width: min(680px, 58vw);
               padding: clamp(1.2rem, 2.4vw, 2rem);
               color: #fffaf2;
@@ -3302,7 +3302,7 @@ transition: none !important;
               border: 1px solid rgba(255,255,255,.22);
               box-shadow: 0 22px 50px rgba(0,0,0,.28);
               opacity: 1;
-              transform: translateY(86vh);
+              transform: translateY(calc(-50% + 86vh));
               z-index: 2;
               pointer-events: none;
             }
@@ -3325,16 +3325,16 @@ transition: none !important;
 
             .outer-circle-copy.quote-center {
               left: 50%;
-              bottom: 50%;
+              top: 50%;
               width: min(760px, 72vw);
-              transform: translate(-50%, 86vh);
+              transform: translate(-50%, calc(-50% + 86vh));
             }
 
             .outer-circle-copy.frame-center {
               left: 50%;
-              bottom: 50%;
+              top: 50%;
               width: min(720px, 68vw);
-              transform: translate(-50%, 86vh);
+              transform: translate(-50%, calc(-50% + 86vh));
             }
 
             .outer-circle-copy.quote-center p {
@@ -5254,8 +5254,8 @@ transition: none !important;
                                 const y = 86 - (enter * 86) - (leave * 86);
                                 const isCurrentOrMoving = local >= 0 && local < 1;
 								const translate = (copy.classList.contains('quote-center') || copy.classList.contains('frame-center'))
-								    ? `translate(-50%, ${y}vh)`
-								    : `translateY(${y}vh)`;
+								    ? `translate(-50%, calc(-50% + ${y}vh))`
+								    : `translateY(calc(-50% + ${y}vh))`;
 								
 								copy.style.opacity = isCurrentOrMoving ? '1' : '0';
 								copy.style.transform = translate;
@@ -6479,7 +6479,7 @@ transition: none !important;
                 display: block;
                 visibility: visible;
                 z-index: 41;
-                transform: translate(-50%, 120vh);
+                transform: translate(-50%, calc(-50% + 86vh));
                 will-change: transform, opacity;
                 pointer-events: none;
             }
@@ -6612,7 +6612,7 @@ transition: none !important;
                 position: absolute !important;
                 left: 50% !important;
                 top: 50% !important;
-                transform: translate(-50%, 120vh);
+                transform: translate(-50%, calc(-50% + 86vh));
                 opacity: 0;
                 display: block !important;
                 visibility: visible !important;
@@ -7018,6 +7018,29 @@ transition: none !important;
                 }
             };
 
+            function getHeldScrollY(progress, startY, endY, holdY = 0, holdSpan = 0.18) {
+                const maxProgress = Math.max(1, Number(progress) > 1 ? Number(progress) : 1);
+                const safeProgress = Math.max(0, Math.min(maxProgress, Number(progress) || 0));
+                const travel = startY - endY;
+                if (!travel) return startY;
+
+                const centerProgress = (startY - holdY) / travel;
+                const holdStart = Math.max(0.02, centerProgress - holdSpan / 2);
+                const holdEnd = Math.min(maxProgress - 0.02, centerProgress + holdSpan / 2);
+
+                if (safeProgress < holdStart) {
+                    const local = safeProgress / Math.max(0.001, holdStart);
+                    return startY + ((holdY - startY) * local);
+                }
+
+                if (safeProgress <= holdEnd) {
+                    return holdY;
+                }
+
+                const local = (safeProgress - holdEnd) / Math.max(0.001, maxProgress - holdEnd);
+                return holdY + ((endY - holdY) * Math.max(0, Math.min(1, local)));
+            }
+
             let cultureScrolly = null;
 
             function initCultureScrolly() {
@@ -7082,9 +7105,9 @@ transition: none !important;
                     const copy = state.overlay.querySelector(`[data-culture-copy="${key}"]`);
                     if (!copy) return;
                     const local = range(p, start, end);
-                    const y = 120 - local * 240;
-                    const visible = p >= start && p <= end && y < 118 && y > -118;
-                    copy.style.transform = `translate(-50%, ${y}vh)`;
+                    const y = getHeldScrollY(local, 86, -86, 0, 0.34);
+                    const visible = p >= start && p <= end && y < 84 && y > -84;
+                    copy.style.transform = `translate(-50%, calc(-50% + ${y}vh))`;
                     copy.classList.toggle('is-active', visible);
                 };
 
@@ -9348,14 +9371,10 @@ transition: none !important;
             async function showStoryFinalFromTimer() {
                 window.switchView(2);
                 await renderStoryScene(storyLineups.length - 1);
-                storyFinalScrollProgress = 0.02;
-                storyFinalClickPrimed = false;
-                const finalCopy = document.getElementById('story-final-copy');
-                if (finalCopy) {
-                    finalCopy.style.setProperty('--story-final-y', '115vh');
-                    finalCopy.style.setProperty('--story-final-opacity', '1');
-                }
-                pages[2]?.style.setProperty('--story-bg-blur', '0px');
+                storyFinalScrollProgress = 0.5;
+                storyFinalClickPrimed = true;
+                applyStoryFinalProgress(storyFinalScrollProgress);
+                pages[2]?.style.setProperty('--story-bg-blur', '9px');
             }
 
             function updateStoryProgress() {
@@ -9391,7 +9410,7 @@ transition: none !important;
                     if (storyDialogBox) storyDialogBox.classList.add('hidden');
                     if (finalPanel && finalCopy) {
                         finalCopy.textContent = scene.content;
-                        finalCopy.style.setProperty('--story-final-y', '115vh');
+                        finalCopy.style.setProperty('--story-final-y', '86vh');
                         finalCopy.style.setProperty('--story-final-opacity', '1');
                         finalPanel.classList.add('is-active');
                     }
@@ -9446,10 +9465,11 @@ transition: none !important;
                 if (!scene?.scrollPanel || !finalCopy) return false;
                 if (deltaY < 0 && storyFinalScrollProgress <= 0) return false;
 
-                storyFinalScrollProgress = Math.max(0, Math.min(1.12, storyFinalScrollProgress + (deltaY / 520)));
+                const finalScrollUnit = Math.max(1, window.innerHeight * 0.95);
+                storyFinalScrollProgress = Math.max(0, Math.min(1, storyFinalScrollProgress + (deltaY / finalScrollUnit)));
                 applyStoryFinalProgress(storyFinalScrollProgress);
 
-                if (storyFinalScrollProgress >= 1.08) {
+                if (storyFinalScrollProgress >= 0.98) {
                     triggerFlashTransition();
                 }
                 return true;
@@ -9458,11 +9478,10 @@ transition: none !important;
             function applyStoryFinalProgress(progress) {
                 const finalCopy = document.getElementById('story-final-copy');
                 if (!finalCopy) return;
-                const safeProgress = Math.max(0, Math.min(1.12, progress));
-                const y = 115 - (safeProgress * 195);
-                const opacity = safeProgress > 0.82 ? Math.max(0, 1 - ((safeProgress - 0.82) / 0.28)) : 1;
+                const safeProgress = Math.max(0, Math.min(1, progress));
+                const y = getHeldScrollY(safeProgress, 86, -86, 0, 0.34);
                 finalCopy.style.setProperty('--story-final-y', `${y}vh`);
-                finalCopy.style.setProperty('--story-final-opacity', String(opacity));
+                finalCopy.style.setProperty('--story-final-opacity', '1');
                 pages[2]?.style.setProperty('--story-bg-blur', `${Math.min(9, safeProgress * 11).toFixed(2)}px`);
             }
 
@@ -9470,7 +9489,7 @@ transition: none !important;
                 const scene = storyLineups[currentScriptIdx];
                 if (!scene?.final) return false;
                 if (!storyFinalClickPrimed) {
-                    storyFinalScrollProgress = 115 / 195;
+                    storyFinalScrollProgress = 0.5;
                     applyStoryFinalProgress(storyFinalScrollProgress);
                     pages[2]?.style.setProperty('--story-bg-blur', '9px');
                     storyFinalClickPrimed = true;
@@ -9496,12 +9515,11 @@ transition: none !important;
             pages[2].addEventListener('wheel', event => {
                 if (pages[2].classList.contains('hidden')) return;
                 event.preventDefault();
+                if (storyLineups[currentScriptIdx]?.scrollPanel) {
+                    if (moveStoryFinalPanel(event.deltaY)) return;
+                }
                 if (storyWheelLocked) return;
                 storyWheelLocked = true;
-                if (moveStoryFinalPanel(event.deltaY)) {
-                    setTimeout(() => { storyWheelLocked = false; }, 120);
-                    return;
-                }
                 if (event.deltaY > 0) {
                     advanceStoryScene(false);
                 } else {
