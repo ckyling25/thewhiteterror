@@ -508,7 +508,8 @@
       --priority-1-compact-dot-shadow: 0 0 0 14px rgba(184, 74, 66, 0.18), 0 0 44px rgba(184, 74, 66, 0.48);
       --priority-1-nav-dot-size: 14px;
       --priority-1-nav-dot-color: rgba(244, 239, 230, 0.52);
-      --priority-1-title-size: clamp(2.4rem, 6.6vw, 6.2rem);
+      --timeline-prism-title-size: clamp(1.08rem, 1.55vw, 1.42rem);
+      --priority-1-title-size: var(--timeline-prism-title-size);
 
       --priority-2-compact-opacity: 1;
       --priority-2-compact-text-color: rgba(244, 239, 230, 0.78);
@@ -519,7 +520,7 @@
       --priority-2-compact-dot-shadow: 0 0 0 11px rgba(244, 239, 230, 0.09);
       --priority-2-nav-dot-size: 12px;
       --priority-2-nav-dot-color: rgba(244, 239, 230, 0.45);
-      --priority-2-title-size: clamp(2rem, 5.6vw, 5.3rem);
+      --priority-2-title-size: var(--timeline-prism-title-size);
 
       --priority-3-compact-opacity: 0.68;
       --priority-3-compact-text-color: rgba(244, 239, 230, 0.72);
@@ -530,7 +531,7 @@
       --priority-3-compact-dot-shadow: 0 0 0 9px rgba(244, 239, 230, 0.05);
       --priority-3-nav-dot-size: 10px;
       --priority-3-nav-dot-color: rgba(244, 239, 230, 0.36);
-      --priority-3-title-size: clamp(1.9rem, 5vw, 5rem);
+      --priority-3-title-size: var(--timeline-prism-title-size);
 }
 
 /* ==============================
@@ -3875,8 +3876,8 @@ transition: none !important;
   #democracyTimelineSection.groupmate-inline-timeline .prism-face h3 .event-title-main {
     font-family: var(--sans) !important;
     font-weight: 950 !important;
-    line-height: 0.95 !important;
-    letter-spacing: -0.08em !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0 !important;
     color: var(--paper) !important;
     -webkit-font-smoothing: antialiased !important;
     text-rendering: geometricPrecision !important;
@@ -3884,33 +3885,40 @@ transition: none !important;
 
   #democracyTimelineSection.groupmate-inline-timeline .prism-face h3 {
     display: flex !important;
-    align-items: flex-end !important;
-    gap: 0.14em !important;
+    align-items: baseline !important;
+    gap: 0.16em !important;
     max-width: 100% !important;
     min-width: 0 !important;
     margin: 0 !important;
-    padding-right: 34px !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
+    padding-right: 38px !important;
+    font-size: var(--timeline-prism-title-size) !important;
+    white-space: normal !important;
+    overflow: visible !important;
     transform: translateZ(1px) !important;
   }
 
-  #democracyTimelineSection.groupmate-inline-timeline .prism-face.priority-1 h3 { font-size: var(--priority-1-title-size) !important; }
-  #democracyTimelineSection.groupmate-inline-timeline .prism-face.priority-2 h3 { font-size: var(--priority-2-title-size) !important; }
-  #democracyTimelineSection.groupmate-inline-timeline .prism-face.priority-3 h3 { font-size: var(--priority-3-title-size) !important; }
+  #democracyTimelineSection.groupmate-inline-timeline .prism-face.priority-1 h3,
+  #democracyTimelineSection.groupmate-inline-timeline .prism-face.priority-2 h3,
+  #democracyTimelineSection.groupmate-inline-timeline .prism-face.priority-3 h3,
+  #democracyTimelineSection.groupmate-inline-timeline .prism-face.is-compact-copy h3 {
+    font-size: var(--timeline-prism-title-size) !important;
+  }
 
   #democracyTimelineSection.groupmate-inline-timeline .event-title-prefix {
     flex: 0 0 auto !important;
-    font-size: 0.5em !important;
+    font-size: 0.72em !important;
     line-height: 1 !important;
-    letter-spacing: -0.03em !important;
-    transform: translateY(-0.04em) !important;
+    letter-spacing: 0 !important;
+    transform: none !important;
   }
 
   #democracyTimelineSection.groupmate-inline-timeline .event-title-main {
     min-width: 0 !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: normal !important;
+    word-break: keep-all !important;
+    overflow-wrap: anywhere !important;
   }
 </style>
 </head>
@@ -4125,17 +4133,18 @@ transition: none !important;
         "--priority-1-compact-dot-size": "36px",
         "--priority-1-compact-dot-margin-top": "0px",
         "--priority-1-nav-dot-size": "14px",
-        "--priority-1-title-size": "clamp(2.4rem, 6.6vw, 6.2rem)",
+        "--timeline-prism-title-size": "clamp(1.08rem, 1.55vw, 1.42rem)",
+        "--priority-1-title-size": "var(--timeline-prism-title-size)",
         "--priority-2-compact-opacity": "1",
         "--priority-2-compact-dot-size": "26px",
         "--priority-2-compact-dot-margin-top": "0px",
         "--priority-2-nav-dot-size": "12px",
-        "--priority-2-title-size": "clamp(2rem, 5.6vw, 5.3rem)",
+        "--priority-2-title-size": "var(--timeline-prism-title-size)",
         "--priority-3-compact-opacity": "0.68",
         "--priority-3-compact-dot-size": "18px",
         "--priority-3-compact-dot-margin-top": "0px",
         "--priority-3-nav-dot-size": "10px",
-        "--priority-3-title-size": "clamp(1.9rem, 5vw, 5rem)"
+        "--priority-3-title-size": "var(--timeline-prism-title-size)"
       },
       interaction: {
         dragSensitivity: 0.13,
