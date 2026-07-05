@@ -20,6 +20,13 @@
             background-color: #FAFAFA; /* 溫潤的米白底色，減少純白的刺眼感，呼應紙張質感 */
             color: #1A202C; /* 深炭灰文字，提高閱讀對比與舒適度 */
             overflow-x: hidden;
+            --education-body-font: 'Noto Sans TC', sans-serif;
+            --education-body-size: clamp(1rem, 1.18vw, 1.125rem);
+            --education-body-color: #4B5563;
+            --education-body-line: 2;
+            --education-note-size: .75rem;
+            --education-note-color: #6B7280;
+            --education-note-line: 1rem;
         }
         
         .serif-title {
@@ -632,43 +639,47 @@ position: absolute;
 
 #democracyTimelineSection.groupmate-inline-timeline .intro-copy-card p {
 margin: 0;
-      color: rgba(64, 54, 44, 0.96);
-      font-size: clamp(1.2rem, 1.46vw, 1.46rem);
-      line-height: 2.02;
-      font-weight: 500;
+      color: var(--education-body-color);
+      font-family: var(--education-body-font);
+      font-size: var(--education-body-size);
+      line-height: var(--education-body-line);
+      font-weight: 400;
+      letter-spacing: 0;
 }
 
 #democracyTimelineSection.groupmate-inline-timeline .intro-copy-card p + p {
-margin-top: 30px;
+margin-top: 2rem;
 }
 
 #democracyTimelineSection.groupmate-inline-timeline .intro-copy-quote {
 display: block;
       width: 100%;
       max-width: 100%;
-      font-family: var(--hand);
-      font-size: clamp(1.18rem, 1.34vw, 1.34rem);
-      line-height: 1.54;
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      color: rgba(64, 54, 44, 0.96);
+      font-family: var(--education-body-font);
+      font-size: var(--education-body-size);
+      line-height: var(--education-body-line);
+      font-weight: 400;
+      letter-spacing: 0;
+      color: var(--education-body-color);
       white-space: nowrap;
       transform: none;
       overflow: visible;
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.12);
+      text-shadow: none;
 }
 
 #democracyTimelineSection.groupmate-inline-timeline .intro-copy-quote.is-long {
-font-size: clamp(0.96rem, 1.04vw, 1.04rem);
+font-size: var(--education-body-size);
 }
 
 #democracyTimelineSection.groupmate-inline-timeline .intro-copy-note {
-margin-top: 38px;
-      color: rgba(64, 54, 44, 0.82);
-      font-size: clamp(0.94rem, 1.08vw, 1.04rem);
-      line-height: 1.9;
+margin-top: 2rem;
+      color: var(--education-note-color);
+      font-family: var(--education-body-font);
+      font-size: var(--education-note-size);
+      line-height: var(--education-note-line);
       font-weight: 500;
       white-space: normal;
+      letter-spacing: 0;
 }
 
 #democracyTimelineSection.groupmate-inline-timeline .intro-timeline-card {
@@ -1937,9 +1948,12 @@ transition: none !important;
             right: 26%;
             top: var(--text-top, 50%);
             margin: 0;
-            color: #2D3748;
-            font-size: clamp(.95rem, 1.08vw, 1.05rem);
-            line-height: 1.95;
+            color: var(--education-body-color);
+            font-family: var(--education-body-font);
+            font-size: var(--education-body-size);
+            line-height: var(--education-body-line);
+            font-weight: 400;
+            letter-spacing: 0;
             text-align: justify;
             opacity: 0;
             transform: translateY(calc(var(--text-shift, -50%) + var(--group-y, 0vh)));
@@ -1955,9 +1969,10 @@ transition: none !important;
         }
 
         .parallax-text p.text-sm {
-            font-size: clamp(.78rem, .9vw, .9rem);
-            line-height: 1.55;
-            color: #667085;
+            font-size: var(--education-note-size);
+            line-height: var(--education-note-line);
+            color: var(--education-note-color);
+            font-weight: 500;
         }
 
 
@@ -2288,8 +2303,8 @@ transition: none !important;
             .parallax-text p {
                 left: 1.25rem;
                 right: 1.25rem;
-                font-size: .95rem;
-                line-height: 1.85;
+                font-size: 1rem;
+                line-height: var(--education-body-line);
             }
 
             #cloud-wrapper {
@@ -3193,6 +3208,15 @@ transition: none !important;
               line-height: 1.72;
               white-space: pre-line;
               text-align: left;
+            }
+
+            .final-reflection-copy p {
+              color: var(--education-body-color);
+              font-family: var(--education-body-font);
+              font-size: var(--education-body-size);
+              line-height: var(--education-body-line);
+              font-weight: 400;
+              letter-spacing: 0;
             }
         
             .close-button {
@@ -5535,7 +5559,7 @@ transition: none !important;
                         </script>
                     </div>
 
-                                        <div class="space-y-8 text-base md:text-lg text-gray-600 leading-loose text-justify max-w-3xl mx-auto">
+                                        <div class="final-reflection-copy space-y-8 text-justify max-w-3xl mx-auto">
                         <p>「你身在臺灣卻不知道臺灣的歷史，這件事實在是太荒謬了。」楊矞菁直言，在他看來，了解白恐或轉型正義議題並非僅是拓展歷史知識，而是促進大眾對所處社會發展脈絡的認識。林佳和則把理解白恐的過程，比喻為在對身體進行「清創」。若遲遲不處理，膿瘡會逐漸蔓延至整個社會，削弱青年對於威權的認知。</p>
 
     					<p>當人們理解白恐不是單一的人權侵害事件，開始將自己擺放進這段臺灣的歷史進程，才能讓青年回答「我們是誰？我們怎麼走過來的？」提升青年對於臺灣這片土地的認同感，並讓青年體會民主的得來不易。</p>
