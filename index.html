@@ -3278,6 +3278,20 @@ transition: none !important;
               transition: opacity .18s linear;
             }
 
+            .outer-circle-source {
+              position: absolute;
+              right: clamp(1rem, 2.5vw, 2.25rem);
+              bottom: clamp(1rem, 2.5vw, 2.25rem);
+              z-index: 3;
+              color: #000;
+              font-size: clamp(.72rem, .9vw, .9rem);
+              font-weight: 700;
+              letter-spacing: .04em;
+              opacity: 0;
+              transition: opacity .18s linear;
+              pointer-events: none;
+            }
+
             .outer-circle-stage::after {
               content: "";
               position: absolute;
@@ -5179,6 +5193,10 @@ transition: none !important;
                             <img class="outer-circle-bg" src="images/outer-circle-2.jpeg" alt="版畫作品展出現場">
                             <img class="outer-circle-bg" src="images/outer-circle-3.jpg" alt="青年體驗營於白色恐怖綠島紀念園區合影">
                             <img class="outer-circle-bg" src="images/outer-circle-4.jpg" alt="青年於園區空間中討論">
+                            <span class="outer-circle-source">圖片來源：探霧者工作隊提供</span>
+                            <span class="outer-circle-source">圖片來源：探霧者工作隊提供</span>
+                            <span class="outer-circle-source">圖片來源：張龍僑提供</span>
+                            <span class="outer-circle-source">圖片來源：張龍僑提供</span>
 
                             <article class="outer-circle-copy">
                                 <p>青年學子也試圖透過自身力量，讓更多人認識威權時期的臺灣。如臺大學生會轉型正義小組舉辦轉型正義相關講座、電影會等，並製作事件懶人包，希望提供大眾正確的資訊管道。</p>
@@ -5189,7 +5207,7 @@ transition: none !important;
                             </article>
 
                             <article class="outer-circle-copy quote-center">
-                                <p><span class="outer-circle-quote">「年輕人喜歡什麼，年輕人自己知道。」</span><span class="outer-circle-body">每年暑假的〈人權之路-青年體驗營〉由學子青年主導活動規劃與課程設計，陳文成博士紀念基金會從旁協助，帶領學員遠赴曾為政治犯監獄的白色恐怖綠島紀念園區。張龍橋解釋，為了避免活動淪為沉重的歷史教育，同時也要吸引青年參與，最好的方式就是從青年的角度出發。例如其中一個活動是在監獄牢房中撰寫家書，讓學員身處在沒有冷氣且體感高達40度的環境，透過生理上的不適來同理受難者。</span></p>
+                                <p><span class="outer-circle-quote">「年輕人喜歡什麼，年輕人自己知道。」</span><span class="outer-circle-body">每年暑假的〈人權之路-青年體驗營〉由學子青年主導活動規劃與課程設計，陳文成博士紀念基金會從旁協助，帶領學員遠赴曾為政治犯監獄的白色恐怖綠島紀念園區。陳文成博士紀念基金會執行長張龍僑解釋，為了避免活動淪為沉重的歷史教育，同時也要吸引青年參與，最好的方式就是從青年的角度出發。例如其中一個活動是在監獄牢房中撰寫家書，讓學員身處在沒有冷氣且體感高達40度的環境，透過生理上的不適來同理受難者。</span></p>
                             </article>
 
                             <article class="outer-circle-copy frame-center">
@@ -5205,6 +5223,7 @@ transition: none !important;
 
                         const stage = scrolly.querySelector('.outer-circle-stage');
 						const backgrounds = Array.from(scrolly.querySelectorAll('.outer-circle-bg'));
+						const sources = Array.from(scrolly.querySelectorAll('.outer-circle-source'));
 						const copies = Array.from(scrolly.querySelectorAll('.outer-circle-copy'));
 						if (!stage) return;
                         const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
@@ -5245,6 +5264,18 @@ transition: none !important;
 							    }
 							});
 
+							sources.forEach((source, index) => {
+							    if (index === currentScene) {
+							        source.style.opacity = String(1 - bgFadeProgress);
+							    } else if (index === currentScene + 1) {
+							        source.style.opacity = String(bgFadeProgress);
+							    } else if (currentScene === count - 1 && index === count - 1) {
+							        source.style.opacity = '1';
+							    } else {
+							        source.style.opacity = '0';
+							    }
+							});
+
                             copies.forEach((copy, index) => {
                                 const local = sceneProgress - index;
                                 const enter = clamp(local / 0.34);
@@ -5262,6 +5293,9 @@ transition: none !important;
                             if (backgrounds.length && progress >= 0.995) {
                                 backgrounds.forEach((bg, index) => {
                                     bg.style.opacity = index === backgrounds.length - 1 ? '1' : '0';
+                                });
+                                sources.forEach((source, index) => {
+                                    source.style.opacity = index === sources.length - 1 ? '1' : '0';
                                 });
                             }
                         }
