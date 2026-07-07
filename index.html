@@ -199,6 +199,20 @@
             display: flex;
         }
 
+        .bottom-scroll-hint {
+            position: absolute;
+            left: 50%;
+            bottom: clamp(48px, 8vh, 80px);
+            z-index: 45;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+        .bottom-scroll-hint.is-clickable {
+            pointer-events: auto;
+            cursor: pointer;
+        }
+
         .site-footer-credit {
             background: #f4efe6;
             width: 100vw;
@@ -3955,7 +3969,7 @@ transition: none !important;
             <div id="btn-enter-story" class="mt-8 inline-flex flex-col items-center text-gray-500 hover:text-[#9B2C2C] transition-colors duration-300 animate-bounce cursor-pointer z-20">
                 <span class="mb-2 text-sm md:text-base font-medium tracking-widest serif-title">向下滾動</span>
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
             </div>
         </div>
@@ -4000,7 +4014,7 @@ transition: none !important;
         <div class="story-final-scroll-hint flex-col items-center justify-center">
             <span class="mb-2 text-sm md:text-base font-medium tracking-widest serif-title">向下滾動</span>
             <svg class="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
             </svg>
         </div>
         <div class="story-progress-bar" aria-hidden="true">
@@ -4030,10 +4044,10 @@ transition: none !important;
                 </p>
             </div>
             <!-- 往下滾動引導 -->
-            <div class="flex flex-col items-center justify-center text-center w-full mt-12">
-                <span class="text-gray-400 text-xs tracking-widest mb-2 font-medium">向下滾動閱讀報導</span>
+            <div class="bottom-scroll-hint flex flex-col items-center justify-center text-center w-full animate-bounce">
+                <span class="text-gray-400 text-sm md:text-base tracking-widest mb-2 font-medium serif-title">向下滾動</span>
                 <svg class="w-5 h-5 text-[#9B2C2C] animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
             </div>
         </div>
@@ -5197,10 +5211,10 @@ transition: none !important;
                 </div>
 
                 <!-- 解鎖提示動畫 (與 page-3 時間軸引導的文字顏色、位置與箭頭完全一致) -->
-                <div id="unlocked-arrow-indicator" class="hidden flex-col items-center justify-center text-center w-full mt-16 animate-bounce cursor-pointer text-gray-400" onclick="scrollToUnlockedPerspectiveFive()">
-                    <span class="text-xs tracking-widest mb-2 font-medium">向下滾動閱讀報導</span>
+                <div id="unlocked-arrow-indicator" class="bottom-scroll-hint is-clickable hidden flex-col items-center justify-center text-center w-full animate-bounce text-gray-400" onclick="scrollToUnlockedPerspectiveFive()">
+                    <span class="text-sm md:text-base tracking-widest mb-2 font-medium serif-title">向下滾動</span>
                     <svg class="w-5 h-5 text-[#9B2C2C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </div>
             </section>
@@ -6691,6 +6705,16 @@ transition: none !important;
             #page-approach-1 #culture-scrolly-shell .culture-floating-nav {
                 display: none !important;
             }
+            #page-approach-1 .culture-entry-scroll-hint {
+                z-index: 118;
+                color: rgba(255, 255, 255, .78);
+                text-shadow: 0 2px 14px rgba(0, 0, 0, .5);
+                opacity: 1;
+                transition: opacity .22s ease;
+            }
+            #page-approach-1 .culture-entry-scroll-hint.is-hidden {
+                opacity: 0;
+            }
             #page-approach-1 #culture-film-panel .film-scroll-hint {
                 align-self: center !important;
                 margin: 0 auto !important;
@@ -6979,6 +7003,12 @@ transition: none !important;
                                 
                             </div>
                 </div>
+                <div class="culture-entry-scroll-hint bottom-scroll-hint flex flex-col items-center justify-center text-center w-full animate-bounce">
+                    <span class="text-sm md:text-base tracking-widest mb-2 font-medium serif-title">向下滾動</span>
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
                 <div class="culture-scrolly-overlay" aria-live="polite">
                     <p data-culture-copy="a" class="culture-scroll-copy culture-copy-panel culture-copy-medium culture-report-copy culture-scrolly-copy">
                                         為了降低年輕世代認識白恐歷史的門檻，不少音樂和影視作品嘗試透過檔案資料的「轉譯」，期待激發青年對相關議題的興趣。
@@ -7116,6 +7146,7 @@ transition: none !important;
                 const musicLayer = document.getElementById('culture-music-layer');
                 const filmLayer = document.getElementById('culture-film-layer');
                 const overlay = shell?.querySelector('.culture-scrolly-overlay');
+                const scrollHint = shell?.querySelector('.culture-entry-scroll-hint');
                 if (!shell || !viewport || !musicLayer || !filmLayer || !overlay) return null;
 
                 const filmModal = document.getElementById('film-trailer-modal');
@@ -7123,7 +7154,7 @@ transition: none !important;
                     document.body.appendChild(filmModal);
                 }
 
-                cultureScrolly = { shell, viewport, musicLayer, filmLayer, overlay };
+                cultureScrolly = { shell, viewport, musicLayer, filmLayer, overlay, scrollHint };
                 updateCulturePinning(cultureScrolly);
                 return cultureScrolly;
             }
@@ -7165,6 +7196,7 @@ transition: none !important;
                 const clamp01 = value => Math.max(0, Math.min(1, value));
                 const range = (value, start, end) => clamp01((value - start) / Math.max(0.001, end - start));
                 const p = getCultureScrollyProgress();
+                state.scrollHint?.classList.toggle('is-hidden', p > 0.03);
 
                 const moveCopy = (key, start, end) => {
                     const copy = state.overlay.querySelector(`[data-culture-copy="${key}"]`);
