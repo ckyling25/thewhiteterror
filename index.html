@@ -214,6 +214,11 @@
             cursor: pointer;
         }
 
+        html.detail-open .bottom-scroll-hint,
+        body.detail-open .bottom-scroll-hint {
+            display: none !important;
+        }
+
         .site-footer-credit {
             background: #f4efe6;
             width: 100vw;
@@ -765,10 +770,11 @@ margin: 0;
 
 #democracyTimelineSection.groupmate-inline-timeline .module-deck {
 margin: 10px 0 0;
-      max-width: 700px;
+      max-width: none;
       color: rgba(244, 239, 230, 0.7);
-      font-size: clamp(0.94rem, 1.02vw, 1rem);
+      font-size: clamp(0.82rem, 0.92vw, 0.98rem);
       line-height: 1.54;
+      white-space: nowrap;
       position: relative;
       z-index: 2;
 }
@@ -4165,7 +4171,7 @@ transition: none !important;
         dragSensitivity: 0.13,
         edgeResistance: 12,
         introBreakpoint: 760,
-        introTrackStartAt: 0.74,
+        introTrackStartAt: 0.56,
         introCopyEndAt: 0.74,
         introRevealThreshold: 0.96,
         mobileBreakpoint: 560,
