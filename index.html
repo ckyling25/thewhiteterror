@@ -6726,6 +6726,11 @@ transition: none !important;
             #page-approach-1 .culture-scrolly-copy.is-active {
                 opacity: 1 !important;
             }
+            #page-approach-1 .culture-scrolly-copy[data-culture-copy="d"] {
+                width: min(50rem, calc(100vw - 5rem)) !important;
+                max-width: min(50rem, calc(100vw - 5rem)) !important;
+                box-sizing: border-box !important;
+            }
             #page-approach-1 #culture-scrolly-shell .culture-floating-nav {
                 display: none !important;
             }
@@ -6775,7 +6780,7 @@ transition: none !important;
                 padding: clamp(.75rem, 1.25vh, 1.05rem) clamp(.5rem, 1vw, .85rem) !important;
             }
             #page-approach-1 #culture-film-panel .film-detail-label {
-                margin-bottom: .28rem !important;
+                margin: .42rem 0 .32rem !important;
                 font-size: clamp(.66rem, .74vw, .76rem) !important;
                 line-height: 1.25 !important;
             }
@@ -6791,14 +6796,23 @@ transition: none !important;
             }
             #page-approach-1 #culture-film-panel #film-desc,
             #page-approach-1 #culture-film-panel #film-youth {
-                margin-bottom: .56rem !important;
+                margin-bottom: .64rem !important;
                 font-size: clamp(.78rem, .9vw, .94rem) !important;
                 line-height: 1.54 !important;
             }
             #page-approach-1 #culture-film-panel #film-youth {
-                padding-left: .75rem !important;
-                border-left-width: 3px !important;
                 margin-bottom: 0 !important;
+            }
+            #page-approach-1 #culture-film-panel #film-sources {
+                margin-top: .54rem !important;
+                color: #8a8f98 !important;
+                font-size: clamp(.66rem, .74vw, .76rem) !important;
+                line-height: 1.45 !important;
+            }
+            #page-approach-1 #culture-film-panel #film-sources a {
+                color: inherit !important;
+                text-decoration: underline;
+                text-underline-offset: 2px;
             }
             #page-approach-1 #culture-film-panel .film-trailer-card {
                 width: min(100%, 440px) !important;
@@ -6971,12 +6985,13 @@ transition: none !important;
                                                 <h4 id="film-title" class="serif-title font-black mb-3">牯嶺街少年殺人事件</h4>
                                                 <p class="film-detail-label">故事大綱</p>
                                                 <p id="film-desc" class="text-gray-600 text-justify mb-4">
-                                                    故事設定於1960年代初的臺北，少年小四在家庭遷徙、校園管束、幫派衝突與青春情感之間逐漸失序。電影改編自1961年牯嶺街青少年殺人事件，也描繪戰後臺灣社會在威權秩序與世代迷惘中的壓力。
+                                                    改編自1961年發生於台北市牯嶺街的青少年殺人事件，少年小四在結識少女小明後，逐漸對她產生感情。然而，在校園壓力、幫派衝突與家庭變化接連交織下，小四屢受挫折，最終釀成一場情殺悲劇。
                                                 </p>
                                                 <p class="film-detail-label">為何與白色恐怖有關</p>
-                                                <p id="film-youth" class="text-gray-600 border-l-4 border-[#9B2C2C] pl-4">
-                                                    作品未直接描寫政治案件，卻以校園、家庭與街頭日常呈現戒嚴社會的壓抑氛圍，讓觀眾看見白色恐怖時代不只存在於監獄，也滲入青少年的成長環境與人際關係。
+                                                <p id="film-youth" class="text-gray-600">
+                                                    導演將故事重心從單純的少年情殺，擴展至1960年代的高壓統治下的壓抑社會。片中小四父親遭警備總部帶走並接受祕密審訊，返家後原有的信念受到打擊，藉此反映威權體制如何影響個人及家庭生活。
                                                 </p>
+                                                <p id="film-sources">資料來源：<a href="https://fa.tfai.org.tw/fa/article/38289" target="_blank" rel="noopener noreferrer">《Fa電影欣賞》</a>、<a href="https://www.stories.cipas.gov.tw/post/whitehorrorintaiwanesemovies" target="_blank" rel="noopener noreferrer">不當黨產處理委員會黨國治理記憶庫</a></p>
                                             </div>
                                             <div class="film-trailer-card aspect-video bg-black overflow-hidden relative self-center w-full" role="button" tabindex="0" onclick="openFilmTrailerModal()" onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openFilmTrailerModal(); }" aria-label="放大觀看目前作品預告片">
                                                 <iframe
@@ -7044,54 +7059,70 @@ transition: none !important;
                     title: '牯嶺街少年殺人事件',
                     poster: 'posters/poster-brighter-summer-day.jpg',
                     trailer: 'Lh_QL1mBxvM',
-                    desc: '故事設定於1960年代初的臺北，少年小四在家庭遷徙、校園管束、幫派衝突與青春情感之間逐漸失序。電影改編自1961年牯嶺街青少年殺人事件，也描繪戰後臺灣社會在威權秩序與世代迷惘中的壓力。',
-                    tags: ['威權時代', '青少年幫派', '外省家庭'],
-                    youth: '作品未直接描寫政治案件，卻以校園、家庭與街頭日常呈現戒嚴社會的壓抑氛圍，讓觀眾看見白色恐怖時代不只存在於監獄，也滲入青少年的成長環境與人際關係。'
+                    desc: '改編自1961年發生於台北市牯嶺街的青少年殺人事件，少年小四在結識少女小明後，逐漸對她產生感情。然而，在校園壓力、幫派衝突與家庭變化接連交織下，小四屢受挫折，最終釀成一場情殺悲劇。',
+                    youth: '導演將故事重心從單純的少年情殺，擴展至1960年代的高壓統治下的壓抑社會。片中小四父親遭警備總部帶走並接受祕密審訊，返家後原有的信念受到打擊，藉此反映威權體制如何影響個人及家庭生活。',
+                    sources: [
+                        { label: '《Fa電影欣賞》', url: 'https://fa.tfai.org.tw/fa/article/38289' },
+                        { label: '不當黨產處理委員會黨國治理記憶庫', url: 'https://www.stories.cipas.gov.tw/post/whitehorrorintaiwanesemovies' }
+                    ]
                 },
                 '超級大國民': {
                     meta: '1994｜電影',
                     title: '超級大國民',
                     poster: 'posters/poster-super-citizen.webp',
                     trailer: '2D_DV8Wb5SA',
-                    desc: '1950年代，許毅生因參與政治讀書會遭逮捕，在刑求下供出好友陳政一，使對方被判死刑。多年後，他帶著深重愧疚尋找好友埋骨之處，也重新面對妻女因自己入獄而破碎的人生。',
-                    tags: ['政治讀書會', '刑求與自白', '倖存者創傷'],
-                    youth: '作品從政治受難者出獄後的餘生切入，呈現白色恐怖不只發生在監獄與刑場，其罪惡感、失落與家庭創傷還會延續數十年。'
+                    desc: '1950年代，許毅生因參加讀書會遭警備總部逮捕，並在刑求下供出同伴陳政一，導致對方被捕槍決。出獄多年後，深感愧疚的許毅生決定尋找陳政一的墳墓，希望親自向他道歉。',
+                    youth: '電影直接描寫政治犯因參加讀書會遭到逮捕、刑求與槍決，也呈現倖存者長年背負的罪惡感，以及妻女受到牽連的創傷。',
+                    sources: [
+                        { label: '國家電影及視聽文化中心', url: 'https://edumovie-tfai.org.tw/article/content/551' }
+                    ]
                 },
                 '返校': {
                     meta: '2019｜電影',
                     title: '返校',
                     poster: 'posters/poster-detention.webp',
                     trailer: 'Cq0K2ipTaPM',
-                    desc: '故事設定於1962年的山區高中。學生方芮欣與魏仲廷受困校園，在尋找失蹤師長與逃離異象的過程中，逐漸拼湊秘密讀書會遭告密、師生被捕及處決的真相。',
-                    tags: ['思想審查', '舉報文化', '校園監控'],
-                    youth: '電影以校園、青春與恐怖類型包裹白色恐怖歷史，呈現禁書、告密和思想監控如何侵入師生日常，讓青年從熟悉的成長場景理解威權壓迫。'
+                    desc: '1962年，翠華中學的師生祕密組織讀書會、研讀禁書。某個夜晚，學生方芮欣與魏仲廷在校園中醒來，卻發現熟悉的校園已成為鬼魅橫行的異域，兩人也被迫面對讀書會背後的可怕真相。',
+                    youth: '作品以戒嚴時期的高壓校園為背景，描寫師生組織讀書會、閱讀禁書，卻因此面臨攸關生死的風險，呈現威權統治對校園活動與思想的控制。',
+                    sources: [
+                        { label: '影一製作所股份有限公司', url: 'https://www.1production.com.tw/film_in.php?id=13' }
+                    ]
                 },
                 '流麻溝十五號': {
                     meta: '2022｜電影',
                     title: '流麻溝十五號',
                     poster: 'posters/poster-untold.webp',
                     trailer: 'YA-LVx0njkk',
-                    desc: '電影以1950年代綠島新生訓導處為背景，透過女學生、舞者與年輕母親等女性政治受難者的處境，描寫她們遭囚禁、勞動與思想改造，仍努力守住尊嚴、友情與求生意志。',
-                    tags: ['女性受難者', '思想改造', '政治囚禁'],
-                    youth: '作品補足白色恐怖敘事中常被忽略的女性經驗，也呈現綠島監禁制度與「獄中再叛亂案」如何持續製造恐懼和死亡。'
+                    desc: '高中生余杏惠被扣上思想犯的罪名，送往綠島新生訓導處接受思想改造。在島上，她遇見舞者陳萍與初為人母的嚴水霞，三名背景不同的女性在囚禁生活中相識，並彼此陪伴。',
+                    youth: '作品以女性政治犯為主角，呈現她們被送入新生訓導處、以編號取代姓名並接受思想改造的處境，帶領觀眾看見白色恐怖時期較少受到關注的女性受難者。',
+                    sources: [
+                        { label: '台灣電影網', url: 'https://taiwancinema.bamid.gov.tw/Film/Filmcontent/?ContentUrl=89296' },
+                        { label: '國家人權記憶庫', url: 'https://memory.nhrm.gov.tw/NormalNode/Detail/132?MenuNode=12' },
+                        { label: '文化部', url: 'https://www.facebook.com/www.moc.gov.tw/posts/501283468705579/' }
+                    ]
                 },
                 '星空下的黑潮島嶼': {
                     meta: '2025｜電視劇',
                     title: '星空下的黑潮島嶼',
                     poster: 'posters/poster-black-tide.webp',
                     trailer: 'FNxWjoJgPKI',
-                    desc: '1950年代，一群被羅織罪名、送往綠島新生訓導處的年輕醫師與不同身分的政治犯，在嚴酷監禁生活中成立醫務所，設法救治同伴並維持人的尊嚴。',
-                    tags: ['綠島新生訓導處', '政治犯醫師', '囚禁生活'],
-                    youth: '劇集透過長篇幅描寫政治犯在孤島上的工作、友情與求生，讓觀眾看見受難者不只是案件數字，而是在壓迫中仍持續生活與互助的人。'
+                    desc: '一群醫師政治犯被送往綠島新生訓導處後，在醫療設備極為簡陋的環境中，運用專業救治受傷的政治犯與島民。不同立場的政治犯、軍官與島民，也在島上共同面對生活困境。',
+                    youth: '改編自白色恐怖時期一群被關在綠島的醫師政治受難者的故事，描寫醫師遭羅織罪名、移送綠島囚禁，並在失去自由與尊嚴、接受思想教育及勞動改造的環境中維持自我。',
+                    sources: [
+                        { label: '公視新聞網', url: 'https://news.pts.org.tw/article/774755' },
+                        { label: '公共電視', url: 'https://about.pts.org.tw/pr/tender/article/attachment/2024/1729760042z.pdf' }
+                    ]
                 },
                 '大濛': {
                     meta: '2025｜電影',
                     title: '大濛',
                     poster: 'posters/poster-foggy.webp',
                     trailer: 'GDwIYnjYMAE',
-                    desc: '1954年，嘉義少女阿月得知哥哥遭槍決，獨自北上尋找姐姐並領回遺體。途中她遇見外省車伕趙公道，兩名小人物在陌生城市中互相扶持，完成一段沉重的認屍旅程。',
-                    tags: ['政治犯家屬', '槍決與認屍', '小人物視角'],
-                    youth: '作品從受難者家屬的角度描寫白色恐怖，呈現一紙判決如何突然奪走親人，也讓觀眾看見國家暴力之外仍存在的善意與相互扶持。'
+                    desc: '1954年，嘉義少女阿月獨自前往臺北，準備贖回遭槍斃的兄長遺體。途中，她遇見來自廣東的退伍車伕趙公道，兩人為籌措贖屍費並肩闖蕩，逐漸成為患難之交。',
+                    youth: '電影以白色恐怖時期為背景，透過少女北上領回遭槍決兄長遺體的旅程，以庶民及受難者家屬的視角回望這段歷史，呈現政治壓迫如何波及受難者身邊的普通人。',
+                    sources: [
+                        { label: '台北金馬影展', url: 'https://www.goldenhorse.org.tw/film/programme/films/detail/4241' }
+                    ]
                 }
             };
 
@@ -7209,18 +7240,31 @@ transition: none !important;
 
                 const moveCopy = (key, start, end) => {
                     const copy = state.overlay.querySelector(`[data-culture-copy="${key}"]`);
-                    if (!copy) return;
+                    if (!copy) return null;
                     const local = range(p, start, end);
                     const y = getHeldScrollY(local, 86, -86, 0, 0.34);
                     const visible = p >= start && p <= end && y < 84 && y > -84;
                     copy.style.transform = `translate(-50%, calc(-50% + ${y}vh))`;
                     copy.classList.toggle('is-active', visible);
+                    return { copy, y, visible };
+                };
+
+                const moveCopyToCenterAndHold = (key, start, end) => {
+                    const copy = state.overlay.querySelector(`[data-culture-copy="${key}"]`);
+                    if (!copy) return null;
+                    const local = range(p, start, end);
+                    const enterEnd = 0.52;
+                    const y = local < enterEnd ? 86 + ((0 - 86) * (local / enterEnd)) : 0;
+                    const visible = p >= start && y < 84;
+                    copy.style.transform = `translate(-50%, calc(-50% + ${y}vh))`;
+                    copy.classList.toggle('is-active', visible);
+                    return { copy, y, visible };
                 };
 
                 moveCopy('a', 0.02, 0.14);
                 moveCopy('b', 0.36, 0.48);
                 moveCopy('c', 0.50, 0.62);
-                moveCopy('d', 0.88, 0.99);
+                moveCopyToCenterAndHold('d', 0.88, 0.99);
 
                 const musicFadeOut = range(p, 0.36, 0.62);
                 const filmFadeIn = range(p, 0.36, 0.62);
@@ -7327,6 +7371,11 @@ transition: none !important;
                 document.getElementById('film-title').textContent = work.title;
                 document.getElementById('film-desc').textContent = work.desc;
                 document.getElementById('film-youth').textContent = work.youth;
+                const sources = document.getElementById('film-sources');
+                if (sources) {
+                    const links = (work.sources || []).map(source => `<a href="${source.url}" target="_blank" rel="noopener noreferrer">${source.label}</a>`).join('、');
+                    sources.innerHTML = links ? `資料來源：${links}` : '';
+                }
                 const trailer = document.getElementById('film-trailer');
                 if (trailer) {
                     trailer.src = `https://www.youtube.com/embed/${work.trailer}?playsinline=1&rel=0&origin=https%3A%2F%2Fckyling25.github.io`;
