@@ -6468,14 +6468,6 @@ transition: none !important;
                     font-size: .82rem;
                     line-height: 1.6;
                 }
-                #film-tags {
-                    gap: .35rem;
-                    margin-bottom: .7rem;
-                }
-                #film-tags span {
-                    padding: .3rem .55rem;
-                    font-size: .68rem;
-                }
             }
             .culture-scrolly-shell {
                 position: relative;
@@ -6808,15 +6800,6 @@ transition: none !important;
                 border-left-width: 3px !important;
                 margin-bottom: 0 !important;
             }
-            #page-approach-1 #culture-film-panel #film-tags {
-                gap: .46rem !important;
-                margin-bottom: .62rem !important;
-            }
-            #page-approach-1 #culture-film-panel #film-tags span {
-                padding: .34rem .68rem !important;
-                font-size: clamp(.62rem, .7vw, .74rem) !important;
-                line-height: 1.18 !important;
-            }
             #page-approach-1 #culture-film-panel .film-trailer-card {
                 width: min(100%, 440px) !important;
                 max-height: calc(36vh - 2.4rem) !important;
@@ -6986,17 +6969,11 @@ transition: none !important;
                                             <div class="film-detail-copy flex flex-col justify-center">
                                                 <p id="film-meta" class="text-[#9B2C2C] font-bold tracking-widest mb-1">1991｜電影</p>
                                                 <h4 id="film-title" class="serif-title font-black mb-3">牯嶺街少年殺人事件</h4>
-                                                <p class="film-detail-label">作品故事</p>
+                                                <p class="film-detail-label">故事大綱</p>
                                                 <p id="film-desc" class="text-gray-600 text-justify mb-4">
                                                     故事設定於1960年代初的臺北，少年小四在家庭遷徙、校園管束、幫派衝突與青春情感之間逐漸失序。電影改編自1961年牯嶺街青少年殺人事件，也描繪戰後臺灣社會在威權秩序與世代迷惘中的壓力。
                                                 </p>
-                                                <p class="film-detail-label">故事關鍵字</p>
-                                                <div id="film-tags" class="flex flex-wrap gap-2 mb-4">
-                                                    <span class="px-3 py-1.5 bg-gray-100 rounded-full text-xs">威權時代</span>
-                                                    <span class="px-3 py-1.5 bg-gray-100 rounded-full text-xs">青少年幫派</span>
-                                                    <span class="px-3 py-1.5 bg-gray-100 rounded-full text-xs">外省家庭</span>
-                                                </div>
-                                                <p class="film-detail-label">作品與白色恐怖的關聯</p>
+                                                <p class="film-detail-label">為何與白色恐怖有關</p>
                                                 <p id="film-youth" class="text-gray-600 border-l-4 border-[#9B2C2C] pl-4">
                                                     作品未直接描寫政治案件，卻以校園、家庭與街頭日常呈現戒嚴社會的壓抑氛圍，讓觀眾看見白色恐怖時代不只存在於監獄，也滲入青少年的成長環境與人際關係。
                                                 </p>
@@ -7350,7 +7327,6 @@ transition: none !important;
                 document.getElementById('film-title').textContent = work.title;
                 document.getElementById('film-desc').textContent = work.desc;
                 document.getElementById('film-youth').textContent = work.youth;
-                document.getElementById('film-tags').innerHTML = work.tags.map(tag => `<span class="px-3 py-1.5 bg-gray-100 rounded-full text-xs font-medium">${tag}</span>`).join('');
                 const trailer = document.getElementById('film-trailer');
                 if (trailer) {
                     trailer.src = `https://www.youtube.com/embed/${work.trailer}?playsinline=1&rel=0&origin=https%3A%2F%2Fckyling25.github.io`;
