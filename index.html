@@ -403,7 +403,7 @@
            三種狀態都使用同一個置中寬度，避免切換時整組時間軸向左偏移。 */
         #democracyTimelineSection.groupmate-inline-timeline .collapsed-panel {
             position: relative !important;
-            min-height: 272vh !important;
+            min-height: 316vh !important;
             overflow: visible !important;
         }
 
@@ -626,7 +626,7 @@ display: none;
 
 #democracyTimelineSection.groupmate-inline-timeline .collapsed-panel {
 position: relative;
-      min-height: 272vh;
+      min-height: 316vh;
 }
 
 #democracyTimelineSection.groupmate-inline-timeline .collapsed-panel::after {
@@ -702,7 +702,8 @@ display: block;
       width: 100%;
       max-width: 100%;
       font-family: var(--education-body-font);
-      font-size: var(--education-body-size);
+      --democracy-quote-size: clamp(1.34rem, 1.72vw, 1.72rem);
+      font-size: var(--democracy-quote-size) !important;
       line-height: var(--education-body-line);
       font-weight: 400;
       letter-spacing: 0;
@@ -714,11 +715,11 @@ display: block;
 }
 
 #democracyTimelineSection.groupmate-inline-timeline .intro-copy-quote.is-long {
-font-size: var(--education-body-size);
+font-size: var(--democracy-quote-size) !important;
 }
 
 #democracyTimelineSection.groupmate-inline-timeline .intro-copy-card p.intro-copy-note {
-    margin-top: 2rem;
+    margin-top: 3.35rem;
     color: var(--education-note-color);
     font-family: var(--education-body-font);
     font-size: clamp(.82rem, .95vw, .95rem);
@@ -1814,7 +1815,7 @@ transition: none !important;
 
         .parallax-report {
             position: relative;
-            min-height: 200vh;
+            min-height: 224vh;
             background: #FAFAFA;
         }
 
@@ -4196,8 +4197,9 @@ transition: none !important;
         dragSensitivity: 0.13,
         edgeResistance: 12,
         introBreakpoint: 760,
-        introTrackStartAt: 0.56,
-        introCopyEndAt: 0.74,
+        introHoldBeforeMotion: 0.08,
+        introHoldAfterCopy: 0.08,
+        introHoldAfterTrack: 0.08,
         introRevealThreshold: 0.96,
         mobileBreakpoint: 560,
         focusReturnDelayMs: 220,
@@ -4574,14 +4576,37 @@ transition: none !important;
       scrollIntroToIndex(index);
     }
 
+    function getIntroMotionRanges() {
+      const copyTravel = Math.max(DOM.introCopyCard.offsetHeight - DOM.introCopyRail.clientHeight, 0);
+      const trackTravel = Math.max(DOM.compactTrack.scrollWidth - DOM.compactTimeline.clientWidth, 0);
+      const holdBeforeMotion = clamp(CONFIG.interaction.introHoldBeforeMotion, 0, 0.3);
+      const holdAfterCopy = clamp(CONFIG.interaction.introHoldAfterCopy, 0, 0.3);
+      const holdAfterTrack = clamp(CONFIG.interaction.introHoldAfterTrack, 0, 0.3);
+      const motionSpan = Math.max(1 - holdBeforeMotion - holdAfterCopy - holdAfterTrack, 0.01);
+      const totalTravel = Math.max(copyTravel + trackTravel, 1);
+      const copyStart = holdBeforeMotion;
+      const copyEnd = copyStart + (Math.max(copyTravel, 1) / totalTravel) * motionSpan;
+      const trackStart = Math.min(copyEnd + holdAfterCopy, 0.98);
+      const trackEnd = Math.min(trackStart + (Math.max(trackTravel, 1) / totalTravel) * motionSpan, 0.99);
+
+      return {
+        copyTravel,
+        trackTravel,
+        copyStart,
+        copyEnd,
+        trackStart,
+        trackEnd
+      };
+    }
+
     function getIntroProgressForIndex(index) {
       const normalized = clamp(index, 0, events.length - 1);
       const trackProgress = events.length > 1 ? normalized / (events.length - 1) : 0;
+      const { trackStart, trackEnd } = getIntroMotionRanges();
 
       return trackProgress === 0
         ? 0
-        : CONFIG.interaction.introTrackStartAt +
-          (1 - CONFIG.interaction.introTrackStartAt) * trackProgress;
+        : trackStart + (trackEnd - trackStart) * trackProgress;
     }
 
     function scrollIntroToIndex(index, behavior = CONFIG.interaction.scrollBehavior) {
@@ -4637,15 +4662,13 @@ transition: none !important;
       const scrollSpan = Math.max(DOM.collapsedPanel.offsetHeight - window.innerHeight, 1);
       const panelRect = DOM.collapsedPanel.getBoundingClientRect();
       const progress = clamp(-panelRect.top / scrollSpan, 0, 1);
-      const copyProgress = clamp(progress / CONFIG.interaction.introCopyEndAt, 0, 1);
+      const { copyTravel, trackTravel, copyStart, copyEnd, trackStart, trackEnd } = getIntroMotionRanges();
+      const copyProgress = clamp((progress - copyStart) / (copyEnd - copyStart), 0, 1);
       const trackProgress = clamp(
-        (progress - CONFIG.interaction.introTrackStartAt) /
-          (1 - CONFIG.interaction.introTrackStartAt),
+        (progress - trackStart) / (trackEnd - trackStart),
         0,
         1
       );
-      const copyTravel = Math.max(DOM.introCopyCard.offsetHeight - DOM.introCopyRail.clientHeight, 0);
-      const trackTravel = Math.max(DOM.compactTrack.scrollWidth - DOM.compactTimeline.clientWidth, 0);
       const targetIndex = Math.round(trackProgress * (events.length - 1));
 
       DOM.module.style.setProperty("--intro-copy-shift", `${Math.round(copyTravel * -copyProgress)}px`);
@@ -4683,15 +4706,13 @@ transition: none !important;
       }
 
       const progress = getIntroProgressForIndex(normalized);
-      const copyProgress = clamp(progress / CONFIG.interaction.introCopyEndAt, 0, 1);
+      const { copyTravel, trackTravel, copyStart, copyEnd, trackStart, trackEnd } = getIntroMotionRanges();
+      const copyProgress = clamp((progress - copyStart) / (copyEnd - copyStart), 0, 1);
       const trackProgress = clamp(
-        (progress - CONFIG.interaction.introTrackStartAt) /
-          (1 - CONFIG.interaction.introTrackStartAt),
+        (progress - trackStart) / (trackEnd - trackStart),
         0,
         1
       );
-      const copyTravel = Math.max(DOM.introCopyCard.offsetHeight - DOM.introCopyRail.clientHeight, 0);
-      const trackTravel = Math.max(DOM.compactTrack.scrollWidth - DOM.compactTimeline.clientWidth, 0);
 
       DOM.module.style.setProperty("--intro-copy-shift", `${Math.round(copyTravel * -copyProgress)}px`);
       DOM.module.style.setProperty("--intro-track-shift", `${Math.round(trackTravel * -trackProgress)}px`);
@@ -5359,8 +5380,11 @@ transition: none !important;
                                 const local = sceneProgress - index;
                                 const enter = clamp(local / 0.34);
                                 const leave = clamp((local - 0.68) / 0.32);
-                                const y = 86 - (enter * 86) - (leave * 86);
-                                const isCurrentOrMoving = local >= 0 && local < 1;
+                                const shouldStayCentered = copy.classList.contains('frame-center');
+                                const y = shouldStayCentered
+                                    ? 86 - (enter * 86)
+                                    : 86 - (enter * 86) - (leave * 86);
+                                const isCurrentOrMoving = local >= 0 && (shouldStayCentered ? local <= 1 : local < 1);
 								const translate = (copy.classList.contains('quote-center') || copy.classList.contains('frame-center'))
 								    ? `translate(-50%, calc(-50% + ${y}vh))`
 								    : `translateY(calc(-50% + ${y}vh))`;
@@ -9999,27 +10023,29 @@ function initYouthAttitudeChart() {
 			          0.24～0.66：第二組文字從下方進場
 			          0.34 後：開始切換成文字雲
 			        */
-			        const firstProgress = clamp01(progress / 0.44);
-					const secondProgress = clamp01((progress - 0.05) / 0.32);
+			        const entryHold = 0.10;
+			        const motionProgress = clamp01((progress - entryHold) / (1 - entryHold));
+			        const firstProgress = clamp01(motionProgress / 0.44);
+					const secondProgress = clamp01((motionProgress - 0.05) / 0.32);
 					
 					const firstY = -125 * firstProgress;
 					const secondY = 90 * (1 - secondProgress);
 					
-					const shouldShowCloud = progress >= 0.30;
+					const shouldShowCloud = motionProgress >= 0.30;
 			        report.classList.toggle('show-cloud', shouldShowCloud);
 			
 			        paragraphs.forEach((paragraph, index) => {
 			            // 第一組：白恐之所以...、國立臺灣大學...
 			            if (index === 0) {
 			                setParagraph(paragraph, {
-			                    active: progress < 0.50,
+			                    active: motionProgress < 0.50,
 			                    top: '30%',
 			                    y: firstY,
 			                    maxHeight: '34vh'
 			                });
 			            } else if (index === 1) {
 			                setParagraph(paragraph, {
-			                    active: progress < 0.50,
+			                    active: motionProgress < 0.50,
 			                    top: '62%',
 			                    y: firstY,
 			                    maxHeight: '34vh'
@@ -10028,14 +10054,14 @@ function initYouthAttitudeChart() {
 			            // 第二組：根據本報記者...、黃長玲提醒...
 			            } else if (index === 2) {
 			                setParagraph(paragraph, {
-			                    active: progress >= 0.05,
+			                    active: motionProgress >= 0.05,
 			                    top: '30%',
 			                    y: secondY,
 			                    maxHeight: '32vh'
 			                });
 			            } else if (index === 3) {
 			                setParagraph(paragraph, {
-			                    active: progress >= 0.05,
+			                    active: motionProgress >= 0.05,
 			                    top: '58%',
 			                    y: secondY,
 			                    maxHeight: '32vh'
@@ -10044,14 +10070,14 @@ function initYouthAttitudeChart() {
 			            // 註一、註二
 			            } else if (index === 4) {
 			                setParagraph(paragraph, {
-			                    active: progress >= 0.30,
+			                    active: motionProgress >= 0.30,
 			                    top: '82%',
 			                    y: secondY,
 			                    maxHeight: '8vh'
 			                });
 			            } else if (index === 5) {
 			                setParagraph(paragraph, {
-			                    active: progress >= 0.30,
+			                    active: motionProgress >= 0.30,
 			                    top: '90%',
 			                    y: secondY,
 			                    maxHeight: '8vh'
