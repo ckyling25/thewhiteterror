@@ -8555,44 +8555,69 @@ transition: none !important;
       overflow: visible;
     }
     #page-approach-3 .approach-return-nav {
+      top: 3.35rem !important;
+      right: 1rem !important;
+      left: auto !important;
       z-index: 80;
     }
-    .jm-scroll-stage {
+    #page-approach-3 .jm-scroll-stage {
       height: 900vh;
+      min-height: 720vh;
       position: relative;
-      background: #0b0b0b;
+      background: #050505;
     }
-    .jm-frame {
-      position: sticky;
+    #page-approach-3 .jm-frame {
+      position: absolute;
       top: 0;
+      left: 0;
       width: 100%;
+      height: 100vh;
       height: 100svh;
       overflow: hidden;
-      background: #0b0b0b;
+      background: #050505;
       display: grid;
       place-items: center;
       isolation: isolate;
       contain: layout paint;
     }
-    .jm-video-shell {
+    #page-approach-3 .jm-frame.is-fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100svh;
+      z-index: 60;
+    }
+    #page-approach-3 .jm-frame.is-ended {
+      position: absolute;
+      top: auto;
+      bottom: 0;
+      left: 0;
       width: 100%;
-      height: 100%;
+      height: 100vh;
+      height: 100svh;
+    }
+    #page-approach-3 .jm-video-shell {
+      position: absolute;
+      inset: 0;
       display: grid;
       place-items: center;
       overflow: hidden;
-      transform: translateZ(0);
-      will-change: transform;
+      background: #050505;
     }
-    .jm-video {
-      width: 100%;
-      height: 100%;
+    #page-approach-3 .jm-video {
+      width: 100vw;
+      height: 100vh;
+      height: 100svh;
       object-fit: contain;
+      object-position: center center;
       display: block;
-      background: #0b0b0b;
+      background: #050505;
       transform: translateZ(0);
-      will-change: transform, width, height;
+      will-change: contents;
     }
-    .jm-hint {
+    #page-approach-3 .jm-hint {
       position: absolute;
       left: 50%;
       bottom: 1.25rem;
@@ -8609,10 +8634,10 @@ transition: none !important;
       transition: opacity .25s ease;
       pointer-events: none;
     }
-    .jm-hint.is-hidden {
+    #page-approach-3 .jm-hint.is-hidden {
       opacity: 0;
     }
-    .jm-end-card {
+    #page-approach-3 .jm-end-card {
       position: absolute;
       left: clamp(1.5rem, 5vw, 4rem);
       bottom: clamp(2rem, 7vh, 5rem);
@@ -8633,11 +8658,11 @@ transition: none !important;
       transition: opacity .35s ease, transform .35s ease;
       pointer-events: none;
     }
-    .jm-end-card.is-visible {
+    #page-approach-3 .jm-end-card.is-visible {
       opacity: 1;
       transform: translateY(0);
     }
-    .jm-tour {
+    #page-approach-3 .jm-tour {
       position: fixed;
       inset: 0;
       z-index: 70;
@@ -8645,10 +8670,10 @@ transition: none !important;
       background: #050505;
       overflow: hidden;
     }
-    .jm-tour.is-active {
+    #page-approach-3 .jm-tour.is-active {
       display: block;
     }
-    .jm-scene {
+    #page-approach-3 .jm-scene {
       position: absolute;
       inset: 0;
       opacity: 0;
@@ -8656,11 +8681,11 @@ transition: none !important;
       transition: opacity .28s ease;
       background: #050505;
     }
-    .jm-scene.is-active {
+    #page-approach-3 .jm-scene.is-active {
       opacity: 1;
       pointer-events: auto;
     }
-    .jm-scene iframe {
+    #page-approach-3 .jm-scene iframe {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -8668,7 +8693,7 @@ transition: none !important;
       border: 0;
       background: #050505;
     }
-    .jm-info-box {
+    #page-approach-3 .jm-info-box {
       position: absolute;
       left: clamp(1rem, 4vw, 4.4rem);
       bottom: clamp(1.2rem, 6vh, 4rem);
@@ -8685,7 +8710,7 @@ transition: none !important;
       line-height: 1.8;
       font-weight: 500;
     }
-    .jm-next-control {
+    #page-approach-3 .jm-next-control {
       position: absolute;
       right: clamp(1rem, 4vw, 4rem);
       bottom: clamp(1.2rem, 6vh, 4rem);
@@ -8694,7 +8719,7 @@ transition: none !important;
       justify-items: center;
       gap: .55rem;
     }
-    .jm-next-arrow {
+    #page-approach-3 .jm-next-arrow {
       width: clamp(4.25rem, 9vw, 6.5rem);
       aspect-ratio: 1;
       border: 0;
@@ -8706,18 +8731,18 @@ transition: none !important;
       transition: transform .18s ease, background .18s ease;
       backdrop-filter: blur(3px);
     }
-    .jm-next-arrow:hover {
+    #page-approach-3 .jm-next-arrow:hover {
       transform: translateY(-3px);
       background: rgba(255,255,255,.28);
     }
-    .jm-next-arrow::before {
+    #page-approach-3 .jm-next-arrow::before {
       content: "";
       width: 52%;
       height: 52%;
       background: rgba(255,255,255,.92);
       clip-path: polygon(50% 0, 92% 48%, 67% 48%, 67% 100%, 33% 100%, 33% 48%, 8% 48%);
     }
-    .jm-arrow-label {
+    #page-approach-3 .jm-arrow-label {
       color: #161616;
       background: rgba(255,255,255,.72);
       border: 1px solid rgba(0,0,0,.16);
@@ -8729,7 +8754,35 @@ transition: none !important;
       font-weight: 800;
       white-space: nowrap;
     }
-    .jm-back-button {
+    #page-approach-3 .jm-panorama-hint {
+      position: absolute;
+      left: 50%;
+      bottom: clamp(1.5rem, 6vh, 4rem);
+      z-index: 4;
+      display: grid;
+      justify-items: center;
+      gap: .16rem;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    #page-approach-3 .jm-panorama-icon {
+      width: clamp(2.2rem, 4.2vw, 3.4rem);
+      height: auto;
+      display: block;
+      opacity: .86;
+      filter: drop-shadow(0 3px 10px rgba(255,255,255,.28));
+      transform: translateY(.18rem);
+    }
+    #page-approach-3 .jm-panorama-label {
+      color: #050505;
+      padding: 0;
+      font-size: clamp(.76rem, 1vw, .92rem);
+      font-weight: 800;
+      line-height: 1.25;
+      white-space: nowrap;
+      text-shadow: 0 1px 8px rgba(255,255,255,.7);
+    }
+    #page-approach-3 .jm-back-button {
       position: absolute;
       left: 1rem;
       top: 1rem;
@@ -8744,35 +8797,41 @@ transition: none !important;
       font-weight: 700;
     }
     @media (max-width: 720px) {
-      .jm-scroll-stage {
+      #page-approach-3 .jm-scroll-stage {
         height: 760vh;
+        min-height: 680vh;
       }
-      .jm-info-box {
+      #page-approach-3 .jm-info-box {
         left: 1rem;
         right: 1rem;
         bottom: 1rem;
         width: auto;
         max-width: calc(100vw - 2rem);
       }
-      .jm-next-control {
+      #page-approach-3 .jm-next-control {
         right: 1rem;
         bottom: calc(1rem + 11.5rem);
       }
-      .jm-next-arrow {
+      #page-approach-3 .jm-next-arrow {
         width: 4.2rem;
       }
-      .jm-arrow-label {
+    #page-approach-3 .jm-arrow-label {
         font-size: .78rem;
+      }
+      #page-approach-3 .jm-panorama-hint {
+        bottom: 1rem;
       }
     }
   </style>
 
-  <button onclick="window.returnToApproachSelector()" class="approach-return-nav" type="button">返回選擇</button>
+  <button onclick="window.returnToApproachSelector()" class="approach-return-nav" type="button">返回入口頁面</button>
 
   <div class="jm-scroll-stage" id="jm-scroll-stage">
     <section class="jm-frame" aria-label="白色恐怖景美紀念園區滾動式影片">
       <div class="jm-video-shell">
-        <video id="jm-scroll-video" class="jm-video" preload="auto" muted playsinline disablepictureinpicture src="%E7%99%BD%E6%81%90%E6%99%AF%E7%BE%8E%E6%BB%BE%E5%8B%95%E5%9C%B0%E5%9C%96.mp4"></video>
+        <video id="jm-scroll-video" class="jm-video" preload="auto" muted playsinline disablepictureinpicture>
+          <source src="%E7%99%BD%E6%81%90%E6%99%AF%E7%BE%8E%E6%BB%BE%E5%8B%95%E5%9C%B0%E5%9C%96.mp4" type="video/mp4">
+        </video>
       </div>
       <div class="jm-hint" id="jm-hint">滾動滑鼠探索園區</div>
       <div class="jm-end-card" id="jm-end-card">白色恐怖景美紀念園區<br>（原景美看守所）</div>
@@ -8785,6 +8844,10 @@ transition: none !important;
     <article class="jm-scene" data-scene="gate">
       <iframe title="白色恐怖景美紀念園區大門全景" allow="xr-spatial-tracking; gyroscope; accelerometer" allowfullscreen scrolling="no" src="https://kuula.co/share/Lc5Vf?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1"></iframe>
       <div class="jm-info-box">仁愛樓為二層樓建物，於1968年改建完工，作為警總軍法處看守所。戒嚴時期有許多政治犯皆曾羈押於此，此為犯人進入牢房前必經之路與門口。</div>
+      <div class="jm-panorama-hint" aria-hidden="true">
+        <img class="jm-panorama-icon" src="images/360-degree.png" alt="">
+        <div class="jm-panorama-label">左右拖曳畫面可環顧四周</div>
+      </div>
       <div class="jm-next-control">
         <button class="jm-next-arrow" type="button" data-next-scene="cell-door" aria-label="前往監獄門口"></button>
         <div class="jm-arrow-label">點此前往下一場景</div>
@@ -8794,6 +8857,10 @@ transition: none !important;
     <article class="jm-scene" data-scene="cell-door">
       <iframe title="仁愛樓59號房門全景" allow="xr-spatial-tracking; gyroscope; accelerometer" allowfullscreen scrolling="no" src="https://kuula.co/share/Lc5Cy?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1"></iframe>
       <div class="jm-info-box">此處為仁愛樓二樓的女性押房，1979年12月13日，陳菊因美麗島事件遭逮捕，並關押於59號房。</div>
+      <div class="jm-panorama-hint" aria-hidden="true">
+        <img class="jm-panorama-icon" src="images/360-degree.png" alt="">
+        <div class="jm-panorama-label">左右拖曳畫面可環顧四周</div>
+      </div>
       <div class="jm-next-control">
         <button class="jm-next-arrow" type="button" data-next-scene="inside" aria-label="前往監獄內部"></button>
         <div class="jm-arrow-label">點此前往下一場景</div>
@@ -8802,6 +8869,10 @@ transition: none !important;
 
     <article class="jm-scene" data-scene="inside">
       <iframe title="仁愛樓監獄內部全景" allow="xr-spatial-tracking; gyroscope; accelerometer" allowfullscreen scrolling="no" src="https://kuula.co/share/collection/7T9yQ?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1"></iframe>
+      <div class="jm-panorama-hint" aria-hidden="true">
+        <img class="jm-panorama-icon" src="images/360-degree.png" alt="">
+        <div class="jm-panorama-label">左右拖曳畫面可環顧四周</div>
+      </div>
     </article>
   </section>
 
@@ -8809,60 +8880,88 @@ transition: none !important;
     (function() {
       const root = document.getElementById('page-approach-3');
       const stage = document.getElementById('jm-scroll-stage');
+      const frame = stage?.querySelector('.jm-frame');
       const video = document.getElementById('jm-scroll-video');
       const hint = document.getElementById('jm-hint');
       const endCard = document.getElementById('jm-end-card');
       const tour = document.getElementById('jm-tour');
       const backButton = document.getElementById('jm-back-button');
       const scenes = Array.from(document.querySelectorAll('#jm-tour .jm-scene'));
-      if (!root || !stage || !video || !tour) return;
+      if (!root || !stage || !frame || !video || !tour) return;
 
-      let targetTime = 0;
-      let displayedTime = 0;
       let duration = 1;
-      let rafId = 0;
+      let ticking = false;
       let tourOpen = false;
+      let videoReady = false;
 
       function clamp(value, min, max) {
         return Math.min(max, Math.max(min, value));
       }
 
+      function getViewportHeight() {
+        return window.innerHeight || document.documentElement.clientHeight || 1;
+      }
+
       function scrollProgress() {
         const rect = stage.getBoundingClientRect();
-        const travel = Math.max(1, stage.offsetHeight - window.innerHeight);
+        const travel = Math.max(1, stage.offsetHeight - getViewportHeight());
         return clamp(-rect.top / travel, 0, 1);
       }
 
       function isSectionVisible() {
         const rect = root.getBoundingClientRect();
-        return rect.bottom > 0 && rect.top < window.innerHeight;
+        return rect.bottom > 0 && rect.top < getViewportHeight();
       }
 
-      function syncTargetFromScroll() {
+      function updateFramePinState() {
+        const rect = stage.getBoundingClientRect();
+        const vh = getViewportHeight();
+        const isBefore = rect.top > 0;
+        const isEnded = rect.bottom <= vh;
+        frame.classList.toggle('is-fixed', !isBefore && !isEnded);
+        frame.classList.toggle('is-ended', isEnded);
+      }
+
+      function resizeScrollTrack() {
+        if (!Number.isFinite(duration) || duration <= 1) return;
+        const viewportUnits = clamp(Math.round(duration * 95), 760, 1600);
+        stage.style.height = `${viewportUnits}vh`;
+      }
+
+      function renderScrollVideo() {
+        ticking = false;
+        updateFramePinState();
         if (!isSectionVisible()) return;
+
         const progress = scrollProgress();
-        targetTime = progress * duration;
+        const safeDuration = Math.max(0.01, duration - 0.04);
+        const nextTime = clamp(progress * safeDuration, 0, safeDuration);
+
+        if (videoReady && Number.isFinite(nextTime)) {
+          try {
+            if (Math.abs(video.currentTime - nextTime) > 0.025) {
+              video.currentTime = nextTime;
+            }
+          } catch (error) {}
+        }
+
         endCard?.classList.toggle('is-visible', progress > .985 && !tourOpen);
         hint?.classList.toggle('is-hidden', progress > .06 || tourOpen);
-        if (!rafId) rafId = requestAnimationFrame(tick);
       }
 
-      function tick() {
-        rafId = 0;
-        if (!Number.isFinite(duration) || duration <= 0) return;
-        const diff = targetTime - displayedTime;
-        displayedTime = Math.abs(diff) > .012 ? displayedTime + diff * .32 : targetTime;
-        try {
-          video.currentTime = clamp(displayedTime, 0, duration);
-        } catch (error) {}
-        if (Math.abs(targetTime - displayedTime) > .012) {
-          rafId = requestAnimationFrame(tick);
-        }
+      function requestScrollVideoRender() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(renderScrollVideo);
       }
+      window.updateJmScrolly = requestScrollVideoRender;
 
       function setupVideo() {
         duration = Number.isFinite(video.duration) && video.duration > 0 ? video.duration : 1;
-        syncTargetFromScroll();
+        videoReady = duration > 1;
+        video.pause();
+        resizeScrollTrack();
+        requestScrollVideoRender();
       }
 
       function showScene(id) {
@@ -8879,11 +8978,14 @@ transition: none !important;
         tour.classList.remove('is-active');
         document.body.style.overflow = '';
         scenes.forEach(scene => scene.classList.remove('is-active'));
-        syncTargetFromScroll();
+        requestScrollVideoRender();
       }
 
-      window.addEventListener('scroll', syncTargetFromScroll, { passive: true });
-      window.addEventListener('resize', syncTargetFromScroll);
+      window.addEventListener('scroll', requestScrollVideoRender, { passive: true });
+      window.addEventListener('resize', () => {
+        resizeScrollTrack();
+        requestScrollVideoRender();
+      });
       window.addEventListener('wheel', event => {
         if (tourOpen || !isSectionVisible()) return;
         const progress = scrollProgress();
@@ -8897,10 +8999,17 @@ transition: none !important;
         button.addEventListener('click', () => showScene(button.dataset.nextScene));
       });
       backButton?.addEventListener('click', closeTour);
-      video.addEventListener('loadedmetadata', setupVideo, { once: true });
-      video.addEventListener('canplay', setupVideo, { once: true });
+      video.addEventListener('loadedmetadata', setupVideo);
+      video.addEventListener('durationchange', setupVideo);
+      video.addEventListener('canplaythrough', setupVideo, { once: true });
+      video.addEventListener('error', () => {
+        hint.textContent = '影片載入失敗，請確認白恐景美滾動地圖.mp4 是否存在。';
+        hint?.classList.remove('is-hidden');
+      });
+      video.muted = true;
+      video.pause();
       video.load();
-      setupVideo();
+      requestScrollVideoRender();
     })();
   </script>
 </section>
@@ -9205,6 +9314,12 @@ transition: none !important;
                     window.requestAnimationFrame(() => {
                         window.updateCultureScrolly?.();
                         window.requestAnimationFrame(() => window.updateCultureScrolly?.());
+                    });
+                } else if (pageKey === 'approach-3') {
+                    targetPage.classList.add('fade-in-active');
+                    window.requestAnimationFrame(() => {
+                        window.updateJmScrolly?.();
+                        window.requestAnimationFrame(() => window.updateJmScrolly?.());
                     });
                 } else {
                     targetPage.classList.add('fade-in-active');
