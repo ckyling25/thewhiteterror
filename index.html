@@ -249,7 +249,9 @@
             width: clamp(168px, 16vw, 230px);
             max-height: 310px;
             object-fit: contain;
-            filter: drop-shadow(0 16px 22px rgba(0, 0, 0, .16));
+            filter:
+                drop-shadow(0 8px 7px rgba(0, 0, 0, .22))
+                drop-shadow(0 22px 24px rgba(0, 0, 0, .28));
         }
 
         .speaker-quote-row.is-left .speaker-portrait {
@@ -2048,6 +2050,17 @@ transition: none !important;
             font-weight: 900;
             line-height: 1.25;
             white-space: nowrap;
+        }
+
+        .word-cloud-section .source {
+            align-self: flex-start;
+            margin-top: clamp(.55rem, 1.4vh, .85rem);
+            color: #666;
+            font-family: "Noto Sans TC", sans-serif;
+            font-size: clamp(.85rem, 1vw, 15px);
+            font-weight: 400;
+            letter-spacing: 0;
+            line-height: 1.6;
         }
 
         #cloud-wrapper {
@@ -4026,7 +4039,6 @@ transition: none !important;
                 <!-- 角色或引言提示 -->
                 <div class="flex items-center justify-between mb-3 border-b border-gray-800 pb-2">
                     <span id="story-speaker" class="text-xs tracking-widest text-[#9B2C2C] font-semibold uppercase">時代的縮影</span>
-                    <span class="text-xs text-gray-500">向下滾動繼續</span>
                 </div>
                 <!-- 故事本文 -->
                 <p id="story-text" class="text-gray-100 text-base md:text-xl leading-relaxed min-h-[90px] md:min-h-[110px] text-justify font-light cursor-blink">
@@ -4034,7 +4046,7 @@ transition: none !important;
                 </p>
                 <!-- 下一步箭頭 -->
                 <div class="text-right mt-4 flex items-center justify-end text-gray-400 text-xs tracking-wider">
-                    <span id="story-progress-hint" class="animate-pulse">向下滾動，文字會自動跑完</span>
+                    <span id="story-progress-hint" class="animate-pulse">向下滾動推進劇情</span>
                     <svg class="w-4 h-4 ml-2 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
@@ -5096,6 +5108,9 @@ transition: none !important;
                                         <div class="circle" data-word="太沉重" data-count="5" data-size="120" data-left="605" data-top="190" data-replies="有點恐怖|害怕悲劇|內容太沉重" style="width:120px;height:120px;background:#D7CCC8;left:605px;top:190px;"><span class="word">太沉重</span><span class="count">共有 5 人提到</span></div>
                                     </div>
                                 </div>
+                                <div class="source">
+                                    資料來源：〈青年對白恐時期之認知問卷調查〉
+                                </div>
                             </section>
                         </div>
                     </div>
@@ -5124,7 +5139,7 @@ transition: none !important;
     <section id="page-4-quiz-container" class="section-divider-line section-view hidden min-h-screen flex-col items-center py-14 md:py-20 px-3 md:px-6 z-10">
         <header class="max-w-3xl text-center mb-4 md:mb-6 px-4 shrink-0">
             <h2 class="serif-title text-3xl md:text-5xl font-bold text-gray-800 leading-tight whitespace-nowrap mb-6">你對白色恐怖了解多少？</h2>
-            <p class="text-sm md:text-base text-stone-600 leading-relaxed">作答後立即查看解答，以及和你做出相同選擇的填答者比例。</p>
+            <p class="text-sm md:text-base text-stone-600 leading-relaxed">以下題目挑選自〈青年對白恐時期之認知問卷調查〉，作答後將顯示解答，以及問卷中有多少填答者和你做出相同選擇。</p>
         </header>
 
         <div id="quiz-list" class="quiz-list"></div>
@@ -9653,7 +9668,7 @@ transition: none !important;
                     typeWriterResolve = null;
                     resolve();
                 }
-                if (storyProgressHint) storyProgressHint.textContent = '點擊或向下滾動，前往下一幕';
+                if (storyProgressHint) storyProgressHint.textContent = '向下滾動推進劇情';
                 return true;
             }
 
@@ -9720,9 +9735,9 @@ transition: none !important;
 
                 if (storyDialogBox) storyDialogBox.classList.remove('hidden');
                 if (finalPanel) finalPanel.classList.remove('is-active');
-                if (storyProgressHint) storyProgressHint.textContent = '向下滾動，文字會自動跑完';
+                if (storyProgressHint) storyProgressHint.textContent = '向下滾動推進劇情';
                 await runTypewriter(scene.content, storyText);
-                if (storyProgressHint) storyProgressHint.textContent = '再次向下滾動前往下一幕';
+                if (storyProgressHint) storyProgressHint.textContent = '向下滾動推進劇情';
             }
 
             async function advanceStoryScene(skipTypingAndAdvance = false) {
@@ -9920,13 +9935,13 @@ function initYouthAttitudeChart() {
 
                         meta.data.forEach((arc, index) => {
                             const p = arc.tooltipPosition();
-                            ctx.font = "bold 26px Noto Sans TC";
+                            ctx.font = "bold 21px Noto Sans TC";
                             ctx.textAlign = "center";
                             ctx.fillStyle = index === 0 ? "white" : "#222";
-                            ctx.fillText(chart.data.labels[index], p.x, p.y - 8);
+                            ctx.fillText(chart.data.labels[index], p.x, p.y - 7);
 
-                            ctx.font = "bold 32px Noto Sans TC";
-                            ctx.fillText(chart.data.datasets[0].data[index] + "%", p.x, p.y + 30);
+                            ctx.font = "bold 26px Noto Sans TC";
+                            ctx.fillText(chart.data.datasets[0].data[index] + "%", p.x, p.y + 24);
                         });
 
                         ctx.restore();
@@ -10034,12 +10049,13 @@ function initYouthAttitudeChart() {
 			        const entryHold = 0.10;
 			        const motionProgress = clamp01((progress - entryHold) / (1 - entryHold));
 			        const firstProgress = clamp01(motionProgress / 0.44);
-					const secondProgress = clamp01((motionProgress - 0.05) / 0.32);
+					const secondStart = 0.08;
+					const secondProgress = clamp01((motionProgress - secondStart) / 0.18);
 					
 					const firstY = -125 * firstProgress;
-					const secondY = 90 * (1 - secondProgress);
+					const secondY = 72 * (1 - secondProgress);
 					
-					const shouldShowCloud = motionProgress >= 0.30;
+					const shouldShowCloud = motionProgress >= 0.18;
 			        report.classList.toggle('show-cloud', shouldShowCloud);
 			
 			        paragraphs.forEach((paragraph, index) => {
@@ -10062,14 +10078,14 @@ function initYouthAttitudeChart() {
 			            // 第二組：根據本報記者...、黃長玲提醒...
 			            } else if (index === 2) {
 			                setParagraph(paragraph, {
-			                    active: motionProgress >= 0.05,
+			                    active: motionProgress >= secondStart,
 			                    top: '30%',
 			                    y: secondY,
 			                    maxHeight: '32vh'
 			                });
 			            } else if (index === 3) {
 			                setParagraph(paragraph, {
-			                    active: motionProgress >= 0.05,
+			                    active: motionProgress >= secondStart,
 			                    top: '58%',
 			                    y: secondY,
 			                    maxHeight: '32vh'
