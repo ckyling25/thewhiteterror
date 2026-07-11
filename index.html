@@ -7780,6 +7780,7 @@ transition: none !important;
       --red-dark: #5f1719;
       --green: #31594c;
       --shadow: 0 18px 50px rgba(35, 27, 19, 0.14);
+      --focus-ring: rgba(132, 37, 36, 0.22);
     }
 
     #page-approach-2 .chen-story-page, #page-approach-2 .chen-story-page * { box-sizing: border-box; }
@@ -7806,45 +7807,6 @@ transition: none !important;
 
     #page-approach-2 .chen-story-page a { color: inherit; }
 
-    #page-approach-2 .chen-story-page .site-header {
-      display: none;
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      padding: 14px clamp(18px, 4vw, 48px);
-      background: rgba(255, 252, 246, 0.94);
-      border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(12px);
-    }
-
-    #page-approach-2 .chen-story-page .site-header.is-visible {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-    }
-
-    #page-approach-2 .chen-story-page .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-    }
-
-    #page-approach-2 .chen-story-page .brand-mark {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--red);
-      box-shadow: 0 0 0 5px rgba(132, 37, 36, 0.12);
-      flex: 0 0 auto;
-    }
-
     #page-approach-2 .chen-story-page .side-nav {
       position: fixed;
       right: 22px;
@@ -7852,8 +7814,8 @@ transition: none !important;
       transform: translateY(-50%);
       z-index: 15;
       display: grid;
-      gap: 14px;
-      padding: 14px 10px;
+      gap: 20px;
+      padding: 18px 12px;
       background: rgba(255, 252, 246, 0.9);
       border: 1px solid var(--line);
       border-radius: 999px;
@@ -7861,14 +7823,31 @@ transition: none !important;
     }
 
     #page-approach-2 .chen-story-page .dot {
-      width: 12px;
-      height: 12px;
+      position: relative;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
-      border: 1px solid #bba98c;
+      border: 2px solid #bba98c;
       background: #e8dcc8;
       opacity: 0.45;
       pointer-events: none;
       transition: transform 180ms ease, background 180ms ease, opacity 180ms ease;
+    }
+
+    #page-approach-2 .chen-story-page .dot::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 14px;
+      width: 2px;
+      height: 25px;
+      background: var(--line);
+      transform: translateX(-50%);
+      z-index: -1;
+    }
+
+    #page-approach-2 .chen-story-page .dot:last-child::after {
+      display: none;
     }
 
     #page-approach-2 .chen-story-page .dot.unlocked {
@@ -7879,7 +7858,14 @@ transition: none !important;
     #page-approach-2 .chen-story-page .dot.active {
       background: var(--red);
       border-color: var(--red);
-      transform: scale(1.35);
+      transform: scale(1.25);
+      box-shadow: 0 0 0 7px rgba(132, 37, 36, 0.15);
+    }
+
+    #page-approach-2 .chen-story-page .dot.unlocked.completed {
+      background: var(--green);
+      border-color: var(--green);
+      opacity: 1;
     }
 
     #page-approach-2 .chen-story-page main {
@@ -7921,11 +7907,11 @@ transition: none !important;
     #page-approach-2 .chen-story-page .eyebrow,
     #page-approach-2 .chen-story-page .chapter-label {
       display: inline-block;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
       color: var(--red);
       font-family: "Microsoft JhengHei", sans-serif;
-      font-size: 13px;
-      font-weight: 700;
+      font-size: clamp(14px, 1.12vw, 16px);
+      font-weight: 900;
       letter-spacing: 0.18em;
       text-transform: uppercase;
     }
@@ -7935,6 +7921,7 @@ transition: none !important;
     #page-approach-2 .chen-story-page h1, #page-approach-2 .chen-story-page h2, #page-approach-2 .chen-story-page h3 {
       font-family: "Noto Serif TC", "PingFang TC", "Microsoft JhengHei", serif;
       letter-spacing: 0;
+      font-weight: 900;
     }
 
     #page-approach-2 .chen-story-page h1 {
@@ -7951,6 +7938,7 @@ transition: none !important;
       margin-bottom: 24px;
       font-size: clamp(30px, 5vw, 54px);
       line-height: 1.18;
+      font-weight: 900;
     }
 
     #page-approach-2 .chen-story-page h3 {
@@ -7977,9 +7965,9 @@ transition: none !important;
 
     #page-approach-2 .chen-story-page .body-copy {
       display: grid;
-      gap: 18px;
+      gap: 20px;
       font-size: 19px;
-      line-height: 1.9;
+      line-height: 1.92;
       font-weight: 400;
     }
 
@@ -7998,8 +7986,16 @@ transition: none !important;
 
     #page-approach-2 .chen-story-page .body-copy strong,
     #page-approach-2 .chen-story-page .emphasis {
-      font-weight: 600;
+      font-weight: 900;
       color: var(--red-dark);
+    }
+
+    #page-approach-2 .chen-story-page #section-2 .layout {
+      align-items: start;
+    }
+
+    #page-approach-2 .chen-story-page #section-2 .text-panel {
+      margin-top: clamp(88px, 10vh, 112px);
     }
 
     #page-approach-2 .chen-story-page .text-panel {
@@ -8011,10 +8007,23 @@ transition: none !important;
 
     #page-approach-2 .chen-story-page .photo {
       margin: 0;
+      align-self: start;
+      overflow: hidden;
+      cursor: zoom-in;
       background: #fffdfa;
       border: 1px solid rgba(140, 118, 82, 0.25);
       box-shadow: var(--shadow);
       padding: 12px;
+      transform-origin: center;
+      will-change: transform;
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+    }
+
+    #page-approach-2 .chen-story-page .photo:hover {
+      transform: scale(1.045);
+      box-shadow: 0 24px 58px rgba(35, 27, 19, 0.2);
+      border-color: rgba(132, 37, 36, 0.34);
+      z-index: 2;
     }
 
     #page-approach-2 .chen-story-page .photo img {
@@ -8023,6 +8032,11 @@ transition: none !important;
       min-height: 240px;
       object-fit: cover;
       filter: sepia(0.24) contrast(1.04) saturate(0.82);
+      transition: filter 220ms ease;
+    }
+
+    #page-approach-2 .chen-story-page .photo:hover img {
+      filter: sepia(0.18) contrast(1.07) saturate(0.9);
     }
 
     #page-approach-2 .chen-story-page .photo figcaption {
@@ -8042,6 +8056,7 @@ transition: none !important;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 18px;
+      align-items: start;
     }
 
     #page-approach-2 .chen-story-page .image-pair .photo:nth-child(2) {
@@ -8055,12 +8070,12 @@ transition: none !important;
     }
 
     #page-approach-2 .chen-story-page .full-quote {
-      min-height: 74vh;
+      min-height: 70vh;
       display: grid;
       align-items: center;
       margin-left: calc(50% - 50vw);
       margin-right: calc(50% - 50vw);
-      padding: clamp(70px, 10vw, 120px) max(24px, calc((100vw - 1080px) / 2));
+      padding: clamp(64px, 9vw, 108px) max(24px, calc((100vw - 1080px) / 2));
       color: #fffaf2;
       background:
         linear-gradient(rgba(42, 21, 21, 0.6), rgba(42, 21, 21, 0.72)),
@@ -8070,11 +8085,31 @@ transition: none !important;
     }
 
     #page-approach-2 .chen-story-page .full-quote p {
-      max-width: 900px;
-      font-size: clamp(36px, 7vw, 78px);
-      line-height: 1.24;
-      font-weight: 700;
+      max-width: 820px;
+      font-size: clamp(32px, 5.4vw, 58px);
+      line-height: 1.28;
+      font-weight: 900;
       letter-spacing: 0;
+    }
+
+    #page-approach-2 .chen-story-page #section-3 .full-quote p {
+      text-shadow: 0 10px 32px rgba(0, 0, 0, 0.28);
+    }
+
+    #page-approach-2 .chen-story-page #section-3 {
+      margin-bottom: clamp(112px, 14vw, 180px);
+    }
+
+    #page-approach-2 .chen-story-page #section-3 .photo {
+      align-self: center;
+    }
+
+    #page-approach-2 .chen-story-page #section-4 .layout {
+      align-items: start;
+    }
+
+    #page-approach-2 .chen-story-page #section-4 .image-pair {
+      margin-top: clamp(96px, 12vh, 132px);
     }
 
     #page-approach-2 .chen-story-page .interaction {
@@ -8086,10 +8121,16 @@ transition: none !important;
     #page-approach-2 .chen-story-page .interaction-title {
       margin-bottom: 14px;
       color: #493d30;
-      font-weight: 700;
+      font-weight: 900;
       font-size: 16px;
       line-height: 1.75;
       display: block;
+    }
+
+    #page-approach-2 .chen-story-page .interaction-hint {
+      margin: -4px 0 14px;
+      color: var(--muted);
+      font: 700 14px/1.7 "Microsoft JhengHei", sans-serif;
     }
 
     #page-approach-2 .chen-story-page .choice-list {
@@ -8098,6 +8139,7 @@ transition: none !important;
     }
 
     #page-approach-2 .chen-story-page button {
+      position: relative;
       appearance: none;
       border: 1px solid #bca989;
       border-radius: 6px;
@@ -8109,11 +8151,49 @@ transition: none !important;
       text-align: left;
       text-decoration: none;
       transition: background 160ms ease, border-color 160ms ease;
+      box-shadow: 0 3px 0 rgba(132, 37, 36, 0.16);
     }
 
     #page-approach-2 .chen-story-page button:hover {
+      transform: translateY(-2px);
       background: #f1e5cf;
       border-color: #987b52;
+      box-shadow: 0 10px 24px rgba(35, 27, 19, 0.14);
+    }
+
+    #page-approach-2 .chen-story-page button:focus-visible,
+    #page-approach-2 .chen-story-page .dot:focus-visible,
+    #page-approach-2 .chen-story-page .music-toggle:focus-visible,
+    #page-approach-2 .chen-story-page input:focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 3px;
+    }
+
+    #page-approach-2 .chen-story-page button[aria-pressed="true"],
+    #page-approach-2 .chen-story-page button.selected,
+    #page-approach-2 .chen-story-page .choice-list button.selected {
+      background: var(--red);
+      color: #fffaf2;
+      border-color: var(--red-dark);
+      box-shadow: 0 0 0 4px rgba(132, 37, 36, 0.14);
+    }
+
+    #page-approach-2 .chen-story-page .choice-list button {
+      padding-right: 42px;
+      border-width: 2px;
+      background: linear-gradient(180deg, #fffdf6, #f8edda);
+      font-weight: 900;
+    }
+
+    #page-approach-2 .chen-story-page .choice-list button::after {
+      content: "›";
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--red);
+      font-weight: 800;
+      opacity: 0.72;
     }
 
     #page-approach-2 .chen-story-page .primary {
@@ -8135,6 +8215,11 @@ transition: none !important;
       line-height: 1.9;
       opacity: 0;
       transition: opacity 180ms ease;
+    }
+
+    #page-approach-2 .chen-story-page .result:empty {
+      min-height: 0;
+      margin-top: 0;
     }
 
     #page-approach-2 .chen-story-page .result.visible { opacity: 1; }
@@ -8174,17 +8259,21 @@ transition: none !important;
     }
 
     #page-approach-2 .chen-story-page .final {
-      min-height: 88vh;
+      min-height: 100vh;
       display: grid;
-      align-items: center;
-      padding-bottom: 72px;
+      place-items: center;
+      padding-block: clamp(36px, 6vh, 58px);
+    }
+
+    #page-approach-2 .chen-story-page #section-5 {
+      margin: 0;
     }
 
     #page-approach-2 .chen-story-page .final-card {
       max-width: 820px;
       margin: 0 auto;
       text-align: center;
-      padding: clamp(30px, 6vw, 64px);
+      padding: clamp(28px, 5vw, 52px);
       background: var(--paper-strong);
       border: 1px solid var(--line);
       box-shadow: var(--shadow);
@@ -8198,7 +8287,12 @@ transition: none !important;
     #page-approach-2 .chen-story-page .final-card .body-copy {
       max-width: 660px;
       margin: 0 auto;
-      text-align: left;
+      text-align: center;
+    }
+
+    #page-approach-2 .chen-story-page .final-card .body-copy p,
+    #page-approach-2 .chen-story-page .final-card .sources {
+      text-align: center;
     }
 
     #page-approach-2 .chen-story-page .pause-question {
@@ -8217,8 +8311,157 @@ transition: none !important;
       font: 13px/1.7 "Microsoft JhengHei", sans-serif;
     }
 
+    #page-approach-2 .chen-story-page .chen-final-return {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: auto;
+      margin: 22px auto 0;
+      padding: 11px 20px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, .55);
+      color: #fff;
+      font: 800 15px/1 "Microsoft JhengHei", sans-serif;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .24);
+    }
+
+    #page-approach-2 .chen-story-page .chen-final-return:hover {
+      background: rgba(155, 44, 44, .88);
+      transform: translateY(-2px);
+    }
+
+    #page-approach-2 .chen-story-page .music-toggle {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 80;
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      color: var(--ink);
+      box-shadow: var(--shadow);
+      text-align: center;
+      padding: 0;
+      font-size: 20px;
+      line-height: 1;
+      isolation: isolate;
+      transform: translateY(0) scale(1);
+      transition: background 220ms ease, border-color 220ms ease, color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+    }
+
+    #page-approach-2 .chen-story-page .music-toggle::before,
+    #page-approach-2 .chen-story-page .music-toggle::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      border-radius: inherit;
+      background: rgba(132, 37, 36, 0.26);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #page-approach-2 .chen-story-page .music-toggle:hover {
+      transform: translateY(-2px) scale(1);
+      box-shadow: 0 22px 44px rgba(35, 27, 19, 0.22);
+    }
+
+    #page-approach-2 .chen-story-page .music-toggle .music-icon {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    #page-approach-2 .chen-story-page .music-toggle.is-on {
+      background: var(--red);
+      color: #fffaf2;
+      border-color: var(--red-dark);
+      box-shadow: 0 18px 46px rgba(132, 37, 36, 0.28);
+    }
+
+    #page-approach-2 .chen-story-page .music-toggle.is-on::before {
+      animation: chenMusicRipple 1.8s ease-out infinite;
+    }
+
+    #page-approach-2 .chen-story-page .music-toggle.is-on::after {
+      animation: chenMusicRipple 1.8s ease-out 0.9s infinite;
+    }
+
+    #page-approach-2 .chen-story-page .music-toggle.is-on .music-icon {
+      animation: chenMusicNoteFloat 1.8s ease-in-out infinite;
+    }
+
+    @keyframes chenMusicRipple {
+      0% {
+        opacity: 0.34;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.85);
+      }
+    }
+
+    @keyframes chenMusicNoteFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-2px);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #page-approach-2 .chen-story-page .music-toggle,
+      #page-approach-2 .chen-story-page .music-toggle::before,
+      #page-approach-2 .chen-story-page .music-toggle::after,
+      #page-approach-2 .chen-story-page .music-toggle .music-icon {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    #page-approach-2 .chen-story-page .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      place-items: center;
+      padding: 28px;
+      background: rgba(20, 16, 12, 0.82);
+    }
+
+    #page-approach-2 .chen-story-page .lightbox.open {
+      display: grid;
+    }
+
+    #page-approach-2 .chen-story-page .lightbox img {
+      max-width: min(100%, 1120px);
+      max-height: 86vh;
+      object-fit: contain;
+      background: #fffdfa;
+      padding: 12px;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+    }
+
     @media (max-width: 900px) {
       #page-approach-2 .chen-story-page .side-nav { display: none; }
+      #page-approach-2 .chen-story-page .full-quote p {
+        font-size: clamp(29px, 8vw, 44px);
+      }
+      #page-approach-2 .chen-story-page .photo:hover {
+        transform: scale(1.025);
+      }
       #page-approach-2 .chen-story-page .hero-grid,
       #page-approach-2 .chen-story-page .layout,
       #page-approach-2 .chen-story-page .layout.reverse {
@@ -8227,15 +8470,11 @@ transition: none !important;
       #page-approach-2 .chen-story-page .layout.reverse .text-panel { order: 0; }
       #page-approach-2 .chen-story-page .hero { min-height: auto; }
       #page-approach-2 .chen-story-page .photo.small { max-width: none; }
+      #page-approach-2 .chen-story-page #section-4 .image-pair { margin-top: 0; }
       #page-approach-2 .chen-story-page .image-pair .photo:nth-child(2) { transform: none; }
     }
 
     @media (max-width: 640px) {
-      #page-approach-2 .chen-story-page .site-header {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-      #page-approach-2 .chen-story-page .brand { font-size: 15px; }
       #page-approach-2 .chen-story-page main { width: min(100% - 28px, 1080px); }
       #page-approach-2 .chen-story-page .text-panel { padding: 22px 18px; }
       #page-approach-2 .chen-story-page .body-copy { font-size: 18px; line-height: 1.9; }
@@ -8254,21 +8493,19 @@ transition: none !important;
         width: 100%;
         text-align: center;
       }
+      #page-approach-2 .chen-story-page .music-toggle {
+        right: 16px;
+        bottom: 16px;
+        width: 48px;
+        height: 48px;
+      }
     }
   
 #page-approach-2.chen-story-shell { min-height: 100vh; overflow: visible; background: #ead9ad; }
 #page-approach-2 .chen-story-page { min-height: 100vh; width: 100%; }
-#page-approach-2 .chen-story-page .site-header { display: none; }
 
   </style>
   <div class="chen-story-page">
-
-  <header class="site-header">
-    <div class="brand">
-      <span class="brand-mark" aria-hidden="true"></span>
-      <span>我是陳欽生</span>
-    </div>
-  </header>
 
   <nav class="side-nav" aria-label="章節導覽">
     <a class="dot unlocked active" id="dot-1" href="#section-1" title="Chapter 1"></a>
@@ -8289,7 +8526,7 @@ transition: none !important;
           <div class="lead-stack">
             <p>
               <span class="line">1967 年，</span>
-              <span class="line">我從馬來西亞怡保來到台灣求學。</span>
+              <span class="line">我從馬來西亞怡保來到臺灣求學。</span>
             </p>
             <p>
               <span class="line">我以為自己只是離家， 去一個新的地方念書。</span>
@@ -8304,7 +8541,7 @@ transition: none !important;
         </div>
         <figure class="photo tall">
           <img src="images/chen-story/before-taiwan.jpg" alt="陳欽生來臺前照片" />
-          <figcaption>我來台灣前拍下照片，準備朝著夢想前行</figcaption>
+          <figcaption>我來臺灣前拍下照片，準備朝著夢想前行</figcaption>
         </figure>
       </div>
     </section>
@@ -8320,6 +8557,7 @@ transition: none !important;
           <!-- 將互動區塊移至圖片下方 -->
           <div class="interaction">
             <div class="interaction-title">如果你是當年的我，你的留學理由是什麼？</div>
+            <p class="interaction-hint">請按下其中一個選項，選擇後會顯示你的回應。</p>
             <div class="choice-list">
               <button type="button" data-study="world">希望探索更大的世界</button>
               <button type="button" data-study="work">替未來找一份更好的工作</button>
@@ -8352,7 +8590,6 @@ transition: none !important;
     <section class="chapter locked" id="section-3">
       <div class="full-quote">
         <div>
-          <span class="eyebrow">Chapter 03 / 1971.03</span>
           <p>
             <span class="line">1971 年 3 月</span>
             <span class="line">我的人生停止了</span>
@@ -8361,6 +8598,7 @@ transition: none !important;
       </div>
       <div class="layout" style="margin-top: 52px;">
         <div class="text-panel">
+          <div class="chapter-label">Chapter 03 / 1971.03</div>
           <h2>
             <span class="line">一句有人要見你</span>
             <span class="line">改變了我的十二年</span>
@@ -8373,7 +8611,7 @@ transition: none !important;
             </p>
             <p>
               <span class="line"><strong>我不知道自己會被帶到哪裡</strong></span>
-              <span class="line"><strong>我的話未必會被聽見</strong></span>
+              <span class="line"><strong>我的話也未必會被聽見</strong></span>
             </p>
             <p>
               <span class="line">被羈押之後，</span>
@@ -8422,6 +8660,7 @@ transition: none !important;
 
           <div class="interaction" style="margin-top: 32px;">
             <label class="interaction-title" for="ageInput">如果是你，十二年後會幾歲？</label>
+            <p class="interaction-hint">請輸入年齡後按下「計算」，看看十二年會把你帶到哪裡。</p>
             <div class="age-input">
               <input id="ageInput" type="number" min="1" max="100" placeholder="輸入你現在的年齡，例如：22" />
               <button type="button" class="primary" id="ageButton">計算</button>
@@ -8462,10 +8701,16 @@ transition: none !important;
             <a href="https://zh.wikipedia.org/wiki/%E5%8F%B0%E5%8D%97%E7%BE%8E%E5%9C%8B%E6%96%B0%E8%81%9E%E8%99%95" target="_blank" rel="noreferrer">台南美國新聞處爆炸事件</a>、
             <a href="https://www.nhrm.gov.tw" target="_blank" rel="noreferrer">國家人權博物館</a>。
           </div>
+          <button onclick="window.returnToApproachSelector()" class="chen-final-return" type="button">← 返回入口頁面</button>
         </div>
       </div>
     </section>
   </main>
+
+  <button class="music-toggle" id="chenMusicToggle" type="button" aria-label="播放背景音樂" title="播放背景音樂"><span class="music-icon" aria-hidden="true">🔇</span></button>
+  <div class="lightbox" id="chenLightbox" aria-hidden="true">
+    <img id="chenLightboxImage" alt="" />
+  </div>
 
   <script>
 (() => {
@@ -8473,6 +8718,13 @@ transition: none !important;
     const storyRoot = document.getElementById("page-approach-2");
     const dots = Array.from(storyRoot.querySelectorAll(".dot"));
     const sections = Array.from(storyRoot.querySelectorAll(".chapter"));
+    const musicToggle = storyRoot.querySelector("#chenMusicToggle");
+    const lightbox = storyRoot.querySelector("#chenLightbox");
+    const lightboxImage = storyRoot.querySelector("#chenLightboxImage");
+    const music = new Audio("audio/chen-story-background.mp3");
+    music.loop = true;
+    music.volume = 0.15;
+    let musicStarted = false;
 
     function notifyFrameResize() {
       
@@ -8485,9 +8737,9 @@ transition: none !important;
     }
 
     const studyReplies = {
-      world: "你選擇了探索世界。對未知的好奇，也是我當年離家的心情。",
-      work: "你選擇了更好的未來。努力念書，只是想讓人生多一點可能。",
-      family: "你選擇了家人的期待。那時的我，也只是想學成後回家陪伴母親。"
+      world: "未知的好奇，也是我當年離家的心情。",
+      work: "努力念書，只是想讓人生多一點可能。",
+      family: "那時的我，也只是想學成後回家陪伴母親。"
     };
 
     function unlockChapter(number) {
@@ -8497,6 +8749,9 @@ transition: none !important;
 
       chapter.classList.remove("locked");
       if (dot) dot.classList.add("unlocked");
+      dots.forEach((item, index) => {
+        item.classList.toggle("completed", index + 1 < number);
+      });
       requestAnimationFrame(notifyFrameResize);
     }
 
@@ -8510,9 +8765,14 @@ transition: none !important;
     }
 
     storyRoot.querySelectorAll("[data-study]").forEach((button) => {
+      button.setAttribute("aria-pressed", "false");
       button.addEventListener("click", () => {
         const key = button.dataset.study;
         const result = storyRoot.querySelector("#studyResult");
+        storyRoot.querySelectorAll("[data-study]").forEach((item) => {
+          item.classList.toggle("selected", item === button);
+          item.setAttribute("aria-pressed", item === button ? "true" : "false");
+        });
         // 移除了最後的輔助提示語，改以溫和優雅的古樸卡片樣式呈現回答
         showResult(result, `
           <div class="result-box">
@@ -8523,6 +8783,18 @@ transition: none !important;
         unlockChapter(4);
       });
     });
+
+    function ageReflection(age) {
+      const decade = Math.floor(age / 10) * 10;
+      if (decade < 10) return "學習階段不斷改變，可能開始要學會對自己的人生負責。";
+      if (decade < 20) return "可能是一段學習、離家、工作與建立自我的長路。";
+      if (decade < 30) return "可能你已經足夠獨立，開始分攤家庭生計。";
+      if (decade < 40) return "常常跨過關係、責任與人生方向的幾次轉彎。";
+      if (decade < 50) return "會讓許多承諾變重，也讓自由變得更珍貴。";
+      if (decade < 60) return "足以看見時間如何改變身體、家庭與信念。";
+      if (decade < 70) return "可能是一段回望，也是一段重新安排生命重心的時間。";
+      return "在人生後段尤其清楚，每一天都不是可以輕易被奪走的空白。";
+    }
 
     function calculateAge() {
       const input = storyRoot.querySelector("#ageInput");
@@ -8540,7 +8812,7 @@ transition: none !important;
         <div class="result-box">
           你今年 ${age} 歲。十二年後，你會是 ${future} 歲。
           <br />
-          今天才要準備重新開始人生。
+          ${ageReflection(age)}
         </div>
       `);
       unlockChapter(5);
@@ -8573,6 +8845,111 @@ transition: none !important;
     }, { threshold: 0.22, rootMargin: "-80px 0px -25% 0px" });
 
     sections.forEach((section) => observer.observe(section));
+
+    function markMusicOn() {
+      musicToggle?.classList.add("is-on");
+      if (musicToggle) {
+        musicToggle.innerHTML = `<span class="music-icon" aria-hidden="true">♫</span>`;
+        musicToggle.setAttribute("aria-label", "暫停背景音樂");
+        musicToggle.setAttribute("title", "暫停背景音樂");
+      }
+    }
+
+    function markMusicOff() {
+      musicToggle?.classList.remove("is-on");
+      if (musicToggle) {
+        musicToggle.innerHTML = `<span class="music-icon" aria-hidden="true">🔇</span>`;
+        musicToggle.setAttribute("aria-label", "播放背景音樂");
+        musicToggle.setAttribute("title", "播放背景音樂");
+      }
+    }
+
+    function startMusic() {
+      if (musicStarted) return;
+      music.play().then(() => {
+        musicStarted = true;
+      }).catch(() => {
+        markMusicOff();
+      });
+    }
+
+    function stopMusic() {
+      music.pause();
+      music.currentTime = 0;
+      musicStarted = false;
+      markMusicOff();
+    }
+
+    window.startChenStoryMusic = startMusic;
+    window.stopChenStoryMusic = stopMusic;
+
+    music.addEventListener("play", () => {
+      musicStarted = true;
+      markMusicOn();
+    });
+
+    music.addEventListener("pause", () => {
+      musicStarted = false;
+      markMusicOff();
+    });
+
+    markMusicOff();
+
+    const pageVisibilityObserver = new MutationObserver(() => {
+      if (storyRoot.classList.contains("hidden")) {
+        stopMusic();
+      }
+    });
+    pageVisibilityObserver.observe(storyRoot, { attributes: true, attributeFilter: ["class"] });
+
+    storyRoot.addEventListener("pointerdown", (event) => {
+      if (event.target.closest(".approach-return-nav, .chen-final-return")) return;
+      if (event.target === musicToggle || lightbox?.contains(event.target)) return;
+      startMusic();
+    });
+
+    storyRoot.addEventListener("keydown", (event) => {
+      if (event.target === musicToggle || musicStarted) return;
+      if (event.key === "Tab") return;
+      startMusic();
+    });
+
+    musicToggle?.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (music.paused) {
+        music.play().then(() => {
+          musicStarted = true;
+        }).catch(markMusicOff);
+        return;
+      }
+      music.pause();
+    });
+
+    storyRoot.querySelectorAll(".photo img").forEach((image) => {
+      image.addEventListener("click", () => {
+        if (!lightbox || !lightboxImage) return;
+        lightboxImage.src = image.currentSrc || image.src;
+        lightboxImage.alt = image.alt || "";
+        lightbox.classList.add("open");
+        lightbox.setAttribute("aria-hidden", "false");
+      });
+    });
+
+    lightbox?.addEventListener("click", () => {
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+      if (lightboxImage) {
+        lightboxImage.removeAttribute("src");
+        lightboxImage.alt = "";
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape" || !lightbox?.classList.contains("open")) return;
+      lightbox.click();
+    });
+
     storyRoot.querySelectorAll("img").forEach((image) => {
       if (!image.complete) image.addEventListener("load", notifyFrameResize, { once: true });
     });
@@ -9320,6 +9697,9 @@ transition: none !important;
                         page.classList.remove('flex', 'fade-in-active');
                     }
                 });
+                if (pageKey !== 'approach-2') {
+                    window.stopChenStoryMusic?.();
+                }
 
                 document.body.appendChild(targetPage);
                 targetPage.classList.add('approach-standalone-detail');
@@ -9362,6 +9742,9 @@ transition: none !important;
                         window.updateCultureScrolly?.();
                         window.requestAnimationFrame(() => window.updateCultureScrolly?.());
                     });
+                } else if (pageKey === 'approach-2') {
+                    targetPage.classList.add('fade-in-active');
+                    window.startChenStoryMusic?.();
                 } else if (pageKey === 'approach-3') {
                     targetPage.classList.add('fade-in-active');
                     window.requestAnimationFrame(() => {
@@ -9410,6 +9793,7 @@ transition: none !important;
                     if (typeof stopCultureMusic === 'function') {
                         stopCultureMusic();
                     }
+                    window.stopChenStoryMusic?.();
                     updateCultureControlsVisibility();
                     updateInlineApproachReturnVisibility();
 
@@ -9420,6 +9804,7 @@ transition: none !important;
                 }
 
                 const finishRouteJump = beginRouteJump();
+                window.stopChenStoryMusic?.();
                 window.switchView('5-education', true);
                 requestAnimationFrame(() => {
                     setInstantScrollTop(getApproachSelectorScrollTop());
@@ -10020,8 +10405,10 @@ function initYouthAttitudeChart() {
 			        top,
 			        shift = '-50%',
 			        y = 0,
-			        maxHeight = 'none'
+			        maxHeight = 'none',
+			        instant = false
 			    }) => {
+			        paragraph.style.transition = instant ? 'none' : '';
 			        paragraph.classList.toggle('is-active', active);
 			        paragraph.style.setProperty('--text-top', top);
 			        paragraph.style.setProperty('--text-shift', shift);
@@ -10081,30 +10468,26 @@ function initYouthAttitudeChart() {
 			                    active: motionProgress >= secondStart,
 			                    top: '30%',
 			                    y: secondY,
-			                    maxHeight: '32vh'
+			                    maxHeight: '32vh',
+			                    instant: true
 			                });
 			            } else if (index === 3) {
 			                setParagraph(paragraph, {
 			                    active: motionProgress >= secondStart,
 			                    top: '58%',
 			                    y: secondY,
-			                    maxHeight: '32vh'
+			                    maxHeight: '32vh',
+			                    instant: true
 			                });
 			
-			            // 註一、註二
+			            // 註二
 			            } else if (index === 4) {
 			                setParagraph(paragraph, {
-			                    active: motionProgress >= 0.30,
+			                    active: motionProgress >= secondStart,
 			                    top: '82%',
 			                    y: secondY,
-			                    maxHeight: '8vh'
-			                });
-			            } else if (index === 5) {
-			                setParagraph(paragraph, {
-			                    active: motionProgress >= 0.30,
-			                    top: '90%',
-			                    y: secondY,
-			                    maxHeight: '8vh'
+			                    maxHeight: '8vh',
+			                    instant: true
 			                });
 			            }
 			        });
