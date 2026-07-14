@@ -10199,8 +10199,16 @@ transition: none !important;
                     setInstantScrollTop(0);
                     startDaysCalculation(); // 啟動時間計數器
                 } else if (pageKey === '4' || pageKey === '1') {
-                    targetPage.classList.add('flex');
-                } else if (pageKey === '5-education') {
+				    targetPage.classList.add('flex');
+				
+				/* 導言故事頁直接顯示，不套用由下往上的淡入動畫 */
+				} else if (pageKey === '2') {
+				    targetPage.classList.remove('fade-in-active');
+				    targetPage.style.opacity = '1';
+				    targetPage.style.transform = 'none';
+				    targetPage.style.animation = 'none';
+				
+				} else if (pageKey === '5-education') {
                     const articlePage = pages['3'];
                     if (articlePage) {
                         articlePage.classList.remove('hidden');
