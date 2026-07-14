@@ -71,7 +71,7 @@
 
         /* 閃白過場動畫 */
         .flash-white {
-            animation: flashWhite 1.5s ease-in-out forwards;
+            animation: flashWhite 0.8s ease-in-out forwards;
         }
         
         @keyframes flashWhite {
@@ -10300,16 +10300,15 @@ transition: none !important;
 			
 			    // 動畫最白時切換到故事頁
 			    setTimeout(() => {
-			        window.switchView(2);
-			        initStoryScript();
-			    }, 700);
-			
-			    // 閃白結束後隱藏遮罩
-			    setTimeout(() => {
-			        flashOverlay.classList.remove('flash-white');
-			        flashOverlay.classList.add('hidden');
-			        flashOverlay.dataset.transitioning = 'false';
-			    }, 1550);
+				    window.switchView(2);
+				    initStoryScript();
+				}, 380);
+				
+				setTimeout(() => {
+				    flashOverlay.classList.remove('flash-white');
+				    flashOverlay.classList.add('hidden');
+				    flashOverlay.dataset.transitioning = 'false';
+				}, 
 			});
 
             // --- 頁面 2：圖片故事腳本 ---
