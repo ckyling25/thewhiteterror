@@ -3732,7 +3732,7 @@ transition: none !important;
 		
 		/* 標題與提示的共同容器 */
 		#page-1-landing .prison-hero-copy {
-		    position: relative;
+		    position: static;
 		    z-index: 20;
 		
 		    display: grid;
@@ -3792,9 +3792,9 @@ transition: none !important;
 		
 		/* 向下滑動按鈕 */
 		#page-1-landing .prison-scroll-button {
-	    position: fixed;
+	    position: absolute;
 	    left: 50%;
-	    bottom: 3rem;
+	    bottom: 3.5rem;
 	    z-index: 30;
 	
 	    display: flex;
@@ -3813,10 +3813,11 @@ transition: none !important;
 	    font-size: clamp(.85rem, 1.1vw, 1rem);
 	    font-weight: 700;
 	    letter-spacing: .08em;
-	    text-shadow: 0 2px 8px rgba(0, 0, 0, .45);
+	    text-align: center;
+	
+	    text-shadow: 0 2px 8px rgba(0, 0, 0, .55);
 	
 	    cursor: pointer;
-	
 	    transform: translateX(-50%);
 	}
 		
@@ -3830,7 +3831,7 @@ transition: none !important;
 	    border-right: 2px solid #FCFCFC;
 	    border-bottom: 2px solid #FCFCFC;
 	
-	    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, .45));
+	    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, .55));
 	
 	    animation:
 	        prisonArrowFloat
