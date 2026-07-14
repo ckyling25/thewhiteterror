@@ -3737,19 +3737,12 @@ transition: none !important;
 		
 		    display: grid;
 		    place-items: center;
-		    gap: 2rem;
-		
 		    max-width: 100%;
 		
-		    opacity: 0;
-		    transform: translateY(26px);
-		
-		    animation:
-		        prisonTitleRise
-		        2s
-		        ease
-		        1.05s
-		        forwards;
+		    /* 父層不能有 transform，否則按鈕會以標題區為定位基準 */
+		    opacity: 1;
+		    transform: none;
+		    animation: none;
 		}
 		
 		/* 主標題外框 */
@@ -3776,6 +3769,17 @@ transition: none !important;
 		    text-shadow:
 		        0 8px 0 rgba(108, 108, 108, .34),
 		        0 26px 54px rgba(0, 0, 0, .34);
+		
+		    /* 原本父層的進場動畫移到標題本身 */
+		    opacity: 0;
+		    transform: translateY(26px);
+		
+		    animation:
+		        prisonTitleRise
+		        2s
+		        ease
+		        1.05s
+		        forwards;
 		}
 		
 		/* 第二行副標題 */
@@ -3792,34 +3796,40 @@ transition: none !important;
 		
 		/* 向下滑動按鈕 */
 		#page-1-landing .prison-scroll-button {
-	    position: absolute;
-	    left: 50%;
-	    bottom: 3.5rem;
-	    z-index: 30;
-	
-	    display: flex;
-	    flex-direction: column;
-	    align-items: center;
-	
-	    margin: 0;
-	    padding: 0;
-	
-	    border: 0;
-	    background: transparent;
-	
-	    color: #FCFCFC;
-	
-	    font-family: 'Noto Sans TC', sans-serif;
-	    font-size: clamp(.85rem, 1.1vw, 1rem);
-	    font-weight: 700;
-	    letter-spacing: .08em;
-	    text-align: center;
-	
-	    text-shadow: 0 2px 8px rgba(0, 0, 0, .55);
-	
-	    cursor: pointer;
-	    transform: translateX(-50%);
-	}
+		    position: absolute;
+		    left: 50%;
+		    bottom: 3.5rem;
+		    z-index: 30;
+		
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center;
+		
+		    margin: 0;
+		    padding: 0;
+		
+		    border: 0;
+		    background: transparent;
+		
+		    color: #FCFCFC;
+		
+		    font-family: 'Noto Sans TC', sans-serif;
+		    font-size: clamp(.85rem, 1.1vw, 1rem);
+		    font-weight: 700;
+		    letter-spacing: .08em;
+		    text-align: center;
+		
+		    text-shadow: 0 2px 8px rgba(0, 0, 0, .55);
+		
+		    cursor: pointer;
+		
+		    /* 水平置中 */
+		    transform: translateX(-50%);
+		
+		    /* 與標題同時淡入，但不使用 transform 動畫 */
+		    opacity: 0;
+		    animation: prisonScrollReveal 2s ease 1.05s forwards;
+		}
 		
 		/* 向下箭頭 */
 		#page-1-landing .prison-scroll-arrow {
@@ -3858,7 +3868,12 @@ transition: none !important;
 		        transform: none;
 		    }
 		}
-		
+
+		@keyframes prisonScrollReveal {
+		    to {
+		        opacity: 1;
+		    }
+		}
 		/* 箭頭上下浮動 */
 		@keyframes prisonArrowFloat {
 		    0%,
@@ -3936,6 +3951,17 @@ transition: none !important;
 		    #page-1-landing .prison-scroll-arrow {
 		        animation: none;
 		    }
+			
+			#page-1-landing .prison-hero-title,
+			#page-1-landing .prison-scroll-button {
+			    opacity: 1;
+			    transform: none;
+			    animation: none;
+			}
+			
+			#page-1-landing .prison-scroll-button {
+			    transform: translateX(-50%);
+			}
 		}
 
     </style>
