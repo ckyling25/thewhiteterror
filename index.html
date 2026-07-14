@@ -3827,12 +3827,15 @@ transition: none !important;
 		
 		    cursor: pointer;
 		
-		    /* 水平置中 */
-		    transform: translateX(-50%);
-		
-		    /* 與標題同時淡入，但不使用 transform 動畫 */
 		    opacity: 0;
-		    animation: prisonScrollReveal 2s ease 1.05s forwards;
+		    transform: translateX(-50%) translateY(26px);
+		
+		    animation:
+		        prisonScrollRise
+		        2s
+		        ease
+		        1.05s
+		        forwards;
 		}
 		
 		/* 向下箭頭 */
@@ -3873,9 +3876,10 @@ transition: none !important;
 		    }
 		}
 
-		@keyframes prisonScrollReveal {
+		@keyframes prisonScrollRise {
 		    to {
 		        opacity: 1;
+		        transform: translateX(-50%) translateY(0);
 		    }
 		}
 		/* 箭頭上下浮動 */
