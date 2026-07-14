@@ -10272,43 +10272,41 @@ transition: none !important;
             // 映射為局部 reference 方便以下原始代碼調用
             const switchView = window.switchView;
 
-            // --- 頁面 1 到頁面 2：閃白後切換 ---
+            // --- 頁面 1 到頁面 2：快速閃白後切換 ---
 			btnEnterStory.addEventListener('click', () => {
 			    const flashOverlay = document.getElementById('flash-overlay');
 			
+			    // 遮罩不存在時，仍直接進入故事頁
 			    if (!flashOverlay) {
-			        // 遮罩不存在時的保險處理
 			        window.switchView(2);
 			        initStoryScript();
 			        return;
 			    }
 			
-			    // 避免快速滾動或連點重複觸發
+			    // 防止快速滾動或重複點擊
 			    if (flashOverlay.dataset.transitioning === 'true') {
 			        return;
 			    }
 			
 			    flashOverlay.dataset.transitioning = 'true';
 			
-			    // 顯示閃白遮罩
+			    // 重設並播放閃白動畫
 			    flashOverlay.classList.remove('hidden', 'flash-white');
-			
-			    // 重設動畫，確保每次回到封面後都能重新播放
 			    void flashOverlay.offsetWidth;
-			
 			    flashOverlay.classList.add('flash-white');
 			
-			    // 動畫最白時切換到故事頁
+			    // 接近全白時切換到故事頁
 			    setTimeout(() => {
-				    window.switchView(2);
-				    initStoryScript();
-				}, 380);
-				
-				setTimeout(() => {
-				    flashOverlay.classList.remove('flash-white');
-				    flashOverlay.classList.add('hidden');
-				    flashOverlay.dataset.transitioning = 'false';
-				}, 
+			        window.switchView(2);
+			        initStoryScript();
+			    }, 380);
+			
+			    // 閃白動畫完成後移除遮罩
+			    setTimeout(() => {
+			        flashOverlay.classList.remove('flash-white');
+			        flashOverlay.classList.add('hidden');
+			        flashOverlay.dataset.transitioning = 'false';
+			    }, 850);
 			});
 
             // --- 頁面 2：圖片故事腳本 ---
