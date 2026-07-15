@@ -2229,12 +2229,12 @@ transition: none !important;
         }
 
         .reply-container.odd .avatar-frame {
-            margin-right: 15px;
+            margin-right: 24px;
             background: #f0f0f0;
         }
 
         .reply-container.even .avatar-frame {
-            margin-left: 15px;
+            margin-left: 24px;
             background: #e0e0e0;
         }
 
@@ -2247,6 +2247,7 @@ transition: none !important;
         .bubble-wrapper {
             position: relative;
             max-width: 75%;
+            margin-top: 10px;
             z-index: 10;
         }
 
@@ -2284,73 +2285,67 @@ transition: none !important;
         }
 
         .reply-container.odd .bubble-wrapper {
-            margin-left: 5px;
+            margin-left: 10px;
         }
 
         .reply-container.odd .chat-bubble::before {
             content: '';
             position: absolute;
-            bottom: -20px;
-            left: 20px;
-            border-width: 20px 15px 0 0;
-            border-style: solid;
-            border-color: #222 transparent transparent transparent;
+            top: 8px;
+            left: -18px;
+            width: 21px;
+            height: 14px;
+            background: #222;
+            clip-path: polygon(100% 0, 100% 100%, 0 14%);
+            z-index: -1;
         }
 
         .reply-container.odd .chat-bubble::after {
             content: '';
             position: absolute;
-            bottom: -15px;
-            left: 23px;
-            border-width: 16px 10px 0 0;
-            border-style: solid;
-            border-color: #fff transparent transparent transparent;
+            top: 11px;
+            left: -11px;
+            width: 15px;
+            height: 8px;
+            background: #fff;
+            clip-path: polygon(100% 0, 100% 100%, 0 16%);
+            z-index: 1;
         }
 
         .reply-container.odd .bubble-wrapper::after {
-            content: '';
-            position: absolute;
-            bottom: -26px;
-            left: 26px;
-            border-width: 20px 15px 0 0;
-            border-style: solid;
-            border-color: #222 transparent transparent transparent;
-            z-index: -2;
+            content: none;
         }
 
         .reply-container.even .bubble-wrapper {
-            margin-right: 5px;
+            margin-right: 10px;
         }
 
         .reply-container.even .chat-bubble::before {
             content: '';
             position: absolute;
-            bottom: -20px;
-            right: 20px;
-            border-width: 20px 0 0 15px;
-            border-style: solid;
-            border-color: #222 transparent transparent transparent;
+            top: 8px;
+            right: -18px;
+            width: 21px;
+            height: 14px;
+            background: #222;
+            clip-path: polygon(0 0, 0 100%, 100% 14%);
+            z-index: -1;
         }
 
         .reply-container.even .chat-bubble::after {
             content: '';
             position: absolute;
-            bottom: -15px;
-            right: 23px;
-            border-width: 16px 0 0 10px;
-            border-style: solid;
-            border-color: #fff transparent transparent transparent;
+            top: 11px;
+            right: -11px;
+            width: 15px;
+            height: 8px;
+            background: #fff;
+            clip-path: polygon(0 0, 0 100%, 100% 16%);
+            z-index: 1;
         }
 
         .reply-container.even .bubble-wrapper::after {
-            content: '';
-            position: absolute;
-            bottom: -26px;
-            right: 14px;
-            border-width: 20px 0 0 15px;
-            border-style: solid;
-            border-color: #222 transparent transparent transparent;
-            z-index: -2;
+            content: none;
         }
 
         #chat-container button {
@@ -4439,7 +4434,7 @@ transition: none !important;
                         <span id="days-counter" class="serif-title text-4xl md:text-7xl font-black text-[#9B2C2C] tracking-tight">0</span>
                         <span class="text-lg md:text-2xl font-bold text-gray-700">天</span>
                     </div>
-                    <p class="mt-4 text-sm md:text-base text-gray-600 font-semibold">白色恐怖總共約 15,897 天</p>
+                    <p class="mt-4 text-sm md:text-base text-gray-600 font-semibold">白色恐怖總共持續 15,897 天</p>
                 </div>
                 <p class="text-sm md:text-xl text-gray-500 max-w-lg mx-auto leading-relaxed">
                     臺灣民主化的時長，尚未超過白色恐怖的時長。
