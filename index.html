@@ -10875,21 +10875,28 @@ function initYouthAttitudeChart() {
                                 ? `不關心：${value}%。排除中立回答後，超過半數青年表示不關心白色恐怖議題。`
                                 : `關心：${value}%。排除中立回答後，仍有部分青年表示關心白色恐怖議題。`;
                         },
-                        plugins: {
-						    legend: {
-						        display: false
-						    },
-						
-						    tooltip: {
-						        /* 關閉 Chart.js 原本的黑色提示卡 */
-						        enabled: false,
-						
-						        /* 改用上面建立的白色提示卡 */
-						        external: externalTooltipHandler
-						    }
-						},
-
-            function initParallaxChartSwap() {
+            plugins: {
+			    legend: {
+			        display: false
+			    },
+			
+			    tooltip: {
+			        /* 關閉 Chart.js 原本的黑色提示卡 */
+			        enabled: false,
+			
+			        /* 改用白色自訂提示卡 */
+			        external: externalTooltipHandler
+			    }
+			},
+			
+			cutout: "45%"
+			}
+			});
+			
+			}
+			
+			/* 甜甜圈圖程式結束，以下開始下一個功能 */
+			function initParallaxChartSwap() {
 			    const report = document.querySelector('.parallax-report');
 			    const row = report?.querySelector('.parallax-row');
 			    const paragraphs = Array.from(report?.querySelectorAll('.parallax-text p') || []);
