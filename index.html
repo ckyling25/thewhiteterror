@@ -1939,10 +1939,68 @@ transition: none !important;
         }
 
         .youth-chart-wrapper .chartBox {
-            width: min(100%, 390px);
-            margin: auto;
-            position: relative;
-        }
+		    width: min(100%, 390px);
+		    margin: auto;
+		    position: relative;
+		}
+		
+		/* 甜甜圈圖白色提示卡 */
+		#chartTooltip {
+		    position: absolute;
+		    left: 0;
+		    top: 0;
+		    z-index: 9999;
+		
+		    min-width: 140px;
+		    padding: 16px 18px;
+		
+		    opacity: 0;
+		    pointer-events: none;
+		
+		    background: #ffffff;
+		    border: 1px solid rgba(0, 0, 0, .08);
+		    border-radius: 14px;
+		    box-shadow: 0 12px 35px rgba(0, 0, 0, .18);
+		
+		    transform: translate(-50%, -120%) scale(.95);
+		    transition:
+		        opacity .18s ease,
+		        transform .18s ease;
+		}
+		
+		#chartTooltip.show {
+		    opacity: 1;
+		    transform: translate(-50%, -120%) scale(1);
+		}
+		
+		#chartTooltip .tooltip-title {
+		    margin-bottom: 8px;
+		    color: #666;
+		    font-size: 15px;
+		    font-weight: 600;
+		}
+		
+		#chartTooltip .tooltip-value {
+		    font-size: 34px;
+		    font-weight: 900;
+		    line-height: 1;
+		    white-space: nowrap;
+		}
+		
+		#chartTooltip .tooltip-red {
+		    color: #c62828;
+		}
+		
+		#chartTooltip .tooltip-gray {
+		    color: #444;
+		}
+		
+		#chartTooltip .tooltip-percent {
+		    margin-top: 8px;
+		    color: #666;
+		    font-size: 15px;
+		    white-space: nowrap;
+		}
 
         .youth-chart-wrapper .chart-note {
             min-height: 2.8em;
@@ -5388,8 +5446,9 @@ transition: none !important;
                                     排除中立回答後，比較青年對白色恐怖議題的核心態度。
                                 </div>
                                 <div class="chartBox">
-                                    <canvas id="youth-attitude-chart"></canvas>
-                                </div>
+								    <canvas id="youth-attitude-chart"></canvas>
+								    <div id="chartTooltip" role="status" aria-live="polite"></div>
+								</div>
                                 <div id="youth-chart-note" class="chart-note" aria-live="polite">
                                     點擊圖表區塊，可查看各類別比例說明。
                                 </div>
@@ -10656,26 +10715,102 @@ function initYouthAttitudeChart() {
                 canvas.dataset.rendered = "true";
 
                 const centerText = {
-                    id: "centerText",
-                    afterDraw(chart) {
-                        const { ctx } = chart;
-                        const meta = chart.getDatasetMeta(0);
-                        ctx.save();
-
-                        meta.data.forEach((arc, index) => {
-                            const p = arc.tooltipPosition();
-                            ctx.font = "bold 21px Noto Sans TC";
-                            ctx.textAlign = "center";
-                            ctx.fillStyle = index === 0 ? "white" : "#222";
-                            ctx.fillText(chart.data.labels[index], p.x, p.y - 7);
-
-                            ctx.font = "bold 26px Noto Sans TC";
-                            ctx.fillText(chart.data.datasets[0].data[index] + "%", p.x, p.y + 24);
-                        });
-
-                        ctx.restore();
-                    }
-                };
+				    id: "centerText",
+				
+				    afterDraw(chart) {
+				        const { ctx } = chart;
+				        const meta = chart.getDatasetMeta(0);
+				
+				        ctx.save();
+				
+				        meta.data.forEach((arc, index) => {
+				            const p = arc.tooltipPosition();
+				
+				            ctx.font = "bold 21px Noto Sans TC";
+				            ctx.textAlign = "center";
+				            ctx.fillStyle = index === 0 ? "white" : "#222";
+				
+				            ctx.fillText(
+				                chart.data.labels[index],
+				                p.x,
+				                p.y - 7
+				            );
+				
+				            ctx.font = "bold 26px Noto Sans TC";
+				
+				            ctx.fillText(
+				                chart.data.datasets[0].data[index] + "%",
+				                p.x,
+				                p.y + 24
+				            );
+				        });
+				
+				        ctx.restore();
+				    }
+				};
+				
+				/* 白色自訂提示卡 */
+				const tooltipElement =
+				    document.getElementById("chartTooltip");
+				
+				function externalTooltipHandler(context) {
+				    const {
+				        chart,
+				        tooltip: chartTooltip
+				    } = context;
+				
+				    if (!tooltipElement) {
+				        return;
+				    }
+				
+				    /* 滑鼠離開圖表時隱藏提示卡 */
+				    if (
+				        chartTooltip.opacity === 0 ||
+				        !chartTooltip.dataPoints ||
+				        chartTooltip.dataPoints.length === 0
+				    ) {
+				        tooltipElement.classList.remove("show");
+				        return;
+				    }
+				
+				    const point = chartTooltip.dataPoints[0];
+				    const dataset =
+				        chart.data.datasets[point.datasetIndex];
+				
+				    const people =
+				        dataset.counts?.[point.dataIndex] ?? 0;
+				
+				    const colorClass =
+				        point.label === "不關心"
+				            ? "tooltip-red"
+				            : "tooltip-gray";
+				
+				    tooltipElement.innerHTML = `
+				        <div class="tooltip-title">
+				            ${point.label}
+				        </div>
+				
+				        <div class="tooltip-value ${colorClass}">
+				            ${people} 人
+				        </div>
+				
+				        <div class="tooltip-percent">
+				            占 ${point.raw}%
+				        </div>
+				    `;
+				
+				    /*
+				     * caretX、caretY 是相對於 canvas 的座標。
+				     * canvas 與提示卡都在 chartBox 內，因此可以直接定位。
+				     */
+				    tooltipElement.style.left =
+				        `${chartTooltip.caretX}px`;
+				
+				    tooltipElement.style.top =
+				        `${chartTooltip.caretY}px`;
+				
+				    tooltipElement.classList.add("show");
+				}
 
                 new Chart(canvas, {
                     type: "doughnut",
@@ -10684,6 +10819,9 @@ function initYouthAttitudeChart() {
                         labels: ["不關心", "關心"],
                         datasets: [{
                             data: [58.6, 41.4],
+
+							/* 提供白色提示卡顯示人數 */
+							counts: [96, 79],
                             backgroundColor: [
                                 function(context) {
                                     const chart = context.chart;
@@ -10722,19 +10860,18 @@ function initYouthAttitudeChart() {
                                 : `關心：${value}%。排除中立回答後，仍有部分青年表示關心白色恐怖議題。`;
                         },
                         plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        return context.label + "：" + context.raw + "%";
-                                    }
-                                }
-                            }
-                        },
-                        cutout: "45%"
-                    }
-                });
-            }
+						    legend: {
+						        display: false
+						    },
+						
+						    tooltip: {
+						        /* 關閉 Chart.js 原本的黑色提示卡 */
+						        enabled: false,
+						
+						        /* 改用上面建立的白色提示卡 */
+						        external: externalTooltipHandler
+						    }
+						},
 
             function initParallaxChartSwap() {
 			    const report = document.querySelector('.parallax-report');
