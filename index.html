@@ -52,15 +52,6 @@
             50% { opacity: 0; }
         }
 
-        /* 隱藏捲軸保持滾動功能 */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
 		.section-divider-line {
 		    border-top: 1px solid rgba(160, 150, 140, 0.32);
 		}
@@ -348,37 +339,6 @@
                 display: none;
             }
         }
-
-        .democracy-intro {
-            min-height: 100vh;
-            display: grid;
-            place-items: center;
-            padding: clamp(4rem, 8vw, 7rem) clamp(1.25rem, 6vw, 4rem);
-            background: #FAFAFA;
-        }
-
-        .democracy-copy {
-            max-width: 62rem;
-        }
-
-        .democracy-copy p {
-            color: #2D3748;
-            font-size: clamp(1.05rem, 1.65vw, 1.45rem);
-            line-height: 2.15;
-            text-align: left;
-            margin: 0 0 2.2rem;
-        }
-
-        .democracy-copy p:last-child {
-            margin-bottom: 0;
-        }
-
-        .democracy-copy .quote-line {
-            text-align: center;
-            font-family: 'Noto Serif TC', serif;
-            font-weight: 800;
-        }
-
 
         /* 修正：page-3 外層原本的 fade-in transform/animation 會破壞 sticky，導致時間軸像一般頁面往上滑走 */
         #page-3-article-1,
@@ -6366,13 +6326,6 @@ transition: none !important;
             }
             .culture-copy-wide { --copy-width: 76rem; }
             .culture-copy-medium { --copy-width: 64rem; }
-            .culture-quote-line {
-                justify-self: center;
-                text-align: center;
-            }
-            .keep-together {
-                white-space: nowrap;
-            }
             #culture-music-panel {
                 min-height: 100vh;
                 display: flex;
@@ -6464,21 +6417,6 @@ transition: none !important;
             #culture-film-panel .film-scroll-story {
                 filter: blur(var(--culture-film-blur, 14px));
                 transition: filter .08s linear;
-            }
-            .culture-transition-stage,
-            .culture-film-preface-stage,
-            .culture-film-outro-stage {
-                position: absolute;
-                inset: 0;
-                top: 0;
-                min-height: 0;
-                height: 100vh;
-                display: grid;
-                place-items: center;
-                padding: clamp(2rem, 6vw, 5rem);
-                overflow: hidden;
-                pointer-events: none;
-                z-index: 2;
             }
             .film-sticky-stage {
                 position: absolute;
@@ -9873,9 +9811,6 @@ transition: none !important;
       background: #1f1d19;
       transform: scale(var(--life-quiz-scale));
       transform-origin: top left;
-    }
-    .life-quiz-note {
-      display: none;
     }
     @media (max-width: 700px) {
       .life-quiz-entry {
