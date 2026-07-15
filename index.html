@@ -64,11 +64,29 @@
         .flash-white {
             animation: flashWhite 0.8s ease-in-out forwards;
         }
+
+        .flash-white-story-exit {
+            animation: flashWhiteStoryExitIn 0.55s ease-in-out forwards;
+        }
+
+        .flash-white-story-exit.is-leaving {
+            animation: flashWhiteStoryExitOut 0.58s ease-in-out forwards;
+        }
         
         @keyframes flashWhite {
             0% { opacity: 0; background-color: transparent; }
             40% { opacity: 1; background-color: white; }
             60% { opacity: 1; background-color: white; }
+            100% { opacity: 0; background-color: transparent; }
+        }
+
+        @keyframes flashWhiteStoryExitIn {
+            0% { opacity: 0; background-color: transparent; }
+            100% { opacity: 1; background-color: white; }
+        }
+
+        @keyframes flashWhiteStoryExitOut {
+            0% { opacity: 1; background-color: white; }
             100% { opacity: 0; background-color: transparent; }
         }
 
@@ -10210,7 +10228,11 @@ transition: none !important;
                     initWordCloud();
                     startQuizIfNeeded();
                     setInstantScrollTop(0);
-                    startDaysCalculation(); // 啟動時間計數器
+                    if (window.deferDaysCalculationUntilFlashExit) {
+                        window.pendingDaysCalculation = true;
+                    } else {
+                        startDaysCalculation(); // 啟動時間計數器
+                    }
                 } else if (pageKey === '4' || pageKey === '1') {
 				    targetPage.classList.add('flex');
 				
@@ -10602,19 +10624,38 @@ transition: none !important;
             // 閃白過渡邏輯
             function triggerFlashTransition() {
                 const flashOverlay = document.getElementById('flash-overlay');
-                flashOverlay.classList.remove('hidden');
-                flashOverlay.classList.add('flash-white');
+                if (!flashOverlay || flashOverlay.dataset.transitioning === 'true') return;
 
-                // 在閃白最高峰（約600ms）時切換下方的 HTML 視圖
+                flashOverlay.dataset.transitioning = 'true';
+                flashOverlay.classList.remove('hidden', 'flash-white', 'flash-white-story-exit', 'is-leaving');
+                void flashOverlay.offsetWidth;
+                flashOverlay.classList.add('flash-white-story-exit');
+
+                // 先讓白幕完整蓋住，再在白幕背後切換並初始化倒數計時頁
                 setTimeout(() => {
+                    window.deferDaysCalculationUntilFlashExit = true;
                     window.switchView(3);
-                }, 600);
 
-                // 動畫結束後（1500ms）重設閃白遮罩
-                setTimeout(() => {
-                    flashOverlay.classList.add('hidden');
-                    flashOverlay.classList.remove('flash-white');
-                }, 1500);
+                    // 等瀏覽器完成數個 frame 的排版與首屏繪製後，再退白幕，避免第一次載入露出阿祖頁殘影
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            setTimeout(() => {
+                                flashOverlay.classList.add('is-leaving');
+
+                                setTimeout(() => {
+                                    flashOverlay.classList.add('hidden');
+                                    flashOverlay.classList.remove('flash-white-story-exit', 'is-leaving');
+                                    flashOverlay.dataset.transitioning = 'false';
+                                    window.deferDaysCalculationUntilFlashExit = false;
+                                    if (window.pendingDaysCalculation) {
+                                        window.pendingDaysCalculation = false;
+                                        startDaysCalculation();
+                                    }
+                                }, 620);
+                            }, 180);
+                        });
+                    });
+                }, 560);
             }
 
             // --- 頁面 3：時間計算器動態數值 ---
