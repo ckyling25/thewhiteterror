@@ -195,7 +195,7 @@
             position: absolute;
             left: 50%;
             bottom: clamp(48px, 8vh, 80px);
-            z-index: 45;
+            z-index: 30;
             display: none;
             transform: translateX(-50%);
             pointer-events: none;
@@ -210,12 +210,14 @@
 
         .bottom-scroll-hint {
             position: absolute;
-            left: 0;
-            right: 0;
+            left: 50%;
+            right: auto;
             bottom: clamp(48px, 8vh, 80px);
-            width: 100%;
             z-index: 45;
             pointer-events: none;
+            transform: translateX(-50%);
+            color: #9ca3af;
+            text-align: center;
         }
 
         .bottom-scroll-hint.is-clickable {
@@ -2490,12 +2492,7 @@ transition: none !important;
             overflow-x: hidden;
         }
 
-        #page-5-education.approach-detail-mode > .max-w-3xl,
-        #page-5-education.approach-detail-mode > #unlocked-content {
-            display: none !important;
-        }
-
-        #page-5-education:not(.approach-unlocked) > #unlocked-content {
+        #page-5-education.approach-detail-mode > .max-w-3xl {
             display: none !important;
         }
 
@@ -3849,8 +3846,8 @@ transition: none !important;
 		#page-1-landing .prison-scroll-button {
 		    position: absolute;
 		    left: 50%;
-		    bottom: 3.5rem;
-		    z-index: 30;
+		    bottom: clamp(48px, 8vh, 80px);
+		    z-index: 45;
 		
 		    display: flex;
 		    flex-direction: column;
@@ -4409,7 +4406,7 @@ transition: none !important;
             <p id="story-final-copy" class="story-final-copy"></p>
         </div>
         <div class="story-final-scroll-hint flex-col items-center justify-center">
-            <span class="mb-2 text-sm md:text-base font-medium tracking-widest serif-title">向下滾動</span>
+            <span class="mb-2 text-sm md:text-base font-medium tracking-widest serif-title">向下滑動</span>
             <svg class="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
             </svg>
@@ -4441,9 +4438,9 @@ transition: none !important;
                 </p>
             </div>
             <!-- 往下滾動引導 -->
-            <div class="bottom-scroll-hint flex flex-col items-center justify-center text-center w-full animate-bounce">
-                <span class="text-gray-400 text-sm md:text-base tracking-widest mb-2 font-medium serif-title">向下滾動</span>
-                <svg class="w-5 h-5 text-gray-400 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="bottom-scroll-hint flex flex-col items-center justify-center text-gray-400">
+                <span class="mb-2 text-sm md:text-base font-medium tracking-widest serif-title">向下滑動</span>
+                <svg class="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
             </div>
@@ -5560,13 +5557,12 @@ transition: none !important;
             <p class="text-base md:text-lg leading-loose mb-12 text-justify text-gray-600">
                 楊素芳認為現今社會對白恐議題仍存在不同意見，他認為教育者必須先願意正視威權時期所造成的傷害與爭議，不可將其草草帶過，才能妥善傳達歷史記憶。
             </p>
-            
-            <!-- 平滑滾動定位錨點 -->
-            <div id="approaches-anchor" class="h-4"></div>
+        </div>
+    </section>
 
-            <!-- 四大靠近方式導覽區塊 -->
-            <section id="approach-selector" class="relative left-1/2 w-screen -translate-x-1/2 min-h-screen flex flex-col justify-center items-center py-20 md:py-28 border-t border-gray-200/60 mt-16">
-			    <div class="w-full text-center space-y-5 mb-20 md:mb-24 px-4" style="transform: translateY(calc(-1 * clamp(1.5rem, 4vh, 2.75rem)));">
+    <!-- 四大靠近方式導覽區塊 -->
+    <section id="approach-selector" class="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden">
+			    <div class="approach-selector-heading w-full text-center space-y-5 px-4">
 			        <h2 class="serif-title text-3xl md:text-5xl font-bold text-gray-800 leading-tight whitespace-nowrap text-center">
 			            每一個人靠近白恐的方式都不一樣，你可以……
 			        </h2>
@@ -5575,80 +5571,153 @@ transition: none !important;
 			        </p>
 			    </div>
 			
-			    <!-- 四大靠近方式卡片 (桌機並列排版，莫蘭迪冷灰藍底色) -->
-			    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl w-full mx-auto px-6">
-                    <!-- 卡片 1 -->
-                    <button onclick="window.showInlineApproach('approach-2')" id="card-1" class="approach-card group flex flex-col items-start text-left p-6 bg-[#EBF1F5] border-2 border-slate-300 rounded-xl transition-all duration-300 hover:border-[#9B2C2C] hover:bg-white hover:shadow-lg focus:outline-none">
-                        <div class="w-10 h-10 rounded-lg bg-[#9B2C2C]/5 flex items-center justify-center mb-4 group-hover:bg-[#9B2C2C]/10 transition-colors">
-                            <svg class="w-5 h-5 text-[#9B2C2C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A8.966 8.966 0 0112 15c2.21 0 4.236.799 5.879 2.126M15 11a3 3 0 10-6 0 3 3 0 006 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 100-18 9 9 0 000 18z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="serif-title font-bold text-lg text-[#2D3748] mb-2 group-hover:text-[#9B2C2C] transition-colors">人物故事</h3>
-                        <p class="text-xs text-gray-500 font-semibold mb-2 tracking-wider">受難者生命故事</p>
-                        <p class="text-xs text-gray-600 leading-relaxed font-light">
-                            從陳欽生等個人經歷出發，看見白色恐怖如何落在一個人的生命裡。
-                        </p>
+			    <style>
+                    .approach-door-grid {
+                        position: absolute;
+                        left: 50%;
+                        bottom: calc(clamp(2rem, 5vh, 3.75rem) + 5dvh);
+                        transform: translateX(-50%);
+                        display: grid;
+                        grid-template-columns: repeat(4, minmax(0, 1fr));
+                        gap: clamp(.5rem, 1.1vw, 1.25rem);
+                        width: min(100%, 82rem);
+                        margin: 0;
+                        padding: 0 clamp(1.2rem, 4vw, 2rem);
+                        align-items: end;
+                    }
+                    #approach-selector {
+                        display: block;
+                        height: 100vh;
+                        height: 100dvh;
+                        min-height: 100vh;
+                        min-height: 100dvh;
+                        max-height: 100vh;
+                        max-height: 100dvh;
+                        box-sizing: border-box;
+                    }
+                    #approach-selector::before {
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        height: 1px;
+                        background: rgba(209, 213, 219, .6);
+                        z-index: 3;
+                    }
+                    .approach-selector-heading {
+                        position: absolute;
+                        top: clamp(4rem, 9vh, 6rem);
+                        left: 0;
+                        right: 0;
+                        z-index: 2;
+                    }
+                    .approach-door-card {
+                        position: relative;
+                        display: block;
+                        width: min(100%, clamp(14rem, 20vw, 21rem), 31vh);
+                        aspect-ratio: 420 / 934;
+                        height: auto;
+                        margin: 0 auto;
+                        padding: 0;
+                        border: 0;
+                        background: transparent;
+                        cursor: pointer;
+                        outline: none;
+                        transition: transform .25s ease, filter .25s ease;
+                    }
+                    .approach-door-card:hover,
+                    .approach-door-card:focus-visible {
+                        transform: translateY(-6px);
+                        filter: drop-shadow(0 18px 24px rgba(45, 55, 72, .22));
+                    }
+                    .approach-door-image {
+                        position: absolute;
+                        inset: 0;
+                        background-image: url('images/door/approach-doors.png');
+                        background-repeat: no-repeat;
+                        background-size: 400% 100%;
+                        background-position: var(--door-position) center;
+                        filter: drop-shadow(0 12px 16px rgba(45, 55, 72, .18));
+                    }
+                    .approach-door-card.is-opening .approach-door-image {
+                        background-image: var(--door-open-image);
+                        background-size: 100% 100%;
+                        background-position: center;
+                    }
+                    .approach-door-card.is-opening .approach-door-label {
+                        opacity: 0;
+                    }
+                    .approach-door-label {
+                        position: absolute;
+                        left: 50%;
+                        top: 61.5%;
+                        width: 62%;
+                        height: 24%;
+                        transform: translateX(-50%);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: #fff;
+                        font-family: inherit;
+                        font-size: clamp(1.08rem, 1.45vw, 1.45rem);
+                        font-weight: 800;
+                        line-height: 1.2;
+                        text-align: center;
+                        letter-spacing: .06em;
+                        text-shadow: 0 2px 7px rgba(0, 0, 0, .72);
+                        pointer-events: none;
+                    }
+                    @media (max-width: 900px) {
+                        .approach-door-grid {
+                            grid-template-columns: repeat(2, minmax(0, 1fr));
+                        }
+                        .approach-door-card {
+                            width: min(100%, clamp(12rem, 34vw, 16rem), 29vh);
+                        }
+                    }
+                    @media (max-width: 560px) {
+                        .approach-door-grid {
+                            grid-template-columns: 1fr;
+                        }
+                    }
+                </style>
+			    <div class="approach-door-grid">
+                    <button onclick="window.openApproachDoor(this, 'approach-2')" id="card-1" class="approach-door-card" type="button" style="--door-position: 0%; --door-open-image: url('images/door/red-door-open.png');" aria-label="人物故事">
+                        <span class="approach-door-image" aria-hidden="true"></span>
+                        <span class="approach-door-label serif-title">人物故事</span>
                     </button>
 
-                    <!-- 卡片 2 -->
-                    <button onclick="window.showInlineApproach('approach-3')" id="card-2" class="approach-card group flex flex-col items-start text-left p-6 bg-[#EBF1F5] border-2 border-slate-300 rounded-xl transition-all duration-300 hover:border-[#9B2C2C] hover:bg-white hover:shadow-lg focus:outline-none">
-                        <div class="w-10 h-10 rounded-lg bg-[#9B2C2C]/5 flex items-center justify-center mb-4 group-hover:bg-[#9B2C2C]/10 transition-colors">
-                            <svg class="w-5 h-5 text-[#9B2C2C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="serif-title font-bold text-lg text-[#2D3748] mb-2 group-hover:text-[#9B2C2C] transition-colors">地方空間</h3>
-                        <p class="text-xs text-gray-500 font-semibold mb-2 tracking-wider">不義遺址與走讀</p>
-                        <p class="text-xs text-gray-600 leading-relaxed font-light">
-                            走進曾經發生壓迫與監禁的場域，從空間與現場感理解歷史留下的痕跡。
-                        </p>
+                    <button onclick="window.openApproachDoor(this, 'approach-3')" id="card-2" class="approach-door-card" type="button" style="--door-position: 33.333%; --door-open-image: url('images/door/green-door-open.png');" aria-label="地方空間">
+                        <span class="approach-door-image" aria-hidden="true"></span>
+                        <span class="approach-door-label serif-title">地方空間</span>
                     </button>
 
-                    <!-- 卡片 3 -->
-                    <button onclick="window.showInlineApproach('approach-1')" id="card-3" class="approach-card group flex flex-col items-start text-left p-6 bg-[#EBF1F5] border-2 border-slate-300 rounded-xl transition-all duration-300 hover:border-[#9B2C2C] hover:bg-white hover:shadow-lg focus:outline-none">
-                        <div class="w-10 h-10 rounded-lg bg-[#9B2C2C]/5 flex items-center justify-center mb-4 group-hover:bg-[#9B2C2C]/10 transition-colors">
-                            <svg class="w-5 h-5 text-[#9B2C2C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="serif-title font-bold text-lg text-[#2D3748] mb-2 group-hover:text-[#9B2C2C] transition-colors">文化作品</h3>
-                        <p class="text-xs text-gray-500 font-semibold mb-2 tracking-wider">音樂影像與藝術</p>
-                        <p class="text-xs text-gray-600 leading-relaxed font-light">
-                            透過歌曲、電影與影視作品，從熟悉的旋律與故事開始接近白恐記憶。
-                        </p>
+                    <button onclick="window.openApproachDoor(this, 'approach-1')" id="card-3" class="approach-door-card" type="button" style="--door-position: 66.666%; --door-open-image: url('images/door/blue-door-open.png');" aria-label="文化作品">
+                        <span class="approach-door-image" aria-hidden="true"></span>
+                        <span class="approach-door-label serif-title">文化作品</span>
                     </button>
 
-                    <!-- 卡片 4 -->
-                    <button onclick="window.showInlineApproach('approach-4')" id="card-4" class="approach-card group flex flex-col items-start text-left p-6 bg-[#EBF1F5] border-2 border-slate-300 rounded-xl transition-all duration-300 hover:border-[#9B2C2C] hover:bg-white hover:shadow-lg focus:outline-none">
-                        <div class="w-10 h-10 rounded-lg bg-[#9B2C2C]/5 flex items-center justify-center mb-4 group-hover:bg-[#9B2C2C]/10 transition-colors">
-                            <svg class="w-5 h-5 text-[#9B2C2C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.168.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                            </svg>
-                        </div>
-                        <h3 class="serif-title font-bold text-lg text-[#2D3748] mb-2 group-hover:text-[#9B2C2C] transition-colors">生活角度</h3>
-                        <p class="text-xs text-gray-500 font-semibold mb-2 tracking-wider">日常經驗與檔案</p>
-                        <p class="text-xs text-gray-600 leading-relaxed font-light">
-                            從口述、檔案與日常細節切入，重新理解威權如何改變人的生活。
-                        </p>
+                    <button onclick="window.openApproachDoor(this, 'approach-4')" id="card-4" class="approach-door-card" type="button" style="--door-position: 100%; --door-open-image: url('images/door/yellow-door-open.png');" aria-label="生活角度">
+                        <span class="approach-door-image" aria-hidden="true"></span>
+                        <span class="approach-door-label serif-title">生活角度</span>
                     </button>
                 </div>
 
                 <!-- 解鎖提示動畫 (與 page-3 時間軸引導的文字顏色、位置與箭頭完全一致) -->
-                <div id="unlocked-arrow-indicator" class="bottom-scroll-hint is-clickable hidden flex-col items-center justify-center text-center w-full animate-bounce text-gray-400" onclick="scrollToUnlockedPerspectiveFive()">
-                    <span class="text-sm md:text-base tracking-widest mb-2 font-medium serif-title">向下滾動</span>
-                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div id="unlocked-arrow-indicator" class="bottom-scroll-hint is-clickable hidden flex-col items-center justify-center text-gray-400" onclick="scrollToUnlockedPerspectiveFive()">
+                    <span class="mb-2 text-sm md:text-base font-medium tracking-widest serif-title">向下滑動</span>
+                    <svg class="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </div>
-            </section>
+    </section>
 
         <!-- ==========================================
              面向五：突破同溫層與記憶傳承 (解鎖後動態插入此區)
              ========================================== -->
-        </div>
 
-        <div id="unlocked-content">
+        <div id="unlocked-content" class="hidden">
             <section id="page-10-perspective-five" class="bg-[#FAFAFA] py-24 px-6 border-t border-gray-200">
                 <div class="max-w-6xl mx-auto">
 
@@ -6027,8 +6096,6 @@ transition: none !important;
         </div>
 
         </div>
-
-    </section>
 
     <!-- ==========================================
          頁面 6：文化入口詳細頁
@@ -7109,8 +7176,7 @@ transition: none !important;
             }
             #page-approach-1 .culture-entry-scroll-hint {
                 z-index: 118;
-                color: rgba(255, 255, 255, .78);
-                text-shadow: 0 2px 14px rgba(0, 0, 0, .5);
+                color: #9ca3af;
                 opacity: 1;
                 transition: opacity .22s ease;
             }
@@ -7119,9 +7185,13 @@ transition: none !important;
             }
             #page-approach-1 #culture-film-panel .film-scroll-hint {
                 align-self: center !important;
+                position: relative !important;
+                left: auto !important;
+                bottom: auto !important;
                 margin: 0 auto !important;
                 line-height: 1.2 !important;
                 font-size: clamp(.72rem, .9vw, .88rem) !important;
+                transform: none !important;
             }
             #page-approach-1 #culture-film-panel .film-carousel {
                 height: 100% !important;
@@ -7400,9 +7470,9 @@ transition: none !important;
                                 
                             </div>
                 </div>
-                <div class="culture-entry-scroll-hint bottom-scroll-hint flex flex-col items-center justify-center text-center w-full animate-bounce">
-                    <span class="text-sm md:text-base tracking-widest mb-2 font-medium serif-title">向下滾動</span>
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <div class="culture-entry-scroll-hint bottom-scroll-hint flex flex-col items-center justify-center text-gray-400">
+                    <span class="mb-2 text-sm md:text-base font-medium tracking-widest serif-title">向下滑動</span>
+                    <svg class="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </div>
@@ -9903,6 +9973,8 @@ transition: none !important;
                 const article = document.getElementById('article-body-start');
                 const quizPage = document.getElementById('page-4-quiz-container');
                 const educationPage = document.getElementById('page-5-education');
+                const approachSelector = document.getElementById('approach-selector');
+                const unlockedContent = document.getElementById('unlocked-content');
                 if (!article || !quizPage) return;
 
                 if (quizPage.parentElement !== article) {
@@ -9919,19 +9991,26 @@ transition: none !important;
                     educationPage.classList.remove('hidden');
                     educationPage.classList.add('flex');
                 }
+                if (educationPage && approachSelector && approachSelector.previousElementSibling !== educationPage) {
+                    educationPage.insertAdjacentElement('afterend', approachSelector);
+                }
+                if (approachSelector && unlockedContent && unlockedContent.previousElementSibling !== approachSelector) {
+                    approachSelector.insertAdjacentElement('afterend', unlockedContent);
+                }
             }
 
             function mountInlineApproachSections() {
-                const educationPage = document.getElementById('page-5-education');
+                const approachSelector = document.getElementById('approach-selector');
                 const unlockedContent = document.getElementById('unlocked-content');
-                if (!educationPage || !unlockedContent) return;
+                const approachParent = approachSelector?.parentElement;
+                if (!approachSelector || !approachParent || !unlockedContent) return;
 
                 ['page-approach-1', 'page-approach-2', 'page-approach-3', 'page-approach-4'].forEach(id => {
                     const page = document.getElementById(id);
                     if (!page) return;
 
-                    if (page.parentElement !== educationPage) {
-                        educationPage.insertBefore(page, unlockedContent);
+                    if (page.parentElement !== approachParent || page.nextElementSibling !== unlockedContent) {
+                        approachParent.insertBefore(page, unlockedContent);
                     }
 
                     page.classList.add('approach-inline-detail');
@@ -9973,7 +10052,7 @@ transition: none !important;
             function getApproachSelectorScrollTop() {
                 const selector = document.getElementById('approach-selector');
                 if (!selector) return 0;
-                return selector.getBoundingClientRect().top + window.scrollY;
+                return selector.offsetTop || (selector.getBoundingClientRect().top + window.scrollY);
             }
 
             function beginRouteJump() {
@@ -10004,12 +10083,37 @@ transition: none !important;
             };
 
 
+            window.resetApproachDoors = function() {
+                document.querySelectorAll('.approach-door-card').forEach(door => {
+                    door.classList.remove('is-opening');
+                    door.disabled = false;
+                    delete door.dataset.opening;
+                });
+            };
+
+            window.openApproachDoor = function(door, pageKey) {
+                if (!door || door.dataset.opening === 'true') return;
+                door.dataset.opening = 'true';
+                document.querySelectorAll('.approach-door-card').forEach(item => {
+                    item.disabled = item !== door;
+                    item.classList.remove('is-opening');
+                });
+                door.disabled = true;
+                door.classList.add('is-opening');
+
+                setTimeout(() => {
+                    window.showInlineApproach(pageKey);
+                }, 650);
+            };
+
+
             window.showInlineApproach = function(pageKey) {
                 const finishRouteJump = beginRouteJump();
                 mountInlineApproachSections();
 
                 const selector = document.getElementById('approach-selector');
                 const educationPage = document.getElementById('page-5-education');
+                const unlockedDiv = document.getElementById('unlocked-content');
                 const targetPage = pages[pageKey];
 
                 if (!targetPage) {
@@ -10055,7 +10159,6 @@ transition: none !important;
                 targetPage.classList.remove('hidden');
                 updateInlineApproachReturnVisibility();
 
-                const unlockedDiv = document.getElementById('unlocked-content');
                 if (unlockedDiv) {
                     unlockedDiv.classList.add('hidden');
                 }
@@ -10095,6 +10198,7 @@ transition: none !important;
             };
 
             window.returnToApproachSelector = function() {
+                window.resetApproachDoors?.();
                 const selector = document.getElementById('approach-selector');
                 const educationPage = document.getElementById('page-5-education');
                 const isInlineApproach = selector && educationPage && !educationPage.classList.contains('hidden');
@@ -10238,12 +10342,13 @@ transition: none !important;
 				    targetPage.style.transform = 'none';
 				    targetPage.style.animation = 'none';
 				
-				} else if (pageKey === '5-education') {
+                } else if (pageKey === '5-education') {
                     const articlePage = pages['3'];
                     if (articlePage) {
                         articlePage.classList.remove('hidden');
                         articlePage.classList.add('flex');
                     }
+                    mountQuizIntoArticle();
                     targetPage.classList.add('flex');
                     targetPage.classList.remove('approach-detail-mode');
                     mountInlineApproachSections();
