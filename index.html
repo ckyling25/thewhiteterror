@@ -5651,9 +5651,9 @@ transition: none !important;
                     .approach-door-label {
                         position: absolute;
                         left: 50%;
-                        top: 61.5%;
+                        top: 55.8%;
                         width: 62%;
-                        height: 24%;
+                        height: 26.5%;
                         transform: translateX(-50%);
                         display: flex;
                         align-items: center;
@@ -9435,7 +9435,8 @@ transition: none !important;
       display: block;
       background: #050505;
       transform: translateZ(0);
-      will-change: contents;
+      backface-visibility: hidden;
+      will-change: transform;
     }
     #page-approach-3 .jm-hint {
       position: absolute;
@@ -9688,7 +9689,8 @@ transition: none !important;
     </article>
 
     <article class="jm-scene" data-scene="inside">
-      <iframe title="仁愛樓監獄內部全景" allow="xr-spatial-tracking; gyroscope; accelerometer" allowfullscreen scrolling="no" src="https://kuula.co/share/collection/7T9yQ?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1"></iframe>
+      <iframe width="100%" height="640" frameborder="0" allow="xr-spatial-tracking; gyroscope; accelerometer" allowfullscreen scrolling="no" src="https://kuula.co/share/Lc5k3?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1"></iframe>
+      <div class="jm-info-box">曾同被關押在59號房的呂秀蓮，在擔任副總統期間推動景美人權園區建立，他曾表示：「民主得來不易，現在的年輕人更應珍惜自由，不該把自由視為空氣與水、把自由當成理所當然。」</div>
       <div class="jm-panorama-hint" aria-hidden="true">
         <img class="jm-panorama-icon" src="images/360-degree.png" alt="">
         <div class="jm-panorama-label">左右拖曳畫面可環顧四周</div>
@@ -9713,6 +9715,8 @@ transition: none !important;
       let ticking = false;
       let tourOpen = false;
       let videoReady = false;
+      let targetTime = 0;
+      let renderedTime = 0;
 
       function clamp(value, min, max) {
         return Math.min(max, Math.max(min, value));
@@ -9755,18 +9759,27 @@ transition: none !important;
 
         const progress = scrollProgress();
         const safeDuration = Math.max(0.01, duration - 0.04);
-        const nextTime = clamp(progress * safeDuration, 0, safeDuration);
+        targetTime = clamp(progress * safeDuration, 0, safeDuration);
 
-        if (videoReady && Number.isFinite(nextTime)) {
+        if (videoReady && Number.isFinite(targetTime)) {
           try {
-            if (Math.abs(video.currentTime - nextTime) > 0.025) {
-              video.currentTime = nextTime;
+            const gap = Math.abs(renderedTime - targetTime);
+            renderedTime += (targetTime - renderedTime) * (gap > 1.2 ? 1 : .28);
+
+            if (!video.seeking || Math.abs(video.currentTime - renderedTime) > .45) {
+              if (Math.abs(video.currentTime - renderedTime) > 0.045) {
+                video.currentTime = renderedTime;
+              }
             }
           } catch (error) {}
         }
 
         endCard?.classList.toggle('is-visible', progress > .985 && !tourOpen);
         hint?.classList.toggle('is-hidden', progress > .06 || tourOpen);
+
+        if (!tourOpen && videoReady && Math.abs(renderedTime - targetTime) > .035) {
+          requestScrollVideoRender();
+        }
       }
 
       function requestScrollVideoRender() {
@@ -9779,6 +9792,8 @@ transition: none !important;
       function setupVideo() {
         duration = Number.isFinite(video.duration) && video.duration > 0 ? video.duration : 1;
         videoReady = duration > 1;
+        targetTime = clamp(video.currentTime || 0, 0, Math.max(0.01, duration - 0.04));
+        renderedTime = targetTime;
         video.pause();
         resizeScrollTrack();
         requestScrollVideoRender();
