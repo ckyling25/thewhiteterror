@@ -4074,7 +4074,7 @@ transition: none !important;
         }
 
         #page-1-landing .prison-title-image.is-secondary.is-visible {
-            animation-duration: 1.15s;
+            animation-duration: .75s;
         }
 
         #page-1-landing .prison-loading {
@@ -10974,11 +10974,11 @@ transition: none !important;
                 setLandingProgress(0);
                 const preload = preloadLandingContent(setLandingProgress);
 
-                await wait(1500);
+                await wait(1320);
                 primaryTitle?.classList.add('is-visible');
-                await wait(1450);
+                await wait(1350);
                 secondaryTitle?.classList.add('is-visible');
-                await wait(1200);
+                await wait(820);
                 loading?.classList.add('is-visible');
                 await preload;
                 setLandingProgress(100);
