@@ -4049,32 +4049,78 @@ transition: none !important;
 		    transform: none;
 		    animation: none;
 		}
-		
-		#page-1-landing .prison-title-image {
-		    display: block;
-		    width: 100%;
-		    height: auto;
-		    object-fit: contain;
-		    opacity: 0;
-		    transform: translateY(28px);
-		    filter: drop-shadow(0 18px 30px rgba(0, 0, 0, .28));
-		    animation: prisonTitleImageFloat 1.35s ease forwards;
-		    user-select: none;
-		    -webkit-user-drag: none;
-		}
+        #page-1-landing .prison-title-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            opacity: 0;
+            transform: translateY(28px);
+            filter: drop-shadow(0 18px 30px rgba(0, 0, 0, .28));
+            user-select: none;
+            -webkit-user-drag: none;
+        }
 
-		#page-1-landing .prison-title-image.is-primary {
-		    max-width: min(76vw, 980px);
-		    animation-delay: 1.55s;
-		}
+        #page-1-landing .prison-title-image.is-primary {
+            max-width: min(76vw, 980px);
+        }
 
-		#page-1-landing .prison-title-image.is-secondary {
-		    max-width: min(58vw, 760px);
-		    animation-delay: 1.95s;
-		}
-		
-		/* 向下滑動按鈕 */
-		#page-1-landing .prison-scroll-button {
+        #page-1-landing .prison-title-image.is-secondary {
+            max-width: min(58vw, 760px);
+        }
+
+        #page-1-landing .prison-title-image.is-visible {
+            animation: prisonTitleImageFloat 1.35s ease forwards;
+        }
+
+        #page-1-landing .prison-title-image.is-secondary.is-visible {
+            animation-duration: 1.15s;
+        }
+
+        #page-1-landing .prison-loading {
+            width: min(44vw, 420px);
+            min-width: 220px;
+            margin-top: clamp(.65rem, 1.4vh, 1.1rem);
+            opacity: 0;
+            transform: translateY(12px);
+            pointer-events: none;
+            transition: opacity .55s ease, transform .55s ease;
+        }
+
+        #page-1-landing .prison-loading.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #page-1-landing .prison-loading-track {
+            height: 8px;
+            border: 1px solid rgba(255, 255, 255, .78);
+            background: rgba(18, 18, 18, .32);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .38);
+            overflow: hidden;
+        }
+
+        #page-1-landing .prison-loading-fill {
+            display: block;
+            width: 0%;
+            height: 100%;
+            background: #FCFCFC;
+            box-shadow: 0 0 12px rgba(255, 255, 255, .75);
+            transition: width .28s ease;
+        }
+
+        #page-1-landing .prison-loading-text {
+            margin: .45rem 0 0;
+            color: #FCFCFC;
+            font-family: 'Noto Sans TC', sans-serif;
+            font-size: clamp(.7rem, .9vw, .82rem);
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, .55);
+        }
+        
+        /* 向下滑動按鈕 */
+        #page-1-landing .prison-scroll-button {
 		    position: fixed;
 		    left: 50%;
 		    bottom: clamp(48px, 8vh, 80px);
@@ -4101,17 +4147,17 @@ transition: none !important;
 		    text-shadow: 0 2px 8px rgba(0, 0, 0, .55);
 		
 		    cursor: pointer;
-		
-		    opacity: 0;
-		    transform: translateX(-50%) translateY(26px);
-		
-		    animation:
-		        prisonScrollRise
-		        2s
-		        ease
-		        3.45s
-		        forwards;
-		}
+            opacity: 0;
+            transform: translateX(-50%) translateY(26px);
+            pointer-events: none;
+            transition: opacity .75s ease, transform .75s ease;
+        }
+
+        #page-1-landing .prison-scroll-button.is-visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
 		
 		/* 向下箭頭 */
 		#page-1-landing .prison-scroll-arrow {
@@ -4966,11 +5012,18 @@ transition: none !important;
 	            <img class="prison-title-image is-secondary" src="標題2.png" alt="主標題圖片二">
 	        </h1>
 	
-	        <button
+	        
+        <div class="prison-loading" id="landing-load-progress" role="progressbar" aria-label="頁面內容載入進度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="prison-loading-track" aria-hidden="true">
+                <span class="prison-loading-fill" id="landing-load-progress-fill"></span>
+            </div>
+            <p class="prison-loading-text" id="landing-load-progress-text">載入中 0%</p>
+        </div>
+            <button
 	            id="btn-enter-story"
 	            class="prison-scroll-button"
 	            type="button"
-	            aria-label="進入下一頁"
+	            aria-label="進入下一頁" disabled
 	        >
 	            向下滑動
 	
@@ -10806,6 +10859,137 @@ transition: none !important;
             const btnGoToQuiz = document.getElementById('btn-go-to-quiz');
             
             const btnProceedToEdu = document.getElementById('btn-proceed-to-edu');
+            window.landingIntroReady = false;
+
+            function wait(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            function collectLandingLoadAssets() {
+                const urls = new Set();
+                document.querySelectorAll('img[src], video[src], video source[src]').forEach(el => {
+                    const raw = el.getAttribute('src');
+                    if (raw && !raw.startsWith('data:')) urls.add(raw);
+                });
+
+                Array.from(document.styleSheets).forEach(sheet => {
+                    let rules;
+                    try {
+                        rules = sheet.cssRules;
+                    } catch (error) {
+                        return;
+                    }
+                    if (!rules) return;
+                    Array.from(rules).forEach(rule => {
+                        const cssText = rule.cssText || '';
+                        const matches = cssText.matchAll(/url\((['"]?)(.*?)\1\)/g);
+                        for (const match of matches) {
+                            const raw = (match[2] || '').trim();
+                            if (raw && !raw.startsWith('data:') && !raw.startsWith('#')) urls.add(raw);
+                        }
+                    });
+                });
+
+                return Array.from(urls);
+            }
+
+            function preloadLandingContent(onProgress) {
+                const urls = collectLandingLoadAssets();
+                const units = urls.length + 2;
+                let finished = 0;
+
+                const mark = () => {
+                    finished += 1;
+                    onProgress(Math.min(100, Math.round((finished / units) * 100)));
+                };
+
+                const assetPromises = urls.map(src => new Promise(resolve => {
+                    const isVideo = /\.(mp4|webm|ogg)(\?|#|$)/i.test(src);
+                    if (isVideo) {
+                        const video = document.createElement('video');
+                        video.preload = 'auto';
+                        video.muted = true;
+                        let settled = false;
+                        const done = () => {
+                            if (settled) return;
+                            settled = true;
+                            mark();
+                            resolve();
+                        };
+                        video.addEventListener('canplaythrough', done, { once: true });
+                        video.addEventListener('error', done, { once: true });
+                        setTimeout(done, 4500);
+                        video.src = src;
+                        video.load();
+                        return;
+                    }
+
+                    const image = new Image();
+                    let settled = false;
+                    const done = () => {
+                        if (settled) return;
+                        settled = true;
+                        mark();
+                        resolve();
+                    };
+                    image.onload = done;
+                    image.onerror = done;
+                    setTimeout(done, 4500);
+                    image.src = src;
+                }));
+
+                const fontPromise = (document.fonts?.ready || Promise.resolve()).then(mark, mark);
+                const windowLoadPromise = document.readyState === 'complete'
+                    ? Promise.resolve().then(mark)
+                    : new Promise(resolve => {
+                        let settled = false;
+                        const done = () => {
+                            if (settled) return;
+                            settled = true;
+                            mark();
+                            resolve();
+                        };
+                        window.addEventListener('load', done, { once: true });
+                        setTimeout(done, 6000);
+                    });
+
+                return Promise.allSettled([...assetPromises, fontPromise, windowLoadPromise]);
+            }
+
+            function setLandingProgress(percent) {
+                const progress = document.getElementById('landing-load-progress');
+                const fill = document.getElementById('landing-load-progress-fill');
+                const text = document.getElementById('landing-load-progress-text');
+                const value = Math.max(0, Math.min(100, percent || 0));
+                if (progress) progress.setAttribute('aria-valuenow', String(value));
+                if (fill) fill.style.width = `${value}%`;
+                if (text) text.textContent = `載入中 ${value}%`;
+            }
+
+            async function initLandingIntroSequence() {
+                const primaryTitle = document.querySelector('#page-1-landing .prison-title-image.is-primary');
+                const secondaryTitle = document.querySelector('#page-1-landing .prison-title-image.is-secondary');
+                const loading = document.getElementById('landing-load-progress');
+
+                setLandingProgress(0);
+                const preload = preloadLandingContent(setLandingProgress);
+
+                await wait(1500);
+                primaryTitle?.classList.add('is-visible');
+                await wait(1450);
+                secondaryTitle?.classList.add('is-visible');
+                await wait(1200);
+                loading?.classList.add('is-visible');
+                await preload;
+                setLandingProgress(100);
+                await wait(500);
+
+                window.landingIntroReady = true;
+                btnEnterStory?.classList.add('is-visible');
+                if (btnEnterStory) btnEnterStory.disabled = false;
+            }
+
+            initLandingIntroSequence();
 
             function mountQuizIntoArticle() {
                 const article = document.getElementById('article-body-start');
@@ -11098,7 +11282,7 @@ transition: none !important;
             window.addEventListener('wheel', function(e) {
                 const page1 = document.getElementById('page-1-landing');
                 // 如果目前在第一頁、向下滑動、且沒有在過場中
-                if (!page1.classList.contains('hidden') && e.deltaY > 0 && !isTransitioning) {
+                if (!page1.classList.contains('hidden') && e.deltaY > 0 && !isTransitioning && window.landingIntroReady) {
                     isTransitioning = true; // 鎖定
                     document.getElementById('btn-enter-story').click();
                     
@@ -11118,7 +11302,7 @@ transition: none !important;
                 const page1 = document.getElementById('page-1-landing');
                 
                 // 手指向上滑動 (距離大於 50)
-                if (!page1.classList.contains('hidden') && (touchStartY - touchEndY > 50) && !isTransitioning) {
+                if (!page1.classList.contains('hidden') && (touchStartY - touchEndY > 50) && !isTransitioning && window.landingIntroReady) {
                     isTransitioning = true;
                     document.getElementById('btn-enter-story').click();
                     
@@ -11247,6 +11431,7 @@ transition: none !important;
 
             // --- 頁面 1 到頁面 2：快速閃白後切換 ---
 			btnEnterStory.addEventListener('click', () => {
+                if (!window.landingIntroReady) return;
 			    const flashOverlay = document.getElementById('flash-overlay');
 			
 			    // 遮罩不存在時，仍直接進入故事頁
