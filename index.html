@@ -3997,7 +3997,7 @@ transition: none !important;
 		    animation:
 		        prisonGateDrop
 		        1.25s
-		        cubic-bezier(.22, .88, .25, 1.05)
+		        cubic-bezier(.22, .88, .25, 1)
 		        .15s
 		        forwards;
 		}
@@ -4178,13 +4178,13 @@ transition: none !important;
 	        infinite;
 	}
 		
-		/* 柵欄掉落與回彈 */
+		/* 柵欄掉落 */
 		@keyframes prisonGateDrop {
-		    70% {
-		        transform: translateY(112vh);
+		    from {
+		        transform: translateY(0);
 		    }
-		
-		    100% {
+
+		    to {
 		        transform: translateY(104vh);
 		    }
 		}
@@ -10963,7 +10963,7 @@ transition: none !important;
                 const value = Math.max(0, Math.min(100, percent || 0));
                 if (progress) progress.setAttribute('aria-valuenow', String(value));
                 if (fill) fill.style.width = `${value}%`;
-                if (text) text.textContent = `載入中 ${value}%`;
+                if (text) text.textContent = value >= 100 ? '載入完成' : `載入中 ${value}%`;
             }
 
             async function initLandingIntroSequence() {
@@ -10974,7 +10974,7 @@ transition: none !important;
                 setLandingProgress(0);
                 const preload = preloadLandingContent(setLandingProgress);
 
-                await wait(1320);
+                await wait(1400);
                 primaryTitle?.classList.add('is-visible');
                 await wait(1350);
                 secondaryTitle?.classList.add('is-visible');
