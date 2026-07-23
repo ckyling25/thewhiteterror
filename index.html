@@ -464,6 +464,132 @@
             }
         }
 
+        /* 時間計算器日曆飄落動畫 */
+        .time-calendar-scene {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .time-calendar-scene > .text-center {
+            position: relative;
+            z-index: 2;
+        }
+
+        .time-calendar-scene > .bottom-scroll-hint {
+            position: absolute;
+            left: 50%;
+            right: auto;
+            bottom: clamp(28px, 5vh, 54px);
+            z-index: 3;
+            transform: translateX(-50%);
+        }
+
+        .time-calendar-content {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity .85s ease, transform .85s ease;
+        }
+
+        .time-calendar-content.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .time-calendar-fall {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .time-calendar-page {
+            position: absolute;
+            top: -34vh;
+            left: var(--calendar-left, 50%);
+            width: clamp(170px, 18vw, 320px);
+            max-width: 34vw;
+            opacity: 0;
+            transform: translate3d(var(--calendar-start-x, 0), -28vh, 0) rotate(var(--calendar-start-rotate, -8deg));
+            filter: drop-shadow(0 18px 22px rgba(0, 0, 0, .22));
+            will-change: transform, opacity;
+        }
+
+        .time-calendar-fall.is-active .time-calendar-page {
+            animation: timeCalendarPageFall var(--calendar-duration, 3.4s) cubic-bezier(.18, .72, .24, 1) var(--calendar-delay, 0s) forwards;
+        }
+
+        .time-calendar-page-1 {
+            --calendar-left: 7%;
+            --calendar-start-x: -4vw;
+            --calendar-drift: 0vw;
+            --calendar-start-rotate: -18deg;
+            --calendar-end-rotate: -12deg;
+            --calendar-delay: 0s;
+            --calendar-duration: 3.35s;
+            --calendar-end-opacity: .88;
+        }
+
+        .time-calendar-page-2 {
+            --calendar-left: 37%;
+            --calendar-start-x: 4vw;
+            --calendar-drift: -9vw;
+            --calendar-start-rotate: 13deg;
+            --calendar-end-rotate: -21deg;
+            --calendar-delay: .45s;
+            --calendar-duration: 3.4s;
+            --calendar-end-opacity: 0;
+        }
+
+        .time-calendar-page-3 {
+            --calendar-left: 52%;
+            --calendar-start-x: 1vw;
+            --calendar-drift: -5vw;
+            --calendar-start-rotate: -7deg;
+            --calendar-end-rotate: 10deg;
+            --calendar-delay: .95s;
+            --calendar-duration: 3.25s;
+            --calendar-end-opacity: 0;
+        }
+
+        .time-calendar-page-4 {
+            --calendar-left: 74%;
+            --calendar-start-x: 7vw;
+            --calendar-drift: 0vw;
+            --calendar-start-rotate: 19deg;
+            --calendar-end-rotate: 13deg;
+            --calendar-delay: 1.45s;
+            --calendar-duration: 3.5s;
+            --calendar-end-opacity: .88;
+        }
+
+        @keyframes timeCalendarPageFall {
+            0% {
+                opacity: 0;
+                transform: translate3d(var(--calendar-start-x, 0), -28vh, 0) rotate(var(--calendar-start-rotate, -8deg));
+            }
+            12%, 72% {
+                opacity: .82;
+            }
+            100% {
+                opacity: var(--calendar-end-opacity, 0);
+                transform: translate3d(var(--calendar-drift, 0), 94vh, 0) rotate(var(--calendar-end-rotate, 18deg));
+            }
+        }
+
+        @media (max-width: 700px) {
+            .time-calendar-page {
+                width: clamp(128px, 34vw, 210px);
+                max-width: 42vw;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .time-calendar-fall,
+            .time-calendar-page {
+                display: none;
+            }
+        }
         /* 修正：page-3 外層原本的 fade-in transform/animation 會破壞 sticky，導致時間軸像一般頁面往上滑走 */
         #page-3-article-1,
         #page-3-article-1.fade-in-active {
@@ -5082,8 +5208,14 @@ transition: none !important;
     <section id="page-3-article-1" class="section-view hidden flex-col bg-[#FAFAFA] w-full z-10">
         
         <!-- 時間計算器巨幕 (首屏) -->
-        <div class="min-h-screen flex flex-col items-center justify-center relative border-b border-gray-200/60 px-4 bg-gradient-to-b from-gray-50 to-[#FAFAFA]">
-            <div class="text-center max-w-3xl">
+        <div class="time-calendar-scene min-h-screen flex flex-col items-center justify-center relative border-b border-gray-200/60 px-4 bg-gradient-to-b from-gray-50 to-[#FAFAFA]">
+                        <div class="time-calendar-fall" id="time-calendar-fall" aria-hidden="true">
+                <img class="time-calendar-page time-calendar-page-1" src="第一張.png" alt="">
+                <img class="time-calendar-page time-calendar-page-2" src="第二張.png" alt="">
+                <img class="time-calendar-page time-calendar-page-3" src="第三張.png" alt="">
+                <img class="time-calendar-page time-calendar-page-4" src="最後一張.png" alt="">
+            </div>
+            <div class="time-calendar-content text-center max-w-3xl" id="time-calendar-content">
                 <h2 class="serif-title text-2xl md:text-5xl font-bold text-[#1A202C] mb-10 leading-tight">
                     距離白色恐怖結束，<br class="md:hidden">至今已...
                 </h2>
@@ -9897,13 +10029,13 @@ transition: none !important;
 
     function ageReflection(age) {
       const decade = Math.floor(age / 10) * 10;
-      if (decade < 10) return "學習階段不斷改變，可能開始要學會對自己的人生負責。";
-      if (decade < 20) return "可能是一段學習、離家、工作與建立自我的長路。";
-      if (decade < 30) return "可能你已經足夠獨立，開始分攤家庭生計。";
-      if (decade < 40) return "常常跨過關係、責任與人生方向的幾次轉彎。";
-      if (decade < 50) return "會讓許多承諾變重，也讓自由變得更珍貴。";
-      if (decade < 60) return "足以看見時間如何改變身體、家庭與信念。";
-      if (decade < 70) return "可能是一段回望，也是一段重新安排生命重心的時間。";
+      if (decade < 08) return "學習階段不斷改變，可能開始要學會對自己的人生負責。";
+      if (decade < 18) return "可能是一段學習、離家、工作與建立自我的長路。";
+      if (decade < 28) return "可能你已經足夠獨立，開始分攤家庭生計。";
+      if (decade < 38) return "常常跨過關係、責任與人生方向的幾次轉彎。";
+      if (decade < 48) return "會讓許多承諾變重，也讓自由變得更珍貴。";
+      if (decade < 58) return "足以看見時間如何改變身體、家庭與信念。";
+      if (decade < 68) return "可能是一段回望，也是一段重新安排生命重心的時間。";
       return "在人生後段尤其清楚，每一天都不是可以輕易被奪走的空白。";
     }
 
@@ -11790,8 +11922,21 @@ transition: none !important;
             }
 
             let countingAnimationTriggered = false;
+            function startTimeCalendarFall() {
+                const calendarFall = document.getElementById('time-calendar-fall');
+                if (!calendarFall || calendarFall.classList.contains('is-active')) return;
+                calendarFall.classList.add('is-active');
+            }
+
+            function revealTimeCalendarContent() {
+                const content = document.getElementById('time-calendar-content');
+                content?.classList.add('is-visible');
+            }
+
             function startDaysCalculation() {
                 if (countingAnimationTriggered) return; 
+                startTimeCalendarFall();
+                countingAnimationTriggered = true;
                 
                 const dayValueElement = document.getElementById('days-counter');
                 const calculatedDays = getDaysBetween('1992-11-07');
@@ -11815,8 +11960,10 @@ transition: none !important;
                         window.requestAnimationFrame(step);
                     }
                 }
-                window.requestAnimationFrame(step);
-                countingAnimationTriggered = true;
+                setTimeout(() => {
+                    revealTimeCalendarContent();
+                    window.requestAnimationFrame(step);
+                }, 2300);
             }
 
             // 輔助滾動方法
