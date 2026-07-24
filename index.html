@@ -11944,7 +11944,7 @@ transition: none !important;
                 const scene = document.querySelector('.time-calendar-scene');
                 if (!scene) return;
                 const rect = scene.getBoundingClientRect();
-                const shouldHide = rect.top < -window.innerHeight * 0.08 || rect.bottom < window.innerHeight * 0.98;
+                const shouldHide = rect.bottom < window.innerHeight * 0.16;
                 scene.classList.toggle('is-past', shouldHide);
             }
 
