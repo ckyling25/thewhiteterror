@@ -521,6 +521,7 @@
             left: var(--calendar-left, 50%);
             width: clamp(170px, 18vw, 320px);
             max-width: 34vw;
+            --calendar-end-y: 94vh;
             opacity: 0;
             transform: translate3d(var(--calendar-start-x, 0), -28vh, 0) rotate(var(--calendar-start-rotate, -8deg));
             filter: drop-shadow(0 18px 22px rgba(0, 0, 0, .22));
@@ -585,7 +586,7 @@
             }
             100% {
                 opacity: var(--calendar-end-opacity, 0);
-                transform: translate3d(var(--calendar-drift, 0), 94vh, 0) rotate(var(--calendar-end-rotate, 18deg));
+                transform: translate3d(var(--calendar-drift, 0), var(--calendar-end-y, 94vh), 0) rotate(var(--calendar-end-rotate, 18deg));
             }
         }
 
@@ -593,6 +594,7 @@
             .time-calendar-page {
                 width: clamp(128px, 34vw, 210px);
                 max-width: 42vw;
+                --calendar-end-y: 104vh;
             }
         }
 
@@ -2676,6 +2678,205 @@ transition: none !important;
 
             #cloud-wrapper {
                 min-height: 0;
+            }
+
+            .parallax-report {
+                min-height: 0 !important;
+                padding: 1rem 1rem 2.5rem;
+            }
+
+            .parallax-row,
+            .parallax-row.is-fixed,
+            .parallax-row.is-ended {
+                position: relative !important;
+                top: auto !important;
+                bottom: auto !important;
+                left: auto !important;
+                display: flex !important;
+                flex-direction: column;
+                width: 100%;
+                height: auto !important;
+                min-height: 0 !important;
+                overflow: visible;
+            }
+
+            .parallax-visual,
+            .parallax-text {
+                display: contents;
+            }
+
+            .parallax-chart-panel,
+            .parallax-cloud-panel,
+            .parallax-report.show-cloud .parallax-chart-panel,
+            .parallax-report.show-cloud .parallax-cloud-panel {
+                position: relative !important;
+                left: auto !important;
+                right: auto !important;
+                top: auto !important;
+                bottom: auto !important;
+                opacity: 1 !important;
+                transform: none !important;
+                pointer-events: auto !important;
+            }
+
+            .parallax-chart-panel {
+                order: 1;
+                margin-bottom: 1.35rem;
+            }
+
+            .parallax-cloud-panel {
+                order: 3;
+                margin: 1.5rem 0 1.35rem;
+                overflow: visible !important;
+            }
+
+            .parallax-text p,
+            .parallax-text p.is-active {
+                position: relative !important;
+                left: auto !important;
+                right: auto !important;
+                top: auto !important;
+                max-height: none !important;
+                margin: 0;
+                opacity: 1 !important;
+                overflow: visible !important;
+                transform: none !important;
+                pointer-events: auto !important;
+                text-align: justify;
+            }
+
+            .parallax-text p:nth-child(1) {
+                order: 2;
+            }
+
+            .parallax-text p:nth-child(2) {
+                order: 2;
+                margin-top: 1rem;
+            }
+
+            .parallax-text p:nth-child(3) {
+                order: 4;
+            }
+
+            .parallax-text p:nth-child(4) {
+                order: 4;
+                margin-top: 1rem;
+            }
+
+            .parallax-text p.education-note {
+                order: 4;
+                margin-top: .85rem;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .parallax-cloud-panel .word-cloud-section {
+                width: min(100%, 520px);
+                height: auto;
+                min-height: 0 !important;
+                margin: auto;
+                padding: clamp(1rem, 2vw, 26px) clamp(1rem, 2vw, 24px);
+                font-family: "Noto Sans TC", sans-serif;
+                background: #fafafa;
+                border-radius: 18px;
+                box-shadow: 0 22px 50px rgba(57, 45, 31, .12) !important;
+                overflow: hidden;
+            }
+
+            .parallax-cloud-panel #cloud-wrapper {
+                width: 100%;
+                min-height: 420px !important;
+                align-items: center;
+                overflow: hidden;
+                top: 0;
+            }
+
+            .parallax-cloud-panel #cloud {
+                width: min(310px, 100%);
+                height: 410px;
+                transform: none;
+            }
+
+            .parallax-cloud-panel .circle {
+                padding: 10px;
+                box-shadow: 0 8px 18px rgba(0, 0, 0, .16);
+            }
+
+            .parallax-cloud-panel .circle .word {
+                font-size: clamp(13px, 3.75vw, 15px);
+                line-height: 1.18;
+                margin-bottom: 4px;
+                white-space: nowrap;
+            }
+
+            .parallax-cloud-panel .circle .count {
+                font-size: clamp(10px, 2.8vw, 12px);
+                line-height: 1.2;
+                white-space: nowrap;
+            }
+
+            .parallax-cloud-panel .circle:nth-child(1) {
+                width: 82px !important;
+                height: 82px !important;
+                left: 42px !important;
+                top: 112px !important;
+                z-index: 20;
+            }
+
+            .parallax-cloud-panel .circle:nth-child(2) {
+                width: 116px !important;
+                height: 116px !important;
+                left: 98px !important;
+                top: 155px !important;
+                z-index: 80;
+            }
+
+            .parallax-cloud-panel .circle:nth-child(3) {
+                width: 108px !important;
+                height: 108px !important;
+                left: 100px !important;
+                top: 20px !important;
+                z-index: 70;
+            }
+
+            .parallax-cloud-panel .circle:nth-child(4) {
+                width: 92px !important;
+                height: 92px !important;
+                left: 196px !important;
+                top: 106px !important;
+                z-index: 50;
+            }
+
+            .parallax-cloud-panel .circle:nth-child(5) {
+                width: 86px !important;
+                height: 86px !important;
+                left: 32px !important;
+                top: 260px !important;
+                z-index: 30;
+            }
+
+            .parallax-cloud-panel .circle:nth-child(6) {
+                width: 104px !important;
+                height: 104px !important;
+                left: 110px !important;
+                top: 274px !important;
+                z-index: 60;
+            }
+
+            .parallax-cloud-panel .circle:nth-child(7) {
+                width: 90px !important;
+                height: 90px !important;
+                left: 210px !important;
+                top: 267px !important;
+                z-index: 40;
+            }
+
+            .parallax-cloud-panel .circle:nth-child(8) {
+                width: 76px !important;
+                height: 76px !important;
+                left: 213px !important;
+                top: 187px !important;
+                z-index: 10;
             }
         }
 
@@ -4895,6 +5096,30 @@ transition: none !important;
       width: 100vw;
     }
 
+    #page-2-story .story-bg-frame img[data-story-bg="0"] {
+      object-position: 50% center;
+    }
+
+    #page-2-story .story-bg-frame img[data-story-bg="1"] {
+      object-position: 62% center;
+    }
+
+    #page-2-story .story-bg-frame img[data-story-bg="2"] {
+      object-position: 54% center;
+    }
+
+    #page-2-story .story-bg-frame img[data-story-bg="3"] {
+      object-position: 62% center;
+    }
+
+    #page-2-story .story-bg-frame img[data-story-bg="4"] {
+      object-position: 86% center;
+    }
+
+    #page-2-story .story-bg-frame img[data-story-bg="5"] {
+      object-position: 24% center;
+    }
+
     #page-2-story .story-dialog,
     .story-dialog {
       max-width: calc(100vw - 2rem) !important;
@@ -4913,14 +5138,69 @@ transition: none !important;
       padding: 1.15rem !important;
     }
 
+    #democracyTimelineSection.groupmate-inline-timeline .intro-timeline-card {
+      aspect-ratio: auto !important;
+      grid-template-rows: auto auto auto !important;
+      gap: .95rem !important;
+      height: auto !important;
+      min-height: 0 !important;
+      overflow: visible !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .intro-timeline-card .module-deck {
+      white-space: normal !important;
+    }
+
     #democracyTimelineSection.groupmate-inline-timeline .intro-timeline-window {
       width: 100% !important;
-      height: clamp(190px, 36vh, 260px) !important;
+      height: 230px !important;
+      min-height: 230px !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+      touch-action: pan-x;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(244, 239, 230, .34) transparent;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .intro-timeline-window::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .intro-timeline-window::-webkit-scrollbar-thumb {
+      border-radius: 999px;
+      background: rgba(244, 239, 230, .34);
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .compact-timeline {
+      width: max-content !important;
+      min-width: 1500px !important;
+      height: 100% !important;
+      overflow: visible !important;
     }
 
     #democracyTimelineSection.groupmate-inline-timeline .compact-track {
-      min-width: 1800px !important;
-      grid-template-columns: repeat(9, minmax(200px, 1fr)) !important;
+      min-width: 1500px !important;
+      grid-template-columns: repeat(9, minmax(166px, 1fr)) !important;
+      transform: none !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .compact-item {
+      min-height: 196px !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .intro-expand-row {
+      width: 100% !important;
+      justify-content: flex-end !important;
+      margin-top: .15rem !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .intro-expand-row .expand-button {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      transform: none !important;
+      white-space: nowrap !important;
     }
 
     #word-cloud-section {
@@ -4966,24 +5246,68 @@ transition: none !important;
     }
 
     .quiz-card {
-      min-height: auto !important;
-      padding: 2.3rem 1.65rem 2.6rem !important;
+      height: auto !important;
+      min-height: 415px !important;
+      padding: 4.45rem 1.85rem 4.55rem !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      background: url('quiz-paper.webp') center / 100% 100% no-repeat !important;
       background-size: 100% 100% !important;
+      box-shadow: none !important;
     }
 
-    .quiz-card h3 {
+    #page-4-quiz-container #quiz-card-3 .quiz-card {
+      min-height: 415px !important;
+      padding-top: 4.45rem !important;
+      padding-bottom: 4.55rem !important;
+    }
+
+    #page-4-quiz-container .quiz-card h3.serif-title,
+    #page-4-quiz-container .quiz-item:nth-child(n + 3) .quiz-card h3.serif-title {
+      display: block !important;
+      width: min(86%, 300px) !important;
+      height: auto !important;
       min-height: 0 !important;
-      font-size: clamp(1.25rem, 6vw, 1.6rem) !important;
+      margin-inline: auto !important;
+      margin-top: 0 !important;
+      font-size: 1.22rem !important;
+      line-height: 1.5 !important;
+      align-items: initial !important;
+      white-space: normal !important;
     }
 
     .quiz-options {
       grid-template-columns: 1fr !important;
+      width: min(82%, 260px) !important;
+      margin-inline: auto !important;
+      gap: .5rem !important;
+      margin-top: 1.35rem !important;
+    }
+
+    .quiz-option {
+      width: 100% !important;
+      min-height: 44px !important;
+      padding: .45rem .7rem !important;
+      font-size: .88rem !important;
+      line-height: 1.25 !important;
+      border-radius: .55rem !important;
     }
 
     .quiz-feedback-copy {
       width: 100% !important;
       max-width: 100% !important;
       text-align: left !important;
+    }
+
+    .quiz-feedback {
+      height: auto !important;
+      min-height: 330px !important;
+      overflow: visible !important;
+      padding-bottom: 1.4rem !important;
+    }
+
+    .quiz-feedback .quiz-panel:nth-child(2) {
+      padding-bottom: 1.3rem !important;
     }
 
     .quiz-feedback-reference {
@@ -4996,6 +5320,10 @@ transition: none !important;
 
     .quiz-scale {
       width: 100% !important;
+      height: auto !important;
+      min-height: 86px !important;
+      margin-top: 3.25rem !important;
+      padding-top: 2.55rem !important;
     }
 
     #page-5-education {
@@ -5007,14 +5335,88 @@ transition: none !important;
       padding-top: 4rem !important;
     }
 
+    #page-5-education h2.serif-title {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: min(100%, calc(100vw - 2rem)) !important;
+      margin-inline: auto !important;
+      font-size: 0 !important;
+      line-height: 1.22 !important;
+      text-align: center !important;
+      white-space: normal !important;
+    }
+
+    #page-5-education h2.serif-title::before,
+    #page-5-education h2.serif-title::after {
+      display: block;
+      font-size: clamp(1.72rem, 7.6vw, 2.25rem);
+      line-height: 1.28;
+    }
+
+    #page-5-education h2.serif-title::before {
+      content: "教育現場受限";
+    }
+
+    #page-5-education h2.serif-title::after {
+      content: "扁平敘事難拉近歷史距離";
+    }
+
     .speaker-quote-row {
-      display: block !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-inline: auto !important;
       text-align: left !important;
+      overflow: visible !important;
     }
 
     .speaker-portrait {
-      width: min(42vw, 150px) !important;
+      order: 1 !important;
+      width: min(46vw, 170px) !important;
+      height: min(62vw, 230px) !important;
+      max-height: none !important;
+      object-fit: contain !important;
+      object-position: bottom center !important;
       margin: 1rem auto 0 !important;
+    }
+
+    #page-5-education .education-bubble-shell {
+      order: 2 !important;
+      width: min(100%, calc(100vw - 2.3rem)) !important;
+      max-width: calc(100vw - 2.3rem) !important;
+      justify-self: center !important;
+      margin: 0 auto !important;
+      overflow: visible !important;
+    }
+
+    #page-5-education .speech-bubble {
+      box-sizing: border-box !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 1.15rem 1.35rem !important;
+      overflow: hidden !important;
+      text-align: left !important;
+    }
+
+    #page-5-education .speech-bubble::before,
+    #page-5-education .speech-bubble::after {
+      content: none !important;
+      display: none !important;
+    }
+
+    #page-5-education .speech-bubble > p,
+    #page-5-education .speaker-quote-row.is-left .speech-bubble > p,
+    #page-5-education .speaker-quote-row.is-left .speech-bubble .serif-title {
+      width: 100% !important;
+      max-width: 100% !important;
+      white-space: normal !important;
+      overflow-wrap: anywhere !important;
+      word-break: break-word !important;
     }
 
     #approach-selector .approach-selector-heading {
@@ -12008,23 +12410,28 @@ function initYouthAttitudeChart() {
 				
 				        meta.data.forEach((arc, index) => {
 				            const p = arc.tooltipPosition();
+                            const isMobileChart = window.matchMedia("(max-width: 700px)").matches;
+                            const labelFontSize = isMobileChart ? 15 : 21;
+                            const valueFontSize = isMobileChart ? 20 : 26;
+                            const labelOffset = isMobileChart ? -5 : -7;
+                            const valueOffset = isMobileChart ? 20 : 24;
 				
-				            ctx.font = "bold 21px Noto Sans TC";
+				            ctx.font = `bold ${labelFontSize}px Noto Sans TC`;
 				            ctx.textAlign = "center";
 				            ctx.fillStyle = index === 0 ? "white" : "#222";
 				
 				            ctx.fillText(
 				                chart.data.labels[index],
 				                p.x,
-				                p.y - 7
+				                p.y + labelOffset
 				            );
 				
-				            ctx.font = "bold 26px Noto Sans TC";
+				            ctx.font = `bold ${valueFontSize}px Noto Sans TC`;
 				
 				            ctx.fillText(
 				                chart.data.datasets[0].data[index] + "%",
 				                p.x,
-				                p.y + 24
+				                p.y + valueOffset
 				            );
 				        });
 				
@@ -12437,6 +12844,11 @@ function initYouthAttitudeChart() {
 			    const wrapper = document.getElementById("cloud-wrapper");
 			    const cloud = document.getElementById("cloud");
 			    if (!wrapper || !cloud) return;
+
+                if (window.matchMedia("(max-width: 700px)").matches) {
+                    cloud.style.transform = "none";
+                    return;
+                }
 			
 			    const wrapperWidth = wrapper.clientWidth || window.innerWidth || 800;
 			    const wrapperHeight = wrapper.clientHeight || 560;
