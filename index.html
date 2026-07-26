@@ -5060,18 +5060,18 @@ transition: none !important;
 
     .approach-door-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-      width: min(92vw, 560px) !important;
+      width: min(96vw, 640px) !important;
       bottom: clamp(1.2rem, 3vh, 2rem) !important;
-      gap: clamp(.5rem, 2vw, .9rem) clamp(.75rem, 3vw, 1.25rem) !important;
+      gap: clamp(.62rem, 2vw, .95rem) clamp(.45rem, 1.9vw, .8rem) !important;
       padding-inline: 0 !important;
     }
 
     .approach-door-card {
-      width: min(100%, 9.6rem, 22vh) !important;
+      width: min(100%, 11.7rem, 26vh) !important;
     }
 
     .approach-door-label {
-      font-size: clamp(.82rem, 2.8vw, 1rem) !important;
+      font-size: clamp(1.02rem, 3.45vw, 1.24rem) !important;
     }
 
     #page-approach-1,
@@ -5435,17 +5435,17 @@ transition: none !important;
     }
 
     .approach-door-grid {
-      width: min(88vw, 360px) !important;
-      bottom: clamp(.8rem, 2.2vh, 1.3rem) !important;
-      gap: .45rem .75rem !important;
+      width: min(96vw, 390px) !important;
+      bottom: clamp(2.8rem, 6vh, 3.8rem) !important;
+      gap: .55rem .5rem !important;
     }
 
     .approach-door-card {
-      width: min(100%, 7.5rem, 21vh) !important;
+      width: min(100%, 9.25rem, 24vh) !important;
     }
 
     .approach-door-label {
-      font-size: clamp(.7rem, 3.8vw, .9rem) !important;
+      font-size: clamp(.92rem, 4.5vw, 1.08rem) !important;
       letter-spacing: .04em !important;
     }
 
@@ -5487,7 +5487,7 @@ transition: none !important;
     }
 
     .approach-door-card {
-      width: min(100%, 6.8rem, 19vh) !important;
+      width: min(100%, 8.85rem, 23.5vh) !important;
     }
   }
 </style>
@@ -6257,11 +6257,21 @@ transition: none !important;
     }
 
     function unlockPageScrollForTimelineDetail() {
+      const returnY = state.lockedScrollY || 0;
+      document.documentElement.style.scrollBehavior = "auto";
+      document.body.style.scrollBehavior = "auto";
+      window.scrollTo(0, returnY);
+      document.documentElement.scrollTop = returnY;
+      document.body.scrollTop = returnY;
       document.documentElement.classList.remove("detail-open");
       document.body.classList.remove("detail-open");
       document.documentElement.style.overflow = state.previousHtmlOverflow || "";
       document.body.style.overflow = state.previousBodyOverflow || "";
-      window.scrollTo(0, state.lockedScrollY || 0);
+      window.scrollTo(0, returnY);
+      document.documentElement.scrollTop = returnY;
+      document.body.scrollTop = returnY;
+      document.documentElement.style.scrollBehavior = "";
+      document.body.style.scrollBehavior = "";
     }
 
     // ==============================
@@ -6289,23 +6299,35 @@ transition: none !important;
 
     function closeTimeline() {
       const lastViewedIndex = state.activeIndex;
+      const returnY = state.lockedScrollY || 0;
 
+      document.documentElement.classList.add("route-jump-hidden");
+      document.documentElement.style.scrollBehavior = "auto";
+      document.body.style.scrollBehavior = "auto";
+      unlockPageScrollForTimelineDetail();
       DOM.module.classList.remove("is-expanded");
       DOM.expandedPanel.classList.remove("is-open");
       DOM.expandedPanel.style.display = "";
-      unlockPageScrollForTimelineDetail();
       DOM.expandButton.setAttribute("aria-expanded", "false");
       DOM.expandedPanel.setAttribute("aria-hidden", "true");
 
       requestAnimationFrame(() => {
         syncCollapsedIntroToIndex(lastViewedIndex);
-        scrollIntroToIndex(lastViewedIndex, "auto");
         queueIntroProgressUpdate();
+        window.scrollTo(0, returnY);
+        document.documentElement.scrollTop = returnY;
+        document.body.scrollTop = returnY;
+        requestAnimationFrame(() => {
+          window.scrollTo(0, returnY);
+          document.documentElement.scrollTop = returnY;
+          document.body.scrollTop = returnY;
+          document.documentElement.classList.remove("route-jump-hidden");
+          document.documentElement.style.scrollBehavior = "";
+          document.body.style.scrollBehavior = "";
+        });
       });
 
-      setTimeout(() => {
-        DOM.expandButton.focus({ preventScroll: true });
-      }, CONFIG.interaction.focusReturnDelayMs);
+      DOM.expandButton.blur();
     }
 
     function goToEvent(index, instant = false) {
@@ -11615,7 +11637,7 @@ transition: none !important;
             function getApproachSelectorScrollTop() {
                 const selector = document.getElementById('approach-selector');
                 if (!selector) return 0;
-                return selector.offsetTop || (selector.getBoundingClientRect().top + window.scrollY);
+                return selector.getBoundingClientRect().top + window.scrollY;
             }
 
             function beginRouteJump() {
