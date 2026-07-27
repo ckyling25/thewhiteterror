@@ -3129,10 +3129,19 @@ transition: none !important;
             z-index: 20;
             left: var(--fingerprint-x);
             top: var(--fingerprint-y);
-            width: min(62px, 76%);
-            aspect-ratio: 1;
-            background: transparent center / contain no-repeat;
+            display: block;
+            width: 62px;
+            height: 62px;
+            border: 0;
+            border-radius: 0;
+            background-color: transparent !important;
             background-image: url('fingerprint-stamp.png?v=20260727-transparent');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            box-shadow: none;
+            -webkit-mask-image: none;
+            mask-image: none;
             pointer-events: none;
             user-select: none;
             mix-blend-mode: normal;
@@ -3468,7 +3477,8 @@ transition: none !important;
             }
 
             .quiz-fingerprint {
-			    width: min(72px, 86%);
+			    width: min(72px, 18vw);
+			    height: min(72px, 18vw);
 			}
 
             .quiz-feedback {
@@ -13485,7 +13495,7 @@ function initYouthAttitudeChart() {
 
             function stampFingerprint(button, event) {
                 const rect = button.getBoundingClientRect();
-                const hasPointerPosition = event.clientX !== 0 || event.clientY !== 0;
+                const hasPointerPosition = Number.isFinite(event.clientX) && Number.isFinite(event.clientY) && (event.clientX !== 0 || event.clientY !== 0);
                 const clickX = hasPointerPosition ? event.clientX - rect.left : rect.width / 2;
                 const clickY = hasPointerPosition ? event.clientY - rect.top : rect.height / 2;
                 const fingerprint = document.createElement('span');
