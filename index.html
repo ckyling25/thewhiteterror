@@ -4906,9 +4906,10 @@ transition: none !important;
   @media (max-width: 560px) {
     #democracyTimelineSection.groupmate-inline-timeline {
       --face-w: min(100vw, 430px) !important;
-      --face-h: min(65vh, 606px) !important;
+      --timeline-visual-height: 100dvh;
+      --face-h: min(58vh, 520px) !important;
       --carousel-x: calc(-50% - 7px) !important;
-      --carousel-y: -39% !important;
+      --carousel-y: -43% !important;
       --timeline-prism-title-size: clamp(2.1rem, 8.4vw, 2.28rem) !important;
     }
 
@@ -4916,6 +4917,9 @@ transition: none !important;
     #democracyTimelineSection.groupmate-inline-timeline .timeline-module.is-expanded .expanded-panel {
       display: flex !important;
       flex-direction: column !important;
+      height: var(--timeline-visual-height) !important;
+      min-height: var(--timeline-visual-height) !important;
+      max-height: var(--timeline-visual-height) !important;
       overflow: hidden !important;
       overscroll-behavior: none !important;
       touch-action: none !important;
@@ -4932,7 +4936,7 @@ transition: none !important;
       flex-direction: column !important;
       align-items: center !important;
       gap: .38rem !important;
-      padding: max(6.1rem, calc(env(safe-area-inset-top) + 5.85rem)) .9rem 0 !important;
+      padding: max(4.4rem, calc(env(safe-area-inset-top) + 4.05rem)) .9rem 0 !important;
       text-align: center !important;
     }
 
@@ -4979,7 +4983,7 @@ transition: none !important;
       min-height: 0 !important;
       display: grid !important;
       place-items: center !important;
-      padding: clamp(1.25rem, 4.8vh, 2.35rem) 0 .05rem !important;
+      padding: clamp(.8rem, 2.8vh, 1.5rem) 0 .05rem !important;
       overflow: visible !important;
     }
 
@@ -4990,8 +4994,8 @@ transition: none !important;
     #democracyTimelineSection.groupmate-inline-timeline .prism-shell {
       position: relative !important;
       width: 100vw !important;
-      height: min(52vh, 408px) !important;
-      min-height: 306px !important;
+      height: min(46vh, 360px) !important;
+      min-height: 280px !important;
       padding: 0 !important;
       overflow: visible !important;
       perspective: 1600px !important;
@@ -5009,7 +5013,7 @@ transition: none !important;
     #democracyTimelineSection.groupmate-inline-timeline .prism-halo {
       display: block !important;
       width: 100vw !important;
-      height: min(48vh, 440px) !important;
+      height: min(42vh, 380px) !important;
       opacity: .5 !important;
       filter: blur(14px) !important;
     }
@@ -5020,7 +5024,7 @@ transition: none !important;
       top: 50% !important;
       display: block !important;
       width: min(100vw, 430px) !important;
-      height: min(65vh, 606px) !important;
+      height: var(--face-h) !important;
       margin: 0 !important;
       gap: 0 !important;
       transform-style: preserve-3d !important;
@@ -5034,7 +5038,7 @@ transition: none !important;
       inset: 0 !important;
       flex: none !important;
       width: min(100vw, 430px) !important;
-      height: min(65vh, 606px) !important;
+      height: var(--face-h) !important;
       min-height: 0 !important;
       padding: 1.5rem 1.34rem !important;
       gap: .9rem !important;
@@ -5128,9 +5132,9 @@ transition: none !important;
       align-items: center !important;
       gap: 0 !important;
       width: 100% !important;
-      min-height: clamp(8.9rem, 24vh, 12.5rem) !important;
-      margin: clamp(2.4rem, 8vh, 4.2rem) 0 0 !important;
-      padding: 0 .55rem max(.55rem, env(safe-area-inset-bottom)) !important;
+      min-height: clamp(6.5rem, 17vh, 8.75rem) !important;
+      margin: clamp(.7rem, 2.2vh, 1.35rem) 0 0 !important;
+      padding: 0 .55rem max(1.25rem, calc(env(safe-area-inset-bottom) + .8rem)) !important;
       align-content: end !important;
     }
 
@@ -6249,6 +6253,7 @@ transition: none !important;
 
     function initializeTimeline() {
       applyConfigTokens();
+      syncTimelineVisualHeight();
       applyResponsiveLayoutVars();
       createCompactTimeline();
       createPrismTimeline();
@@ -6265,6 +6270,15 @@ transition: none !important;
       Object.entries(CONFIG.cssVars).forEach(([name, value]) => {
         DOM.module.style.setProperty(name, value);
       });
+    }
+
+    function syncTimelineVisualHeight() {
+      const viewportHeight =
+        window.visualViewport && window.visualViewport.height
+          ? window.visualViewport.height
+          : window.innerHeight;
+
+      DOM.module.style.setProperty("--timeline-visual-height", `${Math.round(viewportHeight)}px`);
     }
 
     function applyResponsiveLayoutVars() {
@@ -6581,6 +6595,7 @@ transition: none !important;
     function openTimeline(index = 0) {
       const initialIndex = clamp(index, 0, events.length - 1);
 
+      syncTimelineVisualHeight();
       updateActiveEvent(initialIndex);
       lockPageScrollForTimelineDetail();
       DOM.module.classList.add("is-expanded");
@@ -6938,11 +6953,20 @@ transition: none !important;
       window.addEventListener("scroll", queueIntroProgressUpdate, { passive: true });
 
       window.addEventListener("resize", () => {
+        syncTimelineVisualHeight();
         applyResponsiveLayoutVars();
         updateRadius();
         goToEvent(state.activeIndex, true);
         queueIntroProgressUpdate();
       });
+
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", () => {
+          syncTimelineVisualHeight();
+          updateRadius();
+          goToEvent(state.activeIndex, true);
+        });
+      }
 
       window.addEventListener("load", queueIntroProgressUpdate);
     }
