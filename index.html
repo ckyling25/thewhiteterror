@@ -6550,21 +6550,11 @@ transition: none !important;
       state.lockedScrollY = window.scrollY || document.documentElement.scrollTop || 0;
       state.previousHtmlOverflow = document.documentElement.style.overflow;
       state.previousBodyOverflow = document.body.style.overflow;
-      state.previousBodyPosition = document.body.style.position;
-      state.previousBodyTop = document.body.style.top;
-      state.previousBodyLeft = document.body.style.left;
-      state.previousBodyRight = document.body.style.right;
-      state.previousBodyWidth = document.body.style.width;
 
       document.documentElement.classList.add("detail-open");
       document.body.classList.add("detail-open");
       document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
-      document.body.style.position = "fixed";
-      document.body.style.top = `-${state.lockedScrollY}px`;
-      document.body.style.left = "0";
-      document.body.style.right = "0";
-      document.body.style.width = "100%";
     }
 
     function unlockPageScrollForTimelineDetail() {
@@ -6578,11 +6568,6 @@ transition: none !important;
       document.body.classList.remove("detail-open");
       document.documentElement.style.overflow = state.previousHtmlOverflow || "";
       document.body.style.overflow = state.previousBodyOverflow || "";
-      document.body.style.position = state.previousBodyPosition || "";
-      document.body.style.top = state.previousBodyTop || "";
-      document.body.style.left = state.previousBodyLeft || "";
-      document.body.style.right = state.previousBodyRight || "";
-      document.body.style.width = state.previousBodyWidth || "";
       window.scrollTo(0, returnY);
       document.documentElement.scrollTop = returnY;
       document.body.scrollTop = returnY;
