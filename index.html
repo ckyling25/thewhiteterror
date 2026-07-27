@@ -591,6 +591,10 @@
         }
 
         @media (max-width: 700px) {
+            .time-calendar-scene .time-calendar-content.is-visible {
+                transform: translateY(-8vh);
+            }
+
             .time-calendar-page {
                 width: clamp(128px, 34vw, 210px);
                 max-width: 42vw;
@@ -3126,7 +3130,9 @@ transition: none !important;
             left: var(--fingerprint-x);
             top: var(--fingerprint-y);
             width: min(62px, 76%);
-            height: auto;
+            aspect-ratio: 1;
+            background: transparent center / contain no-repeat;
+            background-image: url('fingerprint-stamp.png');
             pointer-events: none;
             user-select: none;
             mix-blend-mode: normal;
@@ -4973,9 +4979,9 @@ transition: none !important;
       position: absolute !important;
       left: .9rem !important;
       top: max(.7rem, env(safe-area-inset-top)) !important;
-      min-height: 46px !important;
-      padding: .68rem 1.05rem !important;
-      font-size: .94rem !important;
+      min-height: 34px !important;
+      padding: .42rem .78rem !important;
+      font-size: clamp(.84rem, 3.7vw, .98rem) !important;
     }
 
     #democracyTimelineSection.groupmate-inline-timeline .stage {
@@ -5092,8 +5098,8 @@ transition: none !important;
     }
 
     #democracyTimelineSection.groupmate-inline-timeline .event-copy {
-      font-size: 1.24rem !important;
-      line-height: 1.54 !important;
+      font-size: 1.1rem !important;
+      line-height: 1.48 !important;
     }
 
     #democracyTimelineSection.groupmate-inline-timeline .event-image,
@@ -5119,7 +5125,7 @@ transition: none !important;
       position: absolute !important;
       left: .55rem !important;
       top: auto !important;
-      bottom: 4.45rem !important;
+      bottom: 5.25rem !important;
       font-size: .82rem !important;
       white-space: nowrap !important;
     }
@@ -5136,6 +5142,7 @@ transition: none !important;
       margin: clamp(.7rem, 2.2vh, 1.35rem) 0 0 !important;
       padding: 0 .55rem max(1.25rem, calc(env(safe-area-inset-bottom) + .8rem)) !important;
       align-content: end !important;
+      transform: translateY(clamp(2.7rem, 7vh, 4rem)) !important;
     }
 
     #democracyTimelineSection.groupmate-inline-timeline .mini-nav-wrap {
@@ -13476,10 +13483,8 @@ function initYouthAttitudeChart() {
                 const hasPointerPosition = event.clientX !== 0 || event.clientY !== 0;
                 const clickX = hasPointerPosition ? event.clientX - rect.left : rect.width / 2;
                 const clickY = hasPointerPosition ? event.clientY - rect.top : rect.height / 2;
-                const fingerprint = document.createElement('img');
+                const fingerprint = document.createElement('span');
 
-                fingerprint.src = 'fingerprint-stamp.png';
-                fingerprint.alt = '';
                 fingerprint.setAttribute('aria-hidden', 'true');
                 fingerprint.className = 'quiz-fingerprint';
                 fingerprint.style.setProperty(
