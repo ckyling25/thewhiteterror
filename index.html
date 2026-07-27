@@ -3132,7 +3132,7 @@ transition: none !important;
             width: min(62px, 76%);
             aspect-ratio: 1;
             background: transparent center / contain no-repeat;
-            background-image: url('fingerprint-stamp.png');
+            background-image: url('fingerprint-stamp.png?v=20260727-transparent');
             pointer-events: none;
             user-select: none;
             mix-blend-mode: normal;
@@ -5731,11 +5731,16 @@ transition: none !important;
     .approach-door-grid {
       width: min(96vw, 390px) !important;
       bottom: clamp(2.8rem, 6vh, 3.8rem) !important;
+      transform: translate(-50%, clamp(3.2rem, 7vh, 4.6rem)) !important;
       gap: .55rem .5rem !important;
     }
 
     .approach-door-card {
       width: min(100%, 9.25rem, 24vh) !important;
+    }
+
+    #approach-selector .approach-door-card:nth-child(-n + 2) {
+      top: clamp(1.8rem, 5vh, 3.4rem) !important;
     }
 
     .approach-door-label {
