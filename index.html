@@ -2751,7 +2751,7 @@ transition: none !important;
 
             .parallax-text p:nth-child(2) {
                 order: 2;
-                margin-top: 1rem;
+                margin-top: 2rem;
             }
 
             .parallax-text p:nth-child(3) {
@@ -2760,12 +2760,12 @@ transition: none !important;
 
             .parallax-text p:nth-child(4) {
                 order: 4;
-                margin-top: 1rem;
+                margin-top: 2rem;
             }
 
             .parallax-text p.education-note {
                 order: 4;
-                margin-top: .85rem;
+                margin-top: 2rem;
             }
         }
 
@@ -5102,7 +5102,7 @@ transition: none !important;
     }
 
     #page-2-story .story-bg-frame img[data-story-bg="1"] {
-      object-position: 62% center;
+      object-position: 100% center;
     }
 
     #page-2-story .story-bg-frame img[data-story-bg="2"] {
@@ -5118,7 +5118,7 @@ transition: none !important;
     }
 
     #page-2-story .story-bg-frame img[data-story-bg="5"] {
-      object-position: 24% center;
+      object-position: 62% center;
     }
 
     #page-2-story .story-dialog,
@@ -12078,6 +12078,10 @@ transition: none !important;
             let currentTypewriterText = "";
             let storyClickLocked = false;
             let storyWheelLocked = false;
+            let storyTouchStartY = 0;
+            let storyTouchLastY = 0;
+            let storyTouchMoved = false;
+            let storyTouchSuppressClick = false;
             let storyFinalScrollProgress = 0;
             let storyFinalClickPrimed = false;
             const storyIntroLength = storyLineups.findIndex(scene => scene.final);
@@ -12268,6 +12272,7 @@ transition: none !important;
             // 點擊全螢幕任意處皆可快轉/前進
             function handleStoryClick() {
                 if (pages[2].classList.contains('hidden')) return;
+                if (storyTouchSuppressClick) return;
                 if (storyClickLocked) return;
                 storyClickLocked = true;
                 if (!handleStoryFinalClick()) {
@@ -12294,8 +12299,75 @@ transition: none !important;
                 setTimeout(() => { storyWheelLocked = false; }, 140);
             }, { passive: false });
 
+            pages[2].addEventListener('touchstart', event => {
+                if (pages[2].classList.contains('hidden')) return;
+                storyTouchStartY = event.touches[0]?.clientY || 0;
+                storyTouchLastY = storyTouchStartY;
+                storyTouchMoved = false;
+            }, { passive: true });
+
+            pages[2].addEventListener('touchmove', event => {
+                if (pages[2].classList.contains('hidden')) return;
+                const currentY = event.touches[0]?.clientY || storyTouchLastY;
+                const totalDeltaY = storyTouchStartY - currentY;
+                const frameDeltaY = storyTouchLastY - currentY;
+                if (Math.abs(totalDeltaY) > 8) {
+                    storyTouchMoved = true;
+                }
+                if (storyLineups[currentScriptIdx]?.scrollPanel) {
+                    event.preventDefault();
+                    moveStoryFinalPanel(frameDeltaY);
+                }
+                storyTouchLastY = currentY;
+            }, { passive: false });
+
+            let articleReturnTouchStartY = 0;
+            let articleReturnTouchStartedAtTop = false;
+
+            window.addEventListener('touchstart', event => {
+                const articlePage = pages[3];
+                if (!articlePage || articlePage.classList.contains('hidden')) return;
+                articleReturnTouchStartY = event.touches[0]?.clientY || 0;
+                articleReturnTouchStartedAtTop = window.scrollY <= 12;
+            }, { passive: true });
+
+            window.addEventListener('touchmove', event => {
+                const articlePage = pages[3];
+                if (!articlePage || articlePage.classList.contains('hidden')) return;
+                if (!articleReturnTouchStartedAtTop || window.scrollY > 12) return;
+                const currentY = event.touches[0]?.clientY || articleReturnTouchStartY;
+                if (currentY - articleReturnTouchStartY > 18) {
+                    event.preventDefault();
+                }
+            }, { passive: false });
+
+            window.addEventListener('touchend', event => {
+                const articlePage = pages[3];
+                if (!articlePage || articlePage.classList.contains('hidden')) return;
+                if (!articleReturnTouchStartedAtTop || window.scrollY > 12) return;
+                const touchEndY = event.changedTouches[0]?.clientY || articleReturnTouchStartY;
+                if (touchEndY - articleReturnTouchStartY > 54) {
+                    showStoryFinalFromTimer();
+                }
+                articleReturnTouchStartedAtTop = false;
+            }, { passive: true });
+
             pages[2].addEventListener('touchend', event => {
                 if (pages[2].classList.contains('hidden')) return;
+                if (storyTouchMoved) {
+                    storyTouchSuppressClick = true;
+                    if (!storyLineups[currentScriptIdx]?.scrollPanel) {
+                        const touchEndY = event.changedTouches[0]?.clientY || storyTouchStartY;
+                        if (storyTouchStartY - touchEndY > 54) {
+                            advanceStoryScene(false);
+                        } else if (touchEndY - storyTouchStartY > 54) {
+                            rewindStoryScene();
+                        }
+                    }
+                    setTimeout(() => { storyTouchSuppressClick = false; }, 260);
+                    storyTouchMoved = false;
+                    return;
+                }
                 handleStoryClick();
             });
 
