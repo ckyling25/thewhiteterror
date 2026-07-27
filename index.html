@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- 引入 Google Fonts 中文字體 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="fingerprint-stamp.png?v=20260727-ios-alpha">
     
     <style>
         html {
@@ -3102,6 +3103,8 @@ transition: none !important;
             font-weight: 700;
             box-shadow: 0 3px 10px rgba(57, 45, 31, 0.08);
             transition: 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
 
         .quiz-option:hover:not(:disabled),
@@ -3135,7 +3138,7 @@ transition: none !important;
             border: 0;
             border-radius: 0;
             background-color: transparent !important;
-            background-image: url('fingerprint-stamp.png?v=20260727-transparent');
+            background-image: url('fingerprint-stamp.png?v=20260727-ios-alpha');
             background-position: center;
             background-repeat: no-repeat;
             background-size: contain;
@@ -3145,7 +3148,6 @@ transition: none !important;
             pointer-events: none;
             user-select: none;
             mix-blend-mode: normal;
-            filter: contrast(1.35);
             opacity: 0;
             transform:
                 translate(-50%, -50%)
@@ -3158,7 +3160,6 @@ transition: none !important;
         @keyframes fingerprintStamp {
 		    0% {
 		        opacity: 0;
-		        filter: blur(2px) contrast(1.2);
 		        transform:
 		            translate(-50%, -135%)
 		            rotate(var(--fingerprint-rotation))
@@ -3166,7 +3167,6 @@ transition: none !important;
 		    }
 		    52% {
 		        opacity: 1;
-		        filter: blur(0) contrast(1.35);
 		        transform:
 		            translate(-50%, -45%)
 		            rotate(var(--fingerprint-rotation))
@@ -3174,7 +3174,6 @@ transition: none !important;
 		    }
 		    100% {
 		        opacity: 1;
-		        filter: blur(0) contrast(1.35);
 		        transform:
 		            translate(-50%, -50%)
 		            rotate(var(--fingerprint-rotation))
@@ -4094,19 +4093,24 @@ transition: none !important;
               .outer-circle-copy.quote-center,
               .outer-circle-copy.frame-center {
                 left: 50%;
-                bottom: 11vh;
+                top: 50%;
+                bottom: auto;
                 width: min(92vw, 620px);
                 padding: 1rem;
                 transform: translate(-50%, 86vh);
               }
 
-              .outer-circle-copy p {
+              .outer-circle-copy p,
+              .outer-circle-copy.quote-center p,
+              .outer-circle-copy.frame-center p {
                 font-size: .98rem;
                 line-height: 1.85;
               }
 
-              .outer-circle-copy.quote-center p {
-                font-size: 1.35rem;
+              .outer-circle-quote,
+              .outer-circle-body {
+                font-size: inherit;
+                line-height: inherit;
               }
             }
 
@@ -7435,11 +7439,12 @@ transition: none !important;
                                 const enter = clamp(local / 0.34);
                                 const leave = clamp((local - 0.68) / 0.32);
                                 const shouldStayCentered = copy.classList.contains('frame-center');
+                                const shouldCenterOnMobile = window.matchMedia('(max-width: 768px)').matches;
                                 const y = shouldStayCentered
                                     ? 86 - (enter * 86)
                                     : 86 - (enter * 86) - (leave * 86);
                                 const isCurrentOrMoving = local >= 0 && (shouldStayCentered ? local <= 1 : local < 1);
-								const translate = (copy.classList.contains('quote-center') || copy.classList.contains('frame-center'))
+								const translate = (shouldCenterOnMobile || copy.classList.contains('quote-center') || copy.classList.contains('frame-center'))
 								    ? `translate(-50%, calc(-50% + ${y}vh))`
 								    : `translateY(calc(-50% + ${y}vh))`;
 								
