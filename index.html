@@ -4902,6 +4902,289 @@ transition: none !important;
     word-break: keep-all !important;
     overflow-wrap: anywhere !important;
   }
+
+  @media (max-width: 560px) {
+    #democracyTimelineSection.groupmate-inline-timeline {
+      --face-w: min(100vw, 430px) !important;
+      --face-h: min(65vh, 606px) !important;
+      --carousel-x: calc(-50% - 7px) !important;
+      --carousel-y: -39% !important;
+      --timeline-prism-title-size: clamp(2.1rem, 8.4vw, 2.28rem) !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .expanded-panel.is-open,
+    #democracyTimelineSection.groupmate-inline-timeline .timeline-module.is-expanded .expanded-panel {
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+      overscroll-behavior: none !important;
+      touch-action: none !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .expanded-background::before {
+      inset: auto auto 11vh -5vw !important;
+      font-size: 28vw !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .expanded-topbar {
+      flex: 0 0 auto !important;
+      position: relative !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: .38rem !important;
+      padding: max(6.1rem, calc(env(safe-area-inset-top) + 5.85rem)) .9rem 0 !important;
+      text-align: center !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .expanded-topbar > div {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: .42rem !important;
+      width: min(100%, 24rem) !important;
+      margin-inline: auto !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .expanded-topbar h2 {
+      display: block !important;
+      margin: 0 !important;
+      color: var(--paper) !important;
+      font-size: clamp(1.32rem, 6.1vw, 1.52rem) !important;
+      line-height: 1.25 !important;
+      text-align: center !important;
+      white-space: nowrap !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .expanded-hint {
+      display: block !important;
+      max-width: 21rem !important;
+      margin: 0 auto !important;
+      color: rgba(244, 239, 230, 0.68) !important;
+      font-size: clamp(.84rem, 3.7vw, .98rem) !important;
+      line-height: 1.45 !important;
+      text-align: center !important;
+      white-space: nowrap !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .collapse-button {
+      position: absolute !important;
+      left: .9rem !important;
+      top: max(.7rem, env(safe-area-inset-top)) !important;
+      min-height: 46px !important;
+      padding: .68rem 1.05rem !important;
+      font-size: .94rem !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .stage {
+      flex: 1 1 auto !important;
+      min-height: 0 !important;
+      display: grid !important;
+      place-items: center !important;
+      padding: clamp(1.25rem, 4.8vh, 2.35rem) 0 .05rem !important;
+      overflow: visible !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .side-arrow-button {
+      display: none !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .prism-shell {
+      position: relative !important;
+      width: 100vw !important;
+      height: min(52vh, 408px) !important;
+      min-height: 306px !important;
+      padding: 0 !important;
+      overflow: visible !important;
+      perspective: 1600px !important;
+      perspective-origin: 50% 48% !important;
+      cursor: grab !important;
+      touch-action: none !important;
+      scroll-snap-type: none !important;
+      scrollbar-width: none !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .prism-shell::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .prism-halo {
+      display: block !important;
+      width: 100vw !important;
+      height: min(48vh, 440px) !important;
+      opacity: .5 !important;
+      filter: blur(14px) !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .prism-carousel {
+      position: absolute !important;
+      left: 50% !important;
+      top: 50% !important;
+      display: block !important;
+      width: min(100vw, 430px) !important;
+      height: min(65vh, 606px) !important;
+      margin: 0 !important;
+      gap: 0 !important;
+      transform-style: preserve-3d !important;
+      transform: translate(var(--carousel-x, -50%), var(--carousel-y, -50%)) translateZ(calc(var(--radius) * -1)) rotateY(0deg) !important;
+      transition: transform var(--carousel-duration) cubic-bezier(0.18, 0.72, 0.22, 1) !important;
+      will-change: transform !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .prism-face {
+      position: absolute !important;
+      inset: 0 !important;
+      flex: none !important;
+      width: min(100vw, 430px) !important;
+      height: min(65vh, 606px) !important;
+      min-height: 0 !important;
+      padding: 1.5rem 1.34rem !important;
+      gap: .9rem !important;
+      opacity: 0 !important;
+      filter: none !important;
+      backface-visibility: hidden !important;
+      scroll-snap-align: none !important;
+      overflow: hidden !important;
+      pointer-events: none !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .prism-face.is-active {
+      opacity: 1 !important;
+      filter: none !important;
+      pointer-events: auto !important;
+      z-index: 3 !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .file-pin {
+      top: 1.08rem !important;
+      left: 1.08rem !important;
+      width: 44px !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .event-meta {
+      gap: .72rem !important;
+      font-size: 1.08rem !important;
+      letter-spacing: .03em !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .event-meta::before {
+      width: 15px !important;
+      height: 15px !important;
+      box-shadow: 0 0 0 9px var(--accent-soft) !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .prism-face h3 {
+      padding-right: 2.25rem !important;
+      font-size: var(--timeline-prism-title-size) !important;
+      line-height: 1.12 !important;
+      white-space: nowrap !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .prism-face h3 .event-title-prefix {
+      font-size: .86em !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .prism-face h3 .event-title-main {
+      font-size: 1em !important;
+      white-space: nowrap !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .event-copy {
+      font-size: 1.24rem !important;
+      line-height: 1.54 !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .event-image,
+    #democracyTimelineSection.groupmate-inline-timeline .prism-face.is-compact-copy .event-image {
+      height: clamp(138px, 22vh, 205px) !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .event-source {
+      font-size: .82rem !important;
+      right: .74rem !important;
+      bottom: .7rem !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .prism-face::after {
+      top: 1.05rem !important;
+      right: 1rem !important;
+      font-size: .9rem !important;
+      letter-spacing: .42em !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .rotate-status {
+      display: block !important;
+      position: absolute !important;
+      left: .55rem !important;
+      top: auto !important;
+      bottom: 4.45rem !important;
+      font-size: .82rem !important;
+      white-space: nowrap !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .event-controls {
+      position: relative !important;
+      flex: 0 0 auto !important;
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) !important;
+      align-items: center !important;
+      gap: 0 !important;
+      width: 100% !important;
+      min-height: clamp(8.9rem, 24vh, 12.5rem) !important;
+      margin: clamp(2.4rem, 8vh, 4.2rem) 0 0 !important;
+      padding: 0 .55rem max(.55rem, env(safe-area-inset-bottom)) !important;
+      align-content: end !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .mini-nav-wrap {
+      width: 100% !important;
+      min-width: 0 !important;
+      padding: .35rem 0 .15rem !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .mini-nav {
+      min-width: 760px !important;
+      grid-template-columns: repeat(9, minmax(64px, 1fr)) !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .mini-nav::before {
+      top: 17px !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .nav-button {
+      min-height: 58px !important;
+      gap: .25rem !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .nav-dot {
+      margin-top: 11px !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .nav-button.is-active .nav-dot {
+      margin-top: 8px !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .nav-date {
+      font-size: .78rem !important;
+      white-space: nowrap !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .nav-title {
+      font-size: .72rem !important;
+      white-space: nowrap !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .arrow-group {
+      display: none !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .arrow-button {
+      width: 36px !important;
+      height: 36px !important;
+      font-size: 1rem !important;
+    }
+  }
 </style>
 
 <!-- Codex RWD global fix: 補強不同桌機寬度、平板、手機的全站響應式 -->
@@ -5655,7 +5938,7 @@ transition: none !important;
 <div class="expanded-topbar">
 <div>
 <h2>白色恐怖大事記：1949至今</h2>
-<p class="expanded-hint">左右拖曳，或點選兩側與下方按鍵，九張檔案卡會像九角柱一樣轉動；背景視覺會隨事件切換。</p>
+<p class="expanded-hint">左右滑動，以切換事件檔案卡。</p>
 </div>
 <button class="collapse-button" id="collapseButton" type="button">收起時間軸</button>
 </div>
@@ -5666,9 +5949,9 @@ transition: none !important;
 <div aria-hidden="true" class="prism-halo"></div>
 <div class="prism-carousel" id="prismCarousel"></div>
 </div>
-<div class="rotate-status" id="rotateStatus">01 / 09</div>
 </div>
 <div class="event-controls">
+<div class="rotate-status" id="rotateStatus">01 / 09</div>
 <div aria-label="事件節點導覽" class="mini-nav-wrap">
 <div class="mini-nav" id="miniNav"></div>
 </div>
@@ -5693,6 +5976,9 @@ transition: none !important;
         tabletBreakpoint: 860,
         tabletFaceWidth: "min(620px, 76vw)",
         tabletFaceHeight: "510px",
+        mobileBreakpoint: 560,
+        mobileFaceWidth: "min(100vw, 430px)",
+        mobileFaceHeight: "min(65vh, 606px)",
         initialRadius: "940px"
       },
       assets: {
@@ -5706,7 +5992,7 @@ transition: none !important;
         "--priority-1-compact-dot-size": "36px",
         "--priority-1-compact-dot-margin-top": "0px",
         "--priority-1-nav-dot-size": "14px",
-        "--timeline-prism-title-size": "clamp(1.55rem, 2.45vw, 2.2rem)",
+        "--timeline-prism-title-size": "clamp(2.1rem, 8.4vw, 2.28rem)",
         "--priority-1-title-size": "var(--timeline-prism-title-size)",
         "--priority-2-compact-opacity": "1",
         "--priority-2-compact-dot-size": "26px",
@@ -5942,11 +6228,17 @@ transition: none !important;
       mobileScrollFrame: 0,
       introFrame: 0,
       lockedScrollY: 0,
+      detailTouchStartX: 0,
+      detailTouchStartY: 0,
+      detailPointerStartX: 0,
+      detailPointerStartY: 0,
+      isDetailPointerDown: false,
       previousBodyPosition: "",
       previousBodyTop: "",
       previousBodyLeft: "",
       previousBodyRight: "",
       previousBodyWidth: "",
+      previousBodyOverflow: "",
       previousHtmlOverflow: ""
     };
 
@@ -5976,15 +6268,24 @@ transition: none !important;
     }
 
     function applyResponsiveLayoutVars() {
+      const isMobileWidth = window.innerWidth <= CONFIG.layout.mobileBreakpoint;
       const isTabletWidth = window.innerWidth <= CONFIG.layout.tabletBreakpoint;
 
       DOM.module.style.setProperty(
         "--face-w",
-        isTabletWidth ? CONFIG.layout.tabletFaceWidth : CONFIG.layout.desktopFaceWidth
+        isMobileWidth
+          ? CONFIG.layout.mobileFaceWidth
+          : isTabletWidth
+            ? CONFIG.layout.tabletFaceWidth
+            : CONFIG.layout.desktopFaceWidth
       );
       DOM.module.style.setProperty(
         "--face-h",
-        isTabletWidth ? CONFIG.layout.tabletFaceHeight : CONFIG.layout.desktopFaceHeight
+        isMobileWidth
+          ? CONFIG.layout.mobileFaceHeight
+          : isTabletWidth
+            ? CONFIG.layout.tabletFaceHeight
+            : CONFIG.layout.desktopFaceHeight
       );
     }
 
@@ -6249,11 +6550,21 @@ transition: none !important;
       state.lockedScrollY = window.scrollY || document.documentElement.scrollTop || 0;
       state.previousHtmlOverflow = document.documentElement.style.overflow;
       state.previousBodyOverflow = document.body.style.overflow;
+      state.previousBodyPosition = document.body.style.position;
+      state.previousBodyTop = document.body.style.top;
+      state.previousBodyLeft = document.body.style.left;
+      state.previousBodyRight = document.body.style.right;
+      state.previousBodyWidth = document.body.style.width;
 
       document.documentElement.classList.add("detail-open");
       document.body.classList.add("detail-open");
       document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${state.lockedScrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.width = "100%";
     }
 
     function unlockPageScrollForTimelineDetail() {
@@ -6267,6 +6578,11 @@ transition: none !important;
       document.body.classList.remove("detail-open");
       document.documentElement.style.overflow = state.previousHtmlOverflow || "";
       document.body.style.overflow = state.previousBodyOverflow || "";
+      document.body.style.position = state.previousBodyPosition || "";
+      document.body.style.top = state.previousBodyTop || "";
+      document.body.style.left = state.previousBodyLeft || "";
+      document.body.style.right = state.previousBodyRight || "";
+      document.body.style.width = state.previousBodyWidth || "";
       window.scrollTo(0, returnY);
       document.documentElement.scrollTop = returnY;
       document.body.scrollTop = returnY;
@@ -6334,13 +6650,6 @@ transition: none !important;
       const normalized = clamp(index, 0, events.length - 1);
 
       updateActiveEvent(normalized);
-
-      if (isMobileLayout()) {
-        if (DOM.module.classList.contains("is-expanded")) {
-          scrollToMobileCard(normalized, instant);
-        }
-        return;
-      }
 
       if (instant) DOM.prismCarousel.style.transition = "none";
       setCarouselRotation(-normalized * state.step);
@@ -6422,7 +6731,7 @@ transition: none !important;
 
     function setCarouselRotation(rotation) {
       state.currentRotation = rotation;
-      DOM.prismCarousel.style.transform = `translate(-50%, -50%) translateZ(calc(var(--radius) * -1)) rotateY(${rotation}deg)`;
+      DOM.prismCarousel.style.transform = `translate(var(--carousel-x, -50%), var(--carousel-y, -50%)) translateZ(calc(var(--radius) * -1)) rotateY(${rotation}deg)`;
     }
 
     function nearestIndexFromRotation(rotation) {
@@ -6502,17 +6811,19 @@ transition: none !important;
     }
 
     function startDrag(event) {
-      if (isMobileLayout()) return;
-
       state.isDragging = true;
       state.dragStartX = event.clientX;
       state.dragStartRotation = state.currentRotation;
       DOM.prismShell.classList.add("is-dragging");
+      event.preventDefault();
+      event.stopPropagation();
       DOM.prismShell.setPointerCapture(event.pointerId);
     }
 
     function moveDrag(event) {
       if (!state.isDragging) return;
+      event.preventDefault();
+      event.stopPropagation();
       handleDragMove(event.clientX);
     }
 
@@ -6526,14 +6837,92 @@ transition: none !important;
       goToEvent(snapIndex);
     }
 
+    function handleDetailTouchStart(event) {
+      if (!DOM.module.classList.contains("is-expanded")) return;
+      const touch = event.touches && event.touches[0];
+      if (!touch) return;
+      state.detailTouchStartX = touch.clientX;
+      state.detailTouchStartY = touch.clientY;
+    }
+
+    function containTimelineDetailGesture(event) {
+      if (!DOM.module.classList.contains("is-expanded")) return;
+
+      const touch = event.touches && event.touches[0];
+      const target = event.target;
+      const isPrismDragArea = target && target.closest && target.closest(".prism-shell");
+      const isTimelineNav = target && target.closest && target.closest(".mini-nav-wrap");
+
+      if (touch && (isPrismDragArea || isTimelineNav)) {
+        const dx = Math.abs(touch.clientX - state.detailTouchStartX);
+        const dy = Math.abs(touch.clientY - state.detailTouchStartY);
+        if (dx > dy) return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      if (typeof event.stopImmediatePropagation === "function") {
+        event.stopImmediatePropagation();
+      }
+    }
+
+    function handleDetailPointerStart(event) {
+      if (!DOM.module.classList.contains("is-expanded")) return;
+      state.isDetailPointerDown = true;
+      state.detailPointerStartX = event.clientX;
+      state.detailPointerStartY = event.clientY;
+    }
+
+    function containTimelineDetailPointerMove(event) {
+      if (!DOM.module.classList.contains("is-expanded")) return;
+      if (!state.isDetailPointerDown) return;
+
+      const target = event.target;
+      const isPrismDragArea = target && target.closest && target.closest(".prism-shell");
+      const isTimelineNav = target && target.closest && target.closest(".mini-nav-wrap");
+      const dx = Math.abs(event.clientX - state.detailPointerStartX);
+      const dy = Math.abs(event.clientY - state.detailPointerStartY);
+
+      if ((isPrismDragArea || isTimelineNav) && dx > dy) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+      if (typeof event.stopImmediatePropagation === "function") {
+        event.stopImmediatePropagation();
+      }
+    }
+
+    function handleDetailPointerEnd() {
+      state.isDetailPointerDown = false;
+    }
+
+    function containTimelineDetailWheel(event) {
+      if (!DOM.module.classList.contains("is-expanded")) return;
+      const target = event.target;
+      const isTimelineNav = target && target.closest && target.closest(".mini-nav-wrap");
+
+      if (isTimelineNav && Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
     // ==============================
     // Events Binding
     // ==============================
     function bindEvents() {
       DOM.expandButton.addEventListener("click", () => openTimeline(0));
       DOM.collapseButton.addEventListener("click", closeTimeline);
-      DOM.expandedPanel.addEventListener("wheel", (event) => event.stopPropagation(), { passive: true });
-      DOM.expandedPanel.addEventListener("touchmove", (event) => event.stopPropagation(), { passive: true });
+      DOM.expandedPanel.addEventListener("touchstart", handleDetailTouchStart, { passive: true });
+      DOM.expandedPanel.addEventListener("touchmove", containTimelineDetailGesture, { passive: false });
+      DOM.expandedPanel.addEventListener("wheel", containTimelineDetailWheel, { passive: false });
+      window.addEventListener("pointerdown", handleDetailPointerStart, { passive: true, capture: true });
+      window.addEventListener("pointermove", containTimelineDetailPointerMove, { passive: false, capture: true });
+      window.addEventListener("pointerup", handleDetailPointerEnd, { passive: true, capture: true });
+      window.addEventListener("pointercancel", handleDetailPointerEnd, { passive: true, capture: true });
+      window.addEventListener("touchstart", handleDetailTouchStart, { passive: true, capture: true });
+      window.addEventListener("touchmove", containTimelineDetailGesture, { passive: false, capture: true });
+      window.addEventListener("wheel", containTimelineDetailWheel, { passive: false, capture: true });
       DOM.prevButton.addEventListener("click", () => goToEvent(state.activeIndex - 1));
       DOM.nextButton.addEventListener("click", () => goToEvent(state.activeIndex + 1));
       DOM.sidePrevButton.addEventListener("click", () => goToEvent(state.activeIndex - 1));
@@ -6547,6 +6936,7 @@ transition: none !important;
 
       DOM.prismShell.addEventListener("scroll", () => {
         if (!isMobileLayout()) return;
+        if (DOM.module.classList.contains("is-expanded")) return;
 
         cancelAnimationFrame(state.mobileScrollFrame);
         state.mobileScrollFrame = requestAnimationFrame(syncActiveIndexFromMobileScroll);
@@ -6679,7 +7069,7 @@ transition: none !important;
     <section id="page-4-quiz-container" class="section-divider-line section-view hidden min-h-screen flex-col items-center py-14 md:py-20 px-3 md:px-6 z-10">
         <header class="max-w-3xl text-center mb-4 md:mb-6 px-4 shrink-0">
             <h2 class="serif-title text-3xl md:text-5xl font-bold text-gray-800 leading-tight whitespace-nowrap mb-6">你對白色恐怖了解多少？</h2>
-            <p class="text-sm md:text-base text-stone-600 leading-relaxed">以下題目挑選自〈青年對白恐時期之認知問卷調查〉，作答後將顯示解答，以及問卷中有多少填答者和你做出相同選擇。</p>
+            <p class="text-sm md:text-base text-stone-600 leading-relaxed">題目挑選自〈青年對白恐時期之認知問卷調查〉，作答後將顯示解答，以及問卷中有多少填答者和你做出相同選擇。</p>
         </header>
 
         <div id="quiz-list" class="quiz-list"></div>
@@ -12323,8 +12713,12 @@ transition: none !important;
 
             let articleReturnTouchStartY = 0;
             let articleReturnTouchStartedAtTop = false;
+            const isTimelineDetailOpen = () =>
+                document.documentElement.classList.contains('detail-open') ||
+                document.body.classList.contains('detail-open');
 
             window.addEventListener('touchstart', event => {
+                if (isTimelineDetailOpen()) return;
                 const articlePage = pages[3];
                 if (!articlePage || articlePage.classList.contains('hidden')) return;
                 articleReturnTouchStartY = event.touches[0]?.clientY || 0;
@@ -12332,6 +12726,7 @@ transition: none !important;
             }, { passive: true });
 
             window.addEventListener('touchmove', event => {
+                if (isTimelineDetailOpen()) return;
                 const articlePage = pages[3];
                 if (!articlePage || articlePage.classList.contains('hidden')) return;
                 if (!articleReturnTouchStartedAtTop || window.scrollY > 12) return;
@@ -12342,6 +12737,10 @@ transition: none !important;
             }, { passive: false });
 
             window.addEventListener('touchend', event => {
+                if (isTimelineDetailOpen()) {
+                    articleReturnTouchStartedAtTop = false;
+                    return;
+                }
                 const articlePage = pages[3];
                 if (!articlePage || articlePage.classList.contains('hidden')) return;
                 if (!articleReturnTouchStartedAtTop || window.scrollY > 12) return;
@@ -12372,6 +12771,7 @@ transition: none !important;
             });
 
             window.addEventListener('wheel', event => {
+                if (isTimelineDetailOpen()) return;
                 const articlePage = pages[3];
                 if (!articlePage || articlePage.classList.contains('hidden')) return;
                 if (event.deltaY >= 0 || window.scrollY > 12) return;
