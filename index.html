@@ -899,6 +899,7 @@ display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: flex-end;
+      container-type: inline-size;
 }
 
 #democracyTimelineSection.groupmate-inline-timeline .intro-copy-rail {
@@ -974,9 +975,11 @@ position: relative;
       display: grid;
       grid-template-rows: auto minmax(0, 1fr) auto;
       gap: clamp(14px, 1.65vw, 22px);
-      width: min(100%, 860px, calc(var(--intro-card-height) * 1.5));
-      height: auto;
-      aspect-ratio: 4.5 / 3.2;
+      /* 維持右側定位，只由左側縮窄卡片，不改動左方敘事文字欄。 */
+      width: min(calc(100% - clamp(108px, 8vw, 140px)), 860px, calc(var(--intro-card-height) * 1.5));
+      /* 高度仍依縮窄前的欄位寬度計算，不隨目前卡片寬度連動。 */
+      height: min(71.111cqi, 611.56px, calc(var(--intro-card-height) * 1.066667));
+      aspect-ratio: auto;
       min-height: 0;
       padding: clamp(22px, 2.6vw, 30px);
       border-radius: 26px;
@@ -1040,7 +1043,7 @@ margin: 10px 0 0;
       color: rgba(244, 239, 230, 0.7);
       font-size: clamp(0.82rem, 0.92vw, 0.98rem);
       line-height: 1.54;
-      white-space: nowrap;
+      white-space: normal;
       position: relative;
       z-index: 2;
 }
@@ -1703,10 +1706,6 @@ position: relative;
       padding: 0 clamp(20px, 4vw, 54px) 28px;
 }
 
-#democracyTimelineSection.groupmate-inline-timeline .arrow-group {
-display: flex; gap: 8px;
-}
-
 #democracyTimelineSection.groupmate-inline-timeline .arrow-button {
 border-radius: 99px;
       width: 42px;
@@ -1963,10 +1962,6 @@ flex-direction: column-reverse;
         padding-inline: 18px;
 }
 
-#democracyTimelineSection.groupmate-inline-timeline .arrow-group {
-justify-content: center;
-}
-
 #democracyTimelineSection.groupmate-inline-timeline .mini-nav {
 min-width: 820px;
 }
@@ -2146,7 +2141,8 @@ transition: none !important;
             opacity: 0;
             transform: translateY(18px);
             pointer-events: none;
-            overflow: hidden;
+            /* 讓文字雲卡片的陰影完整顯示，與甜甜圈圖卡片一致。 */
+            overflow: visible;
             background: transparent;
             border-radius: 0;
             box-shadow: none;
@@ -5200,10 +5196,6 @@ transition: none !important;
       white-space: nowrap !important;
     }
 
-    #democracyTimelineSection.groupmate-inline-timeline .arrow-group {
-      display: none !important;
-    }
-
     #democracyTimelineSection.groupmate-inline-timeline .arrow-button {
       width: 36px !important;
       height: 36px !important;
@@ -5251,7 +5243,7 @@ transition: none !important;
     }
 
     #democracyTimelineSection.groupmate-inline-timeline .intro-timeline-card {
-      width: min(100%, 760px, calc(var(--intro-card-height) * 1.5));
+      width: min(calc(100% - clamp(84px, 8vw, 112px)), 760px, calc(var(--intro-card-height) * 1.5));
     }
 
     .approach-door-grid {
@@ -5985,10 +5977,6 @@ transition: none !important;
 <div aria-label="事件節點導覽" class="mini-nav-wrap">
 <div class="mini-nav" id="miniNav"></div>
 </div>
-<div aria-label="切換事件" class="arrow-group">
-<button aria-label="上一個事件" class="arrow-button" id="prevButton" type="button">←</button>
-<button aria-label="下一個事件" class="arrow-button" id="nextButton" type="button">→</button>
-</div>
 </div>
 </div>
 </section>
@@ -6241,8 +6229,6 @@ transition: none !important;
       prismShell: document.getElementById("prismShell"),
       prismCarousel: document.getElementById("prismCarousel"),
       miniNav: document.getElementById("miniNav"),
-      prevButton: document.getElementById("prevButton"),
-      nextButton: document.getElementById("nextButton"),
       sidePrevButton: document.getElementById("sidePrevButton"),
       sideNextButton: document.getElementById("sideNextButton"),
       rotateStatus: document.getElementById("rotateStatus")
@@ -6723,22 +6709,13 @@ transition: none !important;
         button.classList.toggle("is-active", buttonIndex === state.activeIndex);
       });
 
-      const prevButtons = [DOM.prevButton, DOM.sidePrevButton];
-      const nextButtons = [DOM.nextButton, DOM.sideNextButton];
       const isAtStart = state.activeIndex === 0;
       const isAtEnd = state.activeIndex === events.length - 1;
 
-      prevButtons.forEach((button) => {
-        if (!button) return;
-        button.disabled = isAtStart;
-        button.style.opacity = isAtStart ? 0.42 : 1;
-      });
-
-      nextButtons.forEach((button) => {
-        if (!button) return;
-        button.disabled = isAtEnd;
-        button.style.opacity = isAtEnd ? 0.42 : 1;
-      });
+      DOM.sidePrevButton.disabled = isAtStart;
+      DOM.sidePrevButton.style.opacity = isAtStart ? 0.42 : 1;
+      DOM.sideNextButton.disabled = isAtEnd;
+      DOM.sideNextButton.style.opacity = isAtEnd ? 0.42 : 1;
 
       DOM.rotateStatus.textContent = `${String(state.activeIndex + 1).padStart(2, "0")} / ${String(events.length).padStart(2, "0")}`;
     }
@@ -6949,8 +6926,6 @@ transition: none !important;
       window.addEventListener("touchstart", handleDetailTouchStart, { passive: true, capture: true });
       window.addEventListener("touchmove", containTimelineDetailGesture, { passive: false, capture: true });
       window.addEventListener("wheel", containTimelineDetailWheel, { passive: false, capture: true });
-      DOM.prevButton.addEventListener("click", () => goToEvent(state.activeIndex - 1));
-      DOM.nextButton.addEventListener("click", () => goToEvent(state.activeIndex + 1));
       DOM.sidePrevButton.addEventListener("click", () => goToEvent(state.activeIndex - 1));
       DOM.sideNextButton.addEventListener("click", () => goToEvent(state.activeIndex + 1));
 
