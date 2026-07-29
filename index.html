@@ -5341,14 +5341,14 @@ transition: none !important;
     }
 
     #approach-selector {
-      height: 100dvh !important;
-      min-height: 100dvh !important;
-      max-height: 100dvh !important;
+      height: 100svh !important;
+      min-height: 100svh !important;
+      max-height: 100svh !important;
       overflow: hidden !important;
     }
 
     #approach-selector .approach-selector-heading {
-      top: clamp(2.4rem, 6vh, 4rem) !important;
+      top: clamp(2.4rem, 6svh, 4rem) !important;
       padding-inline: clamp(1rem, 4vw, 2rem);
     }
 
@@ -5361,13 +5361,13 @@ transition: none !important;
     .approach-door-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
       width: min(96vw, 640px) !important;
-      bottom: clamp(1.2rem, 3vh, 2rem) !important;
+      bottom: clamp(1.2rem, 3svh, 2rem) !important;
       gap: clamp(.62rem, 2vw, .95rem) clamp(.45rem, 1.9vw, .8rem) !important;
       padding-inline: 0 !important;
     }
 
     .approach-door-card {
-      width: min(100%, 11.7rem, 26vh) !important;
+      width: min(100%, 11.7rem, 26svh) !important;
     }
 
     .approach-door-label {
@@ -5721,7 +5721,7 @@ transition: none !important;
     }
 
     #approach-selector .approach-selector-heading {
-      top: clamp(1.7rem, 4vh, 2.4rem) !important;
+      top: clamp(1.7rem, 4svh, 2.4rem) !important;
       gap: .5rem !important;
     }
 
@@ -5736,17 +5736,17 @@ transition: none !important;
 
     .approach-door-grid {
       width: min(96vw, 390px) !important;
-      bottom: clamp(2.8rem, 6vh, 3.8rem) !important;
-      transform: translate(-50%, clamp(3.2rem, 7vh, 4.6rem)) !important;
+      bottom: clamp(2.8rem, 6svh, 3.8rem) !important;
+      transform: translate(-50%, clamp(3.2rem, 7svh, 4.6rem)) !important;
       gap: .55rem .5rem !important;
     }
 
     .approach-door-card {
-      width: min(100%, 9.25rem, 24vh) !important;
+      width: min(100%, 9.25rem, 24svh) !important;
     }
 
     #approach-selector .approach-door-card:nth-child(-n + 2) {
-      top: clamp(1.8rem, 5vh, 3.4rem) !important;
+      top: clamp(1.8rem, 5svh, 3.4rem) !important;
     }
 
     .approach-door-label {
@@ -5755,7 +5755,7 @@ transition: none !important;
     }
 
     #unlocked-arrow-indicator {
-      bottom: clamp(.5rem, 2vh, 1rem) !important;
+      bottom: clamp(.5rem, 2svh, 1rem) !important;
     }
 
     #page-10-perspective-five {
@@ -5792,7 +5792,7 @@ transition: none !important;
     }
 
     .approach-door-card {
-      width: min(100%, 8.85rem, 23.5vh) !important;
+      width: min(100%, 8.85rem, 23.5svh) !important;
     }
   }
 </style>
@@ -8917,15 +8917,27 @@ transition: none !important;
                     font-size: clamp(1rem, 3.2vw, 1.15rem) !important;
                     line-height: 1.65 !important;
                 }
+                #page-approach-1 .culture-entry-scroll-hint {
+                    bottom: clamp(13rem, 32svh, 15rem) !important;
+                }
                 #page-approach-1 #culture-film-panel .film-scroll-hint {
                     transform: translateY(.9rem) !important;
+                    font-size: .9rem !important;
+                    line-height: 1.3 !important;
+                }
+                #page-approach-1 #culture-film-panel .film-carousel {
+                    transform: translateY(-2rem) !important;
+                }
+                #page-approach-1 #culture-film-panel .film-progress-track {
+                    bottom: 1.15rem !important;
+                    transform: translateX(-50%) !important;
                 }
                 #page-approach-1 #culture-film-panel .film-scroll-detail {
                     display: grid !important;
                     grid-template-columns: minmax(0, 1fr) !important;
                     grid-template-rows: minmax(0, 1fr) 2.7rem !important;
                     width: 100% !important;
-                    height: calc(100% + .65rem) !important;
+                    height: calc(100% + 3.25rem) !important;
                     min-height: 0 !important;
                     max-height: none !important;
                     margin: 0 !important;
@@ -8949,31 +8961,31 @@ transition: none !important;
                 }
                 #page-approach-1 #culture-film-panel #film-meta {
                     margin-bottom: .1rem !important;
-                    font-size: .68rem !important;
+                    font-size: .82rem !important;
                     line-height: 1.2 !important;
                 }
                 #page-approach-1 #culture-film-panel #film-title {
                     margin-bottom: .28rem !important;
-                    font-size: clamp(1.05rem, 5.2vw, 1.28rem) !important;
+                    font-size: clamp(1.28rem, 5.9vw, 1.5rem) !important;
                     line-height: 1.18 !important;
                 }
                 #page-approach-1 #culture-film-panel .film-detail-label {
                     margin: .22rem 0 .12rem !important;
-                    font-size: .63rem !important;
+                    font-size: .78rem !important;
                     line-height: 1.2 !important;
                 }
                 #page-approach-1 #culture-film-panel #film-desc,
                 #page-approach-1 #culture-film-panel #film-youth {
                     margin-bottom: .24rem !important;
-                    font-size: clamp(.68rem, 2.75vw, .76rem) !important;
-                    line-height: 1.42 !important;
+                    font-size: clamp(.84rem, 3.35vw, .94rem) !important;
+                    line-height: 1.5 !important;
                     text-align: left !important;
                 }
                 #page-approach-1 #culture-film-panel #film-sources {
                     display: -webkit-box;
                     margin-top: .18rem !important;
                     overflow: hidden;
-                    font-size: .6rem !important;
+                    font-size: .7rem !important;
                     line-height: 1.3 !important;
                     -webkit-box-orient: vertical;
                     -webkit-line-clamp: 2;
