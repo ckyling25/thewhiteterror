@@ -8809,7 +8809,7 @@ transition: none !important;
             }
             #page-approach-1 .culture-entry-scroll-hint {
                 z-index: 118;
-                color: #9ca3af;
+                color: #000;
                 opacity: 1;
                 transition: opacity .22s ease;
             }
@@ -8916,6 +8916,91 @@ transition: none !important;
                     padding: .95rem 1.05rem !important;
                     font-size: clamp(1rem, 3.2vw, 1.15rem) !important;
                     line-height: 1.65 !important;
+                }
+                #page-approach-1 #culture-film-panel .film-scroll-hint {
+                    transform: translateY(.9rem) !important;
+                }
+                #page-approach-1 #culture-film-panel .film-scroll-detail {
+                    display: grid !important;
+                    grid-template-columns: minmax(0, 1fr) !important;
+                    grid-template-rows: minmax(0, 1fr) 2.7rem !important;
+                    width: 100% !important;
+                    height: calc(100% + .65rem) !important;
+                    min-height: 0 !important;
+                    max-height: none !important;
+                    margin: 0 !important;
+                    padding: .48rem !important;
+                    row-gap: .42rem !important;
+                    overflow: hidden !important;
+                    transform: none !important;
+                    align-self: end !important;
+                    border-radius: .8rem;
+                }
+                #page-approach-1 #culture-film-panel .film-detail-copy {
+                    min-height: 0 !important;
+                    padding: .35rem .48rem !important;
+                    overflow-x: hidden !important;
+                    overflow-y: auto !important;
+                    justify-content: flex-start !important;
+                    overscroll-behavior: contain;
+                    -webkit-overflow-scrolling: touch;
+                    scrollbar-width: thin;
+                    scrollbar-color: rgba(74, 85, 104, .38) transparent;
+                }
+                #page-approach-1 #culture-film-panel #film-meta {
+                    margin-bottom: .1rem !important;
+                    font-size: .68rem !important;
+                    line-height: 1.2 !important;
+                }
+                #page-approach-1 #culture-film-panel #film-title {
+                    margin-bottom: .28rem !important;
+                    font-size: clamp(1.05rem, 5.2vw, 1.28rem) !important;
+                    line-height: 1.18 !important;
+                }
+                #page-approach-1 #culture-film-panel .film-detail-label {
+                    margin: .22rem 0 .12rem !important;
+                    font-size: .63rem !important;
+                    line-height: 1.2 !important;
+                }
+                #page-approach-1 #culture-film-panel #film-desc,
+                #page-approach-1 #culture-film-panel #film-youth {
+                    margin-bottom: .24rem !important;
+                    font-size: clamp(.68rem, 2.75vw, .76rem) !important;
+                    line-height: 1.42 !important;
+                    text-align: left !important;
+                }
+                #page-approach-1 #culture-film-panel #film-sources {
+                    display: -webkit-box;
+                    margin-top: .18rem !important;
+                    overflow: hidden;
+                    font-size: .6rem !important;
+                    line-height: 1.3 !important;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 2;
+                }
+                #page-approach-1 #culture-film-panel .film-trailer-card {
+                    order: initial !important;
+                    display: grid !important;
+                    place-items: center;
+                    width: 100% !important;
+                    height: 2.7rem !important;
+                    min-height: 2.7rem !important;
+                    max-height: none !important;
+                    aspect-ratio: auto !important;
+                    align-self: end !important;
+                    border-radius: .55rem;
+                    background: linear-gradient(135deg, #151d26, #2d3944);
+                    cursor: pointer;
+                }
+                #page-approach-1 #culture-film-panel .film-trailer-card::before {
+                    content: "▶  點擊觀看本作預告片";
+                    color: #fff;
+                    font-size: .75rem;
+                    font-weight: 800;
+                    letter-spacing: .04em;
+                }
+                #page-approach-1 #culture-film-panel .film-trailer-card iframe {
+                    display: none !important;
                 }
             }
         </style>
