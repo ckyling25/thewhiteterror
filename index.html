@@ -11467,6 +11467,7 @@ transition: none !important;
       let targetTime = 0;
       let renderedTime = 0;
       let panoramaHintResumeTimer = 0;
+      let mobileSwipeStartY = null;
       const panoramaOrientations = new Map();
       const finalHoldStart = 0.86;
 
@@ -11635,6 +11636,30 @@ transition: none !important;
           showScene('gate');
         }
       }, { passive: false });
+      window.addEventListener('touchstart', event => {
+        if (tourOpen || !isSectionVisible() || event.touches.length !== 1) {
+          mobileSwipeStartY = null;
+          return;
+        }
+        mobileSwipeStartY = event.touches[0].clientY;
+      }, { passive: true });
+      window.addEventListener('touchend', event => {
+        if (mobileSwipeStartY === null || tourOpen || !isSectionVisible()) {
+          mobileSwipeStartY = null;
+          return;
+        }
+
+        const touch = event.changedTouches[0];
+        const upwardSwipeDistance = touch ? mobileSwipeStartY - touch.clientY : 0;
+        mobileSwipeStartY = null;
+
+        if (upwardSwipeDistance >= 40 && scrollProgress() >= .985) {
+          showScene('gate');
+        }
+      }, { passive: true });
+      window.addEventListener('touchcancel', () => {
+        mobileSwipeStartY = null;
+      }, { passive: true });
 
       document.querySelectorAll('#jm-tour [data-next-scene]').forEach(button => {
         button.addEventListener('click', () => showScene(button.dataset.nextScene));
