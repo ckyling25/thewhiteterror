@@ -8902,6 +8902,22 @@ transition: none !important;
             #page-approach-1 #culture-film-panel .film-progress-track {
                 transform: translate(-50%, clamp(.65rem, 1.35vh, 1rem)) !important;
             }
+            @media (max-width: 767px) {
+                #page-approach-1 #culture-music-panel {
+                    --music-edge-space: 5.5rem;
+                }
+                #page-approach-1 #culture-music-panel > .max-w-7xl {
+                    transform: translateY(var(--mobile-music-scroll-y, 0px)) !important;
+                }
+                #page-approach-1 .culture-scrolly-copy {
+                    width: min(86vw, 34rem) !important;
+                    max-width: calc(100vw - 2rem) !important;
+                    box-sizing: border-box !important;
+                    padding: .95rem 1.05rem !important;
+                    font-size: clamp(1rem, 3.2vw, 1.15rem) !important;
+                    line-height: 1.65 !important;
+                }
+            }
         </style>
 
         <!-- 文化入口頁內導覽 -->
@@ -9313,6 +9329,29 @@ transition: none !important;
                 const range = (value, start, end) => clamp01((value - start) / Math.max(0.001, end - start));
                 const p = getCultureScrollyProgress();
                 state.scrollHint?.classList.toggle('is-hidden', p > 0.03);
+                const mobileCultureLayout = window.innerWidth < 768;
+                const musicPanel = document.getElementById('culture-music-panel');
+                const musicContent = musicPanel?.querySelector(':scope > .max-w-7xl');
+
+                if (musicPanel && musicContent) {
+                    if (mobileCultureLayout) {
+                        const panelStyle = window.getComputedStyle(musicPanel);
+                        const panelPaddingTop = parseFloat(panelStyle.paddingTop) || 0;
+                        const panelPaddingBottom = parseFloat(panelStyle.paddingBottom) || 0;
+                        const visibleMusicHeight = Math.max(
+                            1,
+                            window.innerHeight - panelPaddingTop - panelPaddingBottom
+                        );
+                        const musicTravel = Math.max(0, musicContent.scrollHeight - visibleMusicHeight);
+                        const musicScrollProgress = range(p, 0.20, 0.31);
+                        musicContent.style.setProperty(
+                            '--mobile-music-scroll-y',
+                            `${-(musicTravel * musicScrollProgress)}px`
+                        );
+                    } else {
+                        musicContent.style.removeProperty('--mobile-music-scroll-y');
+                    }
+                }
 
                 const moveCopy = (key, start, end) => {
                     const copy = state.overlay.querySelector(`[data-culture-copy="${key}"]`);
@@ -9346,15 +9385,17 @@ transition: none !important;
                 const filmFadeIn = range(p, 0.36, 0.62);
                 const musicOpacity = 1 - musicFadeOut;
                 const filmOpacity = filmFadeIn;
+                const musicBlurStart = mobileCultureLayout ? 0.34 : 0.32;
+                const musicInteractiveEnd = mobileCultureLayout ? 0.34 : 0.32;
                 const musicBlur = p < 0.18
                     ? 14 * (1 - range(p, 0.14, 0.20))
-                    : 14 * range(p, 0.32, 0.38);
+                    : 14 * range(p, musicBlurStart, 0.38);
                 const filmBlur = p < 0.62
                     ? 14 * (1 - range(p, 0.58, 0.62))
                     : 14 * range(p, 0.86, 0.88);
                 const safeMusicBlur = Math.min(14, Math.max(0, musicBlur));
                 const safeFilmBlur = Math.min(14, Math.max(0, filmBlur));
-                const musicInteractive = p >= 0.20 && p <= 0.32 && safeMusicBlur < 1.2 && musicOpacity > 0.98;
+                const musicInteractive = p >= 0.20 && p <= musicInteractiveEnd && safeMusicBlur < 1.2 && musicOpacity > 0.98;
                 const filmInteractive = p >= 0.62 && p <= 0.86 && safeFilmBlur < 1.2 && filmOpacity > 0.98;
 
                 if (!musicInteractive) {
