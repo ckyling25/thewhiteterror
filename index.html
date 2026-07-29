@@ -2876,7 +2876,7 @@ transition: none !important;
             .parallax-cloud-panel .circle:nth-child(8) {
                 width: 94px !important;
                 height: 94px !important;
-                left: 207px !important;
+                left: 222px !important;
                 top: 200px !important;
                 z-index: 10;
             }
@@ -11092,6 +11092,9 @@ transition: none !important;
     #page-approach-3 .jm-hint.is-hidden {
       opacity: 0;
     }
+    #page-approach-3 .jm-hint-mobile {
+      display: none;
+    }
     #page-approach-3 .jm-end-card {
       position: absolute;
       left: clamp(1.5rem, 5vw, 4rem);
@@ -11250,6 +11253,11 @@ transition: none !important;
       gap: .16rem;
       transform: translateX(-50%);
       pointer-events: none;
+      transition: opacity .18s ease, visibility .18s ease;
+    }
+    #page-approach-3 .jm-panorama-hint.is-interacting {
+      opacity: 0;
+      visibility: hidden;
     }
     #page-approach-3 .jm-panorama-icon {
       width: clamp(2.2rem, 4.2vw, 3.4rem);
@@ -11294,6 +11302,27 @@ transition: none !important;
         font-weight: 800;
         letter-spacing: .08em;
       }
+      #page-approach-3 .jm-frame,
+      #page-approach-3 .jm-frame.is-fixed,
+      #page-approach-3 .jm-frame.is-ended,
+      #page-approach-3 .jm-video-shell,
+      #page-approach-3 .jm-video {
+        width: 100vw;
+        height: 100dvh;
+      }
+      #page-approach-3 .jm-video {
+        object-fit: cover;
+        object-position: center center;
+      }
+      #page-approach-3 .jm-end-card {
+        bottom: 5rem;
+      }
+      #page-approach-3 .jm-hint-desktop {
+        display: none;
+      }
+      #page-approach-3 .jm-hint-mobile {
+        display: inline;
+      }
       #page-approach-3 .jm-scroll-stage {
         height: 760vh;
         min-height: 680vh;
@@ -11316,7 +11345,7 @@ transition: none !important;
         font-size: .78rem;
       }
       #page-approach-3 .jm-panorama-hint {
-        bottom: calc(1rem + 8.5rem);
+        bottom: calc(1rem + var(--jm-info-height, 8.5rem) + .5rem);
       }
     }
   </style>
@@ -11330,7 +11359,7 @@ transition: none !important;
           <source src="%E7%99%BD%E6%81%90%E6%99%AF%E7%BE%8E%E6%BB%BE%E5%8B%95%E5%9C%B0%E5%9C%96.mp4" type="video/mp4">
         </video>
       </div>
-      <div class="jm-hint" id="jm-hint">滾動滑鼠探索園區</div>
+      <div class="jm-hint" id="jm-hint"><span class="jm-hint-desktop">滾動滑鼠探索園區</span><span class="jm-hint-mobile">滑動探索園區</span></div>
       <div class="jm-end-card" id="jm-end-card">白色恐怖景美紀念園區<br>（原景美看守所）</div>
       <div class="jm-end-scroll-hint" id="jm-end-scroll-hint">向下滑動</div>
     </section>
@@ -11375,6 +11404,7 @@ transition: none !important;
     </article>
   </section>
 
+  <script src="https://static.kuula.io/api.js"></script>
   <script>
     (function() {
       const root = document.getElementById('page-approach-3');
@@ -11395,6 +11425,8 @@ transition: none !important;
       let videoReady = false;
       let targetTime = 0;
       let renderedTime = 0;
+      let panoramaHintResumeTimer = 0;
+      const panoramaOrientations = new Map();
       const finalHoldStart = 0.86;
 
       function clamp(value, min, max) {
@@ -11403,6 +11435,14 @@ transition: none !important;
 
       function getViewportHeight() {
         return window.innerHeight || document.documentElement.clientHeight || 1;
+      }
+
+      function updatePanoramaHintOffsets() {
+        scenes.forEach(scene => {
+          const infoBox = scene.querySelector('.jm-info-box');
+          if (!infoBox || infoBox.offsetHeight <= 0) return;
+          scene.style.setProperty('--jm-info-height', `${Math.ceil(infoBox.offsetHeight)}px`);
+        });
       }
 
       function scrollProgress() {
@@ -11486,6 +11526,10 @@ transition: none !important;
         tour.classList.add('is-active');
         document.body.style.overflow = 'hidden';
         scenes.forEach(scene => scene.classList.toggle('is-active', scene.dataset.scene === id));
+        requestAnimationFrame(updatePanoramaHintOffsets);
+        tour.querySelectorAll('.jm-panorama-hint').forEach(panoramaHint => {
+          panoramaHint.classList.remove('is-interacting');
+        });
         endCard?.classList.remove('is-visible');
         endScrollHint?.classList.remove('is-visible');
         hint?.classList.add('is-hidden');
@@ -11493,15 +11537,53 @@ transition: none !important;
 
       function closeTour() {
         tourOpen = false;
+        window.clearTimeout(panoramaHintResumeTimer);
         tour.classList.remove('is-active');
         document.body.style.overflow = '';
         scenes.forEach(scene => scene.classList.remove('is-active'));
+        tour.querySelectorAll('.jm-panorama-hint').forEach(panoramaHint => {
+          panoramaHint.classList.remove('is-interacting');
+        });
         requestScrollVideoRender();
+      }
+
+      function orientationDelta(current, previous) {
+        const headingDifference = Math.abs(current.heading - previous.heading);
+        const wrappedHeadingDifference = Math.min(headingDifference, 360 - headingDifference);
+        return wrappedHeadingDifference > .08
+          || Math.abs(current.pitch - previous.pitch) > .08
+          || Math.abs(current.zoom - previous.zoom) > .003;
+      }
+
+      if (window.KuulaPlayerAPI?.addEventListener) {
+        window.KuulaPlayerAPI.addEventListener('orientation', event => {
+          const current = {
+            heading: Number(event?.data?.heading),
+            pitch: Number(event?.data?.pitch),
+            zoom: Number(event?.data?.zoom)
+          };
+          if (!tourOpen || !Object.values(current).every(Number.isFinite)) return;
+
+          const frameId = event?.frame || 'active-panorama';
+          const previous = panoramaOrientations.get(frameId);
+          panoramaOrientations.set(frameId, current);
+          if (!previous || !orientationDelta(current, previous)) return;
+
+          const activePanoramaHint = tour.querySelector('.jm-scene.is-active .jm-panorama-hint');
+          if (!activePanoramaHint) return;
+
+          activePanoramaHint.classList.add('is-interacting');
+          window.clearTimeout(panoramaHintResumeTimer);
+          panoramaHintResumeTimer = window.setTimeout(() => {
+            activePanoramaHint.classList.remove('is-interacting');
+          }, 260);
+        });
       }
 
       window.addEventListener('scroll', requestScrollVideoRender, { passive: true });
       window.addEventListener('resize', () => {
         resizeScrollTrack();
+        if (tourOpen) updatePanoramaHintOffsets();
         requestScrollVideoRender();
       });
       window.addEventListener('wheel', event => {
