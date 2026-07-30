@@ -471,6 +471,13 @@
             overflow: hidden;
         }
 
+        html.time-calendar-scroll-locked,
+        body.time-calendar-scroll-locked {
+            height: 100%;
+            overflow: hidden !important;
+            overscroll-behavior: none;
+        }
+
         .time-calendar-scene > .text-center {
             position: relative;
             z-index: 2;
@@ -600,6 +607,11 @@
                 width: clamp(128px, 34vw, 210px);
                 max-width: 42vw;
                 --calendar-end-y: 104vh;
+            }
+
+            .time-calendar-page-4 {
+                --calendar-left: 62%;
+                --calendar-start-x: 0;
             }
         }
 
@@ -5474,7 +5486,7 @@ transition: none !important;
     }
 
     #page-2-story .story-bg-frame img[data-story-bg="5"] {
-      object-position: 62% center;
+      object-position: 90% center;
     }
 
     #page-2-story .story-dialog,
@@ -5853,6 +5865,495 @@ transition: none !important;
     }
   }
 </style>
+
+<!-- Codex mobile fluid layout: only supplement sizes outside the approved iPhone 14 / 14 Pro Max portrait baseline. -->
+<style id="codex-mobile-fluid-layout">
+  @media (max-width: 379px),
+         (min-width: 431px) and (max-width: 767px),
+         (max-width: 767px) and (max-height: 650px) and (orientation: portrait) {
+    :root {
+      --mobile-safe-height: 100svh;
+      --mobile-gutter: clamp(.75rem, 4vw, 1rem);
+      --mobile-safe-top: max(.75rem, env(safe-area-inset-top, 0px));
+      --mobile-safe-bottom: max(.75rem, env(safe-area-inset-bottom, 0px));
+    }
+
+    /* 入口封面：以穩定視窗高度為準，瀏覽器工具列收合時不重新拉動版面。 */
+    #page-1-landing.prison-landing {
+      width: 100vw;
+      height: var(--mobile-safe-height);
+      min-height: var(--mobile-safe-height);
+      max-height: var(--mobile-safe-height);
+      padding: var(--mobile-gutter);
+    }
+
+    #page-1-landing .prison-gate {
+      inset: -115svh 0 auto;
+      height: 112svh;
+    }
+
+    #page-1-landing .prison-hero-title {
+      width: min(100%, 34rem);
+    }
+
+    #page-1-landing .prison-title-image.is-primary {
+      max-width: min(92vw, 34rem);
+    }
+
+    #page-1-landing .prison-title-image.is-secondary {
+      max-width: min(76vw, 28rem);
+    }
+
+    #page-1-landing .prison-scroll-button {
+      bottom: max(clamp(2.5rem, 8svh, 3.35rem), calc(env(safe-area-inset-bottom, 0px) + .75rem));
+    }
+
+    /* 導言故事：對話框依手機寬高縮放，背景仍維持既有裁切焦點。 */
+    #page-2-story {
+      width: 100vw !important;
+      height: var(--mobile-safe-height) !important;
+      min-height: var(--mobile-safe-height) !important;
+      max-height: var(--mobile-safe-height) !important;
+    }
+
+    #page-2-story .story-dialog-wrap {
+      bottom: clamp(2.7rem, 8svh, 4rem) !important;
+      padding-inline: var(--mobile-gutter) !important;
+    }
+
+    #page-2-story #story-dialog-box {
+      width: min(100%, 40rem);
+      padding: clamp(.9rem, 4vw, 1.5rem) !important;
+    }
+
+    #page-2-story #story-text {
+      min-height: clamp(4.5rem, 13svh, 5.65rem) !important;
+      font-size: clamp(.88rem, 3.75vw, 1rem) !important;
+      line-height: 1.72 !important;
+    }
+
+    #page-2-story .story-progress-bar {
+      left: var(--mobile-gutter);
+      right: var(--mobile-gutter);
+      bottom: max(.72rem, env(safe-area-inset-bottom, 0px));
+    }
+
+    #page-2-story .story-final-scroll-hint {
+      bottom: max(clamp(2.4rem, 7svh, 3.4rem), calc(env(safe-area-inset-bottom, 0px) + 1.1rem));
+    }
+
+    /* 倒數與四入口：固定採用 svh，避免網址列／工具列收合造成跳動。 */
+    .time-calendar-scene {
+      min-height: var(--mobile-safe-height) !important;
+    }
+
+    #approach-selector {
+      height: var(--mobile-safe-height) !important;
+      min-height: var(--mobile-safe-height) !important;
+      max-height: var(--mobile-safe-height) !important;
+    }
+
+    /* 時間軸：寬度、卡片高度與展開頁改由實際手機高寬共同決定。 */
+    #democracyTimelineSection.groupmate-inline-timeline .intro-stage,
+    #democracyTimelineSection.groupmate-inline-timeline .survey-stage,
+    #democracyTimelineSection.groupmate-inline-timeline .wordcloud-stage {
+      width: 100% !important;
+      padding: clamp(2rem, 7svh, 3.25rem) var(--mobile-gutter) !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .intro-timeline-window {
+      height: clamp(12.5rem, 34svh, 15.5rem) !important;
+      min-height: clamp(12.5rem, 34svh, 15.5rem) !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline {
+      --timeline-visual-height: 100svh;
+      --face-w: min(100vw, 430px) !important;
+      --face-h: clamp(19rem, 58svh, 32.5rem) !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .expanded-panel.is-open,
+    #democracyTimelineSection.groupmate-inline-timeline .timeline-module.is-expanded .expanded-panel {
+      height: var(--timeline-visual-height) !important;
+      min-height: var(--timeline-visual-height) !important;
+      max-height: var(--timeline-visual-height) !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .expanded-topbar {
+      padding-top: max(clamp(3.8rem, 10svh, 4.4rem), calc(env(safe-area-inset-top, 0px) + 3.5rem)) !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .event-image,
+    #democracyTimelineSection.groupmate-inline-timeline .prism-face.is-compact-copy .event-image {
+      height: clamp(7.5rem, 22svh, 12.8rem) !important;
+    }
+
+    /* 地方空間：影片與全景都鎖定穩定可視高度，資訊框依內容自動調整。 */
+    #page-approach-3 .jm-frame,
+    #page-approach-3 .jm-frame.is-fixed,
+    #page-approach-3 .jm-frame.is-ended,
+    #page-approach-3 .jm-video-shell,
+    #page-approach-3 .jm-video,
+    #page-approach-3 .jm-tour,
+    #page-approach-3 .jm-scene {
+      height: var(--mobile-safe-height) !important;
+      min-height: var(--mobile-safe-height) !important;
+      max-height: var(--mobile-safe-height) !important;
+    }
+
+    #page-approach-3 .jm-info-box {
+      left: var(--mobile-gutter);
+      right: var(--mobile-gutter);
+      bottom: var(--mobile-safe-bottom);
+      width: auto;
+      max-width: none;
+      max-height: min(31svh, 14rem);
+      padding: clamp(.72rem, 3vw, 1rem);
+      overflow-y: auto;
+      font-size: clamp(.82rem, 3.6vw, .98rem);
+      line-height: 1.68;
+    }
+
+    #page-approach-3 .jm-next-control {
+      right: var(--mobile-gutter);
+      bottom: calc(var(--mobile-safe-bottom) + var(--jm-info-height, 8.5rem) + .75rem);
+    }
+
+    #page-approach-3 .jm-panorama-hint {
+      bottom: calc(var(--mobile-safe-bottom) + var(--jm-info-height, 8.5rem) + .55rem);
+    }
+
+    /* 文化作品：三個滿版層統一使用 svh，矮手機再由下方高度斷點收斂。 */
+    #page-approach-1 .culture-sticky-viewport,
+    #page-approach-1 .culture-sticky-viewport.is-fixed,
+    #page-approach-1 .culture-sticky-viewport.is-ended,
+    #page-approach-1 #culture-music-panel,
+    #page-approach-1 #culture-film-panel,
+    #page-approach-1 #culture-film-panel .film-scroll-story,
+    #page-approach-1 #culture-film-panel .film-sticky-stage {
+      height: var(--mobile-safe-height) !important;
+      min-height: var(--mobile-safe-height) !important;
+      max-height: var(--mobile-safe-height) !important;
+    }
+
+    #page-approach-1 .culture-scrolly-copy {
+      width: min(calc(100vw - (var(--mobile-gutter) * 2)), 34rem) !important;
+      max-height: calc(100svh - 8rem);
+      overflow-y: auto;
+    }
+
+    #page-approach-1 #culture-film-panel .film-sticky-stage {
+      padding-left: var(--mobile-gutter) !important;
+      padding-right: var(--mobile-gutter) !important;
+    }
+
+    /* 家書：保持 390px 基準大小，窄手機縮小、寬手機適度放大。 */
+    .letters-section {
+      width: 100vw;
+      min-height: 100svh;
+      padding-inline: var(--mobile-gutter);
+    }
+
+    .letters-exhibit {
+      width: min(calc(100vw - 1rem), 430px) !important;
+      min-height: clamp(700px, calc(115vw + 310px), 820px) !important;
+      padding-inline: clamp(1.6rem, 9vw, 2.9rem) !important;
+    }
+
+    .letters-grid {
+      column-gap: clamp(.35rem, 3vw, .9rem) !important;
+      row-gap: clamp(.35rem, 1.8svh, .8rem) !important;
+      transform: translateY(clamp(1.5rem, 6vw, 2.25rem)) !important;
+    }
+
+    .envelope-card {
+      padding: clamp(.35rem, 2vw, .75rem);
+    }
+
+    .envelope-card img {
+      width: clamp(86px, 28vw, 120px) !important;
+    }
+
+    .detail-view {
+      width: min(100%, 430px) !important;
+      padding: max(1rem, env(safe-area-inset-top, 0px)) var(--mobile-gutter) max(2rem, env(safe-area-inset-bottom, 0px)) !important;
+      gap: clamp(1rem, 4svh, 1.5rem) !important;
+    }
+
+    .panel-photo img {
+      width: min(52vw, 200px) !important;
+    }
+
+    .panel-bio,
+    .panel-intro {
+      padding: clamp(.9rem, 4vw, 1.25rem) !important;
+    }
+  }
+
+  /* 特別矮的直向手機：只壓縮空間，不改內容順序。 */
+  @media (max-width: 767px) and (max-height: 600px) and (orientation: portrait) {
+    #page-1-landing .prison-title-image.is-primary {
+      max-width: min(82vw, 29rem);
+    }
+
+    #page-1-landing .prison-title-image.is-secondary {
+      max-width: min(67vw, 23rem);
+    }
+
+    #page-1-landing .prison-scroll-button {
+      bottom: max(1.15rem, calc(env(safe-area-inset-bottom, 0px) + .45rem));
+      font-size: .8rem;
+    }
+
+    #page-2-story .story-dialog-wrap {
+      bottom: 1.75rem !important;
+    }
+
+    #page-2-story #story-dialog-box {
+      padding: .75rem !important;
+    }
+
+    #page-2-story #story-text {
+      max-height: 30svh;
+      min-height: 3.8rem !important;
+      overflow-y: auto;
+      font-size: .84rem !important;
+      line-height: 1.55 !important;
+    }
+
+    #approach-selector .approach-selector-heading {
+      top: .7rem !important;
+    }
+
+    #approach-selector .approach-selector-heading h2 {
+      font-size: clamp(1.25rem, 6.6vw, 1.65rem) !important;
+    }
+
+    #approach-selector .approach-selector-heading p {
+      font-size: .78rem !important;
+    }
+
+    .approach-door-grid {
+      bottom: .4rem !important;
+      transform: translate(-50%, 1.2rem) !important;
+      gap: .3rem .45rem !important;
+    }
+
+    .approach-door-card {
+      width: min(100%, 6.25rem, 14svh) !important;
+    }
+
+    #approach-selector .approach-door-card:nth-child(-n + 2) {
+      top: .35rem !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline {
+      --face-h: clamp(17rem, 54svh, 19rem) !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .expanded-topbar {
+      padding-top: max(3.4rem, calc(env(safe-area-inset-top, 0px) + 3.1rem)) !important;
+    }
+
+    #page-approach-3 .jm-info-box {
+      max-height: 27svh;
+      font-size: .78rem;
+      line-height: 1.52;
+    }
+
+    #page-approach-3 .jm-next-arrow {
+      width: 3.45rem;
+    }
+
+    #page-approach-3 .jm-panorama-icon {
+      width: 1.9rem;
+    }
+
+    #page-approach-1 #culture-film-panel .film-sticky-stage {
+      grid-template-rows: minmax(1.35rem, 4svh) minmax(7.8rem, 27svh) minmax(0, 1fr) !important;
+      row-gap: .45rem !important;
+      padding-top: .55rem !important;
+      padding-bottom: 2.4rem !important;
+    }
+
+    #page-approach-1 #culture-film-panel .film-carousel {
+      min-height: 0 !important;
+      transform: translateY(-.75rem) !important;
+    }
+
+    #page-approach-1 #culture-film-panel .film-scroll-detail {
+      height: 100% !important;
+    }
+
+    #page-approach-1 #culture-film-panel #film-desc,
+    #page-approach-1 #culture-film-panel #film-youth {
+      font-size: .78rem !important;
+      line-height: 1.42 !important;
+    }
+  }
+
+  /* 極窄手機：保留同一構圖，縮小左右留白與互動物件。 */
+  @media (max-width: 359px) and (orientation: portrait) {
+    #page-1-landing .prison-title-image.is-primary {
+      max-width: 94vw;
+    }
+
+    #page-1-landing .prison-title-image.is-secondary {
+      max-width: 79vw;
+    }
+
+    .approach-door-grid {
+      width: calc(100vw - 1rem) !important;
+      gap: .4rem !important;
+    }
+
+    .approach-door-card {
+      width: min(100%, 8.15rem, 22svh) !important;
+    }
+
+    #democracyTimelineSection.groupmate-inline-timeline .intro-copy-card,
+    #democracyTimelineSection.groupmate-inline-timeline .intro-timeline-card {
+      padding: .9rem !important;
+    }
+
+    #page-approach-3 .jm-info-box {
+      left: .6rem;
+      right: .6rem;
+    }
+
+    .time-calendar-page-4 {
+      --calendar-left: 56%;
+    }
+
+    .letters-exhibit {
+      width: calc(100vw - .5rem) !important;
+      padding-inline: 1.35rem !important;
+    }
+  }
+
+  /* 640px 左右的舊款／小型手機：門片必須再縮短，才能保留標題與副標空間。 */
+  @media (max-width: 767px) and (max-height: 650px) and (orientation: portrait) {
+    #approach-selector .approach-selector-heading {
+      top: .7rem !important;
+    }
+
+    #approach-selector .approach-selector-heading h2 {
+      font-size: clamp(1.2rem, 6.2vw, 1.6rem) !important;
+    }
+
+    #approach-selector .approach-selector-heading p {
+      font-size: .78rem !important;
+    }
+
+    .approach-door-grid {
+      bottom: .35rem !important;
+      transform: translate(-50%, .8rem) !important;
+      gap: .28rem .42rem !important;
+    }
+
+    .approach-door-card,
+    #approach-selector .approach-door-card:nth-child(-n + 2) {
+      top: auto !important;
+      width: min(100%, 7.25rem, 17svh) !important;
+    }
+  }
+
+  @media (max-width: 359px) and (max-height: 600px) and (orientation: portrait) {
+    .approach-door-card,
+    #approach-selector .approach-door-card:nth-child(-n + 2) {
+      width: min(100%, 6.25rem, 14svh) !important;
+    }
+  }
+
+  /* 手機橫向：避免沿用桌機四欄／高卡片造成上下裁切。 */
+  @media (max-width: 900px) and (max-height: 500px) and (orientation: landscape) {
+    #page-1-landing.prison-landing,
+    #page-2-story,
+    #approach-selector {
+      height: 100svh !important;
+      min-height: 100svh !important;
+      max-height: 100svh !important;
+    }
+
+    #page-1-landing .prison-title-image.is-primary {
+      max-width: min(58vw, 31rem);
+    }
+
+    #page-1-landing .prison-title-image.is-secondary {
+      max-width: min(43vw, 23rem);
+    }
+
+    #page-1-landing .prison-scroll-button {
+      bottom: .6rem;
+    }
+
+    #page-2-story .story-dialog-wrap {
+      bottom: .7rem !important;
+      justify-content: flex-end !important;
+    }
+
+    #page-2-story #story-dialog-box {
+      width: min(58vw, 34rem);
+      margin-right: .5rem;
+      padding: .65rem .8rem !important;
+    }
+
+    #page-2-story #story-text {
+      min-height: 2.8rem !important;
+      max-height: 31svh;
+      overflow-y: auto;
+      font-size: .78rem !important;
+      line-height: 1.45 !important;
+    }
+
+    #approach-selector .approach-selector-heading {
+      top: .45rem !important;
+    }
+
+    #approach-selector .approach-selector-heading h2 {
+      font-size: 1.15rem !important;
+    }
+
+    #approach-selector .approach-selector-heading p {
+      font-size: .72rem !important;
+    }
+
+    .approach-door-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+      width: min(94vw, 46rem) !important;
+      bottom: .3rem !important;
+      transform: translateX(-50%) !important;
+    }
+
+    .approach-door-card,
+    #approach-selector .approach-door-card:nth-child(-n + 2) {
+      top: auto !important;
+      width: min(100%, 18vw, 43svh) !important;
+    }
+
+    #page-approach-3 .jm-info-box {
+      max-height: 35svh;
+      width: min(45vw, 28rem);
+      right: auto;
+    }
+
+    #page-approach-1 #culture-film-panel .film-sticky-stage {
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) !important;
+      grid-template-rows: auto minmax(0, 1fr) !important;
+    }
+
+    #page-approach-1 #culture-film-panel .film-scroll-hint {
+      grid-column: 1 / -1;
+    }
+
+    #page-approach-1 #culture-film-panel .film-carousel,
+    #page-approach-1 #culture-film-panel .film-scroll-detail {
+      height: 100% !important;
+      min-height: 0 !important;
+      transform: none !important;
+    }
+  }
+</style>
 </head>
 <body class="antialiased selection:bg-[#9B2C2C]/20 selection:text-[#9B2C2C]">
 
@@ -5904,7 +6405,7 @@ transition: none !important;
         </div>
         
         <!-- 劇情對話框架（下半部 1/4 處） -->
-        <div class="absolute bottom-[8%] w-full flex justify-center z-30 px-4 md:px-8">
+        <div class="story-dialog-wrap absolute bottom-[8%] w-full flex justify-center z-30 px-4 md:px-8">
             <div id="story-dialog-box" class="bg-black/50 border border-gray-700/60 rounded-xl p-6 md:p-8 max-w-4xl w-full hover:bg-black/55 transition-all duration-300 backdrop-blur-md shadow-[0_15px_30px_rgba(0,0,0,0.5)]">
                 <!-- 角色或引言提示 -->
                 <div class="flex items-center justify-between mb-3 border-b border-gray-800 pb-2">
@@ -8170,6 +8671,20 @@ transition: none !important;
                 text-shadow: 0 2px 10px rgba(0,0,0,.55);
                 transform: none;
             }
+            .film-scroll-hint-mobile {
+                display: none;
+            }
+            .film-down-scroll-arrow {
+                display: none;
+            }
+            @keyframes filmDownArrowBounce {
+                0%, 100% {
+                    transform: translateX(-50%) translateY(0);
+                }
+                50% {
+                    transform: translateX(-50%) translateY(6px);
+                }
+            }
             .film-scroll-story {
                 position: relative;
                 height: 100vh;
@@ -8982,6 +9497,43 @@ transition: none !important;
                     font-size: .9rem !important;
                     line-height: 1.3 !important;
                 }
+                #page-approach-1 #culture-film-panel .film-scroll-hint-desktop {
+                    display: none;
+                }
+                #page-approach-1 #culture-film-panel .film-scroll-hint-mobile {
+                    display: inline;
+                }
+                #page-approach-1 #culture-film-panel .film-carousel,
+                #page-approach-1 #culture-film-panel .film-wheel-card {
+                    touch-action: pan-y;
+                }
+                #page-approach-1 #culture-film-panel .film-down-scroll-arrow {
+                    position: absolute;
+                    left: 50%;
+                    bottom: calc(.45rem + env(safe-area-inset-bottom, 0px));
+                    z-index: 70;
+                    display: grid;
+                    place-items: center;
+                    width: 2rem;
+                    height: 1.5rem;
+                    color: #fff;
+                    opacity: 0;
+                    visibility: hidden;
+                    transform: translateX(-50%);
+                    filter: drop-shadow(0 2px 8px rgba(0,0,0,.72));
+                    pointer-events: none;
+                    transition: opacity .24s ease, visibility .24s ease;
+                }
+                #page-approach-1 #culture-film-panel .film-down-scroll-arrow.is-visible {
+                    opacity: .96;
+                    visibility: visible;
+                    animation: filmDownArrowBounce 1.3s ease-in-out infinite;
+                }
+                #page-approach-1 #culture-film-panel .film-down-scroll-arrow svg {
+                    width: 1.35rem;
+                    height: 1.35rem;
+                    display: block;
+                }
                 #page-approach-1 #culture-film-panel .film-carousel {
                     transform: translateY(-2rem) !important;
                 }
@@ -9193,7 +9745,7 @@ transition: none !important;
                                 <div id="film-scroll-story" class="film-scroll-story">
                                     <div class="film-sticky-stage">
                                         <div class="w-full max-w-6xl mx-auto mb-1">
-                                            <p class="film-scroll-hint">向下滾動，依序觀看作品簡介</p>
+                                            <p class="film-scroll-hint"><span class="film-scroll-hint-desktop">向下滾動，依序觀看作品簡介</span><span class="film-scroll-hint-mobile">左右滑動，依序觀看作品簡介</span></p>
                                         </div>
                     
                                         <div id="film-carousel" class="film-carousel" aria-label="影視作品海報輪盤">
@@ -9251,6 +9803,11 @@ transition: none !important;
                                                     allowfullscreen>
                                                 </iframe>
                                             </div>
+                                        </div>
+                                        <div id="film-down-scroll-arrow" class="film-down-scroll-arrow" aria-hidden="true">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" d="M5 9l7 7 7-7"></path>
+                                            </svg>
                                         </div>
                                     </div>
                                 </div>
@@ -9533,24 +10090,26 @@ transition: none !important;
                 moveCopy('a', 0.02, 0.14);
                 moveCopy('b', 0.36, 0.48);
                 moveCopy('c', 0.50, 0.62);
-                moveCopyToCenterAndHold('d', 0.88, 0.99);
+                moveCopyToCenterAndHold('d', mobileCultureLayout ? 0.89 : 0.88, 0.99);
 
                 const musicFadeOut = range(p, 0.36, 0.62);
                 const filmFadeIn = range(p, 0.36, 0.62);
                 const musicOpacity = 1 - musicFadeOut;
                 const filmOpacity = filmFadeIn;
                 const musicBlurStart = mobileCultureLayout ? 0.34 : 0.32;
-                const musicInteractiveEnd = mobileCultureLayout ? 0.34 : 0.32;
                 const musicBlur = p < 0.18
                     ? 14 * (1 - range(p, 0.14, 0.20))
                     : 14 * range(p, musicBlurStart, 0.38);
+                const filmBlurStart = mobileCultureLayout ? 0.78 : 0.86;
+                const filmBlurEnd = 0.88;
                 const filmBlur = p < 0.62
                     ? 14 * (1 - range(p, 0.58, 0.62))
-                    : 14 * range(p, 0.86, 0.88);
+                    : 14 * range(p, filmBlurStart, filmBlurEnd);
                 const safeMusicBlur = Math.min(14, Math.max(0, musicBlur));
                 const safeFilmBlur = Math.min(14, Math.max(0, filmBlur));
-                const musicInteractive = p >= 0.20 && p <= musicInteractiveEnd && safeMusicBlur < 1.2 && musicOpacity > 0.98;
-                const filmInteractive = p >= 0.62 && p <= 0.86 && safeFilmBlur < 1.2 && filmOpacity > 0.98;
+                const musicInteractive = safeMusicBlur < 1.2 && musicOpacity > 0.98;
+                const filmInteractiveEnd = mobileCultureLayout ? 0.87 : 0.86;
+                const filmInteractive = p >= 0.62 && p <= filmInteractiveEnd && safeFilmBlur < 1.2 && filmOpacity > 0.98;
 
                 if (!musicInteractive) {
                     stopAllMusicTracks();
@@ -9563,8 +10122,12 @@ transition: none !important;
                 state.filmLayer.style.opacity = String(filmOpacity);
                 state.filmLayer.style.filter = `blur(${safeFilmBlur}px)`;
                 state.filmLayer.classList.toggle('is-interactive', filmInteractive);
+                document.getElementById('film-down-scroll-arrow')?.classList.toggle(
+                    'is-visible',
+                    mobileCultureLayout && filmInteractive
+                );
 
-                if (p >= 0.62 && p <= 0.86) {
+                if (!mobileCultureLayout && p >= 0.62 && p <= 0.86) {
                     const filmProgress = range(p, 0.62, 0.86);
                     const index = Math.min(
                         filmOrder.length - 1,
@@ -9683,9 +10246,14 @@ transition: none !important;
 
 
             function scrollToFilmWork(index) {
+                const safeIndex = Math.max(0, Math.min(filmOrder.length - 1, index));
+                if (window.innerWidth < 768) {
+                    renderFilmWork(safeIndex);
+                    return;
+                }
+
                 const state = cultureScrolly || initCultureScrolly();
                 if (state) {
-                    const safeIndex = Math.max(0, Math.min(filmOrder.length - 1, index));
                     const filmProgress = filmOrder.length <= 1 ? 0 : safeIndex / (filmOrder.length - 1);
                     scrollCultureToProgress(0.62 + filmProgress * 0.24);
                     return;
@@ -9701,6 +10269,8 @@ transition: none !important;
             let filmScrollTicking = false;
             function updateFilmFromScroll() {
                 filmScrollTicking = false;
+                if (window.innerWidth < 768) return;
+
                 if (cultureScrolly) {
                     const p = getCultureScrollyProgress();
                     if (p >= 0.62 && p <= 0.86) {
@@ -9730,6 +10300,53 @@ transition: none !important;
                 if (filmScrollTicking) return;
                 filmScrollTicking = true;
                 window.requestAnimationFrame(updateFilmFromScroll);
+            }
+
+            function initFilmSwipeControls() {
+                const carousel = document.getElementById('film-carousel');
+                if (!carousel || carousel.dataset.swipeReady === 'true') return;
+                carousel.dataset.swipeReady = 'true';
+
+                let touchStartX = 0;
+                let touchStartY = 0;
+                let trackingTouch = false;
+                let suppressClick = false;
+
+                carousel.addEventListener('touchstart', event => {
+                    if (window.innerWidth >= 768 || event.touches.length !== 1) return;
+                    touchStartX = event.touches[0].clientX;
+                    touchStartY = event.touches[0].clientY;
+                    trackingTouch = true;
+                }, { passive: true });
+
+                carousel.addEventListener('touchend', event => {
+                    if (!trackingTouch || window.innerWidth >= 768) return;
+                    trackingTouch = false;
+
+                    const touch = event.changedTouches[0];
+                    if (!touch) return;
+                    const deltaX = touch.clientX - touchStartX;
+                    const deltaY = touch.clientY - touchStartY;
+                    const isHorizontalSwipe = Math.abs(deltaX) >= 44 && Math.abs(deltaX) > Math.abs(deltaY) * 1.15;
+                    if (!isHorizontalSwipe) return;
+
+                    suppressClick = true;
+                    const direction = deltaX < 0 ? 1 : -1;
+                    renderFilmWork(activeFilmIndex + direction);
+                    window.setTimeout(() => {
+                        suppressClick = false;
+                    }, 320);
+                }, { passive: true });
+
+                carousel.addEventListener('touchcancel', () => {
+                    trackingTouch = false;
+                }, { passive: true });
+
+                carousel.addEventListener('click', event => {
+                    if (!suppressClick) return;
+                    event.preventDefault();
+                    event.stopPropagation();
+                }, true);
             }
 
             let activeMusicTrack = '';
@@ -9959,6 +10576,7 @@ transition: none !important;
                     audio.addEventListener('timeupdate', updateMusicProgress);
                 }
                 initMusicWaveforms();
+                initFilmSwipeControls();
                 renderFilmWork(0);
                 initCultureScrolly();
                 updateCultureIntroText();
@@ -11471,6 +12089,9 @@ transition: none !important;
       white-space: nowrap;
       text-shadow: 0 1px 8px rgba(255,255,255,.7);
     }
+    #page-approach-3 .jm-panorama-label-mobile {
+      display: none;
+    }
     #page-approach-3 .jm-back-button {
       position: absolute;
       left: 1rem;
@@ -11542,6 +12163,12 @@ transition: none !important;
       #page-approach-3 .jm-panorama-hint {
         bottom: calc(1rem + var(--jm-info-height, 8.5rem) + .5rem);
       }
+      #page-approach-3 .jm-panorama-label-desktop {
+        display: none;
+      }
+      #page-approach-3 .jm-panorama-label-mobile {
+        display: inline;
+      }
     }
   </style>
 
@@ -11568,7 +12195,7 @@ transition: none !important;
       <div class="jm-info-box">仁愛樓為二層樓建物，於1968年改建完工，作為警總軍法處看守所。戒嚴時期有許多政治犯皆曾羈押於此，此為犯人進入牢房前必經之路與門口。</div>
       <div class="jm-panorama-hint" aria-hidden="true">
         <img class="jm-panorama-icon" src="images/360-degree.png" alt="">
-        <div class="jm-panorama-label">左右拖曳畫面可環顧四周</div>
+        <div class="jm-panorama-label"><span class="jm-panorama-label-desktop">左右拖曳畫面可環顧四周</span><span class="jm-panorama-label-mobile">左右滑動可環顧四周</span></div>
       </div>
       <div class="jm-next-control">
         <button class="jm-next-arrow" type="button" data-next-scene="cell-door" aria-label="前往監獄門口"></button>
@@ -11581,7 +12208,7 @@ transition: none !important;
       <div class="jm-info-box">此處為仁愛樓二樓的女性押房，1979年12月13日，陳菊因美麗島事件遭逮捕，並關押於59號房。</div>
       <div class="jm-panorama-hint" aria-hidden="true">
         <img class="jm-panorama-icon" src="images/360-degree.png" alt="">
-        <div class="jm-panorama-label">左右拖曳畫面可環顧四周</div>
+        <div class="jm-panorama-label"><span class="jm-panorama-label-desktop">左右拖曳畫面可環顧四周</span><span class="jm-panorama-label-mobile">左右滑動可環顧四周</span></div>
       </div>
       <div class="jm-next-control">
         <button class="jm-next-arrow" type="button" data-next-scene="inside" aria-label="前往監獄內部"></button>
@@ -11594,7 +12221,7 @@ transition: none !important;
       <div class="jm-info-box">曾同被關押在59號房的呂秀蓮，在擔任副總統期間推動景美人權園區建立，他曾表示：「民主得來不易，現在的年輕人更應珍惜自由，不該把自由視為空氣與水、把自由當成理所當然。」</div>
       <div class="jm-panorama-hint" aria-hidden="true">
         <img class="jm-panorama-icon" src="images/360-degree.png" alt="">
-        <div class="jm-panorama-label">左右拖曳畫面可環顧四周</div>
+        <div class="jm-panorama-label"><span class="jm-panorama-label-desktop">左右拖曳畫面可環顧四周</span><span class="jm-panorama-label-mobile">左右滑動可環顧四周</span></div>
       </div>
     </article>
   </section>
@@ -12625,6 +13252,7 @@ transition: none !important;
                     }
                     initWordCloud();
                     startQuizIfNeeded();
+                    setTimeCalendarScrollLock(!timeCalendarCountdownComplete);
                     setInstantScrollTop(0);
                     if (window.deferDaysCalculationUntilFlashExit) {
                         window.pendingDaysCalculation = true;
@@ -13148,6 +13776,47 @@ transition: none !important;
                 return Math.ceil(totalMs / (1000 * 60 * 60 * 24));
             }
 
+            let timeCalendarScrollLocked = false;
+            let timeCalendarCountdownComplete = false;
+
+            function isTimeCalendarPageVisible() {
+                const articlePage = pages[3];
+                return Boolean(articlePage && !articlePage.classList.contains('hidden'));
+            }
+
+            function setTimeCalendarScrollLock(shouldLock) {
+                timeCalendarScrollLocked = Boolean(shouldLock);
+                document.documentElement.classList.toggle('time-calendar-scroll-locked', timeCalendarScrollLocked);
+                document.body.classList.toggle('time-calendar-scroll-locked', timeCalendarScrollLocked);
+
+                if (timeCalendarScrollLocked) {
+                    window.scrollTo(0, 0);
+                }
+            }
+
+            window.addEventListener('wheel', event => {
+                if (!timeCalendarScrollLocked || !isTimeCalendarPageVisible()) return;
+                event.preventDefault();
+            }, { passive: false });
+
+            window.addEventListener('touchmove', event => {
+                if (!timeCalendarScrollLocked || !isTimeCalendarPageVisible()) return;
+                event.preventDefault();
+            }, { passive: false });
+
+            window.addEventListener('keydown', event => {
+                if (!timeCalendarScrollLocked || !isTimeCalendarPageVisible()) return;
+                const blockedKeys = ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '];
+                if (blockedKeys.includes(event.key)) {
+                    event.preventDefault();
+                }
+            });
+
+            window.addEventListener('scroll', () => {
+                if (!timeCalendarScrollLocked || !isTimeCalendarPageVisible() || window.scrollY === 0) return;
+                window.scrollTo(0, 0);
+            }, { passive: true });
+
             let countingAnimationTriggered = false;
             function startTimeCalendarFall() {
                 const calendarFall = document.getElementById('time-calendar-fall');
@@ -13173,7 +13842,12 @@ transition: none !important;
             window.addEventListener('resize', updateTimeCalendarSceneVisibility);
 
             function startDaysCalculation() {
-                if (countingAnimationTriggered) return; 
+                if (countingAnimationTriggered) {
+                    setTimeCalendarScrollLock(!timeCalendarCountdownComplete);
+                    return;
+                }
+
+                setTimeCalendarScrollLock(true);
                 startTimeCalendarFall();
                 countingAnimationTriggered = true;
                 
@@ -13197,6 +13871,9 @@ transition: none !important;
                     
                     if (progress < 1) {
                         window.requestAnimationFrame(step);
+                    } else {
+                        timeCalendarCountdownComplete = true;
+                        setTimeCalendarScrollLock(false);
                     }
                 }
                 setTimeout(() => {
