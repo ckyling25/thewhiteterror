@@ -1352,12 +1352,8 @@ position: absolute;
         radial-gradient(circle at var(--spot-x, 22%) var(--spot-y, 28%), color-mix(in srgb, var(--accent) 36%, transparent), transparent 31%),
         linear-gradient(132deg, var(--bg-a, #181411), var(--bg-b, #0f0e0d));
       background-size: cover, cover, auto, auto;
-      background-position:
-        center,
-        var(--event-image-position, center center),
-        center,
-        center;
-      transition: background var(--background-duration) ease;
+      background-position: center, center, center, center;
+      transition: none;
 }
 
 #democracyTimelineSection.groupmate-inline-timeline .expanded-background::before {
@@ -6462,6 +6458,78 @@ transition: none !important;
     display: none !important;
   }
 </style>
+<style id="landing-loading-progress">
+  #page-1-landing .prison-scroll-button:not(.is-visible) {
+    opacity: 0 !important;
+    transform: translateX(-50%) translateY(26px) !important;
+    pointer-events: none !important;
+  }
+
+  #page-1-landing .landing-load-status {
+    width: min(52vw, 560px);
+    margin-top: clamp(.9rem, 2.2vh, 1.5rem);
+    color: #fcfcfc;
+    font-family: "Noto Sans TC", sans-serif;
+    opacity: 0;
+    transform: translateY(14px);
+    pointer-events: none;
+    transition: opacity .5s ease, transform .5s ease;
+  }
+
+  #page-1-landing .landing-load-status.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #page-1-landing .landing-load-copy {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: .5rem;
+    font-size: clamp(.78rem, 1.05vw, .95rem);
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, .72);
+  }
+
+  #page-1-landing .landing-load-track {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 9px;
+    border: 1px solid rgba(255, 255, 255, .72);
+    border-radius: 999px;
+    background: rgba(0, 0, 0, .32);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, .3);
+  }
+
+  #page-1-landing .landing-load-fill {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: #9b2c2c;
+    box-shadow: 0 0 12px rgba(155, 44, 44, .62);
+    transition: width .28s ease;
+  }
+
+  #page-1-landing .landing-load-status.is-complete .landing-load-fill {
+    background: #f7f3eb;
+    box-shadow: 0 0 14px rgba(255, 255, 255, .62);
+  }
+
+  @media (max-width: 640px) {
+    #page-1-landing .landing-load-status {
+      width: min(76vw, 420px);
+      margin-top: .75rem;
+    }
+
+    #page-1-landing .landing-load-track {
+      height: 7px;
+    }
+  }
+</style>
 </head>
 <body class="antialiased selection:bg-[#9B2C2C]/20 selection:text-[#9B2C2C]">
 
@@ -6487,6 +6555,23 @@ transition: none !important;
 	            <img class="prison-title-image is-primary" src="標題1.png" alt="主標題圖片一">
 	            <img class="prison-title-image is-secondary" src="標題2.png" alt="主標題圖片二">
 	        </h1>
+            <div
+                id="landing-load-status"
+                class="landing-load-status"
+                role="progressbar"
+                aria-label="網站資源載入進度"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+            >
+                <div class="landing-load-copy" aria-live="polite">
+                    <span id="landing-load-label">載入中</span>
+                    <span id="landing-load-percent">0%</span>
+                </div>
+                <div class="landing-load-track" aria-hidden="true">
+                    <span id="landing-load-fill" class="landing-load-fill"></span>
+                </div>
+            </div>
             <button
 	            id="btn-enter-story"
 	            class="prison-scroll-button"
@@ -6868,7 +6953,7 @@ transition: none !important;
         image: "現在圖片.jpg",
         imagePosition: "center center",
         imageSource: "",
-        content: "",
+        content: "此為中正紀念堂「自由花蕊」常設展的家書展區。",
         theme: {
           ghostText: "至今",
           accent: "#9b8a76",
@@ -7357,7 +7442,6 @@ transition: none !important;
       DOM.module.style.setProperty("--spot-y", theme.spotY);
       DOM.module.style.setProperty("--ghost", `"${theme.ghostText}"`);
       DOM.module.style.setProperty("--event-image", resolvedImage ? `url("${resolvedImage}")` : "none");
-      DOM.module.style.setProperty("--event-image-position", event.imagePosition || "center center");
 
       DOM.prismCarousel.querySelectorAll(".prism-face").forEach((face, faceIndex) => {
         face.classList.toggle("is-active", faceIndex === state.activeIndex);
@@ -12997,13 +13081,36 @@ transition: none !important;
             async function initLandingIntroSequence() {
                 const primaryTitle = document.querySelector('#page-1-landing .prison-title-image.is-primary');
                 const secondaryTitle = document.querySelector('#page-1-landing .prison-title-image.is-secondary');
-                const preload = preloadLandingContent(() => {});
+                const loadStatus = document.getElementById('landing-load-status');
+                const loadLabel = document.getElementById('landing-load-label');
+                const loadPercent = document.getElementById('landing-load-percent');
+                const loadFill = document.getElementById('landing-load-fill');
+                let latestProgress = 0;
+
+                const showProgress = value => {
+                    latestProgress = Math.max(latestProgress, Math.min(100, Math.round(value)));
+                    if (loadPercent) loadPercent.textContent = `${latestProgress}%`;
+                    if (loadFill) loadFill.style.width = `${latestProgress}%`;
+                    loadStatus?.setAttribute('aria-valuenow', String(latestProgress));
+                };
+
+                const preload = preloadLandingContent(showProgress);
 
                 await wait(1400);
                 primaryTitle?.classList.add('is-visible');
                 await wait(1350);
                 secondaryTitle?.classList.add('is-visible');
-                await Promise.allSettled([preload, wait(900)]);
+                await wait(750);
+
+                loadStatus?.classList.add('is-visible');
+                showProgress(latestProgress);
+                await preload;
+
+                showProgress(100);
+                if (loadLabel) loadLabel.textContent = '載入完成';
+                loadStatus?.classList.add('is-complete');
+                loadStatus?.setAttribute('aria-valuetext', '載入完成');
+                await wait(650);
 
                 window.landingIntroReady = true;
                 btnEnterStory?.classList.add('is-visible');
