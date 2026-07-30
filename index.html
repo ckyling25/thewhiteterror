@@ -1352,7 +1352,11 @@ position: absolute;
         radial-gradient(circle at var(--spot-x, 22%) var(--spot-y, 28%), color-mix(in srgb, var(--accent) 36%, transparent), transparent 31%),
         linear-gradient(132deg, var(--bg-a, #181411), var(--bg-b, #0f0e0d));
       background-size: cover, cover, auto, auto;
-      background-position: center, center, center, center;
+      background-position:
+        center,
+        var(--event-image-position, center center),
+        center,
+        center;
       transition: background var(--background-duration) ease;
 }
 
@@ -6420,6 +6424,44 @@ transition: none !important;
     }
   }
 </style>
+<style id="root-scrollbar-and-calendar-scroll-fix">
+  /*
+   * Keep the document scrollable while removing the browser's root scrollbar.
+   * Both elements are targeted because Chromium can use either one as the
+   * scrolling element, depending on the document and how it was opened.
+   */
+  html,
+  body,
+  body * {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+    scrollbar-gutter: auto !important;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  body *::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+    display: none !important;
+    background: transparent !important;
+  }
+
+  /* The timeline swaps the document scroller for this fixed inner panel. */
+  #democracyTimelineSection.groupmate-inline-timeline .expanded-panel,
+  #democracyTimelineSection.groupmate-inline-timeline .expanded-panel.is-open {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+    scrollbar-gutter: auto !important;
+  }
+
+  #democracyTimelineSection.groupmate-inline-timeline .expanded-panel::-webkit-scrollbar,
+  #democracyTimelineSection.groupmate-inline-timeline .expanded-panel.is-open::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+    display: none !important;
+  }
+</style>
 </head>
 <body class="antialiased selection:bg-[#9B2C2C]/20 selection:text-[#9B2C2C]">
 
@@ -6824,7 +6866,7 @@ transition: none !important;
         label: "至今",
         importance: 2,
         image: "現在圖片.jpg",
-        imagePosition: "center top",
+        imagePosition: "center center",
         imageSource: "",
         content: "",
         theme: {
@@ -7315,6 +7357,7 @@ transition: none !important;
       DOM.module.style.setProperty("--spot-y", theme.spotY);
       DOM.module.style.setProperty("--ghost", `"${theme.ghostText}"`);
       DOM.module.style.setProperty("--event-image", resolvedImage ? `url("${resolvedImage}")` : "none");
+      DOM.module.style.setProperty("--event-image-position", event.imagePosition || "center center");
 
       DOM.prismCarousel.querySelectorAll(".prism-face").forEach((face, faceIndex) => {
         face.classList.toggle("is-active", faceIndex === state.activeIndex);
@@ -13858,14 +13901,13 @@ transition: none !important;
                 return Boolean(articlePage && !articlePage.classList.contains('hidden'));
             }
 
-            function setTimeCalendarScrollLock(shouldLock) {
-                timeCalendarScrollLocked = Boolean(shouldLock);
-                document.documentElement.classList.toggle('time-calendar-scroll-locked', timeCalendarScrollLocked);
-                document.body.classList.toggle('time-calendar-scroll-locked', timeCalendarScrollLocked);
-
-                if (timeCalendarScrollLocked) {
-                    window.scrollTo(0, 0);
-                }
+            function setTimeCalendarScrollLock() {
+                // The countdown remains animated, but scrolling must never be
+                // locked or forced back to the top; that caused the visible
+                // pause when moving from the calendar into the timeline.
+                timeCalendarScrollLocked = false;
+                document.documentElement.classList.remove('time-calendar-scroll-locked');
+                document.body.classList.remove('time-calendar-scroll-locked');
             }
 
             window.addEventListener('wheel', event => {
