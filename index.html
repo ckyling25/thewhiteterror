@@ -12691,7 +12691,12 @@ transition: none !important;
       var source = document.getElementById('life-quiz-srcdoc');
       if (!frame || !source || frame.srcdoc) return;
       try {
-        frame.srcdoc = JSON.parse(source.textContent || '""');
+        var quizMarkup = JSON.parse(source.textContent || '""');
+        quizMarkup = quizMarkup.replace(
+          /(\.student-seat-bg\s*\{[\s\S]*?background-image:\s*)url\("data:image\/png;base64,[^"]+"\)/,
+          '$1url("座位學生.png")'
+        );
+        frame.srcdoc = quizMarkup;
       } catch (error) {
         frame.setAttribute('title', '測驗載入失敗');
       }
