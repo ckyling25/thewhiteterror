@@ -14023,11 +14023,11 @@ transition: none !important;
                 return Boolean(articlePage && !articlePage.classList.contains('hidden'));
             }
 
-            function setTimeCalendarScrollLock() {
-                // The countdown remains animated, but scrolling must never be
-                // locked or forced back to the top; that caused the visible
-                // pause when moving from the calendar into the timeline.
-                timeCalendarScrollLocked = false;
+            function setTimeCalendarScrollLock(shouldLock) {
+                // This is an input lock only. Do not change document overflow
+                // or force the page back to the top, which caused scrollbar
+                // flashes and visible jumps in the previous implementation.
+                timeCalendarScrollLocked = Boolean(shouldLock);
                 document.documentElement.classList.remove('time-calendar-scroll-locked');
                 document.body.classList.remove('time-calendar-scroll-locked');
             }
@@ -14049,11 +14049,6 @@ transition: none !important;
                     event.preventDefault();
                 }
             });
-
-            window.addEventListener('scroll', () => {
-                if (!timeCalendarScrollLocked || !isTimeCalendarPageVisible() || window.scrollY === 0) return;
-                window.scrollTo(0, 0);
-            }, { passive: true });
 
             let countingAnimationTriggered = false;
             function startTimeCalendarFall() {
@@ -14122,6 +14117,7 @@ transition: none !important;
 
             // 輔助滾動方法
             window.scrollToArticle = function() {
+                if (timeCalendarScrollLocked && isTimeCalendarPageVisible()) return;
                 const target = document.getElementById('article-body-start');
                 target.scrollIntoView({ behavior: 'smooth' });
             }
