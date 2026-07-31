@@ -2,7 +2,31 @@
 <html lang="zh-TW" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
+    <script>
+        (() => {
+            const root = document.documentElement;
+            const syncViewportSize = () => {
+                const viewport = window.visualViewport;
+                const height = Math.max(1, Math.round((viewport && viewport.height) || window.innerHeight));
+                const width = Math.max(1, Math.round((viewport && viewport.width) || window.innerWidth));
+                root.style.setProperty('--app-height', `${height}px`);
+                root.style.setProperty('--app-width', `${width}px`);
+                root.style.setProperty('--app-vh', `${height / 100}px`);
+                root.style.setProperty('--app-calendar-start', `${height * -0.28}px`);
+                root.style.setProperty('--app-calendar-end', `${height * 0.91}px`);
+                root.style.setProperty('--app-info-max-height', `${height * 0.32}px`);
+            };
+
+            syncViewportSize();
+            window.addEventListener('resize', syncViewportSize, { passive: true });
+            window.addEventListener('orientationchange', syncViewportSize, { passive: true });
+            window.addEventListener('pageshow', syncViewportSize, { passive: true });
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener('resize', syncViewportSize, { passive: true });
+            }
+        })();
+    </script>
     <title>民主世代的歷史課　青年如何認識白色恐怖</title>
     <!-- 引入 Tailwind CSS 進行現代化響應式排版 -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -244,46 +268,6 @@
             background: #f4efe6;
             width: 100vw;
             margin-left: calc(50% - 50vw);
-        }
-
-        :root {
-            --full-report-gap: clamp(3.5rem, 7vw, 6rem);
-        }
-
-        #page-10-perspective-five {
-            padding-bottom: var(--full-report-gap);
-        }
-
-        .full-report-cta-wrap {
-            display: flex;
-            width: 100%;
-            justify-content: center;
-            padding: 0 1.5rem var(--full-report-gap);
-        }
-
-        .full-report-cta {
-            display: inline-flex;
-            min-height: 3rem;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #1a202c;
-            border-radius: 999px;
-            padding: 0.78rem 1.8rem;
-            background: #1a202c;
-            color: #fff;
-            font-size: clamp(0.95rem, 1.3vw, 1.05rem);
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-decoration: none;
-            box-shadow: 0 10px 24px rgba(26, 32, 44, 0.16);
-            transition: background 160ms ease, color 160ms ease, transform 160ms ease;
-        }
-
-        .full-report-cta:hover,
-        .full-report-cta:focus-visible {
-            background: #fff;
-            color: #1a202c;
-            transform: translateY(-2px);
         }
 
         .speaker-quote-row {
@@ -5875,7 +5859,7 @@ transition: none !important;
     }
 
     #page-10-perspective-five {
-      padding: 4rem 1rem var(--full-report-gap) !important;
+      padding: 4rem 1rem !important;
     }
 
     #page-10-perspective-five h2 {
@@ -5954,10 +5938,6 @@ transition: none !important;
 
     #page-1-landing .prison-scroll-button {
       bottom: max(clamp(2.5rem, 8svh, 3.35rem), calc(env(safe-area-inset-bottom, 0px) + .75rem));
-    }
-
-    #page-1-landing .landing-load-status {
-      bottom: calc(max(clamp(2.5rem, 8svh, 3.35rem), calc(env(safe-area-inset-bottom, 0px) + .75rem)) + 4.5rem);
     }
 
     /* 導言故事：對話框依手機寬高縮放，背景仍維持既有裁切焦點。 */
@@ -6157,10 +6137,6 @@ transition: none !important;
       font-size: .8rem;
     }
 
-    #page-1-landing .landing-load-status {
-      bottom: calc(max(1.15rem, calc(env(safe-area-inset-bottom, 0px) + .45rem)) + 4rem);
-    }
-
     #page-2-story .story-dialog-wrap {
       bottom: 1.75rem !important;
     }
@@ -6343,10 +6319,6 @@ transition: none !important;
       bottom: .6rem;
     }
 
-    #page-1-landing .landing-load-status {
-      bottom: 4.1rem;
-    }
-
     #page-2-story .story-dialog-wrap {
       bottom: .7rem !important;
       justify-content: flex-end !important;
@@ -6518,12 +6490,10 @@ transition: none !important;
   }
 
   #page-1-landing .landing-load-status {
-    position: fixed;
-    left: 50%;
-    bottom: calc(clamp(48px, 8vh, 80px) + clamp(4.75rem, 8vh, 5.75rem));
+    position: relative;
     z-index: 80;
     width: min(52vw, 560px);
-    margin: 0;
+    margin-top: clamp(.9rem, 2.2vh, 1.5rem);
     padding: 0;
     border: 0;
     border-radius: 0;
@@ -6533,7 +6503,7 @@ transition: none !important;
     font-family: "Noto Sans TC", sans-serif;
     opacity: 0;
     visibility: hidden;
-    transform: translate(-50%, 14px);
+    transform: translateY(14px);
     pointer-events: none;
     transition: opacity .5s ease, transform .5s ease, visibility 0s linear .5s;
   }
@@ -6541,7 +6511,7 @@ transition: none !important;
   #page-1-landing .landing-load-status.is-visible {
     opacity: 1 !important;
     visibility: visible !important;
-    transform: translate(-50%, 0) !important;
+    transform: translateY(0) !important;
     transition-delay: 0s;
   }
 
@@ -6586,6 +6556,7 @@ transition: none !important;
   @media (max-width: 640px) {
     #page-1-landing .landing-load-status {
       width: min(76vw, 420px);
+      margin-top: .75rem;
     }
 
     #page-1-landing .landing-load-track {
@@ -8537,14 +8508,8 @@ transition: none !important;
                 </div>
             </section>
 
-        <div class="full-report-cta-wrap">
-            <a class="full-report-cta" href="https://unews.nccu.edu.tw/unews/WhiteTerror-youth-democracy/">
-                點擊閱讀完整報導
-            </a>
-        </div>
-
         <!-- 專題落款尾部 (永久置於 page-5 底部) -->
-        <div class="site-footer-credit px-6 md:px-8 py-16 text-center border-t border-gray-200/60">
+        <div class="site-footer-credit px-6 md:px-8 py-16 text-center border-t border-gray-200/60 mt-16">
             <p class="text-xs md:text-sm tracking-[0.18em] text-gray-500 font-medium leading-loose">
                 《大學報》NCCU UONLINE NEWS<br>
                 製作團隊｜鄭丞傑、陳筱雯、方凱琪、林婷妤
@@ -14903,5 +14868,319 @@ function initYouthAttitudeChart() {
 
         });
     </script>
+    <style id="cross-browser-mobile-viewport-fix">
+        :root {
+            --app-height: 100vh;
+            --app-width: 100vw;
+            --app-vh: 1vh;
+            --app-calendar-start: -28vh;
+            --app-calendar-end: 91vh;
+            --app-info-max-height: 32vh;
+        }
+
+        @supports (height: 100dvh) {
+            :root {
+                --app-height: 100dvh;
+                --app-vh: 1dvh;
+                --app-calendar-start: -28dvh;
+                --app-calendar-end: 91dvh;
+                --app-info-max-height: 32dvh;
+            }
+        }
+
+        @keyframes prisonGateDropMobile {
+            from { transform: translate3d(0, -100%, 0); }
+            to { transform: translate3d(0, 0, 0); }
+        }
+
+        @media (max-width: 767px) {
+            :root {
+                --mobile-safe-height: var(--app-height);
+                --mobile-safe-top: max(.65rem, env(safe-area-inset-top, 0px));
+                --mobile-safe-bottom: max(.65rem, env(safe-area-inset-bottom, 0px));
+            }
+
+            html,
+            body {
+                width: 100%;
+                min-height: var(--app-height);
+                margin: 0;
+                padding: 0;
+                background-color: #fafafa;
+            }
+
+            /* Landing: use one coordinate system so mobile browser chrome cannot
+               leave a blank band above or below the gate image. */
+            #page-1-landing.prison-landing {
+                width: 100vw !important;
+                height: var(--app-height) !important;
+                min-height: var(--app-height) !important;
+                max-height: var(--app-height) !important;
+                padding: max(.65rem, env(safe-area-inset-top, 0px)) .75rem max(.65rem, env(safe-area-inset-bottom, 0px)) !important;
+                overflow: hidden !important;
+                box-sizing: border-box !important;
+            }
+
+            #page-1-landing .prison-gate {
+                position: absolute !important;
+                inset: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                transform: translate3d(0, -100%, 0);
+                animation: prisonGateDropMobile 1.25s cubic-bezier(.22, .88, .25, 1) .15s forwards !important;
+            }
+
+            #page-1-landing .prison-gate img {
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: cover !important;
+                object-position: 50% 50% !important;
+            }
+
+            #page-1-landing .prison-hero-copy {
+                width: 100%;
+                max-height: calc(var(--app-height) - var(--mobile-safe-top) - var(--mobile-safe-bottom));
+                box-sizing: border-box;
+            }
+
+            #page-1-landing .landing-load-status {
+                width: min(78vw, 30rem) !important;
+            }
+
+            #page-1-landing .prison-scroll-button {
+                bottom: calc(var(--mobile-safe-bottom) + .55rem) !important;
+            }
+
+            /* Story scenes: fixed overlays must match the visible viewport, not
+               the browser's historical layout viewport. */
+            #page-2-story {
+                position: fixed !important;
+                inset: 0 auto auto 0 !important;
+                width: 100vw !important;
+                height: var(--app-height) !important;
+                min-height: var(--app-height) !important;
+                max-height: var(--app-height) !important;
+                overflow: hidden !important;
+                background: #000 !important;
+                box-sizing: border-box !important;
+            }
+
+            #page-2-story .story-bg-frame,
+            #page-2-story .story-final-panel {
+                inset: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                min-height: 100% !important;
+            }
+
+            #page-2-story .story-bg-frame img {
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: cover !important;
+            }
+
+            #page-2-story .story-dialog-wrap {
+                bottom: calc(var(--mobile-safe-bottom) + 2.15rem) !important;
+            }
+
+            #page-2-story .story-progress-bar {
+                bottom: var(--mobile-safe-bottom) !important;
+            }
+
+            /* Countdown: compact vertical rhythm and keep both falling calendar
+               cards inside the visible phone viewport. */
+            .time-calendar-scene {
+                width: 100vw !important;
+                height: var(--app-height) !important;
+                min-height: var(--app-height) !important;
+                max-height: var(--app-height) !important;
+                padding: var(--mobile-safe-top) .8rem calc(var(--mobile-safe-bottom) + 2.6rem) !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+            }
+
+            .time-calendar-scene .time-calendar-content.is-visible {
+                width: 100%;
+                transform: translateY(-2.5vh) !important;
+            }
+
+            .time-calendar-scene .time-calendar-content h2 {
+                margin-bottom: 1.1rem !important;
+                font-size: clamp(1.65rem, 8vw, 2.3rem) !important;
+            }
+
+            .time-calendar-scene .time-calendar-content > div {
+                width: min(92vw, 34rem);
+                margin: 1rem auto !important;
+                padding: 1.15rem .8rem !important;
+            }
+
+            .time-calendar-scene .time-calendar-content > p {
+                padding-inline: .35rem;
+                font-size: clamp(.92rem, 4vw, 1.05rem) !important;
+            }
+
+            .time-calendar-scene > .bottom-scroll-hint {
+                bottom: calc(var(--mobile-safe-bottom) + .35rem) !important;
+            }
+
+            .time-calendar-page {
+                top: var(--app-calendar-start) !important;
+                width: clamp(112px, 29vw, 150px) !important;
+                max-width: 34vw !important;
+                --calendar-end-y: var(--app-calendar-end);
+            }
+
+            .time-calendar-page-1 { --calendar-left: 1.5%; }
+            .time-calendar-page-4 { --calendar-left: 68%; }
+
+            /* Outer-circle story: its fixed/ended background was still 100vh,
+               exposing the white parent when a browser toolbar changed size. */
+            .outer-circle-scrolly {
+                width: 100vw !important;
+                background: #0e0e0c !important;
+            }
+
+            .outer-circle-stage,
+            .outer-circle-stage.is-fixed,
+            .outer-circle-stage.is-ended {
+                width: 100vw !important;
+                height: var(--app-height) !important;
+                min-height: var(--app-height) !important;
+                max-height: var(--app-height) !important;
+                overflow: hidden !important;
+                background: #0e0e0c !important;
+            }
+
+            .outer-circle-bg {
+                inset: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                min-height: 100% !important;
+                object-fit: cover !important;
+                object-position: center center !important;
+            }
+
+            .outer-circle-copy,
+            .outer-circle-copy.quote-center,
+            .outer-circle-copy.frame-center {
+                width: min(92vw, 38rem) !important;
+                max-height: calc(var(--app-height) - var(--mobile-safe-top) - var(--mobile-safe-bottom) - 4.5rem);
+                overflow-y: auto;
+                overscroll-behavior: contain;
+            }
+
+            .outer-circle-copy p,
+            .outer-circle-copy.quote-center p,
+            .outer-circle-copy.frame-center p {
+                font-size: clamp(.9rem, 3.8vw, 1rem) !important;
+                line-height: 1.75 !important;
+            }
+
+            .outer-circle-source {
+                right: .8rem !important;
+                bottom: calc(var(--mobile-safe-bottom) + .35rem) !important;
+            }
+
+            /* 360-degree tour: make the fixed shell, each scene and the remote
+               iframe share exactly the same visual viewport height. */
+            #page-approach-3 {
+                min-height: var(--app-height) !important;
+                background: #050505 !important;
+            }
+
+            #page-approach-3 .jm-frame,
+            #page-approach-3 .jm-frame.is-fixed,
+            #page-approach-3 .jm-frame.is-ended,
+            #page-approach-3 .jm-video-shell,
+            #page-approach-3 .jm-video,
+            #page-approach-3 .jm-tour,
+            #page-approach-3 .jm-scene {
+                width: 100vw !important;
+                height: var(--app-height) !important;
+                min-height: var(--app-height) !important;
+                max-height: var(--app-height) !important;
+                box-sizing: border-box !important;
+                background: #050505 !important;
+            }
+
+            #page-approach-3 .jm-tour {
+                position: fixed !important;
+                inset: 0 auto auto 0 !important;
+                overflow: hidden !important;
+            }
+
+            #page-approach-3 .jm-scene {
+                inset: 0 !important;
+                overflow: hidden !important;
+            }
+
+            #page-approach-3 .jm-scene iframe {
+                position: absolute !important;
+                inset: 0 !important;
+                display: block !important;
+                width: 100% !important;
+                height: 100% !important;
+                min-height: 100% !important;
+                max-height: 100% !important;
+                border: 0 !important;
+                background: #050505 !important;
+            }
+
+            #page-approach-3 .approach-return-nav,
+            #page-approach-3 .jm-back-button {
+                top: calc(var(--mobile-safe-top) + .25rem) !important;
+            }
+
+            #page-approach-3 .jm-info-box {
+                left: .75rem !important;
+                right: .75rem !important;
+                bottom: calc(var(--mobile-safe-bottom) + .25rem) !important;
+                width: auto !important;
+                max-width: none !important;
+                max-height: min(var(--app-info-max-height), 14rem) !important;
+                overflow-y: auto !important;
+                padding: .75rem .85rem !important;
+                font-size: clamp(.82rem, 3.55vw, .96rem) !important;
+                line-height: 1.65 !important;
+            }
+
+            #page-approach-3 .jm-next-control {
+                right: .75rem !important;
+                bottom: calc(var(--mobile-safe-bottom) + var(--jm-info-height, 8.5rem) + .6rem) !important;
+            }
+
+            #page-approach-3 .jm-panorama-hint {
+                bottom: calc(var(--mobile-safe-bottom) + var(--jm-info-height, 8.5rem) + .4rem) !important;
+            }
+        }
+
+        @media (max-width: 767px) and (max-height: 620px) {
+            #page-1-landing .prison-title-image.is-primary { max-width: 78vw !important; }
+            #page-1-landing .prison-title-image.is-secondary { max-width: 64vw !important; }
+            #page-1-landing .landing-load-status { margin-top: .45rem !important; }
+
+            .time-calendar-scene .time-calendar-content h2 {
+                margin-bottom: .65rem !important;
+                font-size: 1.45rem !important;
+            }
+
+            .time-calendar-scene .time-calendar-content > div {
+                margin: .6rem auto !important;
+                padding: .8rem .65rem !important;
+            }
+
+            #page-2-story .story-dialog-wrap {
+                bottom: calc(var(--mobile-safe-bottom) + 1.35rem) !important;
+            }
+        }
+
+        @media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+            #page-1-landing .prison-gate {
+                transform: none !important;
+                animation: none !important;
+            }
+        }
+    </style>
 </body>
 </html>
