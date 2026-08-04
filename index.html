@@ -8866,6 +8866,18 @@ transition: none !important;
                 width: min(100%, 1360px);
                 margin: clamp(2.2rem, 4vh, 3.4rem) auto 0;
             }
+            #page-approach-1 .culture-music-scroll-hint {
+                position: relative;
+                left: auto;
+                bottom: auto;
+                width: fit-content;
+                margin: clamp(1.15rem, 2.6vh, 1.8rem) auto 0;
+                z-index: 12;
+                color: #6b6257;
+                opacity: .9;
+                transform: none;
+                text-shadow: 0 1px 8px rgba(255, 255, 255, .7);
+            }
             .music-piece-card h4 {
                 font-size: clamp(1.18rem, 1.52vw, 1.48rem);
                 line-height: 1.28;
@@ -9958,6 +9970,12 @@ transition: none !important;
                                             </article>
                                         </div>
                                     </div>
+                                        <div class="culture-music-scroll-hint bottom-scroll-hint flex flex-col items-center justify-center" aria-hidden="true">
+                                            <span class="mb-2 text-sm md:text-base font-medium tracking-widest serif-title">向下滑動</span>
+                                            <svg class="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                        </div>
                                         </div>
                                     </div>
                                     <div id="music-intro-modal" class="music-intro-modal" aria-hidden="true" onclick="closeMusicIntroModal(event)">
