@@ -270,6 +270,41 @@
             margin-left: calc(50% - 50vw);
         }
 
+        .full-report-link-wrap {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin: clamp(2.5rem, 6vw, 4.5rem) auto clamp(1.5rem, 4vw, 3rem);
+            padding-inline: 1rem;
+        }
+
+        .full-report-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            padding: .85rem 1.4rem;
+            border-radius: 999px;
+            border: 1px solid rgba(28, 52, 84, .26);
+            background: #1F3A5F;
+            color: #fff;
+            font-family: "Noto Sans TC", sans-serif;
+            font-size: clamp(.98rem, 2.7vw, 1.08rem);
+            font-weight: 800;
+            letter-spacing: .04em;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 14px 34px rgba(24, 42, 68, .18);
+            transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+        }
+
+        .full-report-link:hover,
+        .full-report-link:focus-visible {
+            transform: translateY(-2px);
+            background: #162B47;
+            box-shadow: 0 18px 42px rgba(24, 42, 68, .26);
+        }
+
         .speaker-quote-row {
             display: grid;
             align-items: center;
@@ -938,6 +973,23 @@ display: flex;
       max-width: calc(50vw - clamp(28px, 4vw, 76px));
 }
 
+@media (min-width: 1600px) {
+      :root {
+            --large-report-text-width: min(36rem, calc(23.48vw + 118px + clamp(24px, 3vw, 58px)));
+      }
+
+      #democracyTimelineSection.groupmate-inline-timeline .intro-copy-column {
+            width: var(--large-report-text-width);
+            max-width: none;
+            margin-left: calc(100% - var(--large-report-text-width));
+      }
+
+      .parallax-text p {
+            right: auto;
+            width: var(--large-report-text-width);
+      }
+}
+
 #democracyTimelineSection.groupmate-inline-timeline .intro-timeline-column {
 display: flex;
       flex-direction: column;
@@ -1289,14 +1341,14 @@ justify-content: flex-end;
 #democracyTimelineSection.groupmate-inline-timeline .intro-expand-row .expand-button {
 opacity: 1;
       pointer-events: auto;
-      transform: none;
+      transform: translateY(clamp(8px, 1vw, 14px));
       z-index: 2;
 }
 
 #democracyTimelineSection.groupmate-inline-timeline .intro-expand-row .expand-button.is-visible {
 opacity: 1;
       pointer-events: auto;
-      transform: none;
+      transform: translateY(clamp(8px, 1vw, 14px));
 }
 
 /* ==============================
@@ -6490,10 +6542,12 @@ transition: none !important;
   }
 
   #page-1-landing .landing-load-status {
-    position: relative;
+    position: fixed;
+    left: 50%;
+    bottom: clamp(112px, 15vh, 148px);
     z-index: 80;
     width: min(52vw, 560px);
-    margin-top: clamp(.9rem, 2.2vh, 1.5rem);
+    margin-top: 0;
     padding: 0;
     border: 0;
     border-radius: 0;
@@ -6503,7 +6557,7 @@ transition: none !important;
     font-family: "Noto Sans TC", sans-serif;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(14px);
+    transform: translateX(-50%) translateY(14px);
     pointer-events: none;
     transition: opacity .5s ease, transform .5s ease, visibility 0s linear .5s;
   }
@@ -6511,7 +6565,7 @@ transition: none !important;
   #page-1-landing .landing-load-status.is-visible {
     opacity: 1 !important;
     visibility: visible !important;
-    transform: translateY(0) !important;
+    transform: translateX(-50%) translateY(0) !important;
     transition-delay: 0s;
   }
 
@@ -6556,7 +6610,7 @@ transition: none !important;
   @media (max-width: 640px) {
     #page-1-landing .landing-load-status {
       width: min(76vw, 420px);
-      margin-top: .75rem;
+      bottom: calc(env(safe-area-inset-bottom, 0px) + 6.4rem);
     }
 
     #page-1-landing .landing-load-track {
@@ -8509,6 +8563,10 @@ transition: none !important;
             </section>
 
         <!-- 專題落款尾部 (永久置於 page-5 底部) -->
+        <div class="full-report-link-wrap">
+            <a class="full-report-link" href="https://unews.nccu.edu.tw/unews/WhiteTerror-youth-democracy/" target="_blank" rel="noopener noreferrer">點擊閱讀完整文字報導</a>
+        </div>
+
         <div class="site-footer-credit px-6 md:px-8 py-16 text-center border-t border-gray-200/60 mt-16">
             <p class="text-xs md:text-sm tracking-[0.18em] text-gray-500 font-medium leading-loose">
                 《大學報》NCCU UONLINE NEWS<br>
