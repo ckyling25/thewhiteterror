@@ -4277,10 +4277,6 @@ transition: none !important;
                 margin-bottom: 2rem !important;
               }
 
-              .letters-section-shell:has(.letter-overlay.is-detail) #letters {
-                display: none;
-              }
-
               .letters-section {
                 min-height: 100vh;
                 margin-top: -3rem;
@@ -4334,17 +4330,35 @@ transition: none !important;
                 max-width: 90vw;
               }
 
+              html.letter-modal-open,
+              body.letter-modal-open {
+                overflow: hidden !important;
+                overscroll-behavior: none;
+              }
+
               .letter-overlay {
-                position: relative;
-                inset: auto;
+                position: fixed;
+                inset: 0;
                 display: none;
-                width: 100%;
-                min-height: 0;
+                width: 100vw;
+                height: 100vh;
+                height: 100dvh;
+                min-height: 100vh;
+                min-height: 100dvh;
+                overflow-x: hidden;
+                overflow-y: auto;
+                overscroll-behavior: contain;
+                -webkit-overflow-scrolling: touch;
                 background: #918d87;
               }
 
               .letter-overlay.is-visible {
                 display: block;
+              }
+
+              .letter-overlay.is-detail {
+                visibility: visible;
+                pointer-events: auto;
               }
 
               .overlay-backdrop {
@@ -8450,7 +8464,11 @@ transition: none !important;
       
             card.classList.add('is-active');
             exhibit.classList.add('has-open-letter');
-      
+
+            overlay.scrollTop = 0;
+            document.documentElement.classList.add('letter-modal-open');
+            document.body.classList.add('letter-modal-open');
+
             overlay.className = 'letter-overlay is-visible';
             overlay.setAttribute('aria-hidden', 'false');
       
@@ -8461,6 +8479,16 @@ transition: none !important;
                 if (applyDetail(card.dataset.detail)) {
                   detailOpen = true;
                   overlay.classList.add('is-detail');
+                  overlay.scrollTop = 0;
+
+                  if (window.matchMedia('(max-width: 700px)').matches) {
+                    isOpen = true;
+                    animating = false;
+                    requestAnimationFrame(() => {
+                      overlay.scrollTop = 0;
+                      closeButton.focus({ preventScroll: true });
+                    });
+                  }
                 }
               });
             });
@@ -8471,17 +8499,23 @@ transition: none !important;
       
             overlay.className = 'letter-overlay';
             overlay.setAttribute('aria-hidden', 'true');
+            overlay.scrollTop = 0;
       
             exhibit.classList.remove('has-open-letter');
             cards.forEach(card => card.classList.remove('is-active'));
       
             letter.removeAttribute('src');
             letter.style.opacity = '';
+
+            document.documentElement.classList.remove('letter-modal-open');
+            document.body.classList.remove('letter-modal-open');
       
             const next = pending;
             active = null;
             pending = null;
             animating = false;
+            isOpen = false;
+            detailOpen = false;
       
             if (next) openMail(next);
           }
@@ -9869,7 +9903,14 @@ transition: none !important;
                     scrollbar-color: rgba(74, 85, 104, .38) transparent;
                 }
                 #page-approach-1 #culture-film-panel #film-meta {
+                    position: sticky;
+                    top: 0;
+                    z-index: 2;
+                    flex: 0 0 auto;
+                    margin-top: 0 !important;
                     margin-bottom: .1rem !important;
+                    padding: .18rem 0 .12rem;
+                    background: #fff;
                     font-size: .82rem !important;
                     line-height: 1.2 !important;
                 }
@@ -10501,8 +10542,13 @@ transition: none !important;
 
             function renderFilmWork(index) {
                 const safeIndex = Math.max(0, Math.min(filmOrder.length - 1, index));
-                if (safeIndex === activeFilmIndex) return;
+                const detailCopy = document.querySelector('#culture-film-panel .film-detail-copy');
+                if (safeIndex === activeFilmIndex) {
+                    if (window.innerWidth < 768 && detailCopy) detailCopy.scrollTop = 0;
+                    return;
+                }
                 activeFilmIndex = safeIndex;
+                if (window.innerWidth < 768 && detailCopy) detailCopy.scrollTop = 0;
                 const name = filmOrder[safeIndex];
                 const work = filmWorks[name];
                 if (!work) return;
@@ -12476,7 +12522,7 @@ transition: none !important;
   <div class="jm-scroll-stage" id="jm-scroll-stage">
     <section class="jm-frame" aria-label="白色恐怖景美紀念園區滾動式影片">
       <div class="jm-video-shell">
-        <video id="jm-scroll-video" class="jm-video" preload="metadata" muted playsinline disablepictureinpicture>
+        <video id="jm-scroll-video" class="jm-video" preload="auto" muted playsinline webkit-playsinline disablepictureinpicture>
           <source src="%E7%99%BD%E6%81%90%E6%99%AF%E7%BE%8E%E6%BB%BE%E5%8B%95%E5%9C%B0%E5%9C%96.mp4" type="video/mp4">
         </video>
       </div>
@@ -12546,6 +12592,9 @@ transition: none !important;
       let videoReady = false;
       let targetTime = 0;
       let renderedTime = 0;
+      let lastRenderAt = performance.now();
+      let lastSeekAt = 0;
+      let seekQueued = false;
       let panoramaHintResumeTimer = 0;
       let mobileSwipeStartY = null;
       const panoramaOrientations = new Map();
@@ -12593,7 +12642,27 @@ transition: none !important;
         stage.style.height = `${viewportUnits}vh`;
       }
 
-      function renderScrollVideo() {
+      function commitVideoSeek(now) {
+        if (!videoReady || !Number.isFinite(renderedTime)) return;
+
+        if (video.seeking) {
+          seekQueued = true;
+          return;
+        }
+
+        const difference = Math.abs(video.currentTime - renderedTime);
+        const mobile = window.matchMedia('(max-width: 700px)').matches;
+        const minimumInterval = mobile ? 48 : 32;
+        if (difference < .025 || now - lastSeekAt < minimumInterval) return;
+
+        seekQueued = false;
+        lastSeekAt = now;
+        try {
+          video.currentTime = renderedTime;
+        } catch (error) {}
+      }
+
+      function renderScrollVideo(timestamp = performance.now()) {
         ticking = false;
         updateFramePinState();
         if (!isSectionVisible()) return;
@@ -12604,17 +12673,14 @@ transition: none !important;
         targetTime = clamp(videoProgress * safeDuration, 0, safeDuration);
 
         if (videoReady && Number.isFinite(targetTime)) {
-          try {
-            const gap = Math.abs(renderedTime - targetTime);
-            renderedTime += (targetTime - renderedTime) * (gap > 1.2 ? 1 : .28);
-
-            if (!video.seeking || Math.abs(video.currentTime - renderedTime) > .45) {
-              if (Math.abs(video.currentTime - renderedTime) > 0.045) {
-                video.currentTime = renderedTime;
-              }
-            }
-          } catch (error) {}
+          const elapsed = clamp(timestamp - lastRenderAt, 1, 64);
+          const mobile = window.matchMedia('(max-width: 700px)').matches;
+          const responseTime = mobile ? 72 : 52;
+          const smoothing = 1 - Math.exp(-elapsed / responseTime);
+          renderedTime += (targetTime - renderedTime) * smoothing;
+          commitVideoSeek(timestamp);
         }
+        lastRenderAt = timestamp;
 
         const showEndContent = progress >= finalHoldStart && !tourOpen;
         endCard?.classList.toggle('is-visible', showEndContent);
@@ -12638,6 +12704,9 @@ transition: none !important;
         videoReady = duration > 1;
         targetTime = clamp(video.currentTime || 0, 0, Math.max(0.01, duration - 0.04));
         renderedTime = targetTime;
+        lastRenderAt = performance.now();
+        lastSeekAt = 0;
+        seekQueued = false;
         video.pause();
         resizeScrollTrack();
         requestScrollVideoRender();
@@ -12748,6 +12817,11 @@ transition: none !important;
       video.addEventListener('loadedmetadata', setupVideo);
       video.addEventListener('durationchange', setupVideo);
       video.addEventListener('canplaythrough', setupVideo, { once: true });
+      video.addEventListener('seeked', () => {
+        if (seekQueued || Math.abs(renderedTime - targetTime) > .025) {
+          requestScrollVideoRender();
+        }
+      });
       video.addEventListener('error', () => {
         hint.textContent = '影片載入失敗，請確認白恐景美滾動地圖.mp4 是否存在。';
         hint?.classList.remove('is-hidden');
